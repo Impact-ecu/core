@@ -261,6 +261,27 @@ vectors = {
             "expect": {"error": "OverlapError", "reason": "cycle"},
         },
         {
+            "id": "V5f-order-references-patch-not-in-version",
+            "rules": ["R22"],
+            "patches": ["P1", "P2"],
+            "overlaps": [["P1", "P5"]],
+            "expect": {"error": "OverlapError", "reason": "spurious_order"},
+        },
+        {
+            "id": "V5g-order-pair-repeated",
+            "rules": ["R22"],
+            "patches": ["P1", "P3"],
+            "overlaps": [["P1", "P3"], ["P3", "P1"]],
+            "expect": {"error": "OverlapError", "reason": "spurious_order"},
+        },
+        {
+            "id": "V5h-duplicate-patch",
+            "rules": ["R14"],
+            "patches": ["P1", "P1"],
+            "overlaps": [],
+            "expect": {"error": "ShapeError", "reason": "duplicate_patch"},
+        },
+        {
             "id": "V6-invert-roundtrip",
             "rules": ["R30"],
             "patches": ["P1", "P3"],

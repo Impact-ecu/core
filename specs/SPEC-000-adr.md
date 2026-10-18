@@ -141,7 +141,7 @@ The boundary is clear: the core is a pure Python library. It does not open files
 
 ### Two stages: `apply` and `release`
 
-Materialization is split into two stages with two hashes, because checksum correction breaks invertibility. `apply(o, P) → UnverifiedImage` is pure and invertible, with no checksum. `release(UnverifiedImage, plugin) → ReleasedImage` applies `checksum_patches` and runs the gate. `UnverifiedImage` does not expose `.bytes` and is not serializable; only `gate.release()` constructs `ReleasedImage`, and import-linter forbids `kernel` and `plugins` from importing `gate`. The compiler prevents the bypass, not a test.
+Materialization is split into two stages with two hashes, because checksum correction breaks invertibility. `apply(o, P) → UnverifiedImage` is pure and invertible, with no checksum. `release(UnverifiedImage, plugin) → ReleasedImage` applies `checksum_patches` and runs the gate. `UnverifiedImage` does not expose `.bytes` and is not serializable; only `gate.release()` constructs `ReleasedImage`, and import-linter forbids `kernel` and `plugins` from importing `gate`. The bypass is prevented by structure, not by a single test: import-linter contracts, export functions that accept only `ReleasedImage`, and the layer-4 architecture test (SPEC-001 R7–R9).
 
 ### Binary kernel invariants
 
@@ -152,7 +152,7 @@ Each invariant is a property test that runs in CI with thousands of generated in
 3.  **Containment.** For every patch `p`, `(p.memory_id, [p.offset, p.offset + p.length))` lies entirely within a `calibration` region of that memory. `offset` is relative to the start of the memory (`base_address` is for display only); `len(before) == len(after) == length > 0`. Any byte outside is rejected before any write.
 4.  **Patch precondition.** `before` of `P[i]` is compared against `apply(o, P[:i])`, never against `o`. A failure is a conflict, never a silent overwrite.
 5.  **Locality.** Bytes outside the union of the ranges of `P` are identical between `o` and `apply(o, P)`, in all memories.
-6.  **Invertibility.** `invert(P)` is `P` in reverse order with `before` and `after` swapped; `apply(apply(o, P), invert(P)) == o` byte for byte. `diff(o, apply(o, P))` returns the canonical set of disjoint patches, ordered by `(memory_id, offset)`, such that `apply(o, diff(...)) == apply(o, P)`.
+6.  **Invertibility.** `invert(P)` is `P` with `before` and `after` swapped and every overlap pair reversed (exact definition: SPEC-001 R30); `apply(apply(o, P), invert(P)) == o` byte for byte. `diff(o, apply(o, P))` returns the canonical set of disjoint patches, ordered by `(memory_id, offset)`, such that `apply(o, diff(...)) == apply(o, P)`.
 7.  **Canonical order.** The kernel normalizes disjoint patches to `(memory_id, offset)` order before hashing, so reordering disjoint patches does not change the hash. Overlapping patches require `Version.overlaps[]` (ordered pairs of `patch_hash`); without it, `apply` rejects.
 8.  **Preserved shape.** The output has the same `dump_kind`, the same memories, and the same `base_address` and sizes as the original. Exporting a partial yields a partial. A patch never resizes.
 9.  **Contained checksum and release locality.** Every patch returned by `checksum_patches` is in a `checksum` region; otherwise the kernel rejects the whole set. `release(u)` differs from `u` only in bytes of `checksum` regions. `calibration` and `checksum` regions are disjoint; a layout that violates this is rejected.

@@ -67,9 +67,13 @@ Application metadata (`version_id`, `project_id`, `parent_version`, `plugin_vers
 
 ## 3. apply
 
-`apply(o: Dump, v: Version, layout: MemoryLayout) -> UnverifiedImage`
+`apply(o: Dump | UnverifiedImage, v: Version, layout: MemoryLayout) -> UnverifiedImage`
 
-- **R20.** `apply` MUST first check `image_hash(o) == v.base_image_hash` and `layout_hash(layout) == v.layout_hash`; mismatch → `ShapeError`, reason `wrong_base` / `wrong_layout`. It then validates every patch (R10–R12, R23), computes the canonical order (R25), and applies patches one by one in that order to a copy of `o`. The input `o` is never mutated.
+`apply`, `invert`, `diff` and `migrate` accept either a `Dump` or an `UnverifiedImage` wherever this spec writes `o` or `x`. They live inside the kernel, so reading an `UnverifiedImage` there does not breach R7. Every "byte for byte" equality in this spec is checked as equality of `image_hash` (R62). Because R62 hashes every memory's bytes, that is equivalent. Property tests live in `tests/`, outside the package and outside the import-linter contracts of R8, and they MAY use `core.kernel._internal.view` to inspect bytes.
+
+- **R14.** `v.patches` MUST NOT contain the same `patch_hash` twice: `ShapeError`, reason `duplicate_patch`.
+
+- **R20.** `apply` MUST first check `image_hash(o) == v.base_image_hash` and `layout_hash(layout) == v.layout_hash`; mismatch → `ShapeError`, reason `wrong_base` / `wrong_layout`. It then validates every patch (R10–R12, R14, R23), computes the canonical order (R25), and applies patches one by one in that order to a copy of `o`. The input `o` is never mutated.
 - **R21. Precondition.** Before writing patch `P[i]`, the bytes at its range in `apply(o, P[:i])` (not in `o`) MUST equal `P[i].before`. Otherwise `PreconditionConflict`, reason `before_mismatch`, carrying `i` and the `patch_hash`. Nothing is ever overwritten silently.
 - **R22. Overlaps.** Two patches overlap if they have the same `memory_id` and their ranges intersect. Every overlapping pair MUST appear exactly once in `v.overlaps`, in either order. Missing pair → `OverlapError`, reason `missing_order`. A pair that does not overlap, references an unknown patch, or appears twice → `OverlapError`, reason `spurious_order`. A cycle → `OverlapError`, reason `cycle`.
 - **R23. Containment.** Every patch range `[offset, offset + length)` MUST lie entirely inside one single `calibration` region of its memory. Crossing into another region, even an adjacent `calibration` one, is rejected before any write: `ContainmentError`, reason `out_of_region`. An unknown `memory_id` → `ContainmentError`, reason `unknown_memory`.
@@ -80,7 +84,7 @@ Application metadata (`version_id`, `project_id`, `parent_version`, `plugin_vers
 
 ## 4. invert and diff
 
-- **R30. invert.** `invert(o, v)` returns a version whose patches are those of `v` with `before` and `after` swapped. Swapping changes each `patch_hash`, so every overlap pair `[a, b]` of `v` becomes `[b', a']`, where `a'` and `b'` are the hashes of the swapped patches. Its `base_image_hash` is `image_hash(apply(o, v))` and its `layout_hash` is unchanged. `apply(apply(o, v), invert(v)) == o` byte for byte.
+- **R30. invert.** `invert(o, v)` returns a version whose patches are those of `v` with `before` and `after` swapped. Swapping changes each `patch_hash`, so every overlap pair `[a, b]` of `v` becomes `[b', a']`, where `a'` and `b'` are the hashes of the swapped patches. Its `base_image_hash` is `image_hash(apply(o, v))` and its `layout_hash` is unchanged. `apply(apply(o, v), invert(o, v)) == o` (compared by `image_hash`, R62).
 - **R31. diff.** `diff(o: Dump, x: Dump, layout) -> DiffResult` requires `o` and `x` to have the same shape (R26 fields; else `ShapeError`, reason `shape_mismatch`). Within `calibration` regions it returns one patch per maximal run of consecutive differing bytes, split at region boundaries, in `(memory_id, offset)` order. These patches are pairwise disjoint and need no overlaps, and `apply(o, diff(o, x).as_version(), layout)` reproduces `x` in every `calibration` byte. For `x = apply(o, v)`, the result reproduces `x` exactly.
 - **R32. Foreign changes.** Differing bytes outside `calibration` regions are never turned into patches. `diff` reports them in `DiffResult.foreign` as maximal runs `{memory_id, offset, length, region_kind, region_name}`, split at region boundaries, sorted by `(memory_id, offset)`. This is what lets an audit show a third-party file that touched a protected or checksum region (vector V8).
 
@@ -137,7 +141,7 @@ These definitions realize SPEC-000 invariant 12. The rest of the provenance reco
 - **JCS:** the third-party `rfc8785` package, pinned in `requirements.txt`. The version actually used is recorded in the file's `generator` block.
 - **SHA-256:** Python `hashlib`.
 - **Expected images:** built by hand with explicit byte edits per case, never by a generic apply.
-- **Cross-check:** `crosscheck.py` recomputes every hashed object with a second, stdlib-only canonicalization and exits non-zero on any disagreement. Both agree at the time of writing (12 objects, 0 disagreements).
+- **Cross-check:** `crosscheck.py` is a second, independent, stdlib-only implementation: its own canonicalization, a naive apply in Kahn min-heap order, a naive diff and migration. It recomputes every expected hash in the file (patches, layouts, original, every case image_hash, version_hash, diff patch_hashes and foreign runs, inverted overlaps, migration result) and exits non-zero on any disagreement.
 
 Every entry carries a `rules` list; the table below matches those lists.
 
@@ -153,7 +157,8 @@ Fixture: a `bench_full` dump with two memories:
 | layouts gap, missing_memory | R4, R5 | `bad_cover`, `shape_mismatch` |
 | V4, V4b | R20, R21, R24, R25, R26, R64 | apply of disjoint patches; order independence of the result and of `version_hash` |
 | V5, V5c | R22, R25, R64 | ordered overlaps, including an order that contradicts offset order |
-| V5b, V5d, V5e | R22 | `missing_order`, `spurious_order`, `cycle` |
+| V5b, V5d, V5e, V5f, V5g | R22 | `missing_order`, `spurious_order` (non-overlapping pair, unknown hash, repeated pair), `cycle` |
+| V5h | R14 | `duplicate_patch` |
 | V6 | R30 | invert with overlaps: inverted base hash, reversed pairs, round-trip |
 | V6b, V6c, V7, V8b | R31 | diff of apply; overlapping edits merge into one run; split at region boundary; `shape_mismatch` |
 | V8 | R32 | foreign changes in protected and checksum regions |
@@ -162,7 +167,7 @@ Fixture: a `bench_full` dump with two memories:
 | V11, V11b | R20 | `wrong_base`, `wrong_layout` |
 | R-* | R10, R12, R21, R23 | `bad_length`, `noop_patch`, `before_mismatch`, `out_of_region`, `unknown_memory` |
 
-Not covered by vectors, so they need dedicated tests: R1–R3, R7–R9 and R13 (structural), R27 (property test over random k), R42 (gate, SPEC-004), R70–R73 (lint, architecture and cross-architecture CI), and `unknown_base_address` (R2).
+Not covered by vectors, so they need dedicated tests: R1–R3, R6, R7–R9, R11 and R13 (structural), R27 (property test over random k), R42 (gate, SPEC-004), R70–R73 (lint, architecture and cross-architecture CI), and `unknown_base_address` (R2).
 
 Implementations MUST pass every vector. Vectors are test data, not golden files: they do not need an `oracle:` record, because no hash is a checksum result.
 
