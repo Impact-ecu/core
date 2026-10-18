@@ -1,0 +1,14 @@
+{
+  "enabledPlugins": {
+    "impact-common@impact": true,
+    "impact-core@impact": true
+  },
+  "extraKnownMarketplaces": {
+    "impact": {
+      "source": {
+        "source": "github",
+        "repo": "Impact-ecu/skills"
+      }
+    }
+  }
+}

@@ -26,6 +26,15 @@ Trigger: **"Retome Impact ECU"** means resume this project from this file and `s
 - Foundation paths (`src/core/kernel`, `gate`, `provenance`, `plugins/_contract.py`, `conformance`, `specs/`, `guardrails/`, `.github/`) change only with the `foundation-change` label, a spec or ADR in the same PR, and the PR open ≥ 24 h since its last commit.
 - Layout: `src/core/{kernel,plugins,gate,provenance,definitions,conformance}`, `tests/{properties,golden,fuzz}`, `specs/`, `guardrails/`, `.github/workflows/`.
 
+## Claude Code setup (once per machine)
+Skills, the `integrity-guardian` agent and guard hooks come from the private marketplace `Impact-ecu/skills`, declared in `.claude/settings.json`. Headless runs (`claude -p`) ignore project-declared marketplaces, so install once, from this directory:
+```sh
+claude plugin marketplace add Impact-ecu/skills --scope project
+claude plugin install impact-common@impact --scope project
+claude plugin install impact-core@impact --scope project
+```
+The machine needs git access to `Impact-ecu/skills` as an org member. If the default GitHub identity is another account, route the org through the right SSH host: `git config --global url."git@<host-alias>:Impact-ecu/".insteadOf "https://github.com/Impact-ecu/"` (and the same for `git@github.com:Impact-ecu/`).
+
 ## Status and next steps
 - Phase −1 (discovery), before any core code: follow one full job at the partner shop (tool, exported format, whether they edit or buy files); close the oracle agreement; map what the community knows about MED17 checksums per variant. Exit criteria in SPEC-000.
 - Then: SPEC-001 (kernel), kernel with the 12 invariants, local CLI, MED17 plugin per variant, gate, audit at the partner shop.
