@@ -1,6 +1,6 @@
 # SPEC-000 · Impact ADR (ECU verification and recalibration platform)
 
-Canonical source for this round: the ADR HTML artifact in Claude, version 12 (2026-10-18). This markdown is the version-controlled copy in the repository; the diagrams exist only in the artifact.
+Canonical source: this markdown file in the repository. It started as version 12 of the ADR HTML artifact in Claude (2026-10-18), which now holds only the diagrams; every later change is made here through a `foundation-change` PR.
 
 Product name: **Impact**. GitHub organization: `Impact-ecu`. This repository is the public `core` (AGPL-3.0); corpus and family plugins live in private repositories of the organization.
 
@@ -539,7 +539,7 @@ Each family implements the same interface in Python; the core loads plugins by e
         version: str                     # semver, recorded in each job
 
         # Dump = {dump_kind: bench_full | boot_full | obd_full | obd_partial | virtual,
-        #         memories: dict[memory_id, bytes]}   # PFlash, DFlash, external EEPROM...
+        #         memories: list[{memory_id, base_address | None, data}]}   # PFlash, DFlash, external EEPROM... (SPEC-001 §2.1)
         def identify(self, dump: Dump) -> Identification | None: ...
         # Identification = {hw_id, sw_id, mcu, checksum_variant_id, memories_present, base_address?}
         def layout(self, ident: Identification, dump_kind: DumpKind) -> MemoryLayout: ...

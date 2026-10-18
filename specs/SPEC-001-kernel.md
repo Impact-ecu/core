@@ -21,11 +21,11 @@ All byte strings are immutable (`bytes`). All integers are non-negative and ≤ 
 ```
 DumpKind  = "bench_full" | "boot_full" | "obd_full" | "obd_partial" | "virtual"
 MemoryId  = string matching ^[a-z][a-z0-9_]{0,31}$          e.g. "pflash", "dflash", "eeprom"
-Memory    = { memory_id: MemoryId, base_address: int, data: bytes }
+Memory    = { memory_id: MemoryId, base_address: int | null, data: bytes }
 Dump      = { dump_kind: DumpKind, memories: list[Memory] }
 ```
 - **R1.** A `Dump` MUST have at least one memory; `memory_id`s MUST be unique; every `data` MUST be non-empty.
-- **R2.** `base_address` is metadata for display and hashing only. All offsets in this spec are relative to the start of `data`.
+- **R2.** `base_address` is metadata for display and hashing only. All offsets in this spec are relative to the start of `data`. It MAY be `null` when it is not yet known (an `obd_partial` read before `identify`, SPEC-000 §Plugin SDK). Such a dump can be hashed (`null` is hashed as JSON `null`) and passed to `identify`, but `apply`, `diff` and `migrate` reject it (`ShapeError`, reason `unknown_base_address`). Once `identify` provides the address, the ingestion builds a new `Dump` with it, which has a different `image_hash`. The file's own `sha256` as received is unchanged and stays the artifact's identity.
 - **R3.** `DumpKind` values are the ones above. They supersede the `full | partial | maps_only` values in SPEC-000 §Data model (Artifact), which this PR aligns.
 
 ### 2.2 Regions and MemoryLayout
@@ -61,9 +61,9 @@ Version = {
 Application metadata (`version_id`, `project_id`, `parent_version`, `plugin_versions`, label, note) is outside the kernel.
 
 ### 2.5 Images
-- `UnverifiedImage`: result of `apply`. Carries `dump_kind`, memory ids, base addresses, sizes and `image_hash`. It MUST NOT expose its bytes through any public attribute or method and MUST NOT be serializable (pickle, JSON, `bytes()` conversion all fail).
-- **R7.** A read-only `Dump` view of an `UnverifiedImage` is available only through `core.kernel.internal.view(u)`, and an import-linter contract allows only `core.gate` to import `core.kernel.internal`.
-- `ReleasedImage` is constructed only by `core.gate` (SPEC-004). The kernel provides the checksum step it uses (§5).
+- **R7.** `UnverifiedImage` is the result of `apply`. It carries `dump_kind`, memory ids, base addresses, sizes and `image_hash`. It MUST NOT expose its bytes through any public attribute or method, and it MUST NOT be serializable: pickle, JSON encoding, `bytes()`, `memoryview()` and buffer-protocol access all fail.
+- **R8.** The only read-only `Dump` view of an `UnverifiedImage` is `core.kernel._internal.view(u)`. In `core`, an import-linter contract allows only `core.gate` to import `core.kernel._internal`. Every consumer repository (CLI, workers, API, plugins) MUST carry an import-linter contract that forbids importing `core.kernel._internal` (skill `bootstrap-repo`). Python cannot make this a hard barrier: a determined caller can always reach private modules. The real guarantee is twofold. Every function that writes an output binary in any consumer accepts only `ReleasedImage`, which has the only public `to_dump()`. And the architecture test walks every export path (SPEC-000 §Four layers, layer 4). This limitation is accepted and recorded here.
+- **R9.** `core.kernel` and `core.plugins` MUST NOT import `core.gate`, so no code below the gate can construct a `ReleasedImage`. `ReleasedImage` is constructed only by `core.gate` (SPEC-004), using the checksum step in §5.
 
 ## 3. apply
 
@@ -74,13 +74,13 @@ Application metadata (`version_id`, `project_id`, `parent_version`, `plugin_vers
 - **R22. Overlaps.** Two patches overlap if they have the same `memory_id` and their ranges intersect. Every overlapping pair MUST appear exactly once in `v.overlaps`, in either order. Missing pair → `OverlapError`, reason `missing_order`. A pair that does not overlap, references an unknown patch, or appears twice → `OverlapError`, reason `spurious_order`. A cycle → `OverlapError`, reason `cycle`.
 - **R23. Containment.** Every patch range `[offset, offset + length)` MUST lie entirely inside one single `calibration` region of its memory. Crossing into another region, even an adjacent `calibration` one, is rejected before any write: `ContainmentError`, reason `out_of_region`. An unknown `memory_id` → `ContainmentError`, reason `unknown_memory`.
 - **R24. Locality.** Bytes outside the union of patch ranges are identical between `o` and the result, in every memory.
-- **R25. Canonical order.** The application order is the topological order of the `overlaps` constraints, ties broken by `(memory_id, offset, patch_hash)` ascending. For a set with no overlaps this is plain `(memory_id, offset)` order. Input order never matters: permuting `v.patches` changes neither the result nor `version_hash` (vectors V4, V4b).
+- **R25. Canonical order.** The application order is the lexicographically smallest topological order of the `overlaps` constraints under the key `(memory_id, offset, patch_hash)`. That is Kahn's algorithm with a min-heap on that key: start with every patch that has no predecessor; repeatedly pop the smallest key, emit it, and push each successor whose predecessors have all been emitted. With no overlaps this is plain `(memory_id, offset)` order. An overlap pair MAY put a later offset first (vector V5c). Input order never matters: permuting `v.patches` changes neither the result nor `version_hash` (vectors V4, V4b).
 - **R26. Preserved shape.** The result has the same `dump_kind`, the same memories, and the same `base_address` and size per memory as `o`. Applying to a partial dump yields a partial image.
-- **R27. Composition.** For the canonical order `P` and every `k`, `apply(o, P) == apply(apply(o, P[:k]), P[k:])` byte for byte, where the second application uses the remaining patches and the overlap pairs among them. Reapplying an already applied patch fails R21.
+- **R27. Composition.** For the canonical order `P` and every `k`, `apply(o, P) == apply(apply(o, P[:k]), P[k:])` byte for byte. The second application uses a version whose `base_image_hash` is `image_hash(apply(o, P[:k]))`, whose `layout_hash` is unchanged, and whose overlap pairs are those of `v` between remaining patches. Pairs between an applied and a remaining patch are already satisfied by the order. Reapplying an already applied patch fails R21.
 
 ## 4. invert and diff
 
-- **R30. invert.** `invert(v)` returns a version whose patches are those of `v` with `before` and `after` swapped. Swapping changes each `patch_hash`, so every overlap pair `[a, b]` of `v` becomes `[b', a']`, where `a'` and `b'` are the hashes of the swapped patches. Its `base_image_hash` is `image_hash(apply(o, v))` and its `layout_hash` is unchanged. `apply(apply(o, v), invert(v)) == o` byte for byte.
+- **R30. invert.** `invert(o, v)` returns a version whose patches are those of `v` with `before` and `after` swapped. Swapping changes each `patch_hash`, so every overlap pair `[a, b]` of `v` becomes `[b', a']`, where `a'` and `b'` are the hashes of the swapped patches. Its `base_image_hash` is `image_hash(apply(o, v))` and its `layout_hash` is unchanged. `apply(apply(o, v), invert(v)) == o` byte for byte.
 - **R31. diff.** `diff(o: Dump, x: Dump, layout) -> DiffResult` requires `o` and `x` to have the same shape (R26 fields; else `ShapeError`, reason `shape_mismatch`). Within `calibration` regions it returns one patch per maximal run of consecutive differing bytes, split at region boundaries, in `(memory_id, offset)` order. These patches are pairwise disjoint and need no overlaps, and `apply(o, diff(o, x).as_version(), layout)` reproduces `x` in every `calibration` byte. For `x = apply(o, v)`, the result reproduces `x` exactly.
 - **R32. Foreign changes.** Differing bytes outside `calibration` regions are never turned into patches. `diff` reports them in `DiffResult.foreign` as maximal runs `{memory_id, offset, length, region_kind, region_name}`, split at region boundaries, sorted by `(memory_id, offset)`. This is what lets an audit show a third-party file that touched a protected or checksum region (vector V8).
 
@@ -133,21 +133,36 @@ These definitions realize SPEC-000 invariant 12. The rest of the provenance reco
 
 ## 9. Test vectors
 
-`specs/vectors/spec-001/vectors.json` was produced by `specs/vectors/spec-001/generate.py`. That script does not use the core: JCS comes from the third-party `rfc8785` package (0.1.4), SHA-256 from Python `hashlib`, and each expected image is built by hand with explicit byte edits per case, never by a generic apply. The hashes were cross-checked with a second stdlib-only canonicalization, and both agree.
+`specs/vectors/spec-001/vectors.json` is produced by `generate.py` in the same directory. Neither script uses the core.
+- **JCS:** the third-party `rfc8785` package, pinned in `requirements.txt`. The version actually used is recorded in the file's `generator` block.
+- **SHA-256:** Python `hashlib`.
+- **Expected images:** built by hand with explicit byte edits per case, never by a generic apply.
+- **Cross-check:** `crosscheck.py` recomputes every hashed object with a second, stdlib-only canonicalization and exits non-zero on any disagreement. Both agree at the time of writing (12 objects, 0 disagreements).
 
-Fixture: a `bench_full` dump with `pflash` (base `0x80000000`, 64 bytes `00..3f`) and `dflash` (base `0xAF000000`, 16 bytes `ff`). Its layout: `boot` protected, `maps_a`/`maps_b` adjacent calibration regions, an unnamed protected region, a `block_crc` checksum region, and `vin_immo` protected.
+Every entry carries a `rules` list; the table below matches those lists.
 
-| Vector | Checks |
-|---|---|
-| P1, P2, P3, Q1 `patch_hash` | R60, R61 |
-| original `image_hash`, layout `layout_hash` | R62, R63 |
-| V4, V4b | apply of disjoint patches; order independence of result and `version_hash` (R20, R24–R26, R64) |
-| V5, V5b | ordered overlap; rejection without order (R22, R25) |
-| V6, V6b, V6c | invert round-trip; diff of apply; diff merges overlapping edits into one run (R30, R31) |
-| V7 | diff splits at a calibration/calibration boundary (R31) |
-| V8 | diff reports changes in protected and checksum regions as foreign (R32) |
-| V9 | checksum patch inside the checksum region (R40, R41) |
-| R-* | containment, precondition, no-op and checksum-containment rejections with their `reason` (R12, R21, R23, R40) |
+Fixture: a `bench_full` dump with two memories:
+- `pflash`: base `0x80000000`, 64 bytes `00..3f`. Base layout: `boot` protected, then the adjacent calibration regions `maps_a` and `maps_b`, an unnamed protected region, and the `block_crc` checksum region. A `migrated` layout shrinks `maps_a` and adds a protected `reserved` region.
+- `dflash`: base `0xAF000000`, 16 bytes `ff`, one protected region `vin_immo`.
+
+| Vector | Rules | Checks |
+|---|---|---|
+| patches P1–P5, Q1, CA–CC | R60, R61 | `patch_hash` |
+| original | R60, R62 | `image_hash` |
+| layouts base, migrated | R60, R63 | `layout_hash` |
+| layouts gap, missing_memory | R4, R5 | `bad_cover`, `shape_mismatch` |
+| V4, V4b | R20, R21, R24, R25, R26, R64 | apply of disjoint patches; order independence of the result and of `version_hash` |
+| V5, V5c | R22, R25, R64 | ordered overlaps, including an order that contradicts offset order |
+| V5b, V5d, V5e | R22 | `missing_order`, `spurious_order`, `cycle` |
+| V6 | R30 | invert with overlaps: inverted base hash, reversed pairs, round-trip |
+| V6b, V6c, V7, V8b | R31 | diff of apply; overlapping edits merge into one run; split at region boundary; `shape_mismatch` |
+| V8 | R32 | foreign changes in protected and checksum regions |
+| V9, V9b | R40, R41 | checksum patch inside the checksum region; `checksum_out_of_region` |
+| V10 | R50, R64 | migration keeps P1, reports P2 as `out_of_region` |
+| V11, V11b | R20 | `wrong_base`, `wrong_layout` |
+| R-* | R10, R12, R21, R23 | `bad_length`, `noop_patch`, `before_mismatch`, `out_of_region`, `unknown_memory` |
+
+Not covered by vectors, so they need dedicated tests: R1–R3, R7–R9 and R13 (structural), R27 (property test over random k), R42 (gate, SPEC-004), R70–R73 (lint, architecture and cross-architecture CI), and `unknown_base_address` (R2).
 
 Implementations MUST pass every vector. Vectors are test data, not golden files: they do not need an `oracle:` record, because no hash is a checksum result.
 
