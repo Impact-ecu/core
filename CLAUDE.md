@@ -1,31 +1,32 @@
-# Impact · contexto para o Claude (chat e terminal)
+# Impact · context for Claude (chat and terminal)
 
-Gatilho: **"Retome Impact ECU"** significa retomar este projeto a partir deste arquivo e de `specs/SPEC-000-adr.md`.
+Trigger: **"Retome Impact ECU"** means resume this project from this file and `specs/SPEC-000-adr.md`.
 
-## O que é
-- Impact é uma plataforma de verificação e recalibração de ECU/TCU automotiva (concorrente de StageX, WinOLS, ECM Titanium), do Luiz (platform engineer, GitHub pessoal `eusouluizlacerda`).
-- Organização GitHub `Impact-ecu`. Este repositório é o `core` público (AGPL-3.0). Corpus de dumps e plugins de família ficam em repositórios privados da organização.
-- O ADR completo (arquitetura, revisões adversariais, comparativo com líderes) está em `specs/SPEC-000-adr.md`. Os diagramas estão só no artefato HTML original no Claude.
-- Há uma oficina parceira, que usa Flex + StageX.
+## What it is
+- Impact is an automotive ECU/TCU verification and recalibration platform (competing with StageX, WinOLS, ECM Titanium), owned by Luiz (platform engineer, personal GitHub `eusouluizlacerda`).
+- GitHub organization `Impact-ecu`. This repository is the public `core` (AGPL-3.0). The dump corpus and family plugins live in private repositories in the organization.
+- The full ADR (architecture, adversarial reviews, comparison with market leaders) is in `specs/SPEC-000-adr.md`. The diagrams exist only in the original HTML artifact in Claude.
+- There is a partner tuning shop, which uses Flex + StageX.
 
-## Decisões fixadas (2026-10-18), não reabrir sem o Luiz
-- Confiabilidade é o produto. O núcleo crítico vem primeiro e muito bem feito: kernel de binário (`apply`/`release`, patches imutáveis por hash, diff, 12 invariantes com teste de propriedade), contrato de plugin por família de ECU com suíte de conformidade, gate de verificação (veredito `bloqueia | alerta | sem achados`, fail-closed) e proveniência reprodutível (JCS, cadeia de hashes). Nada de vender antes disso.
-- Custo zero no MVP: tudo grátis ou open source, em regime de teste. Qualquer coisa paga é Fase 1 ou posterior.
-- Só software: sem hardware ou bancada próprios. O oráculo de checksum é delegado à oficina (ela grava, devolve hash e log de diagnóstico → `golden_field`); `golden_concordant` (duas ferramentas gratuitas concordando) serve para desenvolver, não para lançar plugin.
-- Princípios: agnosticidade (fabricante, ferramenta de leitura, formato de definição, nuvem, cliente), imutabilidade do original, determinismo, verificação antes de confiança, o usuário ensina o sistema. ML só em fase posterior, com gate de precisão. Nenhuma função de delete de emissão, nunca; regiões correspondentes são `protected` e o plugin nunca desliga TPROT nem patcha rotina de verificação.
-- Primeiro produto: auditoria e verificação de arquivos de terceiros (verify independente com `bypassed`/`signature_unverifiable`/`not_applicable`, diff por mapa, relatório de proveniência em PDF+JSON). Recálculo de checksum é add-on.
-- Primeira família: Bosch MED17, por variante de checksum (hardware + método), não por família.
-- Negócio e jurídico (contrato com oficina, termo ao dono do carro, seguro) entram só na Fase 1, quando o primeiro arquivo for para carro de terceiro.
+## Settled decisions (2026-10-18), do not reopen without Luiz
+- Reliability is the product. The critical core comes first and is built very well: binary kernel (`apply`/`release`, patches immutable by hash, diff, 12 invariants with property tests), per-ECU-family plugin contract with a conformance suite, verification gate (verdict `block | warn | no findings`, fail-closed) and reproducible provenance (JCS, hash chain). Nothing is sold before that.
+- Zero cost in the MVP: everything free or open source, in test mode. Anything paid is Phase 1 or later.
+- Software only: no hardware or bench of our own. The checksum oracle is delegated to the shop (it flashes, returns the hash and diagnostic log → `golden_field`); `golden_concordant` (two free tools agreeing) is for development, not for releasing a plugin.
+- Principles: agnosticism (manufacturer, read tool, definition format, cloud, client), immutability of the original, determinism, verification before trust, the user teaches the system. ML only in a later phase, behind a precision gate. No emissions delete function, ever; the corresponding regions are `protected` and a plugin never disables TPROT or patches a verification routine.
+- First product: audit and verification of third-party files (independent verify with `bypassed`/`signature_unverifiable`/`not_applicable`, per-map diff, provenance report as PDF+JSON). Checksum recalculation is an add-on.
+- First family: Bosch MED17, per checksum variant (hardware + method), not per family.
+- Business and legal (shop contract, car-owner consent form, insurance) only enter in Phase 1, when the first file goes to a third party's car.
 
-## Regras de engenharia do núcleo (resumo; detalhes na SPEC-000)
-- `src/core/` é Python puro: sem I/O, rede, subprocess, framework. import-linter garante.
-- Entrada é `Dump{dump_kind, memories}` (multi-memória), nunca um blob. `Patch` carrega `memory_id`.
-- Nenhum byte de dump neste repositório público: `tests/golden/` só tem hashes + `oracle:`.
-- Cobertura 100% com branch, mypy `--strict`, Hypothesis ≥ 2.000 exemplos por invariante, fuzz nos parsers, mutation score ≥ 90% medido no nightly, ratchets em `guardrails/ratchet.json` só sobem.
-- Caminhos de fundação (`src/core/kernel`, `gate`, `provenance`, `plugins/_contract.py`, `conformance`, `specs/`, `guardrails/`, `.github/`) só mudam com label `foundation-change`, spec ou ADR no mesmo PR, PR aberto ≥ 24 h desde o último commit.
-- Estrutura: `src/core/{kernel,plugins,gate,provenance,definitions,conformance}`, `tests/{properties,golden,fuzz}`, `specs/`, `guardrails/`, `.github/workflows/`.
+## Core engineering rules (summary; details in SPEC-000)
+- Repository language is English: code, docs, specs, commit messages.
+- `src/core/` is pure Python: no I/O, network, subprocess or framework. Enforced by import-linter.
+- Input is `Dump{dump_kind, memories}` (multi-memory), never a blob. `Patch` carries `memory_id`.
+- No dump bytes in this public repository: `tests/golden/` holds only hashes + `oracle:`.
+- 100% coverage including branches, mypy `--strict`, Hypothesis ≥ 2,000 examples per invariant, fuzzing on parsers, mutation score ≥ 90% measured nightly, ratchets in `guardrails/ratchet.json` only go up.
+- Foundation paths (`src/core/kernel`, `gate`, `provenance`, `plugins/_contract.py`, `conformance`, `specs/`, `guardrails/`, `.github/`) change only with the `foundation-change` label, a spec or ADR in the same PR, and the PR open ≥ 24 h since its last commit.
+- Layout: `src/core/{kernel,plugins,gate,provenance,definitions,conformance}`, `tests/{properties,golden,fuzz}`, `specs/`, `guardrails/`, `.github/workflows/`.
 
-## Estado e próximos passos
-- Fase −1 (descoberta), antes de código do núcleo: acompanhar um serviço inteiro na oficina parceira (ferramenta, formato exportado, se edita ou compra arquivo); fechar o acordo de oráculo; mapear o que a comunidade sabe sobre checksum da MED17 por variante. Critério de saída na SPEC-000.
-- Depois: SPEC-001 (kernel), kernel com os 12 invariantes, CLI local, plugin MED17 por variante, gate, auditoria na parceira.
-- Pendência de infra: o GitHub App do Claude precisa ser instalado na organização `Impact-ecu` para o Claude do chat conseguir push (hoje só na conta pessoal).
+## Status and next steps
+- Phase −1 (discovery), before any core code: follow one full job at the partner shop (tool, exported format, whether they edit or buy files); close the oracle agreement; map what the community knows about MED17 checksums per variant. Exit criteria in SPEC-000.
+- Then: SPEC-001 (kernel), kernel with the 12 invariants, local CLI, MED17 plugin per variant, gate, audit at the partner shop.
+- Infra pending: the Claude GitHub App must be installed on the `Impact-ecu` organization for chat Claude to push (today it is only on the personal account).

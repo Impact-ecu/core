@@ -1,9 +1,9 @@
 # Impact · core
 
-Núcleo confiável da plataforma Impact de verificação e recalibração de ECU: kernel de binário (`apply`/`release`, patches imutáveis, diff), contrato de plugin por família de ECU, gate de verificação e proveniência. Biblioteca Python pura, sem I/O, sem rede, sem framework.
+Trusted core of the Impact ECU verification and recalibration platform: binary kernel (`apply`/`release`, immutable patches, diff), per-ECU-family plugin contract, verification gate and provenance. Pure Python library: no I/O, no network, no framework.
 
-- Arquitetura e decisões: [`specs/SPEC-000-adr.md`](specs/SPEC-000-adr.md)
-- Licença: AGPL-3.0
-- Estado: Fase −1 (descoberta). Nenhum código do núcleo ainda; primeiro a SPEC-001 (kernel), depois o kernel com os 12 invariantes.
+- Architecture and decisions: [`specs/SPEC-000-adr.md`](specs/SPEC-000-adr.md)
+- License: AGPL-3.0
+- Status: Phase −1 (discovery). No core code yet; SPEC-001 (kernel) comes first, then the kernel with its 12 invariants.
 
-Para retomar o trabalho com o Claude: "Retome Impact ECU" e aponte para este repositório.
+To resume work with Claude: say "Retome Impact ECU" and point it at this repository.
