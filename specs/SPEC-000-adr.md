@@ -485,7 +485,7 @@ The model separates what is immutable fact (binaries, patches, events) from accu
 | Tenant | `tenant_id` | name, plan, kms_key_id, parent_tenant (sub-dealer) | Billing |
 | User | `user_id` | tenant_id, role (owner, tuner, viewer), OIDC subject | Gateway |
 | Project | `project_id` | tenant_id, vehicle (VIN optional), ecu_family, software_version, status | Projects |
-| Artifact | `artifact_id` | project_id, sha256, size, **origin** (obd_read, bench_read, boot_read, virtual_read, file_service), **dump_kind** (full, partial, maps_only), **memories\[\]** (memory_id, base_address, size), original or derived, parent_artifact, retention_lock | Projects |
+| Artifact | `artifact_id` | project_id, sha256, size, **origin** (obd_read, bench_read, boot_read, virtual_read, file_service), **dump_kind** (bench_full, boot_full, obd_full, obd_partial, virtual; SPEC-001 R3), **memories\[\]** (memory_id, base_address, size), original or derived, parent_artifact, retention_lock | Projects |
 | Patch | `patch_hash` | Immutable, addressed by content hash: **memory_id**, offset, length, before_bytes, after_bytes. Metadata outside the hash: created_in_version (tracing), map_id, author, ts | Projects |
 | Version | `version_id` | project_id, parent_version, **complete** and canonical list of patch_hash (materializing never walks parent_version), overlaps\[\], plugin_versions, layout_hash, label | Projects |
 | EcuFamily | `family_id` | manufacturer, name (MED17.5.21, EDC17C46), plugin_id, layout_schema | Definitions |
