@@ -1,7 +1,8 @@
 # SPEC-001 · Binary kernel
 
-Status: accepted
+Status: accepted (revision 1); revision 2 proposed
 Date: 2026-10-18
+Revision: 2 (2026-10-18), proposed in the `foundation-change` PR that adds SPEC-002 to SPEC-005: R2 allows address translation outside the kernel; R42 defines a green `verify` (including `signature_unverifiable`, pending author decision, SPEC-004 open question 1) and references the released image by `image_hash`. Breaking under §10.
 Governs: `src/core/kernel/`, the kernel side of `release`, and the hash definitions used by provenance.
 Derives from: SPEC-000 §Two stages, §Binary kernel invariants, §Data model, §Plugin SDK per ECU family.
 
@@ -25,7 +26,7 @@ Memory    = { memory_id: MemoryId, base_address: int | null, data: bytes }
 Dump      = { dump_kind: DumpKind, memories: list[Memory] }
 ```
 - **R1.** A `Dump` MUST have at least one memory; `memory_id`s MUST be unique; every `data` MUST be non-empty.
-- **R2.** `base_address` is metadata for display and hashing only. All offsets in this spec are relative to the start of `data`. It MAY be `null` when it is not yet known (an `obd_partial` read before `identify`, SPEC-000 §Plugin SDK). Such a dump can be hashed (`null` is hashed as JSON `null`) and passed to `identify`, but `apply`, `diff` and `migrate` reject it (`ShapeError`, reason `unknown_base_address`). Once `identify` provides the address, the ingestion builds a new `Dump` with it, which has a different `image_hash`. The file's own `sha256` as received is unchanged and stays the artifact's identity.
+- **R2.** `base_address` is metadata for display, hashing and address translation outside the kernel (SPEC-002 R65, SPEC-003 R22, R97); no kernel operation uses it. All offsets in this spec are relative to the start of `data`. It MAY be `null` when it is not yet known (an `obd_partial` read before `identify`, SPEC-000 §Plugin SDK). Such a dump can be hashed (`null` is hashed as JSON `null`) and passed to `identify`, but `apply`, `diff` and `migrate` reject it (`ShapeError`, reason `unknown_base_address`). Once `identify` provides the address, the ingestion builds a new `Dump` with it, which has a different `image_hash`. The file's own `sha256` as received is unchanged and stays the artifact's identity.
 - **R3.** `DumpKind` values are the ones above. They supersede the `full | partial | maps_only` values in SPEC-000 §Data model (Artifact), which this PR aligns.
 
 ### 2.2 Regions and MemoryLayout
@@ -94,7 +95,7 @@ Application metadata (`version_id`, `project_id`, `parent_version`, `plugin_vers
 
 - **R40.** Every patch in `q` MUST lie inside one single `checksum` region. If any one does not, the whole set is rejected: `ContainmentError`, reason `checksum_out_of_region`. Patches in `q` follow R10–R13, R21 and R22, with an empty overlap list (checksum patches MUST be disjoint).
 - **R41.** The result differs from `u` only in bytes of `checksum` regions.
-- **R42.** `release` returns a `ReleasedImage` only with a green `verify` and a gate verdict of `no findings` or `warn`; `block` raises; the verdict is immutable; an export with `warn` requires an `Event{alert_ack}` that references `sha256` of the released image. The gate owns this behavior (SPEC-004); the kernel owns R40–R41.
+- **R42.** `release` returns a `ReleasedImage` only with a green `verify` (status `ok`, or `signature_unverifiable` with no region `fail` or `bypassed`, which yields `warn`; SPEC-004 R26; pending author decision, SPEC-004 open question 1) and a gate verdict of `no findings` or `warn`; `block` raises; the verdict is immutable; an export with `warn` requires an `Event{alert_ack}` that references the `image_hash` (R62) of the released image (SPEC-005 R36). The gate owns this behavior (SPEC-004); the kernel owns R40–R41.
 
 ## 6. Migration
 

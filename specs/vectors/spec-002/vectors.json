@@ -1,0 +1,4205 @@
+{
+ "spec": "SPEC-002",
+ "generator": {
+  "jcs": "rfc8785 0.1.4",
+  "sha256": "python hashlib",
+  "crc": "python zlib.crc32 (poly 0x04C11DB7) and a table-driven reflected engine checked against it",
+  "python": "3.12.3"
+ },
+ "algorithms": [
+  {
+   "id": "crc32_iso_hdlc",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "crc32",
+    "poly": 79764919,
+    "init": 4294967295,
+    "xor_out": 4294967295,
+    "reflect_in": true,
+    "reflect_out": true
+   },
+   "message_hex": "313233343536373839",
+   "expected": 3421780262,
+   "catalogue_check": 3421780262
+  },
+  {
+   "id": "crc32_bzip2",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "crc32",
+    "poly": 79764919,
+    "init": 4294967295,
+    "xor_out": 4294967295,
+    "reflect_in": false,
+    "reflect_out": false
+   },
+   "message_hex": "313233343536373839",
+   "expected": 4236843288,
+   "catalogue_check": 4236843288
+  },
+  {
+   "id": "crc32_mpeg2",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "crc32",
+    "poly": 79764919,
+    "init": 4294967295,
+    "xor_out": 0,
+    "reflect_in": false,
+    "reflect_out": false
+   },
+   "message_hex": "313233343536373839",
+   "expected": 58124007,
+   "catalogue_check": 58124007
+  },
+  {
+   "id": "crc32_cksum",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "crc32",
+    "poly": 79764919,
+    "init": 0,
+    "xor_out": 4294967295,
+    "reflect_in": false,
+    "reflect_out": false
+   },
+   "message_hex": "313233343536373839",
+   "expected": 1985902208,
+   "catalogue_check": 1985902208
+  },
+  {
+   "id": "crc32_iscsi",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "crc32",
+    "poly": 517762881,
+    "init": 4294967295,
+    "xor_out": 4294967295,
+    "reflect_in": true,
+    "reflect_out": true
+   },
+   "message_hex": "313233343536373839",
+   "expected": 3808858755,
+   "catalogue_check": 3808858755
+  },
+  {
+   "id": "crc32_custom_init_reflected",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "crc32",
+    "poly": 79764919,
+    "init": 305419896,
+    "xor_out": 0,
+    "reflect_in": true,
+    "reflect_out": true
+   },
+   "message_hex": "079e35cc63fa9128bf56ed841bb249e0770ea53cd36a01982fc65df48b22b950e77e15ac43da71089f36cd64fb9229c057ee851cb34ae1780fa63dd46b029930",
+   "expected": 3705451427
+  },
+  {
+   "id": "crc32_custom_init_mixed",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "crc32",
+    "poly": 79764919,
+    "init": 2309737967,
+    "xor_out": 252645135,
+    "reflect_in": true,
+    "reflect_out": false
+   },
+   "message_hex": "079e35cc63fa9128bf56ed841bb249e0770ea53cd36a01982fc65df48b22b950e77e15ac43da71089f36cd64fb9229c057ee851cb34ae1780fa63dd46b029930",
+   "expected": 2066976100
+  },
+  {
+   "id": "crc32_iscsi_unreflected_custom",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "crc32",
+    "poly": 517762881,
+    "init": 3735928559,
+    "xor_out": 1,
+    "reflect_in": false,
+    "reflect_out": true
+   },
+   "message_hex": "079e35cc63fa9128bf56ed841bb249e0770ea53cd36a01982fc65df48b22b950e77e15ac43da71089f36cd64fb9229c057ee851cb34ae1780fa63dd46b029930",
+   "expected": 3940839382
+  },
+  {
+   "id": "sum16_w1",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "sum16",
+    "word_size": 1,
+    "endianness": "big",
+    "init": 0,
+    "xor_out": 0
+   },
+   "message_hex": "079e35cc63fa9128bf56ed841bb249e0770ea53cd36a01982fc65df48b22b950e77e15ac43da71089f36cd64fb9229c057ee851cb34ae1780fa63dd46b029930",
+   "expected": 7904
+  },
+  {
+   "id": "sum16_w2_be",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "sum16",
+    "word_size": 2,
+    "endianness": "big",
+    "init": 255,
+    "xor_out": 65535
+   },
+   "message_hex": "079e35cc63fa9128bf56ed841bb249e0770ea53cd36a01982fc65df48b22b950e77e15ac43da71089f36cd64fb9229c057ee851cb34ae1780fa63dd46b029930",
+   "expected": 61216
+  },
+  {
+   "id": "sum16_w2_le",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "sum16",
+    "word_size": 2,
+    "endianness": "little",
+    "init": 0,
+    "xor_out": 0
+   },
+   "message_hex": "079e35cc63fa9128bf56ed841bb249e0770ea53cd36a01982fc65df48b22b950e77e15ac43da71089f36cd64fb9229c057ee851cb34ae1780fa63dd46b029930",
+   "expected": 61184
+  },
+  {
+   "id": "sum32_w1",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "sum32",
+    "word_size": 1,
+    "endianness": "little",
+    "init": 0,
+    "xor_out": 0
+   },
+   "message_hex": "079e35cc63fa9128bf56ed841bb249e0770ea53cd36a01982fc65df48b22b950e77e15ac43da71089f36cd64fb9229c057ee851cb34ae1780fa63dd46b029930",
+   "expected": 7904
+  },
+  {
+   "id": "sum32_w2_le",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "sum32",
+    "word_size": 2,
+    "endianness": "little",
+    "init": 268435456,
+    "xor_out": 0
+   },
+   "message_hex": "079e35cc63fa9128bf56ed841bb249e0770ea53cd36a01982fc65df48b22b950e77e15ac43da71089f36cd64fb9229c057ee851cb34ae1780fa63dd46b029930",
+   "expected": 269479680
+  },
+  {
+   "id": "sum32_w4_be",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "sum32",
+    "word_size": 4,
+    "endianness": "big",
+    "init": 0,
+    "xor_out": 4294967295
+   },
+   "message_hex": "079e35cc63fa9128bf56ed841bb249e0770ea53cd36a01982fc65df48b22b950e77e15ac43da71089f36cd64fb9229c057ee851cb34ae1780fa63dd46b029930",
+   "expected": 1744341023
+  },
+  {
+   "id": "sum32_w4_le",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "sum32",
+    "word_size": 4,
+    "endianness": "little",
+    "init": 3405691582,
+    "xor_out": 16909060
+   },
+   "message_hex": "079e35cc63fa9128bf56ed841bb249e0770ea53cd36a01982fc65df48b22b950e77e15ac43da71089f36cd64fb9229c057ee851cb34ae1780fa63dd46b029930",
+   "expected": 3010773322
+  },
+  {
+   "id": "xor_w1",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "xor",
+    "word_size": 1,
+    "endianness": "big",
+    "init": 0,
+    "xor_out": 0
+   },
+   "message_hex": "079e35cc63fa9128bf56ed841bb249e0770ea53cd36a01982fc65df48b22b950e77e15ac43da71089f36cd64fb9229c057ee851cb34ae1780fa63dd46b029930",
+   "expected": 128
+  },
+  {
+   "id": "xor_w2_le",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "xor",
+    "word_size": 2,
+    "endianness": "little",
+    "init": 65535,
+    "xor_out": 0
+   },
+   "message_hex": "079e35cc63fa9128bf56ed841bb249e0770ea53cd36a01982fc65df48b22b950e77e15ac43da71089f36cd64fb9229c057ee851cb34ae1780fa63dd46b029930",
+   "expected": 65407
+  },
+  {
+   "id": "xor_w4_be",
+   "rules": [
+    "R62"
+   ],
+   "algorithm": {
+    "name": "xor",
+    "word_size": 4,
+    "endianness": "big",
+    "init": 0,
+    "xor_out": 2779096485
+   },
+   "message_hex": "079e35cc63fa9128bf56ed841bb249e0770ea53cd36a01982fc65df48b22b950e77e15ac43da71089f36cd64fb9229c057ee851cb34ae1780fa63dd46b029930",
+   "expected": 631612837
+  }
+ ],
+ "fixture": {
+  "rules": [
+   "R60",
+   "R63",
+   "R64",
+   "R65",
+   "R69",
+   "R70",
+   "R71",
+   "R72",
+   "R73",
+   "R74",
+   "R77",
+   "R78"
+  ],
+  "dump_kind": "bench_full",
+  "memory": {
+   "memory_id": "pflash",
+   "base_address": 2147483648,
+   "size": 512
+  },
+  "layout": {
+   "memories": [
+    {
+     "memory_id": "pflash",
+     "base_address": 2147483648,
+     "size": 512,
+     "regions": [
+      {
+       "kind": "protected",
+       "start": 0,
+       "end": 32,
+       "name": "boot"
+      },
+      {
+       "kind": "calibration",
+       "start": 32,
+       "end": 256,
+       "name": "maps"
+      },
+      {
+       "kind": "checksum",
+       "start": 256,
+       "end": 288,
+       "name": "checksums"
+      },
+      {
+       "kind": "protected",
+       "start": 288,
+       "end": 400,
+       "name": "code"
+      },
+      {
+       "kind": "protected",
+       "start": 400,
+       "end": 416,
+       "name": "block_table"
+      },
+      {
+       "kind": "protected",
+       "start": 416,
+       "end": 480,
+       "name": "emissions_egr"
+      },
+      {
+       "kind": "protected",
+       "start": 480,
+       "end": 512,
+       "name": "vin"
+      }
+     ]
+    }
+   ]
+  },
+  "layout_hash": "1545242e361cae8a955b2461694b1d7429d02170f32a300af298298337b9d804",
+  "descriptors": [
+   {
+    "value": {
+     "descriptor_version": 1,
+     "name": "a_comp",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 272
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": null,
+     "target": 0,
+     "strategy": "compensate",
+     "compensate": {
+      "offset": 268
+     }
+    },
+    "descriptor_hash": "443ee5aa0c76938cce6b43c1c63f4a15f0df4478c49077702b97cb9ea352aeb0"
+   },
+   {
+    "value": {
+     "descriptor_version": 1,
+     "name": "b_chain",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "xor",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": null,
+     "chain": [
+      "e_crc",
+      "f_table"
+     ],
+     "skip_self": false,
+     "store": {
+      "offset": 266,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    "descriptor_hash": "c37a2411a251b7314debeebb96a25d256ba7ea59ba1caa9ad696f95e26a141c4"
+   },
+   {
+    "value": {
+     "descriptor_version": 1,
+     "name": "c_sum16",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum16",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 65535
+     },
+     "ranges": [
+      {
+       "start": 0,
+       "end": 262
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 260,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    "descriptor_hash": "082ada4df975eb8910c4b43a53a13d7077c1fff358ecbd245a8766ffa43a22ed"
+   },
+   {
+    "value": {
+     "descriptor_version": 1,
+     "name": "d_mirror",
+     "memory_id": "pflash",
+     "mirror_block": {
+      "source": {
+       "start": 32,
+       "end": 48
+      },
+      "dest_offset": 272
+     }
+    },
+    "descriptor_hash": "aee987442096b5e2db6d0c9e55ca2a107a10aa709323abcfb7aa1cc1d7d45f5f"
+   },
+   {
+    "value": {
+     "descriptor_version": 1,
+     "name": "e_crc",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 256
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 256,
+      "size": 4,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    "descriptor_hash": "87041bc790c19ccba6eae9e7e5d19ddf8db79777a3eb261bd1e407a60a849d85"
+   },
+   {
+    "value": {
+     "descriptor_version": 1,
+     "name": "f_table",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "little",
+      "init": 305419896,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": {
+      "offset": 400,
+      "count": 2,
+      "entry_size": 8,
+      "start": {
+       "at": 0,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end": {
+       "at": 4,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end_is": "exclusive",
+      "addressing": "absolute"
+     },
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 262,
+      "size": 4,
+      "endianness": "little"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    "descriptor_hash": "41cca2dbc70bf0f054752c63346e192c6abdd700c64091a3831b1c29dd159efb"
+   }
+  ],
+  "original": {
+   "bytes_hex": "0b30557a9fc4e90e33587da2c7ec11365b80a5caef14395e83a8cdf2173c6186abd0f51a3f6489aed3f81d42678cb1d6fb20456a8fb4d9fe23486d92b7dc01264b7095badf04294e7398bde2072c51769bc0e50a2f54799ec3e80d32577ca1c6eb10355a7fa4c9ee13385d82a7ccf1163b6085aacff4193e6388add2f71c41668bb0d5fa1f44698eb3d8fd22476c91b6db00254a6f94b9de03284d7297bce1062b50759abfe4092e53789dc2e70c31567ba0c5ea0f34597ea3c8ed12375c81a6cbf0153a5f84a9cef3183d6287acd1f61b40658aafd4f91e43688db2d7fc21466b90b5daff24496e93b8dd02274c7196bbe0052a4f7499bee3082d52779cc1e6a75fb9885f98a88f5c29ea71c8f1af78abd0f51a3f6489aed3f81d42678cb1d6abd0f51a3f6489aed3f81d42678cb1d6fb20456a8fb4d9fe23486d92b7dc01264b7095badf04294e7398bde2072c51769bc0e50a2f54799ec3e80d32577ca1c6eb10355a7fa4c9ee13385d82a7ccf1163b6085aacff4193e6388add2f71c41668bb0d5fa1f44698eb3d8fd22476c91b68000002080000080800000a0800001002b50759abfe4092e53789dc2e70c31567ba0c5ea0f34597ea3c8ed12375c81a6cbf0153a5f84a9cef3183d6287acd1f61b40658aafd4f91e43688db2d7fc21466b90b5daff24496e93b8dd02274c7196bbe0052a4f7499bee3082d52779cc1e6",
+   "image_hash": "e7776323465d20dd7d64f309153098e30b516e3d0d80c29b630dd0a549f5fe1d",
+   "verify": {
+    "status": "ok",
+    "reason": null,
+    "regions": [
+     {
+      "name": "a_comp",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "00000000",
+      "computed": "00000000",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "b_chain",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "ea71",
+      "computed": "ea71",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "c_sum16",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "5f98",
+      "computed": "5f98",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "d_mirror",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "3ca1f432d9c677f14549f8e4b669fcc60f1651d61df0551de85e676f16f9f14d",
+      "computed": "3ca1f432d9c677f14549f8e4b669fcc60f1651d61df0551de85e676f16f9f14d",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "e_crc",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "a75fb988",
+      "computed": "a75fb988",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "f_table",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "a88f5c29",
+      "computed": "a88f5c29",
+      "reason": null,
+      "bypass": null
+     }
+    ]
+   },
+   "checksum_patches": []
+  }
+ },
+ "cases": [
+  {
+   "id": "edit_a",
+   "rules": [
+    "R43",
+    "R51",
+    "R52",
+    "R53",
+    "R54",
+    "R63",
+    "R70",
+    "R71",
+    "R72",
+    "R75",
+    "R76",
+    "R77"
+   ],
+   "edits": [
+    {
+     "value": {
+      "memory_id": "pflash",
+      "offset": 140,
+      "length": 4,
+      "before": "476c91b6",
+      "after": "00112233"
+     },
+     "patch_hash": "c9184cabbe270637a4df347b47b757846acd78bc64faa3f37feed9c42b356aed"
+    }
+   ],
+   "unverified": {
+    "bytes_hex": "0b30557a9fc4e90e33587da2c7ec11365b80a5caef14395e83a8cdf2173c6186abd0f51a3f6489aed3f81d42678cb1d6fb20456a8fb4d9fe23486d92b7dc01264b7095badf04294e7398bde2072c51769bc0e50a2f54799ec3e80d32577ca1c6eb10355a7fa4c9ee13385d82a7ccf1163b6085aacff4193e6388add2f71c41668bb0d5fa1f44698eb3d8fd2200112233db00254a6f94b9de03284d7297bce1062b50759abfe4092e53789dc2e70c31567ba0c5ea0f34597ea3c8ed12375c81a6cbf0153a5f84a9cef3183d6287acd1f61b40658aafd4f91e43688db2d7fc21466b90b5daff24496e93b8dd02274c7196bbe0052a4f7499bee3082d52779cc1e6a75fb9885f98a88f5c29ea71c8f1af78abd0f51a3f6489aed3f81d42678cb1d6abd0f51a3f6489aed3f81d42678cb1d6fb20456a8fb4d9fe23486d92b7dc01264b7095badf04294e7398bde2072c51769bc0e50a2f54799ec3e80d32577ca1c6eb10355a7fa4c9ee13385d82a7ccf1163b6085aacff4193e6388add2f71c41668bb0d5fa1f44698eb3d8fd22476c91b68000002080000080800000a0800001002b50759abfe4092e53789dc2e70c31567ba0c5ea0f34597ea3c8ed12375c81a6cbf0153a5f84a9cef3183d6287acd1f61b40658aafd4f91e43688db2d7fc21466b90b5daff24496e93b8dd02274c7196bbe0052a4f7499bee3082d52779cc1e6",
+    "image_hash": "c0a8a0d89aeae0e13131a62e1290a93e88fa0ec2968ef42ef4353cb7b34fe6da"
+   },
+   "verify_before_fix": {
+    "status": "fail",
+    "reason": null,
+    "regions": [
+     {
+      "name": "a_comp",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "fail",
+      "stored": "00000000",
+      "computed": "b8a4907d",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "b_chain",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "ea71",
+      "computed": "ea71",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "c_sum16",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "fail",
+      "stored": "5f98",
+      "computed": "1676",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "d_mirror",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "3ca1f432d9c677f14549f8e4b669fcc60f1651d61df0551de85e676f16f9f14d",
+      "computed": "3ca1f432d9c677f14549f8e4b669fcc60f1651d61df0551de85e676f16f9f14d",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "e_crc",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "fail",
+      "stored": "a75fb988",
+      "computed": "506c36e8",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "f_table",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "a88f5c29",
+      "computed": "a88f5c29",
+      "reason": null,
+      "bypass": null
+     }
+    ]
+   },
+   "checksum_patches": [
+    {
+     "value": {
+      "memory_id": "pflash",
+      "offset": 256,
+      "length": 4,
+      "before": "a75fb988",
+      "after": "506c36e8"
+     },
+     "patch_hash": "d268e17be47cbfca720cabb1a98b48aefa8eac7e2284fad2a213249025514195"
+    },
+    {
+     "value": {
+      "memory_id": "pflash",
+      "offset": 260,
+      "length": 2,
+      "before": "5f98",
+      "after": "f009"
+     },
+     "patch_hash": "942c83417af155257dfdc1a36c16dce50966e9581789b9551eea928513c01af8"
+    },
+    {
+     "value": {
+      "memory_id": "pflash",
+      "offset": 266,
+      "length": 2,
+      "before": "ea71",
+      "after": "9222"
+     },
+     "patch_hash": "cfa9c8f8858afa4cdca0afb5a202f638447812d9b6df9b5349f829d79a95080c"
+    },
+    {
+     "value": {
+      "memory_id": "pflash",
+      "offset": 268,
+      "length": 4,
+      "before": "c8f1af78",
+      "after": "d6cff9ea"
+     },
+     "patch_hash": "1c8bc3739e1c395cfab1476c687698bafd6e9c662c768412d7aba3f779cfb856"
+    }
+   ],
+   "released": {
+    "image_hash": "3a9bf7d0e5465e4d05def48470d2f265142ce33fdabed49724283ccc05898187"
+   },
+   "verify_after_fix": {
+    "status": "ok",
+    "reason": null,
+    "regions": [
+     {
+      "name": "a_comp",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "00000000",
+      "computed": "00000000",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "b_chain",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "9222",
+      "computed": "9222",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "c_sum16",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "f009",
+      "computed": "f009",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "d_mirror",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "3ca1f432d9c677f14549f8e4b669fcc60f1651d61df0551de85e676f16f9f14d",
+      "computed": "3ca1f432d9c677f14549f8e4b669fcc60f1651d61df0551de85e676f16f9f14d",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "e_crc",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "506c36e8",
+      "computed": "506c36e8",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "f_table",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "a88f5c29",
+      "computed": "a88f5c29",
+      "reason": null,
+      "bypass": null
+     }
+    ]
+   }
+  },
+  {
+   "id": "edit_b",
+   "rules": [
+    "R43",
+    "R51",
+    "R52",
+    "R53",
+    "R54",
+    "R63",
+    "R70",
+    "R71",
+    "R72",
+    "R75",
+    "R76",
+    "R77"
+   ],
+   "edits": [
+    {
+     "value": {
+      "memory_id": "pflash",
+      "offset": 36,
+      "length": 2,
+      "before": "3f64",
+      "after": "abcd"
+     },
+     "patch_hash": "55b6c478097686636d3111393e4a0a571da194eb64706a9e98ea8505fabd1376"
+    }
+   ],
+   "unverified": {
+    "bytes_hex": "0b30557a9fc4e90e33587da2c7ec11365b80a5caef14395e83a8cdf2173c6186abd0f51aabcd89aed3f81d42678cb1d6fb20456a8fb4d9fe23486d92b7dc01264b7095badf04294e7398bde2072c51769bc0e50a2f54799ec3e80d32577ca1c6eb10355a7fa4c9ee13385d82a7ccf1163b6085aacff4193e6388add2f71c41668bb0d5fa1f44698eb3d8fd22476c91b6db00254a6f94b9de03284d7297bce1062b50759abfe4092e53789dc2e70c31567ba0c5ea0f34597ea3c8ed12375c81a6cbf0153a5f84a9cef3183d6287acd1f61b40658aafd4f91e43688db2d7fc21466b90b5daff24496e93b8dd02274c7196bbe0052a4f7499bee3082d52779cc1e6a75fb9885f98a88f5c29ea71c8f1af78abd0f51a3f6489aed3f81d42678cb1d6abd0f51a3f6489aed3f81d42678cb1d6fb20456a8fb4d9fe23486d92b7dc01264b7095badf04294e7398bde2072c51769bc0e50a2f54799ec3e80d32577ca1c6eb10355a7fa4c9ee13385d82a7ccf1163b6085aacff4193e6388add2f71c41668bb0d5fa1f44698eb3d8fd22476c91b68000002080000080800000a0800001002b50759abfe4092e53789dc2e70c31567ba0c5ea0f34597ea3c8ed12375c81a6cbf0153a5f84a9cef3183d6287acd1f61b40658aafd4f91e43688db2d7fc21466b90b5daff24496e93b8dd02274c7196bbe0052a4f7499bee3082d52779cc1e6",
+    "image_hash": "68dfd9a7179339b9165ac4f814e5db7a77857e44d38651998f8ec95d5ec65aa6"
+   },
+   "verify_before_fix": {
+    "status": "fail",
+    "reason": null,
+    "regions": [
+     {
+      "name": "a_comp",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "fail",
+      "stored": "00000000",
+      "computed": "6c690000",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "b_chain",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "ea71",
+      "computed": "ea71",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "c_sum16",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "fail",
+      "stored": "5f98",
+      "computed": "f32f",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "d_mirror",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "fail",
+      "stored": "3ca1f432d9c677f14549f8e4b669fcc60f1651d61df0551de85e676f16f9f14d",
+      "computed": "a595876d53c71d9f97a08f7363e1fa3daca3933ebb8fc7713075c6ca3afdcc8e",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "e_crc",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "fail",
+      "stored": "a75fb988",
+      "computed": "58254edc",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "f_table",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "fail",
+      "stored": "a88f5c29",
+      "computed": "14f95c29",
+      "reason": null,
+      "bypass": null
+     }
+    ]
+   },
+   "checksum_patches": [
+    {
+     "value": {
+      "memory_id": "pflash",
+      "offset": 256,
+      "length": 4,
+      "before": "a75fb988",
+      "after": "58254edc"
+     },
+     "patch_hash": "6f7ced2dc2455b5d8f4d087cab6b83659d26bfee5256f9bf0a355baae9edc0d9"
+    },
+    {
+     "value": {
+      "memory_id": "pflash",
+      "offset": 260,
+      "length": 2,
+      "before": "5f98",
+      "after": "ad15"
+     },
+     "patch_hash": "a19d3ea13cd6f0957258df644eae99bcb32a7b278f0b7e98f57931617ce18669"
+    },
+    {
+     "value": {
+      "memory_id": "pflash",
+      "offset": 262,
+      "length": 4,
+      "before": "a88f5c29",
+      "after": "14f95c29"
+     },
+     "patch_hash": "61586c5a3f6fc92705c824cefe0952019642d57aaeeab2ed1eb784f5d8308247"
+    },
+    {
+     "value": {
+      "memory_id": "pflash",
+      "offset": 266,
+      "length": 2,
+      "before": "ea71",
+      "after": "5e29"
+     },
+     "patch_hash": "0b77537136bf6c73e4484332848afa64be3ff242ff8e5aad45f2a969fa403e25"
+    },
+    {
+     "value": {
+      "memory_id": "pflash",
+      "offset": 268,
+      "length": 4,
+      "before": "c8f1af78",
+      "after": "5e473a02"
+     },
+     "patch_hash": "b9f7d40f3efdb51dd8a73029cea5647f77a4a85d1ee345c5643e1758ffd2399e"
+    },
+    {
+     "value": {
+      "memory_id": "pflash",
+      "offset": 272,
+      "length": 16,
+      "before": "abd0f51a3f6489aed3f81d42678cb1d6",
+      "after": "abd0f51aabcd89aed3f81d42678cb1d6"
+     },
+     "patch_hash": "25d199e65c1261f0c138162e52c286f26eec48e411b5e1860522682c137c040c"
+    }
+   ],
+   "released": {
+    "image_hash": "c54fa1125eba9c3b76897eee6a6e86e22ee429aa0c7cf103112126436bac2e90"
+   },
+   "verify_after_fix": {
+    "status": "ok",
+    "reason": null,
+    "regions": [
+     {
+      "name": "a_comp",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "00000000",
+      "computed": "00000000",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "b_chain",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "5e29",
+      "computed": "5e29",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "c_sum16",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "ad15",
+      "computed": "ad15",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "d_mirror",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "a595876d53c71d9f97a08f7363e1fa3daca3933ebb8fc7713075c6ca3afdcc8e",
+      "computed": "a595876d53c71d9f97a08f7363e1fa3daca3933ebb8fc7713075c6ca3afdcc8e",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "e_crc",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "58254edc",
+      "computed": "58254edc",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "f_table",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "14f95c29",
+      "computed": "14f95c29",
+      "reason": null,
+      "bypass": null
+     }
+    ]
+   }
+  }
+ ],
+ "resolution_failures": [
+  {
+   "id": "table_out_of_bounds",
+   "rules": [
+    "R65",
+    "R66",
+    "R43"
+   ],
+   "bytes_hex": "0b30557a9fc4e90e33587da2c7ec11365b80a5caef14395e83a8cdf2173c6186abd0f51a3f6489aed3f81d42678cb1d6fb20456a8fb4d9fe23486d92b7dc01264b7095badf04294e7398bde2072c51769bc0e50a2f54799ec3e80d32577ca1c6eb10355a7fa4c9ee13385d82a7ccf1163b6085aacff4193e6388add2f71c41668bb0d5fa1f44698eb3d8fd22476c91b6db00254a6f94b9de03284d7297bce1062b50759abfe4092e53789dc2e70c31567ba0c5ea0f34597ea3c8ed12375c81a6cbf0153a5f84a9cef3183d6287acd1f61b40658aafd4f91e43688db2d7fc21466b90b5daff24496e93b8dd02274c7196bbe0052a4f7499bee3082d52779cc1e6a75fb9885f98a88f5c29ea71c8f1af78abd0f51a3f6489aed3f81d42678cb1d6abd0f51a3f6489aed3f81d42678cb1d6fb20456a8fb4d9fe23486d92b7dc01264b7095badf04294e7398bde2072c51769bc0e50a2f54799ec3e80d32577ca1c6eb10355a7fa4c9ee13385d82a7ccf1163b6085aacff4193e6388add2f71c41668bb0d5fa1f44698eb3d8fd22476c91b68000002080000080800000a0800003002b50759abfe4092e53789dc2e70c31567ba0c5ea0f34597ea3c8ed12375c81a6cbf0153a5f84a9cef3183d6287acd1f61b40658aafd4f91e43688db2d7fc21466b90b5daff24496e93b8dd02274c7196bbe0052a4f7499bee3082d52779cc1e6",
+   "image_hash": "087eab7ae8a15c0baddc56563cdd6e0fc19e08b1c0dc41a368230ccab4e20e69",
+   "verify": {
+    "status": "fail",
+    "reason": null,
+    "regions": [
+     {
+      "name": "a_comp",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "00000000",
+      "computed": "00000000",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "b_chain",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "ea71",
+      "computed": "ea71",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "c_sum16",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "5f98",
+      "computed": "5f98",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "d_mirror",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "3ca1f432d9c677f14549f8e4b669fcc60f1651d61df0551de85e676f16f9f14d",
+      "computed": "3ca1f432d9c677f14549f8e4b669fcc60f1651d61df0551de85e676f16f9f14d",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "e_crc",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "ok",
+      "stored": "a75fb988",
+      "computed": "a75fb988",
+      "reason": null,
+      "bypass": null
+     },
+     {
+      "name": "f_table",
+      "memory_id": "pflash",
+      "kind": "recalculable",
+      "status": "fail",
+      "stored": "a88f5c29",
+      "computed": null,
+      "reason": "table_out_of_bounds",
+      "bypass": null
+     }
+    ]
+   }
+  }
+ ],
+ "invalid_descriptor_sets": [
+  {
+   "id": "schema_extra_key",
+   "rules": [
+    "R60",
+    "R79"
+   ],
+   "reason": "schema",
+   "descriptors": [
+    {
+     "descriptor_version": 1,
+     "name": "a_comp",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 272
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": null,
+     "target": 0,
+     "strategy": "compensate",
+     "compensate": {
+      "offset": 268
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "b_chain",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "xor",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": null,
+     "chain": [
+      "e_crc",
+      "f_table"
+     ],
+     "skip_self": false,
+     "store": {
+      "offset": 266,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "c_sum16",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum16",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 65535
+     },
+     "ranges": [
+      {
+       "start": 0,
+       "end": 262
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 260,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "d_mirror",
+     "memory_id": "pflash",
+     "mirror_block": {
+      "source": {
+       "start": 32,
+       "end": 48
+      },
+      "dest_offset": 272
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "e_crc",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 256
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 256,
+      "size": 4,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null,
+     "note": "x"
+    },
+    {
+     "descriptor_version": 1,
+     "name": "f_table",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "little",
+      "init": 305419896,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": {
+      "offset": 400,
+      "count": 2,
+      "entry_size": 8,
+      "start": {
+       "at": 0,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end": {
+       "at": 4,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end_is": "exclusive",
+      "addressing": "absolute"
+     },
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 262,
+      "size": 4,
+      "endianness": "little"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    }
+   ],
+   "layout": {
+    "memories": [
+     {
+      "memory_id": "pflash",
+      "base_address": 2147483648,
+      "size": 512,
+      "regions": [
+       {
+        "kind": "protected",
+        "start": 0,
+        "end": 32,
+        "name": "boot"
+       },
+       {
+        "kind": "calibration",
+        "start": 32,
+        "end": 256,
+        "name": "maps"
+       },
+       {
+        "kind": "checksum",
+        "start": 256,
+        "end": 288,
+        "name": "checksums"
+       },
+       {
+        "kind": "protected",
+        "start": 288,
+        "end": 400,
+        "name": "code"
+       },
+       {
+        "kind": "protected",
+        "start": 400,
+        "end": 416,
+        "name": "block_table"
+       },
+       {
+        "kind": "protected",
+        "start": 416,
+        "end": 480,
+        "name": "emissions_egr"
+       },
+       {
+        "kind": "protected",
+        "start": 480,
+        "end": 512,
+        "name": "vin"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "bad_width",
+   "rules": [
+    "R61",
+    "R79"
+   ],
+   "reason": "bad_width",
+   "descriptors": [
+    {
+     "descriptor_version": 1,
+     "name": "a_comp",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 272
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": null,
+     "target": 0,
+     "strategy": "compensate",
+     "compensate": {
+      "offset": 268
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "b_chain",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "xor",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": null,
+     "chain": [
+      "e_crc",
+      "f_table"
+     ],
+     "skip_self": false,
+     "store": {
+      "offset": 266,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "c_sum16",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum16",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 65535
+     },
+     "ranges": [
+      {
+       "start": 0,
+       "end": 262
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 260,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "d_mirror",
+     "memory_id": "pflash",
+     "mirror_block": {
+      "source": {
+       "start": 32,
+       "end": 48
+      },
+      "dest_offset": 272
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "e_crc",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 256
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 256,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "f_table",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "little",
+      "init": 305419896,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": {
+      "offset": 400,
+      "count": 2,
+      "entry_size": 8,
+      "start": {
+       "at": 0,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end": {
+       "at": 4,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end_is": "exclusive",
+      "addressing": "absolute"
+     },
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 262,
+      "size": 4,
+      "endianness": "little"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    }
+   ],
+   "layout": {
+    "memories": [
+     {
+      "memory_id": "pflash",
+      "base_address": 2147483648,
+      "size": 512,
+      "regions": [
+       {
+        "kind": "protected",
+        "start": 0,
+        "end": 32,
+        "name": "boot"
+       },
+       {
+        "kind": "calibration",
+        "start": 32,
+        "end": 256,
+        "name": "maps"
+       },
+       {
+        "kind": "checksum",
+        "start": 256,
+        "end": 258,
+        "name": ""
+       },
+       {
+        "kind": "protected",
+        "start": 258,
+        "end": 260,
+        "name": ""
+       },
+       {
+        "kind": "checksum",
+        "start": 260,
+        "end": 288,
+        "name": ""
+       },
+       {
+        "kind": "protected",
+        "start": 288,
+        "end": 400,
+        "name": "code"
+       },
+       {
+        "kind": "protected",
+        "start": 400,
+        "end": 416,
+        "name": "block_table"
+       },
+       {
+        "kind": "protected",
+        "start": 416,
+        "end": 480,
+        "name": "emissions_egr"
+       },
+       {
+        "kind": "protected",
+        "start": 480,
+        "end": 512,
+        "name": "vin"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "self_reference",
+   "rules": [
+    "R68",
+    "R79"
+   ],
+   "reason": "self_reference",
+   "descriptors": [
+    {
+     "descriptor_version": 1,
+     "name": "a_comp",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 272
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": null,
+     "target": 0,
+     "strategy": "compensate",
+     "compensate": {
+      "offset": 268
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "b_chain",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "xor",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": null,
+     "chain": [
+      "e_crc",
+      "f_table"
+     ],
+     "skip_self": false,
+     "store": {
+      "offset": 266,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "c_sum16",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum16",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 65535
+     },
+     "ranges": [
+      {
+       "start": 0,
+       "end": 262
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 260,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "d_mirror",
+     "memory_id": "pflash",
+     "mirror_block": {
+      "source": {
+       "start": 32,
+       "end": 48
+      },
+      "dest_offset": 272
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "e_crc",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 260
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 256,
+      "size": 4,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "f_table",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "little",
+      "init": 305419896,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": {
+      "offset": 400,
+      "count": 2,
+      "entry_size": 8,
+      "start": {
+       "at": 0,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end": {
+       "at": 4,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end_is": "exclusive",
+      "addressing": "absolute"
+     },
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 262,
+      "size": 4,
+      "endianness": "little"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    }
+   ],
+   "layout": {
+    "memories": [
+     {
+      "memory_id": "pflash",
+      "base_address": 2147483648,
+      "size": 512,
+      "regions": [
+       {
+        "kind": "protected",
+        "start": 0,
+        "end": 32,
+        "name": "boot"
+       },
+       {
+        "kind": "calibration",
+        "start": 32,
+        "end": 256,
+        "name": "maps"
+       },
+       {
+        "kind": "checksum",
+        "start": 256,
+        "end": 288,
+        "name": "checksums"
+       },
+       {
+        "kind": "protected",
+        "start": 288,
+        "end": 400,
+        "name": "code"
+       },
+       {
+        "kind": "protected",
+        "start": 400,
+        "end": 416,
+        "name": "block_table"
+       },
+       {
+        "kind": "protected",
+        "start": 416,
+        "end": 480,
+        "name": "emissions_egr"
+       },
+       {
+        "kind": "protected",
+        "start": 480,
+        "end": 512,
+        "name": "vin"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "partial_self",
+   "rules": [
+    "R68",
+    "R79"
+   ],
+   "reason": "partial_self",
+   "descriptors": [
+    {
+     "descriptor_version": 1,
+     "name": "a_comp",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 272
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": null,
+     "target": 0,
+     "strategy": "compensate",
+     "compensate": {
+      "offset": 268
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "b_chain",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "xor",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": null,
+     "chain": [
+      "e_crc",
+      "f_table"
+     ],
+     "skip_self": false,
+     "store": {
+      "offset": 266,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "c_sum16",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum16",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 65535
+     },
+     "ranges": [
+      {
+       "start": 0,
+       "end": 262
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 260,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "d_mirror",
+     "memory_id": "pflash",
+     "mirror_block": {
+      "source": {
+       "start": 32,
+       "end": 48
+      },
+      "dest_offset": 272
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "e_crc",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 258
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 256,
+      "size": 4,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "f_table",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "little",
+      "init": 305419896,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": {
+      "offset": 400,
+      "count": 2,
+      "entry_size": 8,
+      "start": {
+       "at": 0,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end": {
+       "at": 4,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end_is": "exclusive",
+      "addressing": "absolute"
+     },
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 262,
+      "size": 4,
+      "endianness": "little"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    }
+   ],
+   "layout": {
+    "memories": [
+     {
+      "memory_id": "pflash",
+      "base_address": 2147483648,
+      "size": 512,
+      "regions": [
+       {
+        "kind": "protected",
+        "start": 0,
+        "end": 32,
+        "name": "boot"
+       },
+       {
+        "kind": "calibration",
+        "start": 32,
+        "end": 256,
+        "name": "maps"
+       },
+       {
+        "kind": "checksum",
+        "start": 256,
+        "end": 288,
+        "name": "checksums"
+       },
+       {
+        "kind": "protected",
+        "start": 288,
+        "end": 400,
+        "name": "code"
+       },
+       {
+        "kind": "protected",
+        "start": 400,
+        "end": 416,
+        "name": "block_table"
+       },
+       {
+        "kind": "protected",
+        "start": 416,
+        "end": 480,
+        "name": "emissions_egr"
+       },
+       {
+        "kind": "protected",
+        "start": 480,
+        "end": 512,
+        "name": "vin"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "misaligned_piece",
+   "rules": [
+    "R67",
+    "R79"
+   ],
+   "reason": "misaligned_piece",
+   "descriptors": [
+    {
+     "descriptor_version": 1,
+     "name": "a_comp",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 272
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": null,
+     "target": 0,
+     "strategy": "compensate",
+     "compensate": {
+      "offset": 268
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "b_chain",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "xor",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": null,
+     "chain": [
+      "e_crc",
+      "f_table"
+     ],
+     "skip_self": false,
+     "store": {
+      "offset": 266,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "c_sum16",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum16",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 65535
+     },
+     "ranges": [
+      {
+       "start": 1,
+       "end": 262
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 260,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "d_mirror",
+     "memory_id": "pflash",
+     "mirror_block": {
+      "source": {
+       "start": 32,
+       "end": 48
+      },
+      "dest_offset": 272
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "e_crc",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 256
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 256,
+      "size": 4,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "f_table",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "little",
+      "init": 305419896,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": {
+      "offset": 400,
+      "count": 2,
+      "entry_size": 8,
+      "start": {
+       "at": 0,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end": {
+       "at": 4,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end_is": "exclusive",
+      "addressing": "absolute"
+     },
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 262,
+      "size": 4,
+      "endianness": "little"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    }
+   ],
+   "layout": {
+    "memories": [
+     {
+      "memory_id": "pflash",
+      "base_address": 2147483648,
+      "size": 512,
+      "regions": [
+       {
+        "kind": "protected",
+        "start": 0,
+        "end": 32,
+        "name": "boot"
+       },
+       {
+        "kind": "calibration",
+        "start": 32,
+        "end": 256,
+        "name": "maps"
+       },
+       {
+        "kind": "checksum",
+        "start": 256,
+        "end": 288,
+        "name": "checksums"
+       },
+       {
+        "kind": "protected",
+        "start": 288,
+        "end": 400,
+        "name": "code"
+       },
+       {
+        "kind": "protected",
+        "start": 400,
+        "end": 416,
+        "name": "block_table"
+       },
+       {
+        "kind": "protected",
+        "start": 416,
+        "end": 480,
+        "name": "emissions_egr"
+       },
+       {
+        "kind": "protected",
+        "start": 480,
+        "end": 512,
+        "name": "vin"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "table_in_calibration",
+   "rules": [
+    "R65",
+    "R79"
+   ],
+   "reason": "table_not_protected",
+   "descriptors": [
+    {
+     "descriptor_version": 1,
+     "name": "a_comp",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 272
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": null,
+     "target": 0,
+     "strategy": "compensate",
+     "compensate": {
+      "offset": 268
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "b_chain",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "xor",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": null,
+     "chain": [
+      "e_crc",
+      "f_table"
+     ],
+     "skip_self": false,
+     "store": {
+      "offset": 266,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "c_sum16",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum16",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 65535
+     },
+     "ranges": [
+      {
+       "start": 0,
+       "end": 262
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 260,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "d_mirror",
+     "memory_id": "pflash",
+     "mirror_block": {
+      "source": {
+       "start": 32,
+       "end": 48
+      },
+      "dest_offset": 272
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "e_crc",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 256
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 256,
+      "size": 4,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "f_table",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "little",
+      "init": 305419896,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": {
+      "offset": 200,
+      "count": 2,
+      "entry_size": 8,
+      "start": {
+       "at": 0,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end": {
+       "at": 4,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end_is": "exclusive",
+      "addressing": "absolute"
+     },
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 262,
+      "size": 4,
+      "endianness": "little"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    }
+   ],
+   "layout": {
+    "memories": [
+     {
+      "memory_id": "pflash",
+      "base_address": 2147483648,
+      "size": 512,
+      "regions": [
+       {
+        "kind": "protected",
+        "start": 0,
+        "end": 32,
+        "name": "boot"
+       },
+       {
+        "kind": "calibration",
+        "start": 32,
+        "end": 256,
+        "name": "maps"
+       },
+       {
+        "kind": "checksum",
+        "start": 256,
+        "end": 288,
+        "name": "checksums"
+       },
+       {
+        "kind": "protected",
+        "start": 288,
+        "end": 400,
+        "name": "code"
+       },
+       {
+        "kind": "protected",
+        "start": 400,
+        "end": 416,
+        "name": "block_table"
+       },
+       {
+        "kind": "protected",
+        "start": 416,
+        "end": 480,
+        "name": "emissions_egr"
+       },
+       {
+        "kind": "protected",
+        "start": 480,
+        "end": 512,
+        "name": "vin"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "table_in_checksum_region",
+   "rules": [
+    "R65",
+    "R79"
+   ],
+   "reason": "table_not_protected",
+   "descriptors": [
+    {
+     "descriptor_version": 1,
+     "name": "a_comp",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 272
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": null,
+     "target": 0,
+     "strategy": "compensate",
+     "compensate": {
+      "offset": 268
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "b_chain",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "xor",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": null,
+     "chain": [
+      "e_crc",
+      "f_table"
+     ],
+     "skip_self": false,
+     "store": {
+      "offset": 266,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "c_sum16",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum16",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 65535
+     },
+     "ranges": [
+      {
+       "start": 0,
+       "end": 262
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 260,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "d_mirror",
+     "memory_id": "pflash",
+     "mirror_block": {
+      "source": {
+       "start": 32,
+       "end": 48
+      },
+      "dest_offset": 272
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "e_crc",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 256
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 256,
+      "size": 4,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "f_table",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "little",
+      "init": 305419896,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": {
+      "offset": 272,
+      "count": 2,
+      "entry_size": 8,
+      "start": {
+       "at": 0,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end": {
+       "at": 4,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end_is": "exclusive",
+      "addressing": "absolute"
+     },
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 262,
+      "size": 4,
+      "endianness": "little"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    }
+   ],
+   "layout": {
+    "memories": [
+     {
+      "memory_id": "pflash",
+      "base_address": 2147483648,
+      "size": 512,
+      "regions": [
+       {
+        "kind": "protected",
+        "start": 0,
+        "end": 32,
+        "name": "boot"
+       },
+       {
+        "kind": "calibration",
+        "start": 32,
+        "end": 256,
+        "name": "maps"
+       },
+       {
+        "kind": "checksum",
+        "start": 256,
+        "end": 288,
+        "name": "checksums"
+       },
+       {
+        "kind": "protected",
+        "start": 288,
+        "end": 400,
+        "name": "code"
+       },
+       {
+        "kind": "protected",
+        "start": 400,
+        "end": 416,
+        "name": "block_table"
+       },
+       {
+        "kind": "protected",
+        "start": 416,
+        "end": 480,
+        "name": "emissions_egr"
+       },
+       {
+        "kind": "protected",
+        "start": 480,
+        "end": 512,
+        "name": "vin"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "unknown_chain_target",
+   "rules": [
+    "R69",
+    "R79"
+   ],
+   "reason": "unknown_chain_target",
+   "descriptors": [
+    {
+     "descriptor_version": 1,
+     "name": "a_comp",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 272
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": null,
+     "target": 0,
+     "strategy": "compensate",
+     "compensate": {
+      "offset": 268
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "b_chain",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "xor",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": null,
+     "chain": [
+      "e_crc",
+      "z_missing"
+     ],
+     "skip_self": false,
+     "store": {
+      "offset": 266,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "c_sum16",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum16",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 65535
+     },
+     "ranges": [
+      {
+       "start": 0,
+       "end": 262
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 260,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "d_mirror",
+     "memory_id": "pflash",
+     "mirror_block": {
+      "source": {
+       "start": 32,
+       "end": 48
+      },
+      "dest_offset": 272
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "e_crc",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 256
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 256,
+      "size": 4,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "f_table",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "little",
+      "init": 305419896,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": {
+      "offset": 400,
+      "count": 2,
+      "entry_size": 8,
+      "start": {
+       "at": 0,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end": {
+       "at": 4,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end_is": "exclusive",
+      "addressing": "absolute"
+     },
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 262,
+      "size": 4,
+      "endianness": "little"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    }
+   ],
+   "layout": {
+    "memories": [
+     {
+      "memory_id": "pflash",
+      "base_address": 2147483648,
+      "size": 512,
+      "regions": [
+       {
+        "kind": "protected",
+        "start": 0,
+        "end": 32,
+        "name": "boot"
+       },
+       {
+        "kind": "calibration",
+        "start": 32,
+        "end": 256,
+        "name": "maps"
+       },
+       {
+        "kind": "checksum",
+        "start": 256,
+        "end": 288,
+        "name": "checksums"
+       },
+       {
+        "kind": "protected",
+        "start": 288,
+        "end": 400,
+        "name": "code"
+       },
+       {
+        "kind": "protected",
+        "start": 400,
+        "end": 416,
+        "name": "block_table"
+       },
+       {
+        "kind": "protected",
+        "start": 416,
+        "end": 480,
+        "name": "emissions_egr"
+       },
+       {
+        "kind": "protected",
+        "start": 480,
+        "end": 512,
+        "name": "vin"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "compensate_not_supported",
+   "rules": [
+    "R71",
+    "R79"
+   ],
+   "reason": "compensate_not_supported",
+   "descriptors": [
+    {
+     "descriptor_version": 1,
+     "name": "a_comp",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 272
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": null,
+     "target": 0,
+     "strategy": "compensate",
+     "compensate": {
+      "offset": 268
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "b_chain",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "xor",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": null,
+     "chain": [
+      "e_crc",
+      "f_table"
+     ],
+     "skip_self": false,
+     "store": {
+      "offset": 266,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "c_sum16",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum16",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 65535
+     },
+     "ranges": [
+      {
+       "start": 0,
+       "end": 262
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 260,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "d_mirror",
+     "memory_id": "pflash",
+     "mirror_block": {
+      "source": {
+       "start": 32,
+       "end": 48
+      },
+      "dest_offset": 272
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "e_crc",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 256
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 256,
+      "size": 4,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "f_table",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "little",
+      "init": 305419896,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": {
+      "offset": 400,
+      "count": 2,
+      "entry_size": 8,
+      "start": {
+       "at": 0,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end": {
+       "at": 4,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end_is": "exclusive",
+      "addressing": "absolute"
+     },
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 262,
+      "size": 4,
+      "endianness": "little"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    }
+   ],
+   "layout": {
+    "memories": [
+     {
+      "memory_id": "pflash",
+      "base_address": 2147483648,
+      "size": 512,
+      "regions": [
+       {
+        "kind": "protected",
+        "start": 0,
+        "end": 32,
+        "name": "boot"
+       },
+       {
+        "kind": "calibration",
+        "start": 32,
+        "end": 256,
+        "name": "maps"
+       },
+       {
+        "kind": "checksum",
+        "start": 256,
+        "end": 288,
+        "name": "checksums"
+       },
+       {
+        "kind": "protected",
+        "start": 288,
+        "end": 400,
+        "name": "code"
+       },
+       {
+        "kind": "protected",
+        "start": 400,
+        "end": 416,
+        "name": "block_table"
+       },
+       {
+        "kind": "protected",
+        "start": 416,
+        "end": 480,
+        "name": "emissions_egr"
+       },
+       {
+        "kind": "protected",
+        "start": 480,
+        "end": 512,
+        "name": "vin"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "field_out_of_checksum_region",
+   "rules": [
+    "R73",
+    "R79"
+   ],
+   "reason": "field_out_of_checksum_region",
+   "descriptors": [
+    {
+     "descriptor_version": 1,
+     "name": "a_comp",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 272
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": null,
+     "target": 0,
+     "strategy": "compensate",
+     "compensate": {
+      "offset": 268
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "b_chain",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "xor",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": null,
+     "chain": [
+      "e_crc",
+      "f_table"
+     ],
+     "skip_self": false,
+     "store": {
+      "offset": 266,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "c_sum16",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum16",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 65535
+     },
+     "ranges": [
+      {
+       "start": 0,
+       "end": 262
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 260,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "d_mirror",
+     "memory_id": "pflash",
+     "mirror_block": {
+      "source": {
+       "start": 32,
+       "end": 48
+      },
+      "dest_offset": 272
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "e_crc",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 256
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 256,
+      "size": 4,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "f_table",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "little",
+      "init": 305419896,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": {
+      "offset": 400,
+      "count": 2,
+      "entry_size": 8,
+      "start": {
+       "at": 0,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end": {
+       "at": 4,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end_is": "exclusive",
+      "addressing": "absolute"
+     },
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 262,
+      "size": 4,
+      "endianness": "little"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    }
+   ],
+   "layout": {
+    "memories": [
+     {
+      "memory_id": "pflash",
+      "base_address": 2147483648,
+      "size": 512,
+      "regions": [
+       {
+        "kind": "protected",
+        "start": 0,
+        "end": 32,
+        "name": "boot"
+       },
+       {
+        "kind": "calibration",
+        "start": 32,
+        "end": 256,
+        "name": "maps"
+       },
+       {
+        "kind": "checksum",
+        "start": 256,
+        "end": 258,
+        "name": ""
+       },
+       {
+        "kind": "checksum",
+        "start": 258,
+        "end": 288,
+        "name": ""
+       },
+       {
+        "kind": "protected",
+        "start": 288,
+        "end": 400,
+        "name": "code"
+       },
+       {
+        "kind": "protected",
+        "start": 400,
+        "end": 416,
+        "name": "block_table"
+       },
+       {
+        "kind": "protected",
+        "start": 416,
+        "end": 480,
+        "name": "emissions_egr"
+       },
+       {
+        "kind": "protected",
+        "start": 480,
+        "end": 512,
+        "name": "vin"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "field_overlap",
+   "rules": [
+    "R73",
+    "R79"
+   ],
+   "reason": "field_overlap",
+   "descriptors": [
+    {
+     "descriptor_version": 1,
+     "name": "a_comp",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 272
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": null,
+     "target": 0,
+     "strategy": "compensate",
+     "compensate": {
+      "offset": 268
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "b_chain",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "xor",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": null,
+     "chain": [
+      "e_crc",
+      "f_table"
+     ],
+     "skip_self": false,
+     "store": {
+      "offset": 266,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "c_sum16",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum16",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 65535
+     },
+     "ranges": [
+      {
+       "start": 0,
+       "end": 262
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 258,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "d_mirror",
+     "memory_id": "pflash",
+     "mirror_block": {
+      "source": {
+       "start": 32,
+       "end": 48
+      },
+      "dest_offset": 272
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "e_crc",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 256
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 256,
+      "size": 4,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "f_table",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "little",
+      "init": 305419896,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": {
+      "offset": 400,
+      "count": 2,
+      "entry_size": 8,
+      "start": {
+       "at": 0,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end": {
+       "at": 4,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end_is": "exclusive",
+      "addressing": "absolute"
+     },
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 262,
+      "size": 4,
+      "endianness": "little"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    }
+   ],
+   "layout": {
+    "memories": [
+     {
+      "memory_id": "pflash",
+      "base_address": 2147483648,
+      "size": 512,
+      "regions": [
+       {
+        "kind": "protected",
+        "start": 0,
+        "end": 32,
+        "name": "boot"
+       },
+       {
+        "kind": "calibration",
+        "start": 32,
+        "end": 256,
+        "name": "maps"
+       },
+       {
+        "kind": "checksum",
+        "start": 256,
+        "end": 260,
+        "name": ""
+       },
+       {
+        "kind": "protected",
+        "start": 260,
+        "end": 262,
+        "name": ""
+       },
+       {
+        "kind": "checksum",
+        "start": 262,
+        "end": 288,
+        "name": ""
+       },
+       {
+        "kind": "protected",
+        "start": 288,
+        "end": 400,
+        "name": "code"
+       },
+       {
+        "kind": "protected",
+        "start": 400,
+        "end": 416,
+        "name": "block_table"
+       },
+       {
+        "kind": "protected",
+        "start": 416,
+        "end": 480,
+        "name": "emissions_egr"
+       },
+       {
+        "kind": "protected",
+        "start": 480,
+        "end": 512,
+        "name": "vin"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "unaccounted_checksum_bytes",
+   "rules": [
+    "R74",
+    "R79"
+   ],
+   "reason": "unaccounted_checksum_bytes",
+   "descriptors": [
+    {
+     "descriptor_version": 1,
+     "name": "a_comp",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 272
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": null,
+     "target": 0,
+     "strategy": "compensate",
+     "compensate": {
+      "offset": 268
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "b_chain",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "xor",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": null,
+     "chain": [
+      "e_crc",
+      "f_table"
+     ],
+     "skip_self": false,
+     "store": {
+      "offset": 266,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "c_sum16",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum16",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 65535
+     },
+     "ranges": [
+      {
+       "start": 0,
+       "end": 262
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 260,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "d_mirror",
+     "memory_id": "pflash",
+     "mirror_block": {
+      "source": {
+       "start": 32,
+       "end": 48
+      },
+      "dest_offset": 272
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "e_crc",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 256
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 256,
+      "size": 4,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "f_table",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "little",
+      "init": 305419896,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": {
+      "offset": 400,
+      "count": 2,
+      "entry_size": 8,
+      "start": {
+       "at": 0,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end": {
+       "at": 4,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end_is": "exclusive",
+      "addressing": "absolute"
+     },
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 262,
+      "size": 4,
+      "endianness": "little"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    }
+   ],
+   "layout": {
+    "memories": [
+     {
+      "memory_id": "pflash",
+      "base_address": 2147483648,
+      "size": 512,
+      "regions": [
+       {
+        "kind": "protected",
+        "start": 0,
+        "end": 32,
+        "name": "boot"
+       },
+       {
+        "kind": "calibration",
+        "start": 32,
+        "end": 256,
+        "name": "maps"
+       },
+       {
+        "kind": "checksum",
+        "start": 256,
+        "end": 290,
+        "name": "checksums"
+       },
+       {
+        "kind": "protected",
+        "start": 290,
+        "end": 400,
+        "name": "code"
+       },
+       {
+        "kind": "protected",
+        "start": 400,
+        "end": 416,
+        "name": "block_table"
+       },
+       {
+        "kind": "protected",
+        "start": 416,
+        "end": 480,
+        "name": "emissions_egr"
+       },
+       {
+        "kind": "protected",
+        "start": 480,
+        "end": 512,
+        "name": "vin"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "dependency_cycle",
+   "rules": [
+    "R75",
+    "R79"
+   ],
+   "reason": "dependency_cycle",
+   "descriptors": [
+    {
+     "descriptor_version": 1,
+     "name": "a_comp",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 272
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": null,
+     "target": 0,
+     "strategy": "compensate",
+     "compensate": {
+      "offset": 268
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "b_chain",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "xor",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": null,
+     "chain": [
+      "e_crc",
+      "f_table"
+     ],
+     "skip_self": false,
+     "store": {
+      "offset": 266,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "c_sum16",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum16",
+      "word_size": 2,
+      "endianness": "big",
+      "init": 0,
+      "xor_out": 65535
+     },
+     "ranges": [
+      {
+       "start": 0,
+       "end": 262
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": true,
+     "store": {
+      "offset": 260,
+      "size": 2,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "d_mirror",
+     "memory_id": "pflash",
+     "mirror_block": {
+      "source": {
+       "start": 32,
+       "end": 48
+      },
+      "dest_offset": 272
+     }
+    },
+    {
+     "descriptor_version": 1,
+     "name": "e_crc",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "crc32",
+      "poly": 79764919,
+      "init": 4294967295,
+      "xor_out": 4294967295,
+      "reflect_in": true,
+      "reflect_out": true
+     },
+     "ranges": [
+      {
+       "start": 32,
+       "end": 256
+      },
+      {
+       "start": 266,
+       "end": 268
+      }
+     ],
+     "ranges_from_table": null,
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 256,
+      "size": 4,
+      "endianness": "big"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    },
+    {
+     "descriptor_version": 1,
+     "name": "f_table",
+     "memory_id": "pflash",
+     "algorithm": {
+      "name": "sum32",
+      "word_size": 4,
+      "endianness": "little",
+      "init": 305419896,
+      "xor_out": 0
+     },
+     "ranges": null,
+     "ranges_from_table": {
+      "offset": 400,
+      "count": 2,
+      "entry_size": 8,
+      "start": {
+       "at": 0,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end": {
+       "at": 4,
+       "size": 4,
+       "endianness": "big"
+      },
+      "end_is": "exclusive",
+      "addressing": "absolute"
+     },
+     "chain": null,
+     "skip_self": false,
+     "store": {
+      "offset": 262,
+      "size": 4,
+      "endianness": "little"
+     },
+     "target": null,
+     "strategy": "recalculate",
+     "compensate": null
+    }
+   ],
+   "layout": {
+    "memories": [
+     {
+      "memory_id": "pflash",
+      "base_address": 2147483648,
+      "size": 512,
+      "regions": [
+       {
+        "kind": "protected",
+        "start": 0,
+        "end": 32,
+        "name": "boot"
+       },
+       {
+        "kind": "calibration",
+        "start": 32,
+        "end": 256,
+        "name": "maps"
+       },
+       {
+        "kind": "checksum",
+        "start": 256,
+        "end": 288,
+        "name": "checksums"
+       },
+       {
+        "kind": "protected",
+        "start": 288,
+        "end": 400,
+        "name": "code"
+       },
+       {
+        "kind": "protected",
+        "start": 400,
+        "end": 416,
+        "name": "block_table"
+       },
+       {
+        "kind": "protected",
+        "start": 416,
+        "end": 480,
+        "name": "emissions_egr"
+       },
+       {
+        "kind": "protected",
+        "start": 480,
+        "end": 512,
+        "name": "vin"
+       }
+      ]
+     }
+    ]
+   }
+  }
+ ],
+ "aggregation": [
+  {
+   "id": "all_ok",
+   "regions": [
+    "ok",
+    "ok"
+   ],
+   "expected": "ok",
+   "rules": [
+    "R43"
+   ]
+  },
+  {
+   "id": "fail_dominates",
+   "regions": [
+    "ok",
+    "bypassed",
+    "fail",
+    "signature_unverifiable"
+   ],
+   "expected": "fail",
+   "rules": [
+    "R43"
+   ]
+  },
+  {
+   "id": "bypassed_over_signed",
+   "regions": [
+    "signature_unverifiable",
+    "bypassed",
+    "ok"
+   ],
+   "expected": "bypassed",
+   "rules": [
+    "R43"
+   ]
+  },
+  {
+   "id": "signed_only",
+   "regions": [
+    "signature_unverifiable",
+    "ok"
+   ],
+   "expected": "signature_unverifiable",
+   "rules": [
+    "R43"
+   ]
+  },
+  {
+   "id": "no_regions",
+   "regions": [],
+   "expected": "not_applicable",
+   "rules": [
+    "R43"
+   ]
+  }
+ ]
+}
