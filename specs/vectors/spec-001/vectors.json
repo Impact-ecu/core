@@ -1,0 +1,927 @@
+{
+  "generator": {
+    "jcs": "rfc8785 0.1.4",
+    "sha256": "python hashlib",
+    "python": "3.12.3"
+  },
+  "original": {
+    "dump_kind": "bench_full",
+    "memories": {
+      "pflash": {
+        "base_address": 2147483648,
+        "bytes_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f"
+      },
+      "dflash": {
+        "base_address": 2936012800,
+        "bytes_hex": "ffffffffffffffffffffffffffffffff"
+      }
+    },
+    "rules": [
+      "R60",
+      "R62"
+    ],
+    "image_jcs": "{\"dump_kind\":\"bench_full\",\"memories\":[{\"base_address\":2936012800,\"memory_id\":\"dflash\",\"sha256\":\"5ac6a5945f16500911219129984ba8b387a06f24fe383ce4e81a73294065461b\",\"size\":16},{\"base_address\":2147483648,\"memory_id\":\"pflash\",\"sha256\":\"fdeab9acf3710362bd2658cdc9a29e8f9c757fcf9811603a8c447cd1d9151108\",\"size\":64}]}",
+    "image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2"
+  },
+  "layouts": {
+    "base": {
+      "rules": [
+        "R60",
+        "R63"
+      ],
+      "value": {
+        "memories": [
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "size": 16,
+            "regions": [
+              {
+                "kind": "protected",
+                "start": 0,
+                "end": 16,
+                "name": "vin_immo"
+              }
+            ]
+          },
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "size": 64,
+            "regions": [
+              {
+                "kind": "protected",
+                "start": 0,
+                "end": 16,
+                "name": "boot"
+              },
+              {
+                "kind": "calibration",
+                "start": 16,
+                "end": 40,
+                "name": "maps_a"
+              },
+              {
+                "kind": "calibration",
+                "start": 40,
+                "end": 48,
+                "name": "maps_b"
+              },
+              {
+                "kind": "protected",
+                "start": 48,
+                "end": 60,
+                "name": ""
+              },
+              {
+                "kind": "checksum",
+                "start": 60,
+                "end": 64,
+                "name": "block_crc"
+              }
+            ]
+          }
+        ]
+      },
+      "jcs": "{\"memories\":[{\"base_address\":2936012800,\"memory_id\":\"dflash\",\"regions\":[{\"end\":16,\"kind\":\"protected\",\"name\":\"vin_immo\",\"start\":0}],\"size\":16},{\"base_address\":2147483648,\"memory_id\":\"pflash\",\"regions\":[{\"end\":16,\"kind\":\"protected\",\"name\":\"boot\",\"start\":0},{\"end\":40,\"kind\":\"calibration\",\"name\":\"maps_a\",\"start\":16},{\"end\":48,\"kind\":\"calibration\",\"name\":\"maps_b\",\"start\":40},{\"end\":60,\"kind\":\"protected\",\"name\":\"\",\"start\":48},{\"end\":64,\"kind\":\"checksum\",\"name\":\"block_crc\",\"start\":60}],\"size\":64}]}",
+      "layout_hash": "541f2e5450079bfb81be851235d7d67b84a71e4b626df435e0a30f0ae534d9d5"
+    },
+    "migrated": {
+      "rules": [
+        "R60",
+        "R63"
+      ],
+      "value": {
+        "memories": [
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "size": 16,
+            "regions": [
+              {
+                "kind": "protected",
+                "start": 0,
+                "end": 16,
+                "name": "vin_immo"
+              }
+            ]
+          },
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "size": 64,
+            "regions": [
+              {
+                "kind": "protected",
+                "start": 0,
+                "end": 16,
+                "name": "boot"
+              },
+              {
+                "kind": "calibration",
+                "start": 16,
+                "end": 30,
+                "name": "maps_a"
+              },
+              {
+                "kind": "protected",
+                "start": 30,
+                "end": 40,
+                "name": "reserved"
+              },
+              {
+                "kind": "calibration",
+                "start": 40,
+                "end": 48,
+                "name": "maps_b"
+              },
+              {
+                "kind": "protected",
+                "start": 48,
+                "end": 60,
+                "name": ""
+              },
+              {
+                "kind": "checksum",
+                "start": 60,
+                "end": 64,
+                "name": "block_crc"
+              }
+            ]
+          }
+        ]
+      },
+      "jcs": "{\"memories\":[{\"base_address\":2936012800,\"memory_id\":\"dflash\",\"regions\":[{\"end\":16,\"kind\":\"protected\",\"name\":\"vin_immo\",\"start\":0}],\"size\":16},{\"base_address\":2147483648,\"memory_id\":\"pflash\",\"regions\":[{\"end\":16,\"kind\":\"protected\",\"name\":\"boot\",\"start\":0},{\"end\":30,\"kind\":\"calibration\",\"name\":\"maps_a\",\"start\":16},{\"end\":40,\"kind\":\"protected\",\"name\":\"reserved\",\"start\":30},{\"end\":48,\"kind\":\"calibration\",\"name\":\"maps_b\",\"start\":40},{\"end\":60,\"kind\":\"protected\",\"name\":\"\",\"start\":48},{\"end\":64,\"kind\":\"checksum\",\"name\":\"block_crc\",\"start\":60}],\"size\":64}]}",
+      "layout_hash": "bfbb91d37abcc0ec37dcf1775c055827d9c787fe5b337e70744d43335d1830f8"
+    },
+    "gap": {
+      "rules": [
+        "R4"
+      ],
+      "value": {
+        "memories": [
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "size": 16,
+            "regions": [
+              {
+                "kind": "protected",
+                "start": 0,
+                "end": 16,
+                "name": "vin_immo"
+              }
+            ]
+          },
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "size": 64,
+            "regions": [
+              {
+                "kind": "protected",
+                "start": 0,
+                "end": 16,
+                "name": "boot"
+              },
+              {
+                "kind": "calibration",
+                "start": 16,
+                "end": 40,
+                "name": "maps_a"
+              },
+              {
+                "kind": "protected",
+                "start": 48,
+                "end": 60,
+                "name": ""
+              },
+              {
+                "kind": "checksum",
+                "start": 60,
+                "end": 64,
+                "name": "block_crc"
+              }
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "error": "LayoutError",
+        "reason": "bad_cover"
+      }
+    },
+    "missing_memory": {
+      "rules": [
+        "R5"
+      ],
+      "value": {
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "size": 64,
+            "regions": [
+              {
+                "kind": "protected",
+                "start": 0,
+                "end": 16,
+                "name": "boot"
+              },
+              {
+                "kind": "calibration",
+                "start": 16,
+                "end": 40,
+                "name": "maps_a"
+              },
+              {
+                "kind": "calibration",
+                "start": 40,
+                "end": 48,
+                "name": "maps_b"
+              },
+              {
+                "kind": "protected",
+                "start": 48,
+                "end": 60,
+                "name": ""
+              },
+              {
+                "kind": "checksum",
+                "start": 60,
+                "end": 64,
+                "name": "block_crc"
+              }
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "error": "LayoutError",
+        "reason": "shape_mismatch"
+      }
+    }
+  },
+  "patches": {
+    "P1": {
+      "rules": [
+        "R60",
+        "R61"
+      ],
+      "value": {
+        "memory_id": "pflash",
+        "offset": 16,
+        "length": 4,
+        "before": "10111213",
+        "after": "0a0b0c0d"
+      },
+      "jcs": "{\"after\":\"0a0b0c0d\",\"before\":\"10111213\",\"length\":4,\"memory_id\":\"pflash\",\"offset\":16}",
+      "patch_hash": "de2dafb3486e129b4379c1580415d3467de4cc7a42bf278fa37d861f14edd980"
+    },
+    "P2": {
+      "rules": [
+        "R60",
+        "R61"
+      ],
+      "value": {
+        "memory_id": "pflash",
+        "offset": 32,
+        "length": 2,
+        "before": "2021",
+        "after": "ffff"
+      },
+      "jcs": "{\"after\":\"ffff\",\"before\":\"2021\",\"length\":2,\"memory_id\":\"pflash\",\"offset\":32}",
+      "patch_hash": "73b776c8c6292eb6c5032964f167232d54b24e4be7335f4f2885dedf74e86b66"
+    },
+    "P3": {
+      "rules": [
+        "R60",
+        "R61"
+      ],
+      "value": {
+        "memory_id": "pflash",
+        "offset": 18,
+        "length": 4,
+        "before": "0c0d1415",
+        "after": "aaaaaaaa"
+      },
+      "jcs": "{\"after\":\"aaaaaaaa\",\"before\":\"0c0d1415\",\"length\":4,\"memory_id\":\"pflash\",\"offset\":18}",
+      "patch_hash": "44fb3e3b60b8d6c510ae97a12bf750b58aab8329823e50d5881a9b4c60d3a0fb"
+    },
+    "P4": {
+      "rules": [
+        "R60",
+        "R61"
+      ],
+      "value": {
+        "memory_id": "pflash",
+        "offset": 18,
+        "length": 4,
+        "before": "12131415",
+        "after": "bbbbbbbb"
+      },
+      "jcs": "{\"after\":\"bbbbbbbb\",\"before\":\"12131415\",\"length\":4,\"memory_id\":\"pflash\",\"offset\":18}",
+      "patch_hash": "da5f89f94944b9ea15132bf4b82b597b5b925a453a2b4de104e2a889b2c0b8a1"
+    },
+    "P5": {
+      "rules": [
+        "R60",
+        "R61"
+      ],
+      "value": {
+        "memory_id": "pflash",
+        "offset": 16,
+        "length": 4,
+        "before": "1011bbbb",
+        "after": "cccccccc"
+      },
+      "jcs": "{\"after\":\"cccccccc\",\"before\":\"1011bbbb\",\"length\":4,\"memory_id\":\"pflash\",\"offset\":16}",
+      "patch_hash": "2084b397838dfe534582f875ec37a81c905e8590deacd755975b59abce075c5b"
+    },
+    "Q1": {
+      "rules": [
+        "R60",
+        "R61"
+      ],
+      "value": {
+        "memory_id": "pflash",
+        "offset": 60,
+        "length": 4,
+        "before": "3c3d3e3f",
+        "after": "deadbeef"
+      },
+      "jcs": "{\"after\":\"deadbeef\",\"before\":\"3c3d3e3f\",\"length\":4,\"memory_id\":\"pflash\",\"offset\":60}",
+      "patch_hash": "8e15e0dd5a43943b63b96ec3f5a5f6d039bbe1dd639055d41ab3dfe4a0271573"
+    },
+    "CA": {
+      "rules": [
+        "R60",
+        "R61"
+      ],
+      "value": {
+        "memory_id": "pflash",
+        "offset": 16,
+        "length": 4,
+        "before": "10111213",
+        "after": "01010101"
+      },
+      "jcs": "{\"after\":\"01010101\",\"before\":\"10111213\",\"length\":4,\"memory_id\":\"pflash\",\"offset\":16}",
+      "patch_hash": "2e5e6fb427c73f30155cab03b38293e4fde705ecea698116ba0ba48743a3e8f7"
+    },
+    "CB": {
+      "rules": [
+        "R60",
+        "R61"
+      ],
+      "value": {
+        "memory_id": "pflash",
+        "offset": 18,
+        "length": 4,
+        "before": "12131415",
+        "after": "02020202"
+      },
+      "jcs": "{\"after\":\"02020202\",\"before\":\"12131415\",\"length\":4,\"memory_id\":\"pflash\",\"offset\":18}",
+      "patch_hash": "7fd0791ddcb16772dfa49330855948ba5719d1964a9080d3e016c53811669f5a"
+    },
+    "CC": {
+      "rules": [
+        "R60",
+        "R61"
+      ],
+      "value": {
+        "memory_id": "pflash",
+        "offset": 17,
+        "length": 4,
+        "before": "11121314",
+        "after": "03030303"
+      },
+      "jcs": "{\"after\":\"03030303\",\"before\":\"11121314\",\"length\":4,\"memory_id\":\"pflash\",\"offset\":17}",
+      "patch_hash": "1013342a95780bceec6b173fe90797c0da131cf8dd7ea877a7b3c5cb9417888b"
+    }
+  },
+  "cases": [
+    {
+      "id": "V4-apply-disjoint",
+      "rules": [
+        "R20",
+        "R21",
+        "R24",
+        "R26",
+        "R64"
+      ],
+      "patches": [
+        "P1",
+        "P2"
+      ],
+      "overlaps": [],
+      "expect": {
+        "image_hash": "c42a3fdf83267ff246a7de25f05553c28f56adcaa048316bac9750968a58a10b",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4"
+      }
+    },
+    {
+      "id": "V4b-apply-disjoint-reordered",
+      "rules": [
+        "R25",
+        "R64"
+      ],
+      "patches": [
+        "P2",
+        "P1"
+      ],
+      "overlaps": [],
+      "expect": {
+        "image_hash": "c42a3fdf83267ff246a7de25f05553c28f56adcaa048316bac9750968a58a10b",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4"
+      }
+    },
+    {
+      "id": "V5-apply-overlap-ordered",
+      "rules": [
+        "R22",
+        "R25",
+        "R64"
+      ],
+      "patches": [
+        "P3",
+        "P1"
+      ],
+      "overlaps": [
+        [
+          "P1",
+          "P3"
+        ]
+      ],
+      "expect": {
+        "image_hash": "9b2bcd97f8bc39837d46e37cff64104af429c83aa4dbd637687da7503ec72cb6",
+        "version_hash": "9750b4c6c98e412c94774b2d413cba185571a5cdaabe0021bec2ff970f5c1806"
+      }
+    },
+    {
+      "id": "V5c-overlap-order-contradicts-offset-order",
+      "rules": [
+        "R22",
+        "R25",
+        "R64"
+      ],
+      "patches": [
+        "P5",
+        "P4"
+      ],
+      "overlaps": [
+        [
+          "P4",
+          "P5"
+        ]
+      ],
+      "expect": {
+        "canonical_order": [
+          "P4",
+          "P5"
+        ],
+        "image_hash": "6f37c0e013e4cab822cea84366a219322866697bb9e13e6e53ec6c62af853e5f",
+        "version_hash": "0fddf012ae5e06efd64aedbda414ae0b0e4b20bbb193040d5f192c5b636cf562"
+      }
+    },
+    {
+      "id": "V5b-overlap-without-order",
+      "rules": [
+        "R22"
+      ],
+      "patches": [
+        "P1",
+        "P3"
+      ],
+      "overlaps": [],
+      "expect": {
+        "error": "OverlapError",
+        "reason": "missing_order"
+      }
+    },
+    {
+      "id": "V5d-spurious-order",
+      "rules": [
+        "R22"
+      ],
+      "patches": [
+        "P1",
+        "P2"
+      ],
+      "overlaps": [
+        [
+          "P1",
+          "P2"
+        ]
+      ],
+      "expect": {
+        "error": "OverlapError",
+        "reason": "spurious_order"
+      }
+    },
+    {
+      "id": "V5e-cycle",
+      "rules": [
+        "R22"
+      ],
+      "patches": [
+        "CA",
+        "CB",
+        "CC"
+      ],
+      "overlaps": [
+        [
+          "CA",
+          "CB"
+        ],
+        [
+          "CB",
+          "CC"
+        ],
+        [
+          "CC",
+          "CA"
+        ]
+      ],
+      "expect": {
+        "error": "OverlapError",
+        "reason": "cycle"
+      }
+    },
+    {
+      "id": "V5f-order-references-patch-not-in-version",
+      "rules": [
+        "R22"
+      ],
+      "patches": [
+        "P1",
+        "P2"
+      ],
+      "overlaps": [
+        [
+          "P1",
+          "P5"
+        ]
+      ],
+      "expect": {
+        "error": "OverlapError",
+        "reason": "spurious_order"
+      }
+    },
+    {
+      "id": "V5g-order-pair-repeated",
+      "rules": [
+        "R22"
+      ],
+      "patches": [
+        "P1",
+        "P3"
+      ],
+      "overlaps": [
+        [
+          "P1",
+          "P3"
+        ],
+        [
+          "P3",
+          "P1"
+        ]
+      ],
+      "expect": {
+        "error": "OverlapError",
+        "reason": "spurious_order"
+      }
+    },
+    {
+      "id": "V5h-duplicate-patch",
+      "rules": [
+        "R14"
+      ],
+      "patches": [
+        "P1",
+        "P1"
+      ],
+      "overlaps": [],
+      "expect": {
+        "error": "ShapeError",
+        "reason": "duplicate_patch"
+      }
+    },
+    {
+      "id": "V6-invert-roundtrip",
+      "rules": [
+        "R30"
+      ],
+      "patches": [
+        "P1",
+        "P3"
+      ],
+      "overlaps": [
+        [
+          "P1",
+          "P3"
+        ]
+      ],
+      "operation": "apply(apply(o, v), invert(o, v))",
+      "expect": {
+        "invert_base_image_hash": "9b2bcd97f8bc39837d46e37cff64104af429c83aa4dbd637687da7503ec72cb6",
+        "invert_overlaps": [
+          [
+            "d39d4e83c7f45ffb95207f67a2cce879fdc3b35df10afa6749f050497261eb59",
+            "cea2d45d39fe2c273974ec7d6e21ee87a45ce96d7b319a58e8d7eec7b2f0dab9"
+          ]
+        ],
+        "image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2"
+      }
+    },
+    {
+      "id": "V6b-diff-of-apply",
+      "rules": [
+        "R31"
+      ],
+      "patches": [
+        "P1",
+        "P2"
+      ],
+      "overlaps": [],
+      "operation": "diff(o, apply(o, v))",
+      "expect": {
+        "patch_hashes": [
+          "de2dafb3486e129b4379c1580415d3467de4cc7a42bf278fa37d861f14edd980",
+          "73b776c8c6292eb6c5032964f167232d54b24e4be7335f4f2885dedf74e86b66"
+        ],
+        "foreign": []
+      }
+    },
+    {
+      "id": "V6c-diff-merges-overlap",
+      "rules": [
+        "R31"
+      ],
+      "patches": [
+        "P1",
+        "P3"
+      ],
+      "overlaps": [
+        [
+          "P1",
+          "P3"
+        ]
+      ],
+      "operation": "diff(o, apply(o, v))",
+      "expect": {
+        "patch_hashes": [
+          "1ff6465ab0fe452f6afa1449da2ab90e805a4d55d14712b5d15bee842d26cce7"
+        ],
+        "foreign": []
+      }
+    },
+    {
+      "id": "V7-diff-splits-at-region-boundary",
+      "rules": [
+        "R31"
+      ],
+      "operation": "diff(o, x)",
+      "x_pflash_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425010203042a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+      "expect": {
+        "patch_hashes": [
+          "5097c7ee29a8fd5f97878326ac849b6bfa04c6a2447362811d8e7d7c2c5582bf",
+          "0c017148db03e4e63f9af14563f548483b8bcaca7981f3ca6056cf5cdc7d5d50"
+        ],
+        "foreign": []
+      }
+    },
+    {
+      "id": "V8-diff-reports-foreign-changes",
+      "rules": [
+        "R32"
+      ],
+      "operation": "diff(o, x)",
+      "x_pflash_hex": "000102030400060708090a0b0c0d0e0f101112137715161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d993f",
+      "x_dflash_hex": "00ffffffffffffffffffffffffffffff",
+      "expect": {
+        "patch_hashes": [
+          "33f5b39a34688a7b0abd1331ff380c25cd300076a85b91f8f391eded2ae554bc"
+        ],
+        "foreign": [
+          {
+            "memory_id": "dflash",
+            "offset": 0,
+            "length": 1,
+            "region_kind": "protected",
+            "region_name": "vin_immo"
+          },
+          {
+            "memory_id": "pflash",
+            "offset": 5,
+            "length": 1,
+            "region_kind": "protected",
+            "region_name": "boot"
+          },
+          {
+            "memory_id": "pflash",
+            "offset": 62,
+            "length": 1,
+            "region_kind": "checksum",
+            "region_name": "block_crc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "V8b-diff-shape-mismatch",
+      "rules": [
+        "R31"
+      ],
+      "operation": "diff(o, x)",
+      "x_pflash_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+      "expect": {
+        "error": "ShapeError",
+        "reason": "shape_mismatch"
+      }
+    },
+    {
+      "id": "V9-checksum-patch",
+      "rules": [
+        "R40",
+        "R41"
+      ],
+      "base_case": "V4-apply-disjoint",
+      "checksum_patches": [
+        "Q1"
+      ],
+      "expect": {
+        "image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86"
+      }
+    },
+    {
+      "id": "V9b-checksum-patch-outside-checksum-region",
+      "rules": [
+        "R40"
+      ],
+      "base_case": "V4-apply-disjoint",
+      "checksum_patch": {
+        "memory_id": "pflash",
+        "offset": 44,
+        "length": 2,
+        "before": "2c2d",
+        "after": "0000"
+      },
+      "expect": {
+        "error": "ContainmentError",
+        "reason": "checksum_out_of_region"
+      }
+    },
+    {
+      "id": "V10-migrate",
+      "rules": [
+        "R50",
+        "R64"
+      ],
+      "patches": [
+        "P1",
+        "P2"
+      ],
+      "overlaps": [],
+      "new_layout": "migrated",
+      "expect": {
+        "version_hash": "f3ed6824bec1b63eb1fa1bda543b2fb7f4a4aed39c4f551d5910b460e8d1cb9c",
+        "conflicts": [
+          {
+            "patch_hash": "73b776c8c6292eb6c5032964f167232d54b24e4be7335f4f2885dedf74e86b66",
+            "reason": "out_of_region"
+          }
+        ]
+      }
+    },
+    {
+      "id": "V11-wrong-base",
+      "rules": [
+        "R20"
+      ],
+      "patches": [
+        "P1"
+      ],
+      "version_base_image_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "expect": {
+        "error": "ShapeError",
+        "reason": "wrong_base"
+      }
+    },
+    {
+      "id": "V11b-wrong-layout",
+      "rules": [
+        "R20"
+      ],
+      "patches": [
+        "P1"
+      ],
+      "version_layout_hash": "bfbb91d37abcc0ec37dcf1775c055827d9c787fe5b337e70744d43335d1830f8",
+      "expect": {
+        "error": "ShapeError",
+        "reason": "wrong_layout"
+      }
+    },
+    {
+      "id": "R-containment-crosses-protected",
+      "rules": [
+        "R23"
+      ],
+      "patch": {
+        "memory_id": "pflash",
+        "offset": 14,
+        "length": 4,
+        "before": "0e0f1011",
+        "after": "00000000"
+      },
+      "expect": {
+        "error": "ContainmentError",
+        "reason": "out_of_region"
+      }
+    },
+    {
+      "id": "R-containment-crosses-calibration-boundary",
+      "rules": [
+        "R23"
+      ],
+      "patch": {
+        "memory_id": "pflash",
+        "offset": 38,
+        "length": 4,
+        "before": "26272829",
+        "after": "00000000"
+      },
+      "expect": {
+        "error": "ContainmentError",
+        "reason": "out_of_region"
+      }
+    },
+    {
+      "id": "R-unknown-memory",
+      "rules": [
+        "R23"
+      ],
+      "patch": {
+        "memory_id": "eeprom",
+        "offset": 0,
+        "length": 1,
+        "before": "00",
+        "after": "01"
+      },
+      "expect": {
+        "error": "ContainmentError",
+        "reason": "unknown_memory"
+      }
+    },
+    {
+      "id": "R-precondition-mismatch",
+      "rules": [
+        "R21"
+      ],
+      "patch": {
+        "memory_id": "pflash",
+        "offset": 16,
+        "length": 4,
+        "before": "00000000",
+        "after": "0a0b0c0d"
+      },
+      "expect": {
+        "error": "PreconditionConflict",
+        "reason": "before_mismatch"
+      }
+    },
+    {
+      "id": "R-bad-length",
+      "rules": [
+        "R10"
+      ],
+      "patch": {
+        "memory_id": "pflash",
+        "offset": 16,
+        "length": 4,
+        "before": "101112",
+        "after": "0a0b0c"
+      },
+      "expect": {
+        "error": "ShapeError",
+        "reason": "bad_length"
+      }
+    },
+    {
+      "id": "R-noop-patch",
+      "rules": [
+        "R12"
+      ],
+      "patch": {
+        "memory_id": "pflash",
+        "offset": 16,
+        "length": 4,
+        "before": "10111213",
+        "after": "10111213"
+      },
+      "expect": {
+        "error": "ShapeError",
+        "reason": "noop_patch"
+      }
+    }
+  ]
+}
