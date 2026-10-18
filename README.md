@@ -6,4 +6,3 @@ Trusted core of the Impact ECU verification and recalibration platform: binary k
 - License: AGPL-3.0
 - Status: Phase −1 (discovery). No core code yet; SPEC-001 (kernel) comes first, then the kernel with its 12 invariants.
 
-To resume work with Claude: say "Retome Impact ECU" and point it at this repository.
