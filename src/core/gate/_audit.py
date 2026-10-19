@@ -3,6 +3,7 @@ from its own plugin calls, never from the caller."""
 
 from collections.abc import Mapping
 from dataclasses import dataclass
+from types import MappingProxyType
 from typing import TypedDict, Unpack
 
 from core import __version__
@@ -164,7 +165,7 @@ def run_audit(
     attribution = (
         None if definition is None else map_attribution(changes.patches, definition, (original.dump, candidate.dump))
     )
-    map_ids = {} if attribution is None else report_map_ids(attribution)
+    map_ids = MappingProxyType({} if attribution is None else report_map_ids(attribution))
     return Audit(audit_record(inputs), original_input, candidate_input, inputs, attribution, map_ids)
 
 
