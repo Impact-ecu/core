@@ -16,7 +16,6 @@ from core.provenance import (
     ExportInputs,
     ExportProvenance,
     ShapeError,
-    Versions,
     audit_record,
     check_alert_ack,
     check_export_record,
@@ -40,7 +39,7 @@ from tests.unit.provenance_scenario import (
 )
 from tests.unit.provenance_support import _plain, add, expect, import_payload, start
 
-VERSIONS_JSON: dict[str, Any] = json.loads(json.dumps(VERSIONS.to_json(with_references=True)))
+VERSIONS_JSON: dict[str, Any] = json.loads(json.dumps(VERSIONS.to_json()))
 
 
 def plain(record: ExportProvenance | AuditRecord) -> dict[str, Any]:
@@ -284,7 +283,7 @@ def audit_inputs() -> AuditInputs:
         layout=LAYOUT,
         verify_original="ok",
         verify_candidate="bypassed",
-        versions=Versions("0.1.0", VERSIONS.plugins, "rules-1"),
+        versions=VERSIONS,
         gate_report=gate_report("no findings"),
         build=IMAGE_BUILD,
     )
@@ -303,14 +302,16 @@ def test_audit_record() -> None:
         (30, "checksum", "crc"),
     ]
     assert value["verify"] == {"original": "ok", "candidate": "bypassed"}
-    assert set(value["versions"]) == {"core", "plugins", "gate_rules"}
+    assert value["versions"] == VERSIONS_JSON
     assert value["python"]["implementation"] == sys.implementation.name
     assert record.audit_hash == sha(value)
 
 
 def test_audit_record_rejections() -> None:
+    without_references = plain(audit_record(audit_inputs()))
+    without_references["versions"] = {k: v for k, v in VERSIONS_JSON.items() if k != "references"}
     with expect("bad_shape", ShapeError):
-        audit_record(dataclasses.replace(audit_inputs(), versions=VERSIONS))
+        AuditRecord(without_references)
     short = Dump("bench_full", (Memory("pflash", 0x8000_0000, PFLASH),))
     with expect("inconsistent_record"):
         audit_record(dataclasses.replace(audit_inputs(), candidate=short))

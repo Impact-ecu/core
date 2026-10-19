@@ -73,11 +73,16 @@ def region_name(value: Raw) -> bool:
     return isinstance(value, str) and encodable(value)
 
 
-_VERSION_FIELDS: dict[str, Check] = {
-    "core": text,
-    "plugins": array(obj({"family": text, "version": text, "conformance_report_hash": HEX32_CHECK}), sort_key="family"),
-    "gate_rules": text,
-}
+_VERSIONS = obj(
+    {
+        "core": text,
+        "plugins": array(
+            obj({"family": text, "version": text, "conformance_report_hash": HEX32_CHECK}), sort_key="family"
+        ),
+        "gate_rules": text,
+        "references": array(obj({"id": text, "version": text}), sort_key="id"),
+    }
+)
 _COMMON: dict[str, Check] = {
     "dump_kind": one_of(*DUMP_KINDS),
     "image_hash_original": HEX32_CHECK,
@@ -106,7 +111,7 @@ EXPORT_SHAPE = obj(
         "patch_hashes": _HASHES,
         "overlaps": _sorted_pairs,
         "checksum_patch_hashes": _HASHES,
-        "versions": obj({**_VERSION_FIELDS, "references": array(obj({"id": text, "version": text}), sort_key="id")}),
+        "versions": _VERSIONS,
         "verdict": one_of("no findings", "warn"),
         "alert_ack": nullable(EVENT_REF_CHECK),
         "input_verify": obj(
@@ -137,8 +142,7 @@ AUDIT_SHAPE = obj(
         "diff_patch_hashes": _HASHES,
         "foreign": array(FOREIGN),
         "verify": obj({"original": one_of(*VERIFY_STATUSES), "candidate": one_of(*VERIFY_STATUSES)}),
-        # §4 lists `versions: { core, plugins, gate_rules }`: an audit has no dual step, so no `references`.
-        "versions": obj(_VERSION_FIELDS),
+        "versions": _VERSIONS,
     }
 )
 
@@ -219,17 +223,15 @@ class Versions:
     gate_rules: str
     references: tuple[Reference, ...] = ()
 
-    def to_json(self, *, with_references: bool) -> dict[str, Json]:
+    def to_json(self) -> dict[str, Json]:
         plugins: list[Json] = [
             {"family": p.family, "version": p.version, "conformance_report_hash": p.conformance_report_hash}
             for p in sorted(self.plugins, key=_family)
         ]
-        value: dict[str, Json] = {"core": self.core, "plugins": plugins, "gate_rules": self.gate_rules}
-        if with_references:
-            value["references"] = [
-                {"id": r.id, "version": r.version} for r in sorted(self.references, key=_reference_id)
-            ]
-        return value
+        references: list[Json] = [
+            {"id": r.id, "version": r.version} for r in sorted(self.references, key=_reference_id)
+        ]
+        return {"core": self.core, "plugins": plugins, "gate_rules": self.gate_rules, "references": references}
 
 
 @dataclass(frozen=True, slots=True)
@@ -275,7 +277,7 @@ class ExportInputs:
 @dataclass(frozen=True, slots=True)
 class AuditInputs:
     """What an audit of `candidate` against `original` holds (R20); `gate_report` is the input gate report on
-    the candidate. `versions.references` must be empty: §4 has no `references`."""
+    the candidate."""
 
     original: Dump
     candidate: Dump
@@ -331,7 +333,7 @@ def export_provenance(
             "patch_hashes": [patch.patch_hash for patch in order],
             "overlaps": sorted([first, second] for first, second in inputs.version.overlaps),
             "checksum_patch_hashes": [p.patch_hash for p in sorted(inputs.checksum_patches, key=_checksum_order)],
-            "versions": inputs.versions.to_json(with_references=True),
+            "versions": inputs.versions.to_json(),
             "gate_report_hash": _gate_report_hash(inputs.gate_report),
             "verdict": as_str(member(inputs.gate_report, "verdict")),
             "alert_ack": None if alert_ack is None else alert_ack.ref,
@@ -486,8 +488,6 @@ def check_suspect_ack(
 
 def audit_record(inputs: AuditInputs) -> AuditRecord:
     """R20: every hash and list comes from `diff(original, candidate, layout)` (SPEC-001 R31, R32)."""
-    if inputs.versions.references:
-        raise ShapeError("bad_shape", "AuditRecord.versions has no references (SPEC-005 §4)")
     try:
         result = diff(inputs.original, inputs.candidate, inputs.layout)
     except KernelError as error:
@@ -512,7 +512,7 @@ def audit_record(inputs: AuditInputs) -> AuditRecord:
                 for run in result.foreign
             ],
             "verify": {"original": inputs.verify_original, "candidate": inputs.verify_candidate},
-            "versions": inputs.versions.to_json(with_references=False),
+            "versions": inputs.versions.to_json(),
             "gate_report_hash": _gate_report_hash(inputs.gate_report),
             "python": python_info(),
             "build": inputs.build.to_json(),

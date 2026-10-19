@@ -35,7 +35,6 @@ from core.provenance import (
     ExportProvenance,
     ReportBindingError,
     ReportContext,
-    ShapeError,
     check_alert_ack,
     check_report_file,
     check_suspect_ack,
@@ -250,7 +249,7 @@ def test_anchor() -> None:
     assert dict(made.to_json()) | {"statement": dict(made.statement.to_json())} == vector["value"]
 
 
-# SPEC-005 R20, R21. The vector's `versions` carries `references`; §4 lists only `{core, plugins, gate_rules}`.
+# SPEC-005 R20, R21
 def test_audit() -> None:
     vector = V["audit"]
     assert vector["rules"] == ["R20", "R21"]
@@ -292,13 +291,10 @@ def test_audit() -> None:
     ] == value["foreign"]
     assert try_hash(value) == vector["audit_hash"]
     assert jcs(value) == vector["jcs"]
-    # Literal reading of §4: `references` is not an AuditRecord key, so the vector value is not canonical.
-    with pytest.raises(ShapeError) as caught:
-        AuditRecord(value)
-    assert caught.value.reason == "bad_shape"
-    literal = copy.deepcopy(value)
-    del literal["versions"]["references"]
-    assert AuditRecord(literal).audit_hash == hashlib.sha256(rfc8785.dumps(literal)).hexdigest()
+    record = AuditRecord(value)
+    assert record.audit_hash == vector["audit_hash"]
+    assert raw_value(record) == value
+    assert set(value["versions"]) == {"core", "plugins", "gate_rules", "references"}
 
 
 # SPEC-005 R82
