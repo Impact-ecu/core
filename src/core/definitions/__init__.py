@@ -1,5 +1,10 @@
-"""Definitions (SPEC-003)."""
+"""Definitions (SPEC-003): map shapes, exact raw↔physical conversion, span, edits as patches, XDF.
 
+Pure: no I/O, network, clock, randomness or floating point (R60, R120). Imports only `core.kernel`.
+The A2L converter is specified but not implemented (R99): `import_a2l` and `export_a2l` refuse.
+"""
+
+from core.definitions._a2l import compu_method_scaling, export_a2l, import_a2l, rat_func_coeffs
 from core.definitions._bind import ByteRange, Decoded, cell_index, decode, encode, encode_axis, span
 from core.definitions._cells import NON_FINITE, NonFinite, Value, decode_cell, encode_cell
 from core.definitions._errors import DefinitionError, DefinitionInvariantError
@@ -97,6 +102,7 @@ __all__ = [
     "axisdef_hash",
     "axisdef_json",
     "cell_index",
+    "compu_method_scaling",
     "decode",
     "decode_cell",
     "definition_from_json",
@@ -108,9 +114,11 @@ __all__ = [
     "encode",
     "encode_axis",
     "encode_cell",
+    "export_a2l",
     "export_xdf",
     "finite_decimal_text",
     "has_reviewed_category",
+    "import_a2l",
     "import_xdf",
     "mapdef_from_json",
     "mapdef_hash",
@@ -119,6 +127,7 @@ __all__ = [
     "parse_a2l_number",
     "parse_rational",
     "parse_xdf_decimal",
+    "rat_func_coeffs",
     "rational_text",
     "revise",
     "span",
