@@ -6,6 +6,7 @@ inputs (R33); other properties take the profile's floor. Every byte is synthetic
 
 import hashlib
 
+import pytest
 from hypothesis import assume, given, settings
 from hypothesis import strategies as st
 
@@ -133,9 +134,15 @@ def test_prefixes_rejected(sample: tuple[bytes, ImportParams], seed: int) -> Non
     assert check_prefixes(SYNTH, data, params, seed) == []
 
 
-# SPEC-006 R12, R33: random and mutated inputs never raise and never exceed R16 (100,000 per PR run).
-@spec_count(100_000)
+FUZZ_SHARDS = 10
+
+
+# SPEC-006 R12, R33: random and mutated inputs never raise and never exceed R16 (100,000 per PR run,
+# in FUZZ_SHARDS independent shards so a parallel run is not bound by one test).
+@pytest.mark.parametrize("shard", range(FUZZ_SHARDS))
+@spec_count(100_000 // FUZZ_SHARDS)
 @given(st.binary(max_size=128) | mutated() | st.builds(lambda c: c[0], containers()), any_params)
-def test_fuzz_never_raises(data: bytes, params: ImportParams) -> None:
+def test_fuzz_never_raises(shard: int, data: bytes, params: ImportParams) -> None:
+    assert 0 <= shard < FUZZ_SHARDS
     assert check_fuzz_input(SYNTH, data, params) == []
     assert check_fuzz_input(RAW_IMPORTER, data, params) == []
