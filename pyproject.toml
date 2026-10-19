@@ -85,6 +85,10 @@ select = [
 # N818: SPEC-001 names the exception PreconditionConflict.
 ignore = ["PLR2004", "N818"]
 
+[tool.ruff.lint.pylint]
+# SPEC-006 R72 and R83 fix six-parameter signatures; R92 has five plus the export chain's genesis_hash.
+max-args = 6
+
 [tool.importlinter]
 root_packages = ["core"]
 include_external_packages = true
@@ -116,6 +120,7 @@ layers = [
     "core.gate",
     "(core.plugins)",
     "(core.definitions)",
+    "(core.evidence)",
     "(core.provenance)",
     "core.kernel",
 ]
@@ -156,3 +161,18 @@ protected_modules = [
     "core.provenance._verify",
 ]
 allowed_importers = ["core.provenance"]
+
+[[tool.importlinter.contracts]]
+name = "Outside evidence, only its public API is importable (SPEC-006 R4)"
+type = "protected"
+protected_modules = [
+    "core.evidence._admission",
+    "core.evidence._attestation",
+    "core.evidence._errors",
+    "core.evidence._golden",
+    "core.evidence._json",
+    "core.evidence._published",
+    "core.evidence._registry",
+    "core.evidence._review",
+]
+allowed_importers = ["core.evidence"]
