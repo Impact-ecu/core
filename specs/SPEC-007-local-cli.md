@@ -43,7 +43,7 @@ The CLI calls only public `core` API. On `main` at the date of this spec, these 
 
 | Id | Missing in `core` | Needed by | Owning spec |
 |---|---|---|---|
-| CG1 | `core.gate.check_input`, `core.gate.release`, `ReleasedImage`, `InputResult` (`core.gate.release` is a fail-closed stub that raises) | `verify`, `audit`, `export` | SPEC-004 |
+| CG1 | `core.gate.check_input`, `core.gate.release`, `ReleasedImage`, `InputResult` (implemented in core PR #13, SPEC-004 revision 2; until it merges, `core.gate.release` on main is a fail-closed stub) | `verify`, `audit`, `export` | SPEC-004 |
 | CG2 | One pure audit function that, from the original, the candidate, the plugin with its conformance report, the evidence bundle, `as_of`, the definition and the rule table, runs the input gate on both files, computes the layout itself, the diff, the per-map attribution and the `AuditRecord`. Today `audit_record` takes `verify_original`, `verify_candidate` and `layout` from the caller, so a consumer would have to orchestrate the plugin itself | `audit` | SPEC-005 §4 (revision), SPEC-004 |
 | CG3 | Stock hash registry: object shape, signature and freshness, which bytes are compared (the whole `image_hash` changes with a VIN in EEPROM, SPEC-005 open question 4), and a pure `stock_status(...) -> stock \| modified \| unknown` | `stock-check` | new spec or SPEC-006 revision |
 | CG4 | Per-map attribution of patches (`patch_hash -> map_id`) from a `Definition`, used by `export_report` and `audit_report` (`map_ids` is caller-supplied today) | `audit`, `export` | SPEC-003 or SPEC-005 revision |
