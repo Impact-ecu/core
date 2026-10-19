@@ -20,7 +20,7 @@ jobs:
       matrix:
         runner: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -44,5 +44,8 @@ jobs:
         run: uv run --locked lint-imports
       - name: pytest (Hypothesis ci profile, 100% line and branch coverage)
         run: uv run --locked pytest -q --hypothesis-profile=ci
-      - name: SPEC-001 independent cross-check
-        run: python3 -I specs/vectors/spec-001/crosscheck.py specs/vectors/spec-001/vectors.json
+      - name: SPEC-001 to SPEC-006 independent cross-checks
+        run: |
+          for d in specs/vectors/spec-*/; do
+            python3 -I "${d}crosscheck.py" "${d}vectors.json"
+          done
