@@ -24,7 +24,7 @@ Trigger: **"Retome Impact ECU"** means resume this project from this file and `s
 - No dump bytes in this public repository: `tests/golden/` holds only hashes + `oracle:`.
 - 100% coverage including branches, mypy `--strict`, Hypothesis ≥ 2,000 examples per invariant, fuzzing on parsers, mutation score ≥ 90% measured nightly, ratchets in `guardrails/ratchet.json` only go up.
 - Foundation paths (`src/core/kernel`, `gate`, `provenance`, `plugins/_contract.py`, `conformance`, `specs/`, `guardrails/`, `.github/`) change only with the `foundation-change` label, a spec or ADR in the same PR, and the PR open ≥ 24 h since its last commit.
-- Layout: `src/core/{kernel,plugins,gate,provenance,definitions,conformance}`, `tests/{properties,golden,fuzz}`, `specs/`, `guardrails/`, `.github/workflows/`.
+- Layout: `src/core/{kernel,plugins,gate,provenance,definitions,conformance,importers,evidence}`, `tests/{properties,golden,fuzz}`, `specs/`, `guardrails/`, `.github/workflows/`.
 
 ## Claude Code setup (once per machine)
 Skills, the `integrity-guardian` agent and guard hooks come from the private marketplace `Impact-ecu/skills`, declared in `.claude/settings.json`. Headless runs (`claude -p`) ignore project-declared marketplaces, so install once, from this directory:
