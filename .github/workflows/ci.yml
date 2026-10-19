@@ -43,7 +43,7 @@ jobs:
       - name: import-linter
         run: uv run --locked lint-imports
       - name: pytest (Hypothesis ci profile, 100% line and branch coverage)
-        run: uv run --locked pytest -q --hypothesis-profile=ci
+        run: uv run --locked pytest -q --hypothesis-profile=ci -n auto --dist worksteal --durations=15
       - name: SPEC-001 to SPEC-006 independent cross-checks
         run: |
           for d in specs/vectors/spec-*/; do
