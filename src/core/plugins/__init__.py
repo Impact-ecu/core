@@ -53,7 +53,7 @@ from core.plugins._contract import (
     verify_report_json,
 )
 from core.plugins._errors import DescriptorError, InterpreterDivergence, PluginContractError
-from core.plugins._jcs import ContractJson, contract_hash, contract_json
+from core.plugins._jcs import ContractJson, contract_hash
 from core.plugins._probe import Outcome, Probe, ProbeEntry, ProbeStatus, probe, probe_json, rebase
 from core.plugins._schema import (
     Addressing,
@@ -141,7 +141,6 @@ __all__ = [
     "check_verify_report",
     "checksum_region_json",
     "contract_hash",
-    "contract_json",
     "descriptor_from_json",
     "descriptor_hash",
     "descriptor_json",

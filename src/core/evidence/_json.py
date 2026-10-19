@@ -1,18 +1,16 @@
-"""Canonical JSON with booleans, hashing, formats and shape checks for SPEC-006 objects (R1-R3).
+"""Hashing, formats and shape checks for SPEC-006 objects (R1-R3).
 
 `FieldAttestation.communicates`, `GoldenEvaluation.attestations[].qualifying` and `EvidenceAdmission` carry
-booleans, which the kernel encoder rejects because none occurs in a kernel hash. Only `true`, `false` and the
-container framing are encoded here; every string, integer and `null` goes through the kernel's RFC 8785
-encoder, so escaping and integer bounds have one implementation.
+booleans, so SPEC-006 objects are encoded by the kernel's `jcs`, never by its boolean-free `canonical_json`.
 """
 
 import hashlib
 import re
 from collections.abc import Mapping, Sequence
 from itertools import pairwise
-from typing import TypeGuard
+from typing import TypeGuard, cast
 
-from core.kernel import canonical_json
+from core.kernel import JcsValue, jcs
 from core.provenance import Raw, Verifier
 
 MAX_SAFE_INTEGER = 2**53 - 1
@@ -30,28 +28,15 @@ DTC = re.compile(r"[PCBU][0-3][0-9A-F]{3}(-[0-9A-F]{2})?")
 UNIT_ID = re.compile(r"[A-Z0-9]{4,40}")
 
 
-def jcs(value: Raw) -> bytes:
+def encode(value: Raw) -> bytes:
     """RFC 8785 of `value`; `TypeError`/`ValueError` for floats, unsafe integers or lone surrogates."""
-    if isinstance(value, bool):
-        return b"true" if value else b"false"
-    if isinstance(value, Mapping):
-        members = [canonical_json(key) + b":" + jcs(value[key]) for key in sorted(value, key=_utf16)]
-        return b"{" + b",".join(members) + b"}"
-    if isinstance(value, Sequence) and not isinstance(value, str):
-        return b"[" + b",".join(jcs(item) for item in value) + b"]"
-    if isinstance(value, float):
-        raise TypeError("floats never occur in a hashed object (SPEC-006 R1)")
-    return canonical_json(value)
-
-
-def _utf16(key: str) -> bytes:
-    # RFC 8785 §3.2.3: object keys are sorted by UTF-16 code units.
-    return key.encode("utf-16-be", "surrogatepass")
+    # `Raw` admits floats only because parsers yield them; `jcs` rejects them at run time (R1).
+    return jcs(cast("JcsValue", value))
 
 
 def digest(value: Raw) -> str:
     """R1: `sha256(JCS(value))` in lowercase hex."""
-    return hashlib.sha256(jcs(value)).hexdigest()
+    return hashlib.sha256(encode(value)).hexdigest()
 
 
 def sha256_hex(data: bytes) -> str:
@@ -60,7 +45,7 @@ def sha256_hex(data: bytes) -> str:
 
 def try_jcs(value: Raw) -> bytes | None:
     try:
-        return jcs(value)
+        return encode(value)
     except (TypeError, ValueError):
         return None
 

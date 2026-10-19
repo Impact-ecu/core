@@ -4,7 +4,7 @@ Pure: no I/O, network, clock, randomness, environment, threads or global state (
 """
 
 from core.kernel._apply import Conflict, MigrationResult, apply, apply_checksum_patches, invert, migrate
-from core.kernel._canonical import canonical_json
+from core.kernel._canonical import JcsValue, canonical_json, jcs
 from core.kernel._diff import DiffResult, ForeignRun, diff
 from core.kernel._errors import (
     ContainmentError,
@@ -37,6 +37,7 @@ __all__ = [
     "Dump",
     "DumpKind",
     "ForeignRun",
+    "JcsValue",
     "KernelError",
     "KernelInvariantError",
     "LayoutError",
@@ -60,6 +61,7 @@ __all__ = [
     "diff",
     "image_hash",
     "invert",
+    "jcs",
     "layout_hash",
     "migrate",
     "version_hash",

@@ -17,7 +17,8 @@ from core.evidence import (
     verify_attestation,
 )
 from core.evidence._errors import ensure
-from core.evidence._json import jcs, try_jcs
+from core.evidence._json import encode as jcs
+from core.evidence._json import try_jcs
 from core.kernel import KernelError, KernelInvariantError
 from core.provenance import ProvenanceError
 from tests.unit.evidence_support import POOL, POST, PRE, TEMPLATE, A, R, attestation, sha, signed

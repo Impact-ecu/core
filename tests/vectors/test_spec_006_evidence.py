@@ -30,7 +30,8 @@ from core.evidence import (
     parse_attestation,
     verify_attestation,
 )
-from core.evidence._json import jcs, signing_input
+from core.evidence._json import encode as jcs
+from core.evidence._json import signing_input
 from core.provenance import TEST_KEY_IDS, Raw, event_hash, parse_event, verify_chain
 from tests.unit.evidence_support import CHAIN, EPOCH, KEYS, POOL, POST, PRE, REVIEWED, V
 from tests.unit.provenance_support import ROOT, VERIFIER

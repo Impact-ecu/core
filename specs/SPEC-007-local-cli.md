@@ -122,7 +122,7 @@ The CLI calls only public `core` API. On `main` at the date of this spec, these 
 
 ## 6. Output and exit codes
 
-- **R61. Machine output.** With `--json`, every command writes exactly one JSON value to stdout, encoded as JCS by `core.kernel.canonical_json`, in an envelope `{schema: "impact.cli-output.v1", command, as_of, core_version, cli_version, result, notices}`, where `result` holds the core objects unchanged (reports, records, `ChainReport`, `EvidenceAdmission`) and `notices` the CLI codes of R63, sorted. Files the CLI writes that `core` hashes (`ReportFile`, chain segments, `Version`s it emits) are written as JCS bytes so their hashes recompute. Human text goes to stdout without `--json`; diagnostics go to stderr. (SPEC-001 R60; SPEC-005 R60)
+- **R61. Machine output.** With `--json`, every command writes exactly one JSON value to stdout, encoded as JCS by `core.kernel.jcs`, in an envelope `{schema: "impact.cli-output.v1", command, as_of, core_version, cli_version, result, notices}`, where `result` holds the core objects unchanged (reports, records, `ChainReport`, `EvidenceAdmission`) and `notices` the CLI codes of R63, sorted. Files the CLI writes that `core` hashes (`ReportFile`, chain segments, `Version`s it emits) are written as JCS bytes so their hashes recompute. Human text goes to stdout without `--json`; diagnostics go to stderr. (SPEC-001 R60; SPEC-005 R60)
 - **R62. Exit codes.**
 
 | Code | Meaning |

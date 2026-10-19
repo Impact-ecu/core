@@ -12,6 +12,7 @@ import rfc8785
 
 import core.kernel
 import core.plugins
+from core.kernel import jcs
 from core.plugins import (
     Bypass,
     ChecksumDescriptor,
@@ -37,7 +38,6 @@ from core.plugins import (
     WordAlgorithm,
     checksum_region_json,
     contract_hash,
-    contract_json,
     descriptor_from_json,
     descriptor_hash,
     descriptor_json,
@@ -106,20 +106,20 @@ def test_errors() -> None:
     ],
 )
 def test_contract_json_is_rfc8785(value: ContractJson) -> None:
-    assert contract_json(value) == rfc8785.dumps(value)
+    assert jcs(value) == rfc8785.dumps(value)
     assert contract_hash(value) == hashlib.sha256(rfc8785.dumps(value)).hexdigest()
 
 
 # SPEC-002 R3, R9: no float, no bytes, only exact integers.
 def test_contract_json_rejections() -> None:
     with pytest.raises(ValueError, match="exact JSON range"):
-        contract_json(2**53)
+        jcs(2**53)
     with pytest.raises(TypeError, match="hex-encoded"):
-        contract_json(cast(Any, b"x"))
+        jcs(cast(Any, b"x"))
     with pytest.raises(TypeError, match="float"):
-        contract_json(cast(Any, 1.5))
+        jcs(cast(Any, 1.5))
     with pytest.raises(TypeError, match="object"):
-        contract_json(cast(Any, object()))
+        jcs(cast(Any, object()))
 
 
 # SPEC-002 R2, R3, R4, R5, R6, R14: the Identification shape.
