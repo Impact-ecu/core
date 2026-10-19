@@ -36,6 +36,6 @@ claude plugin install impact-core@impact --scope project
 The machine needs git access to `Impact-ecu/skills` as an org member. If the default GitHub identity is another account, route the org through the right SSH host: `git config --global url."git@<host-alias>:Impact-ecu/".insteadOf "https://github.com/Impact-ecu/"` (and the same for `git@github.com:Impact-ecu/`).
 
 ## Status and next steps
-- Phase −1 (discovery), before any core code: follow one full job at the partner shop (tool, exported format, whether they edit or buy files); close the oracle agreement; map what the community knows about MED17 checksums per variant. Exit criteria in SPEC-000.
-- Then: SPEC-001 (kernel), kernel with the 12 invariants, local CLI, MED17 plugin per variant, gate, audit at the partner shop.
+- Phase −1 (discovery) runs in parallel with the family-agnostic core (author's decision, 2026-10-18): follow one full job at the partner shop (tool, exported format, whether they edit or buy files); close the oracle agreement; first real dump. Its exit criteria gate family plugins, golden files and Phase 0 exit, not kernel code.
+- SPEC-001 to SPEC-005 are written with test vectors. Now: kernel per SPEC-001, then provenance, gate, definitions, plugin contract and conformance; then local CLI, MED17 plugin per variant, audit at the partner shop.
 - Infra pending: the Claude GitHub App must be installed on the `Impact-ecu` organization for chat Claude to push (today it is only on the personal account).
