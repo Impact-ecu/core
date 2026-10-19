@@ -99,6 +99,8 @@ forbidden_modules = [
     "select", "selectors", "shelve", "shutil", "signal", "socket", "sqlite3", "ssl", "subprocess",
     "sys", "tempfile", "threading", "time", "urllib", "uuid", "zoneinfo",
 ]
+# SPEC-005 R15, R90: the interpreter identity in every record is read from the running interpreter, here only.
+ignore_imports = ["core.provenance._runtime -> sys"]
 
 [[tool.importlinter.contracts]]
 name = "Kernel hashes never go through json, struct or numpy (SPEC-001 R65, R70)"
@@ -137,3 +139,20 @@ protected_modules = [
     "core.kernel._order",
 ]
 allowed_importers = ["core.kernel"]
+
+[[tool.importlinter.contracts]]
+name = "Outside provenance, only its public API is importable (SPEC-005 R90)"
+type = "protected"
+protected_modules = [
+    "core.provenance._anchor",
+    "core.provenance._errors",
+    "core.provenance._events",
+    "core.provenance._json",
+    "core.provenance._payloads",
+    "core.provenance._records",
+    "core.provenance._report",
+    "core.provenance._runtime",
+    "core.provenance._signing",
+    "core.provenance._verify",
+]
+allowed_importers = ["core.provenance"]

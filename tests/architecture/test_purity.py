@@ -14,7 +14,9 @@ import core.kernel
 SRC = Path(__file__).resolve().parents[2] / "src" / "core"
 FILES = sorted(SRC.rglob("*.py"))
 
-ALLOWED_STDLIB = {"bisect", "collections", "dataclasses", "hashlib", "heapq", "re", "typing"}
+ALLOWED_STDLIB = {"bisect", "collections", "dataclasses", "hashlib", "heapq", "itertools", "re", "types", "typing"}
+# SPEC-005 R15, R90: the interpreter identity is the one environment read, confined to one module.
+RUNTIME_READS = {"provenance/_runtime.py": {"platform", "sys"}}
 FORBIDDEN_CALLS = {"open", "eval", "exec", "compile", "__import__", "input", "print", "float", "globals", "vars"}
 
 
@@ -39,7 +41,8 @@ def test_imports_are_allowlisted(path: Path) -> None:
             continue
         for name in names:
             top = name.split(".")[0]
-            assert top == "core" or top in ALLOWED_STDLIB, f"{path}: import {name}"
+            allowed = ALLOWED_STDLIB | RUNTIME_READS.get(str(path.relative_to(SRC)), set())
+            assert top == "core" or top in allowed, f"{path}: import {name}"
 
 
 # SPEC-001 R70: no floating point and no native byte order; R71: no dynamic code or I/O builtins.
