@@ -10,7 +10,7 @@ from hypothesis import given
 from hypothesis import strategies as st
 
 from core.gate import GateBlocked, GateError, ReleasedImage
-from core.gate._evidence import EvidenceAdmissionFn, evidence_admission
+from core.gate._evidence import EvidenceAdmissionFn, published_admission
 from core.gate._model import json_hash
 from core.gate._report import GateReport
 from core.kernel import Dump, UnverifiedImage, Version, canonical_json, image_hash
@@ -64,7 +64,7 @@ def test_no_path_to_a_released_image_but_a_passing_gate(
     u = forged(s.original, version)
     other = check(dump_of(ORIGINAL[:-1] + b"\x00"))
     overrides: dict[str, object] = {"rule_table": TABLE if table else None, "input": s.input() if bound else other}
-    admit = admit_all if evidence else evidence_admission
+    admit = admit_all if evidence else published_admission
     outcome = _outcome(s, u, admit, overrides)
     if not isinstance(outcome, ReleasedImage):
         assert outcome["verdict"] == "block"

@@ -6,7 +6,6 @@ a boolean and never "pass". Pure (R80): no I/O, network, clock, randomness, envi
 """
 
 from core.gate._check import CheckInputArgs, check_input
-from core.gate._evidence import EvidenceAdmission, FieldEvidence, Timestamp, VariantEvidence
 from core.gate._fatigue import AlertRecord, Fatigue, fatigue
 from core.gate._maps import Engine
 from core.gate._model import BUILTIN, Fuel, GateError, GateInvariantError, Severity, Verdict
@@ -19,10 +18,8 @@ __all__ = [
     "AlertRecord",
     "CheckInputArgs",
     "Engine",
-    "EvidenceAdmission",
     "ExportRefused",
     "Fatigue",
-    "FieldEvidence",
     "Fuel",
     "GateBlocked",
     "GateError",
@@ -34,8 +31,6 @@ __all__ = [
     "RuleKey",
     "Severity",
     "Table",
-    "Timestamp",
-    "VariantEvidence",
     "Verdict",
     "check_input",
     "fatigue",

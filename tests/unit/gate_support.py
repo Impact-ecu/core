@@ -11,7 +11,8 @@ from fractions import Fraction
 from typing import Any, cast
 
 from core.definitions import Definition, Dtype, InlineAxis, License, MapDef, Origin, Scaling, SoftwareVersion
-from core.gate import Engine, EvidenceAdmission, GateBlocked, InputResult, ReleasedImage, VariantEvidence
+from core.evidence import EvidenceAdmission, FieldEvidence, VariantAdmission
+from core.gate import Engine, GateBlocked, InputResult, ReleasedImage
 from core.gate._check import CheckInputArgs, run_check_input
 from core.gate._evidence import EvidenceAdmissionFn
 from core.gate._release import ReleaseArgs, run_release
@@ -25,7 +26,7 @@ from core.plugins import (
     RegionStatus,
     VerifyReport,
 )
-from core.provenance import Actor, Event
+from core.provenance import Actor, Event, Verifier
 from tests.unit.plugin_fixtures import FAMILY, LAYOUT, ORIGINAL, VARIANT, FakePlugin, dump_of
 
 PROJECT = "proj-1"
@@ -122,10 +123,10 @@ def definition(*mapdefs: MapDef) -> Definition:
     )
 
 
-def admit_all(evidence: object | None, as_of: str) -> EvidenceAdmission:
+def admit_all(evidence: FieldEvidence | None, as_of: str, verifier: Verifier | None) -> EvidenceAdmission:
     """A `current` field-evidence admission listing the fixture variant as `golden_field` (SPEC-006 R83)."""
-    del evidence, as_of
-    return EvidenceAdmission("current", (), "e" * 64, (VariantEvidence(FAMILY, VARIANT, True, (), ()),))
+    del evidence, as_of, verifier
+    return EvidenceAdmission("current", (), "e" * 64, (VariantAdmission(FAMILY, VARIANT, True, (), ()),))
 
 
 def sha(data: bytes) -> str:
@@ -174,6 +175,7 @@ def input_args(original: Dump, **overrides: object) -> CheckInputArgs:
         "conformance_report": CONFORMANCE,
         "evidence": None,
         "as_of": AS_OF,
+        "verifier": None,
         "confirmation": None,
         "rule_table": TABLE,
     }
@@ -215,6 +217,7 @@ class Scenario:
             "conformance_report": CONFORMANCE,
             "evidence": None,
             "as_of": AS_OF,
+            "verifier": None,
             "references": {},
             "definition": definition(),
             "engine": Engine("SI", "gasoline"),

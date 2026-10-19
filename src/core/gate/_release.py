@@ -6,8 +6,9 @@ from typing import TypedDict, Unpack, cast
 
 from core import __version__
 from core.definitions import ByteRange, Definition, DefinitionError, decode, definition_hash, span
+from core.evidence import FieldEvidence
 from core.gate._calls import PluginFault, admitted_variants, call, conformance_admission, plugin_ref
-from core.gate._evidence import EvidenceAdmissionFn, FieldEvidence, Timestamp, evidence_admission
+from core.gate._evidence import EvidenceAdmissionFn, published_admission
 from core.gate._integrity import (
     edited,
     kernel_check,
@@ -75,7 +76,7 @@ from core.plugins.descriptor import (
     interpret_patches,
     reference_result_usable,
 )
-from core.provenance import Event, Json
+from core.provenance import Event, Json, Verifier
 
 
 class ReleaseArgs(TypedDict):
@@ -86,7 +87,8 @@ class ReleaseArgs(TypedDict):
     plugin: EcuPlugin | None
     conformance_report: ContractJson | None
     evidence: FieldEvidence | None
-    as_of: Timestamp
+    as_of: str
+    verifier: Verifier | None
     references: Mapping[str, RegionReference]
     definition: Definition
     engine: Engine
@@ -196,7 +198,8 @@ class _ReleaseSteps:
         ident = _guard("error", lambda: check_identification(raw, original, ref.family), PluginContractError)
         self.ident = ident
         variant = None if ident is None else ident.checksum_variant_id
-        admitted = admitted_variants(conformance, ref, self.admit, self.args["evidence"], self.args["as_of"])
+        args = self.args
+        admitted = admitted_variants(conformance, ref, self.admit, args["evidence"], args["as_of"], args["verifier"])
         if ident is None or variant not in admitted:
             return OutputAvailability(table, ref, "ok", conformance.report_hash, variant, False, True, False)
         self.regions = _guard(
@@ -453,4 +456,4 @@ def run_release(u: UnverifiedImage, args: ReleaseArgs, admit: EvidenceAdmissionF
 
 def release(u: UnverifiedImage, **args: Unpack[ReleaseArgs]) -> ReleasedImage:
     """SPEC-004 §4. Raises `GateBlocked(report, report_hash)` for a `block` verdict and constructs nothing."""
-    return run_release(u, args, evidence_admission, __version__)
+    return run_release(u, args, published_admission, __version__)

@@ -2,9 +2,11 @@
 
 from collections.abc import Callable
 
-from core.gate._evidence import EvidenceAdmissionFn, FieldEvidence, Timestamp, admitted_by_evidence
+from core.evidence import FieldEvidence
+from core.gate._evidence import EvidenceAdmissionFn, admitted_by_evidence
 from core.gate._report import PluginRef
 from core.plugins import Admission, ContractJson, EcuPlugin, admission, check_plugin
+from core.provenance import Verifier
 
 
 class PluginFault(Exception):
@@ -44,7 +46,9 @@ def admitted_variants(
     plugin: PluginRef,
     admit: EvidenceAdmissionFn,
     evidence: FieldEvidence | None,
-    as_of: Timestamp,
+    as_of: str,
+    verifier: Verifier | None,
 ) -> frozenset[str]:
     """R15 intersected with R16: the conformance report's admitted set and `golden_field` under a current head."""
-    return conformance.admitted & admitted_by_evidence(admit(evidence, as_of), plugin.family)
+    admission = admit(evidence, as_of, verifier)
+    return frozenset(v for v in conformance.admitted if admitted_by_evidence(admission, plugin.family, v))

@@ -1,61 +1,46 @@
-"""Field evidence at the gate (SPEC-004 R16; SPEC-006 R83, R84): the seam to `core.evidence`.
+"""Field evidence at the gate (SPEC-004 R16; SPEC-006 R60, R82-R84).
 
-The gate runs `evidence_admission` itself and never takes an admission or a level from the caller (R16). The
-SPEC-006 implementation is not in this tree yet, so `evidence_admission` below is the fail-closed stand-in:
-every call is `unavailable` and no variant is admitted for `verify` or recalculation, which makes every variant
-`unknown_variant` exactly as R16 prescribes for missing evidence (the run blocks through R13 and R26).
-
-To wire `core.evidence`, replace the body of `evidence_admission` with a call to SPEC-006
-`evidence_admission(evidence, trust, policy, as_of, verifier)`, binding the registry trust anchor and the head
-policy published with the core release (SPEC-006 R60, R82), and map its result onto `EvidenceAdmission`. Nothing
-else in the gate changes: `admitted_by_evidence` is the only reader.
+The gate runs `core.evidence.evidence_admission` itself, with the registry trust anchor and the head policy
+published with the core release, and never takes an admission or a level from the caller (R16). Fail-closed:
+without evidence, without a verifier, without a published trust anchor, or with evidence that `core.evidence`
+rejects, the admission is `unavailable`, no variant is admitted, and the run blocks through R13 and R26.
 """
 
-from collections.abc import Sequence
-from dataclasses import dataclass
-from typing import Literal, Protocol
+from collections.abc import Callable
 
-# SPEC-006 §7.3 `FieldEvidence`; opaque to the gate, which only hands it to `evidence_admission`.
-type FieldEvidence = object
-# SPEC-006 `Timestamp` (SPEC-005 R5), e.g. "2026-10-19T00:00:00Z": the caller's clock (SPEC-004 R80).
-type Timestamp = str
+from core.evidence import HEAD_POLICY_V1, EvidenceAdmission, EvidenceError, FieldEvidence, evidence_admission
+from core.provenance import Raw, Verifier
 
+# SPEC-006 R60: `RegistryTrust` of the operator's registry chain, published with each core release. None is
+# published yet (the registry does not exist), so the published gate admits no variant for recalculation.
+REGISTRY_TRUST: Raw = None
 
-@dataclass(frozen=True, slots=True)
-class VariantEvidence:
-    """One `variants` entry of SPEC-006 R83 `EvidenceAdmission`."""
-
-    family: str
-    checksum_variant_id: str
-    golden_field: bool
-    reasons: tuple[str, ...]
-    evaluations: tuple[str, ...]
+type EvidenceAdmissionFn = Callable[[FieldEvidence | None, str, Verifier | None], EvidenceAdmission]
 
 
-@dataclass(frozen=True, slots=True)
-class EvidenceAdmission:
-    """SPEC-006 R83 `EvidenceAdmission` (`schema: impact.evidence-admission.v1`)."""
-
-    status: Literal["current", "unavailable"]
-    reasons: tuple[str, ...]
-    head_digest: str | None
-    variants: tuple[VariantEvidence, ...]
-
-
-class EvidenceAdmissionFn(Protocol):
-    def __call__(self, evidence: FieldEvidence | None, as_of: Timestamp) -> EvidenceAdmission: ...
-
-
-def evidence_admission(evidence: FieldEvidence | None, as_of: Timestamp) -> EvidenceAdmission:
-    """Fail-closed until `core.evidence` (SPEC-006 R83) is wired here; see the module docstring."""
-    del as_of
-    reason = "missing_evidence" if evidence is None else "evidence_admission_not_wired"
+def _unavailable(reason: str) -> EvidenceAdmission:
     return EvidenceAdmission("unavailable", (reason,), None, ())
 
 
-def admitted_by_evidence(admission: EvidenceAdmission, family: str) -> frozenset[str]:
-    """SPEC-006 R84: the variants of `family` listed with `golden_field: true` under status `current`."""
-    if admission.status != "current":
-        return frozenset()
-    variants: Sequence[VariantEvidence] = admission.variants
-    return frozenset(v.checksum_variant_id for v in variants if v.family == family and v.golden_field)
+def admission_with(trust: Raw) -> EvidenceAdmissionFn:
+    """SPEC-006 R83 under `trust` and the published head policy, outside `test_mode` (R66)."""
+
+    def admit(evidence: FieldEvidence | None, as_of: str, verifier: Verifier | None) -> EvidenceAdmission:
+        if evidence is None:
+            return _unavailable("missing_evidence")
+        if trust is None or verifier is None:
+            return _unavailable("untrusted_head")
+        try:
+            return evidence_admission(evidence, trust, HEAD_POLICY_V1, as_of, verifier)
+        except EvidenceError as error:
+            return _unavailable(error.reason)
+
+    return admit
+
+
+published_admission = admission_with(REGISTRY_TRUST)
+
+
+def admitted_by_evidence(admission: EvidenceAdmission, family: str, variant: str | None) -> bool:
+    """SPEC-006 R84: listed with `golden_field: true` under status `current`."""
+    return variant is not None and admission.golden_field(family, variant)

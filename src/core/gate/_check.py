@@ -3,8 +3,9 @@
 from typing import TypedDict, Unpack
 
 from core import __version__
+from core.evidence import FieldEvidence
 from core.gate._calls import PluginFault, admitted_variants, call, conformance_admission, plugin_ref
-from core.gate._evidence import EvidenceAdmissionFn, FieldEvidence, Timestamp, evidence_admission
+from core.gate._evidence import EvidenceAdmissionFn, published_admission
 from core.gate._input import IdentView, InputAvailability, InputFacts, InputVerifyOutcome, input_report
 from core.gate._model import GateError, present, shielded
 from core.gate._report import SignedRegion
@@ -24,7 +25,7 @@ from core.plugins import (
     identification_hash,
 )
 from core.plugins.descriptor import check_checksums, compare_verify
-from core.provenance import Event, Json
+from core.provenance import Event, Json, Verifier
 
 
 class CheckInputArgs(TypedDict):
@@ -36,7 +37,8 @@ class CheckInputArgs(TypedDict):
     plugin: EcuPlugin | None
     conformance_report: ContractJson | None
     evidence: FieldEvidence | None
-    as_of: Timestamp
+    as_of: str
+    verifier: Verifier | None
     confirmation: Event | None
     rule_table: Json | None
 
@@ -73,7 +75,8 @@ class _InputSteps:
         except PluginContractError:
             return InputAvailability(table, ref, "error", conformance.report_hash, frozenset(), None)
         self.ident = ident
-        admitted = admitted_variants(conformance, ref, self.admit, self.args["evidence"], self.args["as_of"])
+        args = self.args
+        admitted = admitted_variants(conformance, ref, self.admit, args["evidence"], args["as_of"], args["verifier"])
         view = (
             None
             if ident is None
@@ -118,4 +121,4 @@ def run_check_input(dump: Dump, args: CheckInputArgs, admit: EvidenceAdmissionFn
 def check_input(dump: Dump, **args: Unpack[CheckInputArgs]) -> InputResult:
     """SPEC-004 §3: the input gate. The identification is the gate's own `identify` (R12), the admitted set the
     conformance report intersected with field evidence the gate evaluates itself (R15, R16)."""
-    return run_check_input(dump, args, evidence_admission, __version__)
+    return run_check_input(dump, args, published_admission, __version__)
