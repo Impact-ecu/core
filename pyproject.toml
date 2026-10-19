@@ -73,6 +73,7 @@ disallow_any_decorated = false
 target-version = "py312"
 line-length = 120
 src = ["src", "tests"]
+extend-exclude = ["specs"]
 
 [tool.ruff.lint]
 select = [
