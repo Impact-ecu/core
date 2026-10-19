@@ -2,6 +2,7 @@
 
 Status: draft
 Date: 2026-10-18
+Revision: 1 (2026-10-19), for SPEC-007 §2.1 gap CG4: §5.1 adds `map_attribution` and `report_map_ids` (R100–R102). New optional API: minor under §11. Open question 11 is a pending author decision.
 Governs: `src/core/definitions/`: the `MapDef`, `AxisDef` and `Definition` shapes, raw↔physical conversion, canonical units and categories, `definition_hash`, edits turned into patches, and the XDF and A2L converters.
 Derives from: SPEC-000 §Principles (definition format axis), §Data model (Definition, MapDef, MapPack) and §Modeling decisions, §Standards written before the code (SPEC-003), §Verification gate (keyed ranges, reviewed category), §Non-functional requirements (definition portability, unit accuracy), §Ingestion and analysis pipeline (step 4), §Gaps that still require a decision (firmware copyright and A2L), §Gaps and adopted improvements (detection rows), §Licensing and anti-piracy, §Regulatory compliance (intellectual property); SPEC-001 §2.1, R2, R10–R12, R31, R60–R65, R70–R72; SPEC-004 R30–R35; SPEC-005 R1–R4.
 
@@ -166,6 +167,23 @@ Definition = {
 - **R58.** Axis edits follow R57 on the axis span. Editing a `shared` axis edits every map that references it, because the axis bytes are in each map's span (R30); `encode` for a shared axis is called once per `AxisDef`, not per map.
 - **R59. Reading unverified images.** `decode` takes a `Dump`. Its only callers on an `UnverifiedImage` are the gate (through SPEC-001 R8 `view`) and tests. How the editor shows decoded values of an applied but unreleased version is open (§12, question 9).
 
+### 5.1 Patches attributed to maps
+
+The audit and the export report show what changed per map (SPEC-000 §First wins item 4, "per-map diff"). Which map a changed byte belongs to is a rule of definitions, computed by the core, never by a consumer (SPEC-007 R10, gap CG4).
+
+- **R100. map_attribution.** `map_attribution(patches: Sequence[Patch], definition: Definition, dumps: Sequence[Dump]) -> MapAttribution` assigns the bytes of each patch to the `MapDef`s whose R30 span holds them. The span of a map is the union of `span(m, definition, d)` over every `d` in `dumps`: for an audit the original and the candidate, for an export the original and the release candidate, as SPEC-004 R31 does, so a pointer or shared axis read differently on either side counts on both. A `MapDef` whose span fails on any of the dumps (R22, R55) is listed in `unbound` and contributes no span, as SPEC-004 R31 treats it. `dumps` MUST be non-empty (else `DefinitionError`, reason `bad_shape`). Patches with the same `patch_hash` are one patch (SPEC-001 R11). The function reads spans only: it never decodes cells and never evaluates a rule (SPEC-004 R7). (SPEC-000 §First wins item 4; SPEC-001 R31, R32)
+- **R101. Output.**
+  ```
+  MapAttribution = {
+    patches:  list[{ patch_hash, map_ids: list[map_id] }],         # sorted by the patch's (memory_id, offset, patch_hash); map_ids sorted, unique
+    maps:     list[{ map_id, runs: list[{memory_id, offset, length}] }],   # sorted by map_id; only maps holding at least one patch byte
+    unmapped: list[{ memory_id, offset, length }],                  # patch bytes in no resolved span, maximal runs
+    unbound:  list[map_id]                                          # sorted
+  }
+  ```
+  A patch's `map_ids` are the maps holding at least one of its bytes. A map's `runs` are the patch bytes inside its span, as maximal runs. `runs` and `unmapped` are sorted by `(memory_id, offset)`; `unmapped` is the same set of bytes as the runs of SPEC-004 R31's `G-UNMAPPED`. The result does not depend on the order of `patches`, `dumps` or `definition.mapdefs`. (SPEC-004 R31)
+- **R102. One `map_id` per report line.** SPEC-005 §8 `what_changed.patches[].map_id` holds one id: the single element of the patch's `map_ids`, or `null` when there is none or more than one (a maximal diff run, SPEC-001 R31, crosses adjacent maps; a shared axis is read by several maps). `report_map_ids(attribution)` returns that mapping from `patch_hash`. Consumers show `maps` for the per-map view and never derive a `map_id` themselves (SPEC-007 R10). Whether the report should carry the full list is open question 11 (pending author decision); until then `null` means "not exactly one map", not "no map". (SPEC-005 R62)
+
 ## 6. Converters: common rules
 
 - **R60. Pure.** Importers take the file as `bytes` plus parameters; exporters return `bytes`. No file system, network, environment, clock or randomness (SPEC-001 R71). An A2L `/include` directive → reason `unsupported_include`, because resolving it needs I/O [A2].
@@ -305,7 +323,7 @@ The ASAM MCD-2 MC standard is sold by ASAM and was not read for this spec. The f
 | XU1–XU7 | R76 | export rejected, `unrepresentable`, with fields `axes.x` / `axes.y` (missing axis on a dimension > 1), `memory_id`, `scaling.factor`, `scaling.addend`, `axes.x.values`, `axes.x.axis_source` |
 | X2–X15 | R61, R70, R72–R74, R80 | XDF rejections (`xml_forbidden`, `unsupported_stride`, `unsupported_equation`, `unsupported_baseoffset`, `unverified_defaults`, `dims_mismatch`, `ambiguous_label_scaling`, `unsupported_typeflags`, `unsupported_equation` for a decimal divisor (X15), `missing_element` for a `MATH` without `equation` and an axis without `indexcount`, `non_numeric_label` for `+1`, `bad_number` for an address padded with U+00A0); X12 accepts a label value with surrounding whitespace |
 
-Not covered by vectors, so they need dedicated tests: R1, R2, R4, R5 (shape errors, including the R17 `non_canonical` unit encodings), R8 `y_fastest` decoding, R14 beyond the E spot checks (property tests), R22 errors (`unknown_base_address`, `out_of_memory`), R29, R41 (transition table), R42 (gate contract, SPEC-004), R43, R45 (taint), R55–R59 (bind and encode against a `Dump`), R60, R65 (fuzz), R92–R98 (A2L files, after question 4), R120–R122. Vectors are test data, not golden files; they need no `oracle:` record.
+Not covered by vectors, so they need dedicated tests: R1, R2, R4, R5 (shape errors, including the R17 `non_canonical` unit encodings), R8 `y_fastest` decoding, R14 beyond the E spot checks (property tests), R22 errors (`unknown_base_address`, `out_of_memory`), R29, R41 (transition table), R42 (gate contract, SPEC-004), R43, R45 (taint), R55–R59 (bind and encode against a `Dump`), R100–R102 (map attribution, unit and property tests), R60, R65 (fuzz), R92–R98 (A2L files, after question 4), R120–R122. Vectors are test data, not golden files; they need no `oracle:` record.
 
 ## 11. Compatibility
 
@@ -323,6 +341,7 @@ Changing a shape of §3, a conversion rule (R7, R12–R15), the unit factors of 
 8. **Sign convention of `deg_crank` (blocks publication of the SPEC-004 seed table).** "Positive = before TDC" (R16) is a convention chosen here; SPEC-000 does not state it. The SPEC-004 seed ignition rules (−10 to 45, cap 30) are keyed on `deg_crank` and depend on this sign, so the seed table MUST NOT be published until a source confirms the convention or Luiz decides it.
 9. **Decoded values of an unreleased version.** The editor needs the physical values of `apply(o, v)`, but SPEC-001 R7 hides the bytes of an `UnverifiedImage` and R8 lets only the gate call `view`. Options: `decode` overlays patch `after` bytes on the original `Dump` itself (pure, but duplicates part of `apply`), or SPEC-001 grants `core.definitions` access to `view`. Either is a SPEC-001 or SPEC-000 decision.
 10. **Limits.** Maximum input size for importers, maximum maps per definition and the 65535 dimension bound (R26) are provisional until measured on real XDF/A2L files in the private corpus.
+11. **Several maps per report line (pending author decision).** R102 keeps SPEC-005 §8's single `map_id` and writes `null` for a patch that touches several maps, so a report loses which maps a merged diff run changed. Carrying `map_ids` (a list) or `R101`'s per-map runs in the report changes SPEC-005 §8 and its hash (major). Luiz to decide.
 
 ## 13. Sources
 
