@@ -52,7 +52,7 @@ from core.provenance._report import (
     export_report,
     issue_report,
 )
-from core.provenance._signing import Signer, Verifier
+from core.provenance._signing import TEST_KEY_IDS, Signer, Verifier
 from core.provenance._verify import (
     ChainReport,
     Checkpoint,
@@ -69,6 +69,7 @@ from core.provenance._verify import (
 
 __all__ = [
     "DISCLAIMER",
+    "TEST_KEY_IDS",
     "Actor",
     "AnchorFile",
     "AnchorStatement",
