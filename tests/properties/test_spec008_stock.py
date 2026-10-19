@@ -1,4 +1,4 @@
-"""SPEC-008 R11, R23, R24 as properties, against fingerprints (hashlib) and a registry hash (third-party rfc8785)
+"""SPEC-008 R1, R11, R23, R24 as properties, against fingerprints (hashlib) and a registry hash (third-party rfc8785)
 computed here, not by the core."""
 
 import hashlib
@@ -70,7 +70,8 @@ def classify(stock: bytes, excluded: list[tuple[int, int]], seen: bytes, pii: li
     return str(plain(result.status))
 
 
-# SPEC-008 R11, R23: any change inside the excluded ranges keeps `stock`; a change outside makes `modified`.
+# SPEC-008 R1, R11, R23: the registry hash is sha256 of its RFC 8785 JCS; any change inside the excluded ranges
+# keeps `stock`; a change outside makes `modified`.
 @given(memories(), st.data())
 def test_excluded_bytes_never_count(case: tuple[bytes, list[tuple[int, int]]], data: st.DataObject) -> None:
     stock, excluded = case

@@ -1,5 +1,6 @@
 """SPEC-008: shape errors, identification checks, the unpublished anchor and policy, and usability reasons."""
 
+import ast
 import copy
 from dataclasses import replace
 from pathlib import Path
@@ -207,3 +208,37 @@ def test_unregistered_memory_keeps_unknown() -> None:
 # SPEC-008 R26: the public API offers nothing that reads or writes a verdict.
 def test_information_only() -> None:
     assert not any("verdict" in name.lower() for name in core.stock.__all__)
+
+
+# SPEC-008 R22: with a usable registry, no identification or no sw_id is unknown with the registry named.
+def test_identification_reasons() -> None:
+    no_ident = check(ident=None)
+    assert (no_ident.status, no_ident.reasons, no_ident.family) == ("unknown", ("not_identified",), None)
+    assert no_ident.registry_hash == MAIN["registry_hash"]
+    no_sw = check(ident=replace(IDENT or cast("Identification", None), sw_id=None))
+    assert (no_sw.status, no_sw.reasons, no_sw.sw_id, no_sw.memories) == ("unknown", ("no_sw_id",), None, ())
+
+
+# SPEC-008 R30: no registry or check field names personal data, and no dump byte is carried.
+def test_no_personal_data_fields() -> None:
+    def keys(value: object) -> set[str]:
+        if isinstance(value, dict):
+            return set(value) | {key for item in value.values() for key in keys(item)}
+        if isinstance(value, list):
+            return {key for item in value for key in keys(item)}
+        return set()
+
+    found = keys(MAIN) | keys(V["cases"][0]["expect"])
+    for word in ("vin", "serial", "owner", "customer", "person", "file", "data", "bytes"):
+        assert not any(word in key for key in found), word
+
+
+# SPEC-008 R40: core.stock imports only the public kernel, provenance and plugins APIs and its own modules.
+def test_placement() -> None:
+    for path in sorted(Path(core.stock.__file__).parent.glob("*.py")):
+        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+            if isinstance(node, ast.ImportFrom) and (node.module or "").startswith("core"):
+                module = node.module or ""
+                assert module in {"core.kernel", "core.provenance", "core.plugins"} or module.startswith(
+                    "core.stock."
+                ), module
