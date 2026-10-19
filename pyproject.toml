@@ -34,13 +34,15 @@ module-name = "core"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-# SPEC-005 R71: the reproduction script is one stdlib-only file, not a package; tests import it by name.
-pythonpath = ["tools/reproduce"]
+# SPEC-005 R71 and SPEC-009 R5: the reproduction script and the guardrail are stdlib-only files, not packages;
+# tests import them by name.
+pythonpath = ["tools/reproduce", "guardrails"]
 addopts = [
     "--strict-markers",
     "--strict-config",
     "--cov=core",
     "--cov=reproduce",
+    "--cov=check",
     "--cov-branch",
     "--cov-report=term-missing",
     "--cov-fail-under=100",
@@ -49,7 +51,7 @@ xfail_strict = true
 
 [tool.coverage.run]
 branch = true
-source = ["core", "reproduce"]
+source = ["core", "reproduce", "check"]
 
 [tool.coverage.report]
 fail_under = 100
@@ -61,8 +63,8 @@ strict = true
 disallow_any_explicit = true
 disallow_any_decorated = true
 warn_unreachable = true
-mypy_path = "src:tools/reproduce"
-files = ["src", "tests", "tools"]
+mypy_path = "src:tools/reproduce:guardrails"
+files = ["src", "tests", "tools", "guardrails"]
 
 [[tool.mypy.overrides]]
 module = "core.*"
@@ -77,7 +79,7 @@ disallow_any_decorated = false
 [tool.ruff]
 target-version = "py312"
 line-length = 120
-src = ["src", "tests", "tools/reproduce"]
+src = ["src", "tests", "tools/reproduce", "guardrails"]
 extend-exclude = ["specs"]
 
 [tool.ruff.lint]

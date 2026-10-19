@@ -36,6 +36,6 @@ claude plugin install impact-core@impact --scope project
 The machine needs git access to `Impact-ecu/skills` as an org member. If the default GitHub identity is another account, route the org through the right SSH host: `git config --global url."git@<host-alias>:Impact-ecu/".insteadOf "https://github.com/Impact-ecu/"` (and the same for `git@github.com:Impact-ecu/`).
 
 ## Status and next steps
-- No external dependency (ADR-002). Phase −1 exit is software: SPEC-006 (`Importer`, `FieldAttestation`) and the raw importer.
-- SPEC-001 to SPEC-005 are written with test vectors. Now: kernel per SPEC-001, then SPEC-006, provenance, gate, definitions, plugin contract and conformance; then local CLI and MED17 plugin per variant, released per variant when attestations reach `golden_field`.
+- No external dependency (ADR-002). Implemented on main: kernel (SPEC-001), importers and field evidence (SPEC-006), definitions (SPEC-003), provenance and `tools/reproduce` (SPEC-005), plugin contract, two-engine interpreter and conformance (SPEC-002), gate (SPEC-004), stock registry (SPEC-008); guardrails (SPEC-009). Consumer: private `Impact-ecu/cli` (SPEC-007).
+- Pending author decisions: publishing the RegistryTrust anchor and a rule table (needs keys and the SPEC-003 `deg_crank` sign), SPEC-005 OQ12, SPEC-007 OQ2 (age library), SPEC-009 D5. A family plugin (MED17) needs real dumps and field attestations.
 - Infra pending: the Claude GitHub App must be installed on the `Impact-ecu` organization for chat Claude to push (today it is only on the personal account).

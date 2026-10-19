@@ -35,11 +35,11 @@ jobs:
       - name: Install (locked)
         run: uv sync --locked --python python3.12
       - name: ruff check
-        run: uv run --locked ruff check src tests tools
+        run: uv run --locked ruff check src tests tools guardrails
       - name: ruff format
-        run: uv run --locked ruff format --check src tests tools
+        run: uv run --locked ruff format --check src tests tools guardrails
       - name: mypy --strict
-        run: uv run --locked mypy --strict src tests tools
+        run: uv run --locked mypy --strict src tests tools guardrails
       - name: import-linter
         run: uv run --locked lint-imports
       - name: pytest (Hypothesis ci profile, 100% line and branch coverage)

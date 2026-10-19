@@ -243,7 +243,7 @@ No binary leaves the system without passing the gate, and the gate is a core fun
         properties/            # Hypothesis, one file per invariant (test_inv_*.py)
         golden/                # hashes + oracle only; no dump bytes
         fuzz/                  # Atheris targets
-      specs/                   # SPEC-001 to 008, ADRs
+      specs/                   # SPEC-001 to 009, ADRs
       guardrails/              # check.py, ratchet.json, ruleset.json
       .github/workflows/
 
