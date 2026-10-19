@@ -18,11 +18,11 @@ from core.importers import (
     ImportParams,
     ImportRejected,
     JsonValue,
-    jcs,
     jcs_hash,
     outcome_jcs,
     run_import,
 )
+from core.kernel import jcs
 
 PREFIX_SIZES = 64
 REPORT_VERSION = 1

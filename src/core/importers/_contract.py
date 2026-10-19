@@ -6,8 +6,8 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Literal, Protocol
 
-from core.importers._json import FrozenObject, JsonValue, NotJsonError, freeze_json, jcs, jcs_hash
-from core.kernel import Dump, DumpKind, KernelError, Memory, image_hash
+from core.importers._json import FrozenObject, JsonValue, NotJsonError, freeze_json, jcs_hash
+from core.kernel import Dump, DumpKind, KernelError, Memory, image_hash, jcs
 
 CONTRACT_VERSION = 1
 MAX_INPUT_BYTES = 67108864
