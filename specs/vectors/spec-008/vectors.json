@@ -1,0 +1,1019 @@
+{
+  "spec": "SPEC-008",
+  "generator": {
+    "jcs": "rfc8785 0.1.4",
+    "ed25519": "cryptography 46.0.3",
+    "sha256": "python hashlib",
+    "python": "3.12.3"
+  },
+  "key": {
+    "rules": [
+      "R13",
+      "R14"
+    ],
+    "seed_text": "impact spec-008 synthetic stock registry key; never use outside test vectors",
+    "seed_hex": "1efa42f24a62f874574228fad871e708999fc76880f844563ca644a9e7fda055",
+    "public_key": "e9d77da0b97ea682f05ab2aa632442dd45c0b9bd8a3ba2f7d83008b737229ec5",
+    "key_id": "e99a0b0908a86865d6ce32166e57a249e16d47285938084bc1d0d347cd844f2c",
+    "other_seed_text": "impact spec-008 synthetic other key; never use outside test vectors"
+  },
+  "fingerprints": {
+    "rules": [
+      "R11"
+    ],
+    "values": [
+      {
+        "id": "F1",
+        "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954310000000000000000",
+        "excluded": [
+          [
+            16,
+            24
+          ]
+        ],
+        "kept_sha256": "596d8eb33ca3bd38c16eac21b91159be978a6aacd3aebff179643e61ba94b75c"
+      },
+      {
+        "id": "F2",
+        "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954320000000000000000",
+        "excluded": [
+          [
+            16,
+            24
+          ]
+        ],
+        "kept_sha256": "596d8eb33ca3bd38c16eac21b91159be978a6aacd3aebff179643e61ba94b75c"
+      },
+      {
+        "id": "F3",
+        "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc",
+        "excluded": [],
+        "kept_sha256": "39e3d7b6b5d075d37d053ad89b24b41bef4f3c29760c84447cab3f3be1882241"
+      },
+      {
+        "id": "F4",
+        "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc",
+        "excluded": [
+          [
+            0,
+            2
+          ],
+          [
+            10,
+            12
+          ],
+          [
+            63,
+            64
+          ]
+        ],
+        "kept_sha256": "05b9606dabcc8bcb07204e853f5f26db3f859f5a1aaf3c3ef2b7b26748d49dfd"
+      }
+    ]
+  },
+  "registry": {
+    "rules": [
+      "R10",
+      "R12",
+      "R13"
+    ],
+    "jcs": "{\"entries\":[{\"excluded\":[{\"end\":24,\"start\":16}],\"family\":\"synthetic.stock\",\"kept_sha256\":\"596d8eb33ca3bd38c16eac21b91159be978a6aacd3aebff179643e61ba94b75c\",\"memory_id\":\"dflash\",\"size\":32,\"sw_id\":\"SYN-SW-1\"},{\"excluded\":[],\"family\":\"synthetic.stock\",\"kept_sha256\":\"39e3d7b6b5d075d37d053ad89b24b41bef4f3c29760c84447cab3f3be1882241\",\"memory_id\":\"pflash\",\"size\":64,\"sw_id\":\"SYN-SW-1\"},{\"excluded\":[],\"family\":\"synthetic.stock\",\"kept_sha256\":\"351b5b6e1c45232c7a15c568262d5d4eee8632e87f402af10853722fab45660f\",\"memory_id\":\"pflash\",\"size\":64,\"sw_id\":\"SYN-SW-2\"},{\"excluded\":[],\"family\":\"synthetic.stock\",\"kept_sha256\":\"db96cb2ab4f5432e33066e9417ecd55c448518c91cddcf296c7efcdd82058a04\",\"memory_id\":\"dflash\",\"size\":32,\"sw_id\":\"SYN-SW-3\"}],\"expires_at\":\"2026-10-20T00:00:00Z\",\"issued_at\":\"2026-10-19T00:00:00Z\",\"schema\":\"impact.stock-registry.v1\",\"version\":3}",
+    "registry_hash": "2f3647afa5c1c72d89df88b1ce3dffc49b851eb8bc083ac87b1458dc95f66437",
+    "signing_input": "{\"domain\":\"impact.stock-registry-signature.v1\",\"hash\":\"2f3647afa5c1c72d89df88b1ce3dffc49b851eb8bc083ac87b1458dc95f66437\"}"
+  },
+  "registries": {
+    "main": {
+      "registry": {
+        "schema": "impact.stock-registry.v1",
+        "version": 3,
+        "issued_at": "2026-10-19T00:00:00Z",
+        "expires_at": "2026-10-20T00:00:00Z",
+        "entries": [
+          {
+            "family": "synthetic.stock",
+            "sw_id": "SYN-SW-1",
+            "memory_id": "dflash",
+            "size": 32,
+            "excluded": [
+              {
+                "start": 16,
+                "end": 24
+              }
+            ],
+            "kept_sha256": "596d8eb33ca3bd38c16eac21b91159be978a6aacd3aebff179643e61ba94b75c"
+          },
+          {
+            "family": "synthetic.stock",
+            "sw_id": "SYN-SW-1",
+            "memory_id": "pflash",
+            "size": 64,
+            "excluded": [],
+            "kept_sha256": "39e3d7b6b5d075d37d053ad89b24b41bef4f3c29760c84447cab3f3be1882241"
+          },
+          {
+            "family": "synthetic.stock",
+            "sw_id": "SYN-SW-2",
+            "memory_id": "pflash",
+            "size": 64,
+            "excluded": [],
+            "kept_sha256": "351b5b6e1c45232c7a15c568262d5d4eee8632e87f402af10853722fab45660f"
+          },
+          {
+            "family": "synthetic.stock",
+            "sw_id": "SYN-SW-3",
+            "memory_id": "dflash",
+            "size": 32,
+            "excluded": [],
+            "kept_sha256": "db96cb2ab4f5432e33066e9417ecd55c448518c91cddcf296c7efcdd82058a04"
+          }
+        ]
+      },
+      "registry_hash": "2f3647afa5c1c72d89df88b1ce3dffc49b851eb8bc083ac87b1458dc95f66437",
+      "key_id": "e99a0b0908a86865d6ce32166e57a249e16d47285938084bc1d0d347cd844f2c",
+      "signature": "3556aa5d47ea133743342b3e9650b7b7e7bb946f1d86543d65bcb39c2775fe43b7ef30967b9a9594ebd5af40a3b762ea47d8bc3912771bec6fe99721d2486301"
+    },
+    "bad_signature": {
+      "registry": {
+        "schema": "impact.stock-registry.v1",
+        "version": 3,
+        "issued_at": "2026-10-19T00:00:00Z",
+        "expires_at": "2026-10-20T00:00:00Z",
+        "entries": [
+          {
+            "family": "synthetic.stock",
+            "sw_id": "SYN-SW-1",
+            "memory_id": "dflash",
+            "size": 32,
+            "excluded": [
+              {
+                "start": 16,
+                "end": 24
+              }
+            ],
+            "kept_sha256": "596d8eb33ca3bd38c16eac21b91159be978a6aacd3aebff179643e61ba94b75c"
+          },
+          {
+            "family": "synthetic.stock",
+            "sw_id": "SYN-SW-1",
+            "memory_id": "pflash",
+            "size": 64,
+            "excluded": [],
+            "kept_sha256": "39e3d7b6b5d075d37d053ad89b24b41bef4f3c29760c84447cab3f3be1882241"
+          },
+          {
+            "family": "synthetic.stock",
+            "sw_id": "SYN-SW-2",
+            "memory_id": "pflash",
+            "size": 64,
+            "excluded": [],
+            "kept_sha256": "351b5b6e1c45232c7a15c568262d5d4eee8632e87f402af10853722fab45660f"
+          },
+          {
+            "family": "synthetic.stock",
+            "sw_id": "SYN-SW-3",
+            "memory_id": "dflash",
+            "size": 32,
+            "excluded": [],
+            "kept_sha256": "db96cb2ab4f5432e33066e9417ecd55c448518c91cddcf296c7efcdd82058a04"
+          }
+        ]
+      },
+      "registry_hash": "2f3647afa5c1c72d89df88b1ce3dffc49b851eb8bc083ac87b1458dc95f66437",
+      "key_id": "e99a0b0908a86865d6ce32166e57a249e16d47285938084bc1d0d347cd844f2c",
+      "signature": "0056aa5d47ea133743342b3e9650b7b7e7bb946f1d86543d65bcb39c2775fe43b7ef30967b9a9594ebd5af40a3b762ea47d8bc3912771bec6fe99721d2486301"
+    },
+    "too_long": {
+      "registry": {
+        "schema": "impact.stock-registry.v1",
+        "version": 3,
+        "issued_at": "2026-10-19T00:00:00Z",
+        "expires_at": "2026-10-20T00:00:01Z",
+        "entries": [
+          {
+            "family": "synthetic.stock",
+            "sw_id": "SYN-SW-1",
+            "memory_id": "dflash",
+            "size": 32,
+            "excluded": [
+              {
+                "start": 16,
+                "end": 24
+              }
+            ],
+            "kept_sha256": "596d8eb33ca3bd38c16eac21b91159be978a6aacd3aebff179643e61ba94b75c"
+          },
+          {
+            "family": "synthetic.stock",
+            "sw_id": "SYN-SW-1",
+            "memory_id": "pflash",
+            "size": 64,
+            "excluded": [],
+            "kept_sha256": "39e3d7b6b5d075d37d053ad89b24b41bef4f3c29760c84447cab3f3be1882241"
+          },
+          {
+            "family": "synthetic.stock",
+            "sw_id": "SYN-SW-2",
+            "memory_id": "pflash",
+            "size": 64,
+            "excluded": [],
+            "kept_sha256": "351b5b6e1c45232c7a15c568262d5d4eee8632e87f402af10853722fab45660f"
+          },
+          {
+            "family": "synthetic.stock",
+            "sw_id": "SYN-SW-3",
+            "memory_id": "dflash",
+            "size": 32,
+            "excluded": [],
+            "kept_sha256": "db96cb2ab4f5432e33066e9417ecd55c448518c91cddcf296c7efcdd82058a04"
+          }
+        ]
+      },
+      "registry_hash": "62cb9cef2d350d86ea56bd63d578e3104e6891849e3d556f486e1de5c3db4716",
+      "key_id": "e99a0b0908a86865d6ce32166e57a249e16d47285938084bc1d0d347cd844f2c",
+      "signature": "852fd6412212794507e544e3e2175f0e4e19de7c27053b400ac074e6daabfddf0e15f859bb6025e9ae03790e12f2f940a581cf6ec968cd6bdf9df23ddac26e04"
+    }
+  },
+  "trusts": {
+    "main": {
+      "key_id": "e99a0b0908a86865d6ce32166e57a249e16d47285938084bc1d0d347cd844f2c",
+      "public_key": "e9d77da0b97ea682f05ab2aa632442dd45c0b9bd8a3ba2f7d83008b737229ec5"
+    },
+    "other": {
+      "key_id": "99324cb7727bdbe87ca73552645e93d5999a2d32a3fe450fd28fa6b66c6b42de",
+      "public_key": "9c3442d1c54b804a3c122a78875f294caa27c246227b6f545bc58f5b705c9c37"
+    }
+  },
+  "policy": {
+    "schema": "impact.stock-policy.v1",
+    "version": 0,
+    "max_validity_s": 86400
+  },
+  "cases": [
+    {
+      "id": "K01-stock",
+      "rules": [
+        "R11",
+        "R23",
+        "R24"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc"
+          },
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954310000000000000000"
+          }
+        ]
+      },
+      "identification": {
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "pii_locations": [
+          {
+            "memory_id": "dflash",
+            "start": 16,
+            "end": 24,
+            "kind": "serial"
+          }
+        ]
+      },
+      "registry": "main",
+      "trust": "main",
+      "as_of": "2026-10-19T12:00:00Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "stock",
+        "reasons": [],
+        "registry_hash": "2f3647afa5c1c72d89df88b1ce3dffc49b851eb8bc083ac87b1458dc95f66437",
+        "registry_version": 3,
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "memories": [
+          {
+            "memory_id": "dflash",
+            "status": "stock",
+            "reason": null
+          },
+          {
+            "memory_id": "pflash",
+            "status": "stock",
+            "reason": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "K02-stock-other-unit",
+      "rules": [
+        "R11",
+        "R23"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc"
+          },
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954320000000000000000"
+          }
+        ]
+      },
+      "identification": {
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "pii_locations": [
+          {
+            "memory_id": "dflash",
+            "start": 16,
+            "end": 24,
+            "kind": "serial"
+          }
+        ]
+      },
+      "registry": "main",
+      "trust": "main",
+      "as_of": "2026-10-19T12:00:00Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "stock",
+        "reasons": [],
+        "registry_hash": "2f3647afa5c1c72d89df88b1ce3dffc49b851eb8bc083ac87b1458dc95f66437",
+        "registry_version": 3,
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "memories": [
+          {
+            "memory_id": "dflash",
+            "status": "stock",
+            "reason": null
+          },
+          {
+            "memory_id": "pflash",
+            "status": "stock",
+            "reason": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "K03-modified",
+      "rules": [
+        "R23",
+        "R24"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141a222930373e454c535a61686f767d848b9299a0a7aeb5bc"
+          },
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954310000000000000000"
+          }
+        ]
+      },
+      "identification": {
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "pii_locations": [
+          {
+            "memory_id": "dflash",
+            "start": 16,
+            "end": 24,
+            "kind": "serial"
+          }
+        ]
+      },
+      "registry": "main",
+      "trust": "main",
+      "as_of": "2026-10-19T12:00:00Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "modified",
+        "reasons": [],
+        "registry_hash": "2f3647afa5c1c72d89df88b1ce3dffc49b851eb8bc083ac87b1458dc95f66437",
+        "registry_version": 3,
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "memories": [
+          {
+            "memory_id": "dflash",
+            "status": "stock",
+            "reason": null
+          },
+          {
+            "memory_id": "pflash",
+            "status": "modified",
+            "reason": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "K04-not-registered",
+      "rules": [
+        "R23",
+        "R24"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc"
+          },
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954310000000000000000"
+          }
+        ]
+      },
+      "identification": {
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-9",
+        "pii_locations": [
+          {
+            "memory_id": "dflash",
+            "start": 16,
+            "end": 24,
+            "kind": "serial"
+          }
+        ]
+      },
+      "registry": "main",
+      "trust": "main",
+      "as_of": "2026-10-19T12:00:00Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "unknown",
+        "reasons": [
+          "not_registered"
+        ],
+        "registry_hash": "2f3647afa5c1c72d89df88b1ce3dffc49b851eb8bc083ac87b1458dc95f66437",
+        "registry_version": 3,
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-9",
+        "memories": [
+          {
+            "memory_id": "dflash",
+            "status": "unknown",
+            "reason": "not_registered"
+          },
+          {
+            "memory_id": "pflash",
+            "status": "unknown",
+            "reason": "not_registered"
+          }
+        ]
+      }
+    },
+    {
+      "id": "K05-other-software-version",
+      "rules": [
+        "R20",
+        "R23",
+        "R24"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc"
+          },
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954310000000000000000"
+          }
+        ]
+      },
+      "identification": {
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-2",
+        "pii_locations": [
+          {
+            "memory_id": "dflash",
+            "start": 16,
+            "end": 24,
+            "kind": "serial"
+          }
+        ]
+      },
+      "registry": "main",
+      "trust": "main",
+      "as_of": "2026-10-19T12:00:00Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "modified",
+        "reasons": [],
+        "registry_hash": "2f3647afa5c1c72d89df88b1ce3dffc49b851eb8bc083ac87b1458dc95f66437",
+        "registry_version": 3,
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-2",
+        "memories": [
+          {
+            "memory_id": "dflash",
+            "status": "unknown",
+            "reason": "not_registered"
+          },
+          {
+            "memory_id": "pflash",
+            "status": "modified",
+            "reason": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "K06-pii-not-excluded",
+      "rules": [
+        "R23"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954310000000000000000"
+          }
+        ]
+      },
+      "identification": {
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-3",
+        "pii_locations": [
+          {
+            "memory_id": "dflash",
+            "start": 16,
+            "end": 24,
+            "kind": "serial"
+          }
+        ]
+      },
+      "registry": "main",
+      "trust": "main",
+      "as_of": "2026-10-19T12:00:00Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "unknown",
+        "reasons": [
+          "pii_not_excluded"
+        ],
+        "registry_hash": "2f3647afa5c1c72d89df88b1ce3dffc49b851eb8bc083ac87b1458dc95f66437",
+        "registry_version": 3,
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-3",
+        "memories": [
+          {
+            "memory_id": "dflash",
+            "status": "unknown",
+            "reason": "pii_not_excluded"
+          }
+        ]
+      }
+    },
+    {
+      "id": "K07-partial-dump",
+      "rules": [
+        "R10",
+        "R24"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc"
+          }
+        ]
+      },
+      "identification": {
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "pii_locations": []
+      },
+      "registry": "main",
+      "trust": "main",
+      "as_of": "2026-10-19T12:00:00Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "stock",
+        "reasons": [],
+        "registry_hash": "2f3647afa5c1c72d89df88b1ce3dffc49b851eb8bc083ac87b1458dc95f66437",
+        "registry_version": 3,
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "status": "stock",
+            "reason": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "K08-one-memory-unknown",
+      "rules": [
+        "R24"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "eeprom",
+            "base_address": null,
+            "data_hex": "0001020304050607"
+          },
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc"
+          }
+        ]
+      },
+      "identification": {
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "pii_locations": []
+      },
+      "registry": "main",
+      "trust": "main",
+      "as_of": "2026-10-19T12:00:00Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "unknown",
+        "reasons": [
+          "not_registered"
+        ],
+        "registry_hash": "2f3647afa5c1c72d89df88b1ce3dffc49b851eb8bc083ac87b1458dc95f66437",
+        "registry_version": 3,
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "memories": [
+          {
+            "memory_id": "eeprom",
+            "status": "unknown",
+            "reason": "not_registered"
+          },
+          {
+            "memory_id": "pflash",
+            "status": "stock",
+            "reason": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "K09-no-identification",
+      "rules": [
+        "R22"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc"
+          },
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954310000000000000000"
+          }
+        ]
+      },
+      "identification": null,
+      "registry": "main",
+      "trust": "main",
+      "as_of": "2026-10-19T12:00:00Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "unknown",
+        "reasons": [
+          "not_identified"
+        ],
+        "registry_hash": "2f3647afa5c1c72d89df88b1ce3dffc49b851eb8bc083ac87b1458dc95f66437",
+        "registry_version": 3,
+        "family": null,
+        "sw_id": null,
+        "memories": []
+      }
+    },
+    {
+      "id": "K10-no-sw-id",
+      "rules": [
+        "R22"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc"
+          },
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954310000000000000000"
+          }
+        ]
+      },
+      "identification": {
+        "family": "synthetic.stock",
+        "sw_id": null,
+        "pii_locations": [
+          {
+            "memory_id": "dflash",
+            "start": 16,
+            "end": 24,
+            "kind": "serial"
+          }
+        ]
+      },
+      "registry": "main",
+      "trust": "main",
+      "as_of": "2026-10-19T12:00:00Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "unknown",
+        "reasons": [
+          "no_sw_id"
+        ],
+        "registry_hash": "2f3647afa5c1c72d89df88b1ce3dffc49b851eb8bc083ac87b1458dc95f66437",
+        "registry_version": 3,
+        "family": "synthetic.stock",
+        "sw_id": null,
+        "memories": []
+      }
+    },
+    {
+      "id": "K11-bad-signature",
+      "rules": [
+        "R13",
+        "R21"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc"
+          },
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954310000000000000000"
+          }
+        ]
+      },
+      "identification": {
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "pii_locations": [
+          {
+            "memory_id": "dflash",
+            "start": 16,
+            "end": 24,
+            "kind": "serial"
+          }
+        ]
+      },
+      "registry": "bad_signature",
+      "trust": "main",
+      "as_of": "2026-10-19T12:00:00Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "unknown",
+        "reasons": [
+          "untrusted_registry"
+        ],
+        "registry_hash": null,
+        "registry_version": null,
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "memories": []
+      }
+    },
+    {
+      "id": "K12-other-key",
+      "rules": [
+        "R14",
+        "R21"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc"
+          },
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954310000000000000000"
+          }
+        ]
+      },
+      "identification": {
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "pii_locations": [
+          {
+            "memory_id": "dflash",
+            "start": 16,
+            "end": 24,
+            "kind": "serial"
+          }
+        ]
+      },
+      "registry": "main",
+      "trust": "other",
+      "as_of": "2026-10-19T12:00:00Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "unknown",
+        "reasons": [
+          "untrusted_registry"
+        ],
+        "registry_hash": null,
+        "registry_version": null,
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "memories": []
+      }
+    },
+    {
+      "id": "K13-not-yet-valid",
+      "rules": [
+        "R15",
+        "R21"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc"
+          },
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954310000000000000000"
+          }
+        ]
+      },
+      "identification": {
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "pii_locations": [
+          {
+            "memory_id": "dflash",
+            "start": 16,
+            "end": 24,
+            "kind": "serial"
+          }
+        ]
+      },
+      "registry": "main",
+      "trust": "main",
+      "as_of": "2026-10-18T23:59:59Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "unknown",
+        "reasons": [
+          "registry_not_yet_valid"
+        ],
+        "registry_hash": null,
+        "registry_version": null,
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "memories": []
+      }
+    },
+    {
+      "id": "K14-expired",
+      "rules": [
+        "R15",
+        "R21"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc"
+          },
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954310000000000000000"
+          }
+        ]
+      },
+      "identification": {
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "pii_locations": [
+          {
+            "memory_id": "dflash",
+            "start": 16,
+            "end": 24,
+            "kind": "serial"
+          }
+        ]
+      },
+      "registry": "main",
+      "trust": "main",
+      "as_of": "2026-10-20T00:00:00Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "unknown",
+        "reasons": [
+          "registry_expired"
+        ],
+        "registry_hash": null,
+        "registry_version": null,
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "memories": []
+      }
+    },
+    {
+      "id": "K15-validity-too-long",
+      "rules": [
+        "R15",
+        "R21"
+      ],
+      "dump": {
+        "dump_kind": "bench_full",
+        "memories": [
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "data_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bc"
+          },
+          {
+            "memory_id": "dflash",
+            "base_address": 2936012800,
+            "data_hex": "ffffffffffffffffffffffffffffffff53594e554e4954310000000000000000"
+          }
+        ]
+      },
+      "identification": {
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "pii_locations": [
+          {
+            "memory_id": "dflash",
+            "start": 16,
+            "end": 24,
+            "kind": "serial"
+          }
+        ]
+      },
+      "registry": "too_long",
+      "trust": "main",
+      "as_of": "2026-10-19T12:00:00Z",
+      "expect": {
+        "schema": "impact.stock-check.v1",
+        "status": "unknown",
+        "reasons": [
+          "registry_validity_too_long"
+        ],
+        "registry_hash": null,
+        "registry_version": null,
+        "family": "synthetic.stock",
+        "sw_id": "SYN-SW-1",
+        "memories": []
+      }
+    }
+  ]
+}

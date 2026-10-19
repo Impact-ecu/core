@@ -238,11 +238,12 @@ No binary leaves the system without passing the gate, and the gate is a core fun
         conformance/           # suite every plugin runs (exposed as a reusable workflow)
         importers/             # Importer contract, dispatch, raw importer (SPEC-006)
         evidence/              # FieldAttestation, attester registry, golden_field evaluation (SPEC-006)
+        stock/                 # stock registry and stock | modified | unknown lookup (SPEC-008)
       tests/
         properties/            # Hypothesis, one file per invariant (test_inv_*.py)
         golden/                # hashes + oracle only; no dump bytes
         fuzz/                  # Atheris targets
-      specs/                   # SPEC-001 to 006, ADRs
+      specs/                   # SPEC-001 to 008, ADRs
       guardrails/              # check.py, ratchet.json, ruleset.json
       .github/workflows/
 
