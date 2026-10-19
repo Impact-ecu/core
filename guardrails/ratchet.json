@@ -1,0 +1,11 @@
+{
+  "format": 1,
+  "ratchets": {
+    "coverage_line_branch_percent": 100,
+    "invariant_files": 12,
+    "hypothesis_ci_examples": 2000,
+    "fuzz_minutes_per_parser": null,
+    "corpus_min_dumps_per_variant": null,
+    "mutation_score_percent": null
+  }
+}
