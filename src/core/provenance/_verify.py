@@ -8,9 +8,11 @@ from dataclasses import dataclass, field
 from typing import Literal
 
 from core.provenance._anchor import AnchorFile
+from core.provenance._errors import ShapeError
 from core.provenance._events import event_defect, key_event_hash
 from core.provenance._json import (
     HEX32_CHECK,
+    ID_CHECK,
     ZERO_HASH,
     Json,
     Raw,
@@ -30,6 +32,7 @@ from core.provenance._signing import (
     REPORT_DOMAIN,
     TEST_KEY_IDS,
     Verifier,
+    key_id_of,
     verified,
 )
 
@@ -97,6 +100,25 @@ class Checkpoint:
     seq: int
     hash: str
     keys: tuple[CheckpointKey, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class AnchorTrust:
+    """R44: a server chain's anchor key, pinned by the caller out of band (like SPEC-006 `RegistryTrust`)."""
+
+    tenant_id: str
+    genesis_hash: str
+    key_id: str
+    public_key: str
+
+    def __post_init__(self) -> None:
+        if not (
+            ID_CHECK(self.tenant_id)
+            and HEX32_CHECK(self.genesis_hash)
+            and HEX32_CHECK(self.public_key)
+            and key_id_of(self.public_key) == self.key_id
+        ):
+            raise ShapeError("bad_shape", "AnchorTrust")
 
 
 @dataclass(frozen=True, slots=True)
@@ -442,22 +464,50 @@ def _ref_seq(ref: ChainRef) -> int:
     return ref.seq
 
 
+def _trusted(anchors: Sequence[AnchorFile], trust: Sequence[AnchorTrust], verifier: Verifier) -> list[AnchorFile]:
+    """R44: the anchors signed by a pinned `AnchorTrust` key for the chain they name; no other anchor counts."""
+    return [
+        anchor
+        for anchor in anchors
+        if any(
+            (pinned.tenant_id, pinned.genesis_hash, pinned.key_id)
+            == (anchor.statement.tenant_id, anchor.statement.genesis_hash, anchor.key_id)
+            and verified(verifier, pinned.public_key, ANCHOR_DOMAIN, anchor.statement_hash, anchor.signature)
+            for pinned in trust
+        )
+    ]
+
+
+def _checkpoint_keys(checkpoint: Checkpoint, verifier: Verifier) -> tuple[_State, bool]:
+    """R44: the checkpoint's key state; a key whose `key_id` is not the SHA-256 of its public key is left out."""
+    keys = _State(None, "", verifier, test_mode=False)
+    sound = True
+    for key in checkpoint.keys:
+        if not (HEX32_CHECK(key.public_key) and key_id_of(key.public_key) == key.key_id):
+            sound = False
+            continue
+        keys.keys[key.key_id] = (key.public_key, key.enrolled_seq)
+        if key.revoked_seq is not None:
+            keys.revoke(key.key_id, key.revoked_seq)
+    return keys, sound
+
+
 def verify_segment(
     checkpoint: Checkpoint,
     events: Sequence[Raw],
     anchors: Sequence[AnchorFile],
     verifier: Verifier,
     server_chain: Sequence[Raw] | None,
+    *,
+    trust: Sequence[AnchorTrust],
 ) -> ChainReport:
     """R44: R40 steps 2-5 from `checkpoint`. `server_chain` is required for, and only for, a `role: cli` chain.
 
-    Never in test mode: segments are a retention mechanism for real chains (R56).
+    Only anchors signed by a `trust` key count, for the checkpoint and after it. Never in test mode: segments are
+    a retention mechanism for real chains (R56).
     """
-    keys = _State(None, "", verifier, test_mode=False)
-    for key in checkpoint.keys:
-        keys.keys[key.key_id] = (key.public_key, key.enrolled_seq)
-        if key.revoked_seq is not None:
-            keys.revoke(key.key_id, key.revoked_seq)
+    anchors = _trusted(anchors, trust, verifier)
+    keys, sound = _checkpoint_keys(checkpoint, verifier)
     identity = (
         _anchor_identity(checkpoint, anchors, keys)
         if server_chain is None
@@ -470,6 +520,8 @@ def verify_segment(
     state = _State(tenant, identity.genesis_hash, verifier, False, keys=keys.keys, revoked=keys.revoked)
     for _ in range(unplaced):
         state.add(NO_POSITION, "bad_shape")
+    if not sound:
+        state.add(checkpoint.seq, "bad_checkpoint")
     if identity.tenant_id is None:
         state.add(checkpoint.seq, "unanchored_checkpoint")
     state.hashes[checkpoint.seq] = checkpoint.hash

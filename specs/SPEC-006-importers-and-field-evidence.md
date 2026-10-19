@@ -15,7 +15,7 @@ Out of scope: tool container formats (each is a separate importer repository), d
 
 ## 2. Common rules
 
-- **R1.** Every hash in this spec is `sha256(JCS(x))` of the named object, per SPEC-005 R1: lowercase hex, byte strings as lowercase hex (SPEC-001 R60), no floats, integers in `[0, 2⁵³ − 1]`. `image_hash` is SPEC-001 R62, reused and never recomputed another way. (SPEC-001 §7; SPEC-005 R1)
+- **R1.** Every hash in this spec is `sha256(JCS(x))` of the named object, per SPEC-005 R1: lowercase hex, byte strings as lowercase hex (SPEC-001 R60), no floats, integers in `[0, 2⁵³ − 1]`, arrays and objects nested at most 64 deep (SPEC-001 R66; `run_import` counts from the `ImportRecord`, which holds `options` at depth 2, and reports deeper `options` as `bad_params`, R20). `image_hash` is SPEC-001 R62, reused and never recomputed another way. (SPEC-001 §7; SPEC-005 R1)
 - **R2.** Every object defined here carries a `schema` string `impact.<name>.v<major>`, part of its hash. Every listed field is required; an absent value is `null`, never an omitted key; an unknown key, a missing key or a wrongly typed value is rejected with reason `bad_shape`. Keys are ASCII; strings are hashed as given and MUST NOT contain lone surrogates. (SPEC-005 R2–R4)
 - **R3.** Formats, in addition to SPEC-005 R5 (`Hex32`, `Timestamp`, `Day`, `EventId`, `TenantId`):
   ```
@@ -392,3 +392,4 @@ Changing a shape, a hash or commitment construction, a signing domain, a reason,
 8. **Reviewer independence.** Whether a reviewer may also be one of the attesters of the variant being exported, and where the Phase 1 rule of R90 is enforced (CLI, workers).
 9. **Attester terms.** The legal terms an attester accepts (truthful reporting, consent of the ECU owner) are Phase 1, but enrollment before Phase 1 happens without them.
 10. **Gate report.** The gate report does not yet record `head_digest` and the evaluation hashes of R83; adding them changes SPEC-004 §6 and its vectors.
+11. **Roles in the rotation statement.** The R64 rotation hash binds `new_key_id` and `new_public_key` but not the new key's `roles`, so the old key's signature does not say whether its holder chose a successor as `attester`, `reviewer` or both; the operator's enrollment decides the roles alone. Adding `roles` changes the rotation hash, so every rotation signature in the vectors (registry rotations, G12) would change meaning; it is left for a revision that bumps `impact.attester-rotation` to v2 together with its vectors.

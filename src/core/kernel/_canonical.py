@@ -12,6 +12,8 @@ type Json = int | str | Sequence[Json] | Mapping[str, Json] | None
 type JcsValue = bool | int | str | Sequence[JcsValue] | Mapping[str, JcsValue] | None
 
 MAX_SAFE_INTEGER = 2**53 - 1
+# SPEC-001 R66: deeper input is rejected before Python's recursion limit turns it into a RecursionError.
+MAX_JSON_DEPTH = 64
 
 _ESCAPES = {
     '"': '\\"',
@@ -27,14 +29,14 @@ _ESCAPES = {
 def jcs(value: JcsValue) -> bytes:
     """RFC 8785 serialization of `value`, UTF-8 encoded; `TypeError`/`ValueError` outside the JSON domain."""
     parts: list[str] = []
-    _encode(value, parts, booleans=True)
+    _encode(value, parts, booleans=True, depth=0)
     return "".join(parts).encode("utf-8")
 
 
 def canonical_json(value: Json) -> bytes:
     """`jcs` for kernel hash inputs (SPEC-001 R60): a boolean anywhere is a `TypeError`."""
     parts: list[str] = []
-    _encode(value, parts, booleans=False)
+    _encode(value, parts, booleans=False, depth=0)
     return "".join(parts).encode("utf-8")
 
 
@@ -66,7 +68,7 @@ def _string(text: str) -> str:
     return "".join(out)
 
 
-def _encode(value: JcsValue, parts: list[str], *, booleans: bool) -> None:
+def _encode(value: JcsValue, parts: list[str], *, booleans: bool, depth: int) -> None:
     if value is None:
         parts.append("null")
     elif isinstance(value, bool):
@@ -81,29 +83,31 @@ def _encode(value: JcsValue, parts: list[str], *, booleans: bool) -> None:
         parts.append(_string(value))
     elif isinstance(value, (bytes, bytearray, memoryview)):
         raise TypeError("byte strings are hex-encoded before hashing (SPEC-001 R60)")
+    elif isinstance(value, Sequence | Mapping) and depth == MAX_JSON_DEPTH:
+        raise ValueError(f"arrays and objects nest deeper than {MAX_JSON_DEPTH} (SPEC-001 R66)")
     elif isinstance(value, Sequence):
-        _array(value, parts, booleans=booleans)
+        _array(value, parts, booleans=booleans, depth=depth + 1)
     elif isinstance(value, Mapping):
-        _object(value, parts, booleans=booleans)
+        _object(value, parts, booleans=booleans, depth=depth + 1)
     else:
         raise TypeError(f"{type(value).__name__} is not a canonical JSON value")
 
 
-def _array(items: Sequence[JcsValue], parts: list[str], *, booleans: bool) -> None:
+def _array(items: Sequence[JcsValue], parts: list[str], *, booleans: bool, depth: int) -> None:
     parts.append("[")
     for index, item in enumerate(items):
         if index:
             parts.append(",")
-        _encode(item, parts, booleans=booleans)
+        _encode(item, parts, booleans=booleans, depth=depth)
     parts.append("]")
 
 
-def _object(members: Mapping[str, JcsValue], parts: list[str], *, booleans: bool) -> None:
+def _object(members: Mapping[str, JcsValue], parts: list[str], *, booleans: bool, depth: int) -> None:
     parts.append("{")
     for index, key in enumerate(sorted(members, key=_utf16_key)):
         if index:
             parts.append(",")
         parts.append(_string(key))
         parts.append(":")
-        _encode(members[key], parts, booleans=booleans)
+        _encode(members[key], parts, booleans=booleans, depth=depth)
     parts.append("}")

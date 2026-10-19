@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import argparse
 import ast
+import calendar
 import json
 import re
 import subprocess
 import sys
+import time
 import tomllib
 from dataclasses import dataclass
 from pathlib import Path
@@ -20,11 +22,17 @@ FOUNDATION_PREFIXES: Final = (
     "src/core/gate/",
     "src/core/provenance/",
     "src/core/conformance/",
+    "src/core/evidence/",
+    "src/core/stock/",
+    "src/core/importers/",
+    "src/core/definitions/",
+    "tools/reproduce/",
     "specs/",
     "guardrails/",
     ".github/",
 )
 CONTRACT_FILE: Final = "src/core/plugins/_contract.py"
+FOUNDATION_FILES: Final = frozenset({CONTRACT_FILE, "pyproject.toml", "uv.lock"})
 SPEC_BOUND_PREFIXES: Final = ("src/core/kernel/", "src/core/gate/")
 SPEC_DOCUMENT: Final = re.compile(r"specs/(?:SPEC-\d{3}-[^/]+|adr/ADR-\d{3}-[^/]+)\.md")
 GOLDEN_PREFIX: Final = "tests/golden/"
@@ -55,6 +63,7 @@ RATCHET_KEYS: Final = (
     "mutation_score_percent",
 )
 MIN_AGE_SECONDS: Final = 86_400
+TIMESTAMP: Final = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z")
 
 type Ratchets = dict[str, int | None]
 
@@ -84,7 +93,7 @@ class Finding:
 
 
 def is_foundation(path: str) -> bool:
-    return path.startswith(FOUNDATION_PREFIXES) or path == CONTRACT_FILE
+    return path.startswith(FOUNDATION_PREFIXES) or path in FOUNDATION_FILES
 
 
 def is_spec_bound(path: str) -> bool:
@@ -271,13 +280,13 @@ def evaluate(pr: PullRequest) -> list[Finding]:
     ]
 
 
-def evaluate_age(changed: tuple[str, ...], committed_at: int, now: int) -> list[Finding]:
-    """R40."""
+def evaluate_age(changed: tuple[str, ...], updated_at: int, now: int) -> list[Finding]:
+    """R40: the age runs from GitHub's `updated_at`, never from a commit date the author writes."""
     if not any(is_foundation(p) for p in changed):
         return []
-    age = now - committed_at
+    age = now - updated_at
     if age < MIN_AGE_SECONDS:
-        return [Finding("R40", f"foundation change: last commit is {age} s old, needs {MIN_AGE_SECONDS} s")]
+        return [Finding("R40", f"foundation change: pull request updated {age} s ago, needs {MIN_AGE_SECONDS} s")]
     return []
 
 
@@ -290,7 +299,8 @@ def parse_added_lines(diff: str) -> tuple[tuple[str, str], ...]:
         if line.startswith("diff --git "):
             in_header = True
         elif in_header and line.startswith("+++ "):
-            path = line[4:]
+            # git ends the header with a tab when the path has a space; a path ending in a tab would be quoted.
+            path = line[4:].removesuffix("\t")
             if path.startswith('"'):
                 raise InputError(f"path git had to quote: {path}")
         elif line.startswith("@@"):
@@ -321,22 +331,34 @@ class Event:
     body: str
     base: str
     head: str
+    updated_at: int
+
+
+def _epoch(value: object) -> int:
+    """R2: `pull_request.updated_at`, ISO 8601 UTC with second precision, as Unix seconds."""
+    if not isinstance(value, str) or TIMESTAMP.fullmatch(value) is None:
+        raise InputError("event payload: updated_at must be YYYY-MM-DDTHH:MM:SSZ")
+    try:
+        return calendar.timegm(time.strptime(value, "%Y-%m-%dT%H:%M:%SZ"))
+    except ValueError as exc:
+        raise InputError(f"event payload: updated_at {value}: {exc}") from exc
 
 
 def read_event(path: Path) -> Event:
-    """R2: labels, body and both SHAs from the event payload."""
+    """R2: labels, body, both SHAs and `updated_at` from the event payload."""
     try:
         pr = json.loads(path.read_text(encoding="utf-8"))["pull_request"]
         labels = frozenset(str(label["name"]) for label in pr["labels"])
         body = pr["body"] or ""
         base, head = pr["base"]["sha"], pr["head"]["sha"]
+        updated_at = pr["updated_at"]
     except (OSError, ValueError, KeyError, TypeError) as exc:
         raise InputError(f"event payload: {exc!r}") from exc
     if not all(isinstance(v, str) and re.fullmatch(r"[0-9a-f]{40}", v) for v in (base, head)):
         raise InputError("event payload: base and head SHAs must be 40 lowercase hex characters")
     if not isinstance(body, str):
         raise InputError("event payload: body must be a string")
-    return Event(labels, body, base, head)
+    return Event(labels, body, base, head, _epoch(updated_at))
 
 
 def changed_paths(repo: Path, event: Event) -> tuple[str, str, tuple[str, ...]]:
@@ -361,13 +383,18 @@ def collect(repo: Path, event: Event) -> PullRequest:
         merge_base,
         head,
     )
+    added_lines = parse_added_lines(diff)
+    stray = sorted({path for path, _ in added_lines} - set(changed))
+    if stray:
+        # R3, fail-closed: an added line whose path the header parse got wrong would escape R25.
+        raise InputError(f"diff names a path outside the change set: {stray[0]}")
     return PullRequest(
         labels=event.labels,
         body=event.body,
         changed=changed,
         head_paths=head_paths,
         base_paths=base_paths,
-        added_lines=parse_added_lines(diff),
+        added_lines=added_lines,
         base_ratchet=_show(repo, merge_base, RATCHET_PATH, base_paths),
         head_ratchet=_show(repo, head, RATCHET_PATH, head_paths),
         pyproject=_show(repo, head, "pyproject.toml", head_paths),
@@ -410,9 +437,8 @@ def main(argv: list[str]) -> int:
         else:
             if args.now is None:
                 raise InputError("--now is required for foundation-24h")
-            _, head, changed = changed_paths(args.repo, event)
-            committed_at = int(_git(args.repo, "show", "-s", "--format=%ct", head).strip())
-            findings = evaluate_age(changed, committed_at, args.now)
+            _, _, changed = changed_paths(args.repo, event)
+            findings = evaluate_age(changed, event.updated_at, args.now)
     except InputError as exc:
         message = _escape(str(exc))
         _out(f"::error title={args.job} R3::{message}")

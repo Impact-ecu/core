@@ -23,7 +23,7 @@ Trigger: **"Retome Impact ECU"** means resume this project from this file and `s
 - Input is `Dump{dump_kind, memories}` (multi-memory), never a blob. `Patch` carries `memory_id`.
 - No dump bytes in this public repository: `tests/golden/` holds only hashes + `oracle:`.
 - 100% coverage including branches, mypy `--strict`, Hypothesis ≥ 2,000 examples per invariant, fuzzing on parsers, mutation score ≥ 90% measured nightly, ratchets in `guardrails/ratchet.json` only go up.
-- Foundation paths (`src/core/kernel`, `gate`, `provenance`, `plugins/_contract.py`, `conformance`, `specs/`, `guardrails/`, `.github/`) change only with the `foundation-change` label, a spec or ADR in the same PR, and the PR open ≥ 24 h since its last commit.
+- Foundation paths (`src/core/kernel`, `gate`, `provenance`, `plugins/_contract.py`, `conformance`, `evidence`, `stock`, `importers`, `definitions`, `tools/reproduce/`, `specs/`, `guardrails/`, `.github/`, `pyproject.toml`, `uv.lock`; SPEC-009 R10) change only with the `foundation-change` label, a spec or ADR in the same PR, and the PR unchanged for ≥ 24 h (GitHub's `updated_at`, SPEC-009 R40).
 - Layout: `src/core/{kernel,plugins,gate,provenance,definitions,conformance,importers,evidence,stock}`, `tests/{properties,golden,fuzz}`, `specs/`, `guardrails/`, `.github/workflows/`.
 
 ## Claude Code setup (once per machine)
