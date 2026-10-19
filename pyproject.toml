@@ -106,7 +106,7 @@ source_modules = ["core.kernel"]
 forbidden_modules = ["json", "struct", "numpy"]
 
 [[tool.importlinter.contracts]]
-name = "Layers: kernel < provenance < definitions < plugins < gate < conformance (SPEC-000 layer 4, SPEC-001 R9)"
+name = "Layers: kernel < importers < provenance < definitions < plugins < gate < conformance (SPEC-000 layer 4, SPEC-001 R9, SPEC-006 R4)"
 type = "layers"
 layers = [
     "(core.conformance)",
@@ -114,6 +114,7 @@ layers = [
     "(core.plugins)",
     "(core.definitions)",
     "(core.provenance)",
+    "core.importers",
     "core.kernel",
 ]
 
@@ -136,3 +137,9 @@ protected_modules = [
     "core.kernel._order",
 ]
 allowed_importers = ["core.kernel"]
+
+[[tool.importlinter.contracts]]
+name = "Outside the importers package, only its public API is importable (SPEC-006 R4)"
+type = "protected"
+protected_modules = ["core.importers._contract", "core.importers._json", "core.importers._raw"]
+allowed_importers = ["core.importers"]
