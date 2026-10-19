@@ -32,7 +32,10 @@ jobs:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: git fetch --no-tags --no-recurse-submodules origin "$HEAD_SHA"
       - name: SPEC-009 layer 2 and 3 rules
-        run: python3 -I guardrails/check.py guardrails --repo . --event "$GITHUB_EVENT_PATH"
+        run: |
+          # Bootstrap only (SPEC-009 R1): the first pull request that adds guardrails/ has no base copy to run.
+          if [ ! -f guardrails/check.py ]; then echo "::notice::base has no guardrails/check.py yet"; exit 0; fi
+          python3 -I guardrails/check.py guardrails --repo . --event "$GITHUB_EVENT_PATH"
 
   # SPEC-009 R41: a separate job so the ruleset can require it or not (non-required during the waiver).
   foundation-24h:
@@ -52,4 +55,6 @@ jobs:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: git fetch --no-tags --no-recurse-submodules origin "$HEAD_SHA"
       - name: SPEC-009 R40 (24 h since the last commit on a foundation change)
-        run: python3 -I guardrails/check.py foundation-24h --repo . --event "$GITHUB_EVENT_PATH" --now "$(date -u +%s)"
+        run: |
+          if [ ! -f guardrails/check.py ]; then echo "::notice::base has no guardrails/check.py yet"; exit 0; fi
+          python3 -I guardrails/check.py foundation-24h --repo . --event "$GITHUB_EVENT_PATH" --now "$(date -u +%s)"
