@@ -34,7 +34,7 @@ from core.gate._output import (
     output_report,
 )
 from core.gate._report import PluginRef, ReferenceRef, SignedRegion, silences_of
-from core.gate._result import GateBlocked, InputResult, ReleasedImage, seal
+from core.gate._result import ExportBasis, GateBlocked, InputResult, ReleasedImage, seal
 from core.gate._rules import Table, parse_rule_table
 from core.kernel import (
     ContainmentError,
@@ -150,6 +150,7 @@ class _ReleaseSteps:
         self.regions: tuple[ChecksumRegion, ...] = ()
         self.bound: _Bound | None = None
         self.candidate: UnverifiedImage | None = None
+        self.checksum_patches: tuple[Patch, ...] = ()
         self.report: VerifyReport | None = None
 
     def availability(self) -> OutputAvailability:
@@ -303,13 +304,13 @@ class _ReleaseSteps:
         bound = present(self.bound, "SPEC-004 R25")
         used = self._used_references()
         try:
-            candidate = self._recalculate(bound, view(self.u))
+            candidate, q = self._recalculate(bound, view(self.u))
         except Stop as stop:
             return ChecksumOutcome(stop.outcome, None, used)
-        self.candidate = candidate
+        self.candidate, self.checksum_patches = candidate, q
         return ChecksumOutcome(None, candidate.image_hash, used)
 
-    def _recalculate(self, bound: _Bound, dump: Dump) -> UnverifiedImage:
+    def _recalculate(self, bound: _Bound, dump: Dump) -> tuple[UnverifiedImage, tuple[Patch, ...]]:
         """R25: the core derivation first (its resolution failure takes precedence), then the plugin's patches
         compared with it (SPEC-002 R55), then the kernel checksum step and the R41 re-assertion."""
         try:
@@ -337,7 +338,7 @@ class _ReleaseSteps:
         )
         if not outside_checksum_unchanged(dump, view(candidate), bound.layout):
             raise Stop("G-INVARIANT")
-        return candidate
+        return candidate, q
 
     def _independent_patches(self, region: ChecksumRegion, dump: Dump, bound: _Bound) -> tuple[Patch, ...]:
         """R25, SPEC-002 R45: a reference that raises or returns no patch list is unavailable."""
@@ -451,7 +452,10 @@ def run_release(u: UnverifiedImage, args: ReleaseArgs, admit: EvidenceAdmissionF
     candidate = steps.candidate
     if report.verdict == "block" or candidate is None:
         raise GateBlocked(report.report, report.report_hash)
-    return ReleasedImage(seal(), candidate, report, args["project_id"])
+    # SPEC-005 R100: the layout of R23 and the patches of R25 that produced `candidate`, kept for `export_inputs`.
+    layout = present(steps.bound, "SPEC-004 R29").layout
+    basis = ExportBasis(args["original"], args["version"], layout, steps.checksum_patches, args["input"].report)
+    return ReleasedImage(seal(), candidate, report, args["project_id"], basis)
 
 
 def release(u: UnverifiedImage, **args: Unpack[ReleaseArgs]) -> ReleasedImage:

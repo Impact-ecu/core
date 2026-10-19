@@ -17,6 +17,7 @@ from core.gate._audit import AuditArgs
 from core.gate._check import CheckInputArgs, run_check_input
 from core.gate._evidence import EvidenceAdmissionFn
 from core.gate._release import ReleaseArgs, run_release
+from core.gate._result import ExportBasis
 from core.kernel import Dump, DumpKind, MemoryLayout, Patch, UnverifiedImage, Version, apply, image_hash, layout_hash
 from core.plugins import (
     ChecksumRegion,
@@ -246,6 +247,11 @@ class Scenario:
         except GateBlocked as error:
             return error.report
         raise AssertionError("the gate did not block")
+
+
+def export_basis(s: Scenario) -> ExportBasis:
+    """What a release of `s` keeps for SPEC-005 R100, with no checksum patches; for sealed-construction tests."""
+    return ExportBasis(s.original, s.version, LAYOUT, (), s.input().report)
 
 
 def doc(value: object) -> dict[str, Any]:

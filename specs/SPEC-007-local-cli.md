@@ -39,7 +39,7 @@ Out of scope: every domain rule (SPEC-001 to SPEC-006 own them); the server, wor
 
 ### 2.1 Core functions the CLI needs that do not exist yet
 
-The CLI calls only public `core` API. On `main` at the date of this spec, these were missing; each is a `core` change under its owning spec, never CLI code. CG2–CG5 and CG7 are now specified in the owning specs and implemented in `core`; CG6 is still open:
+The CLI calls only public `core` API. On `main` at the date of this spec, these were missing; each is a `core` change under its owning spec, never CLI code. CG2–CG5 and CG7–CG9 are now specified in the owning specs and implemented in `core`; CG6 is still open:
 
 | Id | Missing in `core` | Needed by | Owning spec |
 |---|---|---|---|
@@ -50,6 +50,8 @@ The CLI calls only public `core` API. On `main` at the date of this spec, these 
 | CG5 | Re-basing a `Dump` whose `base_address` is `null`: `core.plugins.rebase` (SPEC-002 R18); a record binding the two `image_hash`es is a pending author decision (SPEC-002 open question 12) | `import` of raw files before `diff`/`apply` | SPEC-002 revision 2 |
 | CG6 | A published `RegistryTrust` and a published `RuleTable` (SPEC-006 R60; SPEC-004 R70, blocked by SPEC-003 open question 8) | every gate call | SPEC-006, SPEC-004 |
 | CG7 | Choosing a plugin when several are installed: `core.plugins.probe` (SPEC-002 R15–R17), fail-closed, never by priority or confidence; the recognition floor is a pending author decision (SPEC-002 open question 11) | `identify`, `verify` | SPEC-002 revision 2 |
+| CG8 | Building `ExportInputs` from a `ReleasedImage`, with the layout, checksum patches, subject hashes and input report the gate held: `core.gate.export_inputs(released, build=...)` (SPEC-005 R100–R102), then `core.provenance.export_provenance` | `export` | SPEC-005 revision 3 |
+| CG9 | The `finding_id`s and payload of an `alert_ack`: `core.gate.alert_warnings` and `core.gate.alert_ack_payload` (SPEC-004 R54) | `export` | SPEC-004 revision 4 |
 
 - **R4. Honest degradation.** Until CG6 is published, `check_input` and `release` report `G-UNAVAILABLE-RULES` (no identify threshold, SPEC-004 R10) and block; until a variant reaches `golden_field` with a current registry head, it is `unknown_variant` and `verify` blocks (SPEC-004 R13, R16; ADR-002 Decision 7). The CLI shows these outcomes as the gate reports them and MUST NOT soften, hide or work around them. (SPEC-000 §Verification gate, "Fail-closed")
 

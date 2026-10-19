@@ -26,6 +26,7 @@ from tests.unit.gate_support import (
     check,
     doc,
     event,
+    export_basis,
     raises,
 )
 from tests.unit.plugin_fixtures import LAYOUT, ORIGINAL, REGIONS, FakePlugin, dump_of
@@ -117,7 +118,7 @@ def test_released_image_needs_the_seal(seal: object) -> None:
     released = Scenario().release()
     report = GateReport(released.report, released.report_hash, released.verdict)
     with pytest.raises(GateError, match="sealed"):
-        ReleasedImage(seal, Scenario().unverified(), report, PROJECT)
+        ReleasedImage(seal, Scenario().unverified(), report, PROJECT, export_basis(Scenario()))
 
 
 # SPEC-004 R80: the same inputs give the same report bytes; patch and silence order never matter.

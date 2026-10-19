@@ -5,6 +5,7 @@ Date: 2026-10-18
 Revision: 1 (2026-10-18), proposed with SPEC-006 (ADR-002): R36 adds the `attester_enrolled`, `attester_revoked`, `attestation_included` and `review` payloads; R40 step 3, R51, R56 and R57 cover them. Adding event types is minor under §13.
 Revision: 2 (2026-10-19), for SPEC-007 §2.1 gap CG2: §4.1 (R23–R28) makes `core.gate.audit` build the `AuditRecord`, with the layout and both verify statuses computed by the gate instead of taken from the caller. The record shape, `audit_hash` and the vectors are unchanged; a new optional API is minor under §13.
 Revision: 3 (2026-10-19), closes open question 8: R77 places the reproduction script at `tools/reproduce/reproduce.py` and ships it with each `core` release under the existing R54 signing; R78 fixes the result details R73–R75 left open (step 0, field naming, audit reports, `limits`, exit status). No hashed object, hash definition or vector changes; a script contract detail is minor under §13.
+Revision: 4 (2026-10-19), for SPEC-007 §2.1 gap CG8: §3.1 (R100–R102) makes `core.gate.export_inputs` build the `ExportInputs` of a release from what the gate's own `release` call held, so a consumer never assembles a hash, a layout or the checksum patches. The record shape, `provenance_hash` and the vectors are unchanged; a new optional API is minor under §13.
 Governs: `src/core/provenance/`, the export and audit records the gate builds, the `Event` hash chain, the customer report, and the contract of the independent reproduction script.
 Derives from: SPEC-000 invariant 12, §Data model (Event row and Modeling decisions), §"Done" criteria (Provenance), §Gaps and adopted improvements ("Workflow: report for the end customer"), §CI pipeline (`release`), §Security and compliance, §Gaps that still require a decision (WORM vs LGPD, bus factor), §Core engineering practices (Reproducible build). Hash base: SPEC-001 §7 (R60–R65), reused and never redefined. This spec is the only owner of `Event` payload shapes (R36); SPEC-004 cites them.
 
@@ -84,6 +85,18 @@ EventRef = { event_id: EventId, seq: int, hash: Hex32 }   # §5; always an event
 - **R17.** `reproducibility` is `best_effort` if and only if `build.kind = lockfile`, else `full`. A `best_effort` record is never evidence for a golden file or an `oracle:` record. (SPEC-000 invariant 12, §Golden files)
 - **R18.** `provenance_hash = sha256(JCS(ExportProvenance))`. (SPEC-000 §Standards SPEC-005, SPEC-001 R60)
 - **R19.** The record contains no tenant, project, actor, timestamp, VIN or other personal data in its own fields. For a `no findings` export, the same export inputs on the same build therefore give the same `provenance_hash`. A `warn` record embeds the `alert_ack` `EventRef` (SPEC-000 invariant 12 requires the ack's `event_id`), whose `hash` covers that event's `tenant_id`, `ts` and `event_id`: such a `provenance_hash` is bound to tenant and time indirectly and is reproduced only with the same ack event. Binding to tenant and time is otherwise the job of the `export` event (§5). (SPEC-000 invariant 1 and 12; decision D3)
+
+### 3.1 Building the export inputs (revision 3)
+
+R10 makes the gate the builder of the record, but `export_provenance` takes an `ExportInputs` whose layout, checksum patches, `definition_hash`, `versions`, `gate_report` and `input_report` the consumer would assemble, and `ReleasedImage` exposes none of them: a consumer would re-derive the checksum patches through the plugin and copy hashes out of the report (SPEC-007 gap CG8, R10). The gate keeps what its `release` call held and builds the inputs itself, as it builds an audit (§4.1). The numbers continue after R92 so that no existing rule moves.
+
+```
+gate.export_inputs(released: ReleasedImage, *, build: Build) -> ExportInputs
+```
+
+- **R100. Only the gate builds export inputs.** `core.gate.export_inputs` is the function a consumer calls to obtain the `ExportInputs` of a release (SPEC-007 R14, R52); `ExportInputs` and `export_provenance` stay the provenance-level type and builder it feeds. A `ReleasedImage` keeps, sealed and immutable (SPEC-004 R29), the objects of the `release` call that constructed it: `original`, `version`, the layout the gate bound itself (SPEC-004 R23), the checksum patches `q` it applied to obtain the release candidate (SPEC-004 R25) and the report of its `input` (SPEC-004 R9). Only `build` comes from the caller, as R16 says. (R10; SPEC-000 §Verification gate: "the gate is a core function, not an API step someone can skip"; SPEC-001 R9)
+- **R101. Fields.** `original`, `version`, `layout` and `checksum_patches` are those kept objects (`checksum_patches` in the order the plugin returned them; R12 orders them in the record); `definition_hash` is the output report's `subject.definition_hash` (SPEC-004 §6: SPEC-003 R52 of the definition the gate evaluated); `versions` is `{core: the report's gate.core_version, plugins: [{family, version} of subject.plugin, the subject's conformance_report_hash], gate_rules: the version of the report's rule table, references: subject.references}`; `gate_report` is `released.report`; `input_report` is the kept input report. A non-`block` output report has every one of these fields set (SPEC-004 R45), so a missing one is a gate bug (`GateInvariantError`, SPEC-004 R82). `export_provenance` then computes every hash from these objects and asserts R11, R13 and R14, and the `image_hash_release` of its record equals `released.image_hash`. (R10–R14; SPEC-004 R25, R29, R45)
+- **R102. Errors and scope.** A `released` that is not a `ReleasedImage` or a `build` that is not a `Build` → `GateError`, reason `bad_type` (SPEC-004 R82). `export_inputs` neither authorizes the export nor reads an ack: bytes still come only from `to_dump(ack)` (SPEC-004 R51), and the `alert_ack` and `suspect_ack` bindings are checked by `export_provenance` (R13, R14). (SPEC-004 R51, R82; R91)
 
 ## 4. AuditRecord
 
@@ -314,7 +327,7 @@ ReproductionBundle = {
 | SPEC-000 invariant | Rules |
 |---|---|
 | 10 Verified release (ack) | R13, R36 |
-| 12 Provenance | R1, R10–R19, R30–R46, R50–R57, R60–R61, R70–R78 |
+| 12 Provenance | R1, R10–R19, R30–R46, R50–R57, R60–R61, R70–R78, R100–R102 |
 
 ## 12. Test vectors
 
@@ -338,7 +351,7 @@ ReproductionBundle = {
 | `commitment` | R82 | commitment hash |
 | `tampers` T1–T15, T4b | R38, R40, R41, R45, R51, R52, R56, R57, R61 | `hash_mismatch`; `seq_gap` (with `missing`) + `prev_mismatch`; `truncated`; a consistent rewrite caught only by `anchor_mismatch` (T4) and undetected without an anchor (T4b, the R41 limit); `bad_signature`; `record_hash_mismatch` + `report_hash_mismatch`; `revoked_key` on an export after a signed self-revocation (T7) and on an anchor whose key was revoked at the anchored `seq` (T8); informational `ts_regression` with status `intact` (T9); `test_key` outside test mode (T10); a genesis with two keys is `not_genesis` (T11); a `key_enrolled` signed by a key that is not enrolled is `unknown_key` and enrolls nothing (T12); a second `genesis` at `seq > 0` is `not_genesis` (T13); a `chain_ref` signed by the chain's key keeps the chain `intact` (T14), and one signed by a key not in the chain is `unknown_key` (T15) |
 
-Not covered by vectors, so they need dedicated tests: R1, R3, R4 (shape rejection), R10 beyond `definition_hash` and `versions.references` (no caller-supplied hash), R15, R19 (record fields), R22, R23–R28 (the gate's audit, on the SPEC-002 fixture plugin), R34 (storage uniqueness), R37, R43, R44, R46 (anchor location, checkpoints, `verify_tenant`), R45 beyond the `chain_ref` signature, R53–R55, R62 beyond the vector's integrity section, R64–R65 (consumer pages), R70–R78 (script contract, CI), R80–R84 (privacy, by architecture and payload-schema tests), R90–R92.
+Not covered by vectors, so they need dedicated tests: R1, R3, R4 (shape rejection), R10 beyond `definition_hash` and `versions.references` (no caller-supplied hash), R100–R102 (the gate's export inputs, on the SPEC-002 fixture plugin), R15, R19 (record fields), R22, R23–R28 (the gate's audit, on the SPEC-002 fixture plugin), R34 (storage uniqueness), R37, R43, R44, R46 (anchor location, checkpoints, `verify_tenant`), R45 beyond the `chain_ref` signature, R53–R55, R62 beyond the vector's integrity section, R64–R65 (consumer pages), R70–R78 (script contract, CI), R80–R84 (privacy, by architecture and payload-schema tests), R90–R92.
 
 Vectors are test data, not golden files: no hash is a checksum result.
 
@@ -391,3 +404,4 @@ Changing a field, a hash definition, a signing input, a domain string, an event 
 | G7 | SPEC-000 §Plugin SDK (`identify` extracts VIN, `pii_in_flash`); SPEC-001 R62 | `image_hash` hashes memories that may hold the VIN | Open question 4 |
 | G8 | SPEC-000 §Data model Event; SPEC-001 §11 question 1 | No `seq` (gap detection) or `schema`; SPEC-001 deferred the fields here | R30; the SPEC-000 Event row is aligned in the same `foundation-change` PR |
 | G9 | §4 R20 (revision 1) | `audit_record` takes the layout and both verify statuses from its caller (SPEC-007 G2, CG2) | R23–R28 (revision 2) |
+| G10 | §3 R10 (revision 2) | `ExportInputs` is assembled by the caller from objects `ReleasedImage` does not expose (layout, checksum patches, subject hashes, input report) (SPEC-007 CG8) | R100–R102 (revision 3) |
