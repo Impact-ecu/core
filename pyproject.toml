@@ -1,0 +1,137 @@
+[project]
+name = "impact-core"
+version = "0.1.0"
+description = "Trusted core of Impact: binary kernel, plugin contract, verification gate and provenance for ECU images."
+readme = "README.md"
+license = "AGPL-3.0-only"
+license-files = ["LICENSE"]
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "hypothesis==6.168.3",
+    "import-linter==2.15",
+    "mypy==2.4.0",
+    "pytest==9.1.1",
+    "pytest-cov==7.1.0",
+    "rfc8785==0.1.4",
+    "ruff==0.16.10",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.2,<0.12"]
+build-backend = "uv_build"
+
+[tool.uv]
+# Supply-chain cooldown: nothing uploaded in the 14 days before the lock was last refreshed.
+exclude-newer = "2026-10-04T00:00:00Z"
+
+[tool.uv.build-backend]
+module-name = "core"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--cov=core",
+    "--cov-branch",
+    "--cov-report=term-missing",
+    "--cov-fail-under=100",
+]
+xfail_strict = true
+
+[tool.coverage.run]
+branch = true
+source = ["core"]
+
+[tool.coverage.report]
+fail_under = 100
+show_missing = true
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+disallow_any_explicit = true
+disallow_any_decorated = true
+warn_unreachable = true
+mypy_path = "src"
+files = ["src", "tests"]
+
+[[tool.mypy.overrides]]
+module = "core.*"
+disallow_any_expr = true
+
+# Tests parse vectors.json (untyped JSON) and use Hypothesis decorators; `src/core` stays Any-free.
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_any_explicit = false
+disallow_any_decorated = false
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "A", "ANN", "ARG", "B", "BLE", "C4", "E", "ERA", "F", "FURB", "I", "N", "PERF", "PGH",
+    "PIE", "PL", "PT", "PYI", "RET", "RUF", "SIM", "SLOT", "T20", "TID", "UP", "W",
+]
+# PLR2004: tests compare against literal sizes and offsets taken from the specs.
+# N818: SPEC-001 names the exception PreconditionConflict.
+ignore = ["PLR2004", "N818"]
+
+[tool.importlinter]
+root_packages = ["core"]
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "src/core is pure: no I/O, network, process, clock, randomness or environment (SPEC-001 R71, SPEC-000 layer 4)"
+type = "forbidden"
+source_modules = ["core"]
+forbidden_modules = [
+    "asyncio", "builtins", "concurrent", "ctypes", "datetime", "fileinput", "glob", "http", "importlib",
+    "io", "logging", "marshal", "multiprocessing", "os", "pathlib", "pickle", "random", "secrets",
+    "select", "selectors", "shelve", "shutil", "signal", "socket", "sqlite3", "ssl", "subprocess",
+    "sys", "tempfile", "threading", "time", "urllib", "uuid", "zoneinfo",
+]
+
+[[tool.importlinter.contracts]]
+name = "Kernel hashes never go through json, struct or numpy (SPEC-001 R65, R70)"
+type = "forbidden"
+source_modules = ["core.kernel"]
+forbidden_modules = ["json", "struct", "numpy"]
+
+[[tool.importlinter.contracts]]
+name = "Layers: kernel < provenance < definitions < plugins < gate < conformance (SPEC-000 layer 4, SPEC-001 R9)"
+type = "layers"
+layers = [
+    "(core.conformance)",
+    "core.gate",
+    "(core.plugins)",
+    "(core.definitions)",
+    "(core.provenance)",
+    "core.kernel",
+]
+
+[[tool.importlinter.contracts]]
+name = "Only core.gate imports core.kernel._internal (SPEC-001 R8)"
+type = "protected"
+protected_modules = ["core.kernel._internal"]
+allowed_importers = ["core.gate"]
+
+[[tool.importlinter.contracts]]
+name = "Outside the kernel, only its public API and _internal are importable (SPEC-001 R7, R8)"
+type = "protected"
+protected_modules = [
+    "core.kernel._apply",
+    "core.kernel._canonical",
+    "core.kernel._diff",
+    "core.kernel._errors",
+    "core.kernel._image",
+    "core.kernel._model",
+    "core.kernel._order",
+]
+allowed_importers = ["core.kernel"]
