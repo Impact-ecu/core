@@ -1,5 +1,5 @@
-"""The sealed results of the gate: `InputResult` (SPEC-004 R9), `ReleasedImage` (R29, R51, SPEC-001 R9) and the
-export authorization of R50-R53.
+"""The sealed results of the gate: `InputResult` (SPEC-004 R9), `ReleasedImage` (R29, R51, SPEC-001 R9), the
+export authorization of R50-R54 and the export inputs of SPEC-005 R100-R102.
 
 Both classes refuse construction without the module-private seal, every attribute assignment, and pickling or
 copying. Python cannot make this a hard barrier (the accepted limitation of SPEC-001 R8); `release` re-checks an
@@ -7,14 +7,15 @@ copying. Python cannot make this a hard barrier (the accepted limitation of SPEC
 """
 
 from collections.abc import Mapping, Sequence
+from dataclasses import dataclass
 from typing import Literal, NoReturn, SupportsIndex, cast, final
 
-from core.gate._model import HEX64, GateError, GateEvent, Verdict, child, ensure, event_of, json_hash
+from core.gate._model import HEX64, GateError, GateEvent, Verdict, child, ensure, event_of, json_hash, present
 from core.gate._report import GateReport
-from core.kernel import Dump, DumpKind, MemoryShape, UnverifiedImage
+from core.kernel import Dump, DumpKind, MemoryLayout, MemoryShape, Patch, UnverifiedImage, Version
 from core.kernel._internal import view
 from core.plugins import Identification
-from core.provenance import Event, Json
+from core.provenance import Build, Event, ExportInputs, Json, PluginVersion, Reference, Versions
 
 _SEAL = object()
 _ACK_KEYS = frozenset({"image_hash_release", "gate_report_hash", "warnings", "presented_ms", "confirmed_ms"})
@@ -137,9 +138,39 @@ def _ack_shape(payload: Mapping[str, Json]) -> bool:
     )
 
 
+@dataclass(frozen=True, slots=True)
+class AlertWarning:
+    """R54: one `warn` finding of an output report as an `alert_ack` lists it (R50, SPEC-005 R36)."""
+
+    finding_id: str
+    rule_id: str
+    text: str
+
+    def to_json(self) -> dict[str, Json]:
+        return {"finding_id": self.finding_id, "rule_id": self.rule_id, "text": self.text}
+
+
+def _gate_text(value: object, rule: str) -> str:
+    """A string the gate wrote into its own report; anything else is a gate bug (SPEC-001 R73)."""
+    return present(value if isinstance(value, str) else None, rule)
+
+
+def _warnings(report: GateReport) -> tuple[AlertWarning, ...]:
+    """R43, R50: every `warn` finding of `findings`, in report order; the one source R52 and R54 share."""
+    return tuple(
+        AlertWarning(
+            json_hash(cast("Json", item)),
+            _gate_text(child(item, "rule_id"), "SPEC-004 R2"),
+            _gate_text(child(item, "text"), "SPEC-004 R2"),
+        )
+        for item in _sequence(report.report.get("findings"))
+        if child(item, "severity") == "warn"
+    )
+
+
 def _mismatch(report: GateReport, image_hash: str, payload: Mapping[str, Json]) -> str | None:
     """R52 after `bad_payload`: the first of image, report, `(finding_id, rule_id)` list and text list."""
-    warns = [item for item in _sequence(report.report.get("findings")) if child(item, "severity") == "warn"]
+    warns = _warnings(report)
     acked = _sequence(payload.get("warnings"))
     checks = (
         ("image_mismatch", payload.get("image_hash_release") == image_hash),
@@ -147,9 +178,9 @@ def _mismatch(report: GateReport, image_hash: str, payload: Mapping[str, Json]) 
         (
             "findings_mismatch",
             [(child(w, "finding_id"), child(w, "rule_id")) for w in acked]
-            == [(json_hash(cast("Json", item)), child(item, "rule_id")) for item in warns],
+            == [(warn.finding_id, warn.rule_id) for warn in warns],
         ),
-        ("text_mismatch", [child(w, "text") for w in acked] == [child(item, "text") for item in warns]),
+        ("text_mismatch", [child(w, "text") for w in acked] == [warn.text for warn in warns]),
     )
     return next((reason for reason, holds in checks if not holds), None)
 
@@ -168,17 +199,31 @@ def authorize(report: GateReport, image_hash: str, project_id: str, ack: GateEve
     return _mismatch(report, image_hash, payload)
 
 
+@dataclass(frozen=True, slots=True)
+class ExportBasis:
+    """SPEC-005 R100: what the `release` call held that `ExportInputs` needs and the report does not carry."""
+
+    original: Dump
+    version: Version
+    layout: MemoryLayout
+    checksum_patches: tuple[Patch, ...]
+    input_report: Mapping[str, Json]
+
+
 @final
 class ReleasedImage(_Immutable):
     """R29: an image the gate let out, with its verdict, report and `report_hash`; bytes only via `to_dump` (R51)."""
 
-    __slots__ = ("_candidate", "_project_id", "_report")
+    __slots__ = ("_basis", "_candidate", "_project_id", "_report")
 
     _candidate: UnverifiedImage
     _report: GateReport
     _project_id: str
+    _basis: ExportBasis
 
-    def __init__(self, seal: object, candidate: UnverifiedImage, report: GateReport, project_id: str) -> None:
+    def __init__(
+        self, seal: object, candidate: UnverifiedImage, report: GateReport, project_id: str, basis: ExportBasis
+    ) -> None:
         _sealed(seal, "ReleasedImage")
         # SPEC-000 invariant 10, SPEC-001 R42: never constructed with a block verdict, and the image is the
         # release candidate the report names.
@@ -188,6 +233,7 @@ class ReleasedImage(_Immutable):
         object.__setattr__(self, "_candidate", candidate)
         object.__setattr__(self, "_report", report)
         object.__setattr__(self, "_project_id", project_id)
+        object.__setattr__(self, "_basis", basis)
 
     @property
     def dump_kind(self) -> DumpKind:
@@ -222,6 +268,73 @@ class ReleasedImage(_Immutable):
 
     def __repr__(self) -> str:
         return f"ReleasedImage(verdict={self.verdict!r}, image_hash={self.image_hash!r})"
+
+
+def _released(value: object, what: str) -> ReleasedImage:
+    if not isinstance(value, ReleasedImage):
+        raise GateError("bad_type", f"{what} takes a ReleasedImage")
+    return value
+
+
+def alert_warnings(released: ReleasedImage) -> tuple[AlertWarning, ...]:
+    """R54: the warnings an `alert_ack` of this release lists, in report order; `()` for `no findings`."""
+    return _warnings(_released(released, "alert_warnings")._report)
+
+
+def alert_ack_payload(released: ReleasedImage, *, presented_ms: int, confirmed_ms: int) -> dict[str, Json]:
+    """R54: the SPEC-005 R36 `alert_ack` payload that R52 authorizes for this release."""
+    image = _released(released, "alert_ack_payload")
+    if image.verdict == "no findings":
+        raise GateError("unexpected_ack", "a no findings release takes no alert_ack (SPEC-004 R52)")
+    if not (_uint(presented_ms) and _uint(confirmed_ms) and presented_ms <= confirmed_ms):
+        raise GateError("bad_payload", "presented_ms and confirmed_ms are integers, presented_ms <= confirmed_ms")
+    return {
+        "image_hash_release": image.image_hash,
+        "gate_report_hash": image.report_hash,
+        "warnings": [warning.to_json() for warning in _warnings(image._report)],
+        "presented_ms": presented_ms,
+        "confirmed_ms": confirmed_ms,
+    }
+
+
+def export_inputs(released: ReleasedImage, *, build: Build) -> ExportInputs:
+    """SPEC-005 R100-R102: the `ExportInputs` of this release, from what its `release` call held and its own
+    report; only `build` (SPEC-005 R16) comes from the caller."""
+    image = _released(released, "export_inputs")
+    if not isinstance(build, Build):
+        raise GateError("bad_type", "export_inputs takes a provenance Build")
+    report = image.report
+    gate, subject = child(report, "gate"), child(report, "subject")
+    plugin = child(subject, "plugin")
+    plugins = (
+        PluginVersion(
+            _gate_text(child(plugin, "family"), "SPEC-004 R45"),
+            _gate_text(child(plugin, "version"), "SPEC-004 R45"),
+            _gate_text(child(subject, "conformance_report_hash"), "SPEC-004 R45"),
+        ),
+    )
+    references = tuple(
+        Reference(_gate_text(child(r, "id"), "SPEC-004 R45"), _gate_text(child(r, "version"), "SPEC-004 R45"))
+        for r in _sequence(child(subject, "references"))
+    )
+    versions = Versions(
+        _gate_text(child(gate, "core_version"), "SPEC-004 R45"),
+        plugins,
+        _gate_text(child(child(gate, "rule_table"), "version"), "SPEC-004 R45"),
+        references,
+    )
+    basis = image._basis
+    return ExportInputs(
+        original=basis.original,
+        version=basis.version,
+        layout=basis.layout,
+        checksum_patches=basis.checksum_patches,
+        definition_hash=_gate_text(child(subject, "definition_hash"), "SPEC-004 R45"),
+        versions=versions,
+        gate_report=report,
+        input_report=basis.input_report,
+        build=build,
+    )
 
 
 def seal() -> object:

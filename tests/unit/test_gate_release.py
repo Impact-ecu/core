@@ -57,6 +57,7 @@ from tests.unit.gate_support import (
     definition,
     doc,
     event,
+    export_basis,
     raises,
     ran_of,
     rule_ids,
@@ -657,7 +658,7 @@ def test_released_image_is_sealed() -> None:
     released = Scenario().release()
     report = GateReport(released.report, released.report_hash, "no findings")
     with pytest.raises(GateError) as error:
-        ReleasedImage(object(), Scenario().unverified(), report, PROJECT)
+        ReleasedImage(object(), Scenario().unverified(), report, PROJECT, export_basis(Scenario()))
     assert error.value.reason == "sealed"
     name = "_report"
     with pytest.raises(AttributeError):
