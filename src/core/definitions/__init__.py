@@ -53,6 +53,7 @@ from core.definitions._rational import (
     rational_text,
 )
 from core.definitions._units import EXPORT_TEXT, Unit
+from core.definitions._xdf import ImportResult, Rejection, XdfParams, export_xdf, import_xdf, normalize_xdf
 
 __all__ = [
     "EXPORT_TEXT",
@@ -70,6 +71,7 @@ __all__ = [
     "Distribution",
     "Dtype",
     "FixedAxis",
+    "ImportResult",
     "InlineAxis",
     "Kind",
     "License",
@@ -81,12 +83,14 @@ __all__ = [
     "Origin",
     "OriginKind",
     "PointerAxis",
+    "Rejection",
     "Scaling",
     "SharedAxis",
     "SoftwareVersion",
     "State",
     "Unit",
     "Value",
+    "XdfParams",
     "axis_from_json",
     "axis_json",
     "axisdef_from_json",
@@ -104,11 +108,14 @@ __all__ = [
     "encode",
     "encode_axis",
     "encode_cell",
+    "export_xdf",
     "finite_decimal_text",
     "has_reviewed_category",
+    "import_xdf",
     "mapdef_from_json",
     "mapdef_hash",
     "mapdef_json",
+    "normalize_xdf",
     "parse_a2l_number",
     "parse_rational",
     "parse_xdf_decimal",
