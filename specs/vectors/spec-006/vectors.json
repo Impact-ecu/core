@@ -1,0 +1,5140 @@
+{
+  "generator": {
+    "jcs": "rfc8785 0.1.4",
+    "ed25519": "cryptography 46.0.3",
+    "sha256": "python hashlib",
+    "hmac": "python hmac",
+    "python": "3.12.3",
+    "spec001_vectors_sha256": "351719cc0b064d17df24404822f363bbfac2a6111847760b55516cdc5c9a09e2"
+  },
+  "spec001_inputs": {
+    "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+    "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+    "golden_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+    "other_image_hash": "c42a3fdf83267ff246a7de25f05553c28f56adcaa048316bac9750968a58a10b",
+    "from": [
+      "original",
+      "V4-apply-disjoint",
+      "V9-checksum-patch"
+    ]
+  },
+  "synthetic_second_version": {
+    "version_hash": "8f26f907d1ee3940a81dfb745cfbc940fcb142a6aa0e1f0b4190201faea7d47f",
+    "image_hash": "87c026feb3148faf6105d564e0ce5cdd09ed54d58a0b5099e8d5b15c1396bc04"
+  },
+  "keys": {
+    "rules": [
+      "R49",
+      "R66"
+    ],
+    "keys": {
+      "registry": {
+        "seed_text": "impact spec-006 synthetic registry key; never use outside test vectors",
+        "public_key": "2777ffb024ca3a7b41e996fa5d53b10725ddd36caf6733a9d39d53be7f7cde34",
+        "key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d"
+      },
+      "attester-a": {
+        "seed_text": "impact spec-006 synthetic attester-a key; never use outside test vectors",
+        "public_key": "942f24e644e85098fb66a13cd45d26f7b20ad62fbded37150993554c3793bcf6",
+        "key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19"
+      },
+      "attester-a2": {
+        "seed_text": "impact spec-006 synthetic attester-a2 key; never use outside test vectors",
+        "public_key": "75fd1589632ea2706ebd361fc5b8c8399b4ba8419494be956c048dc000dd9966",
+        "key_id": "5d4f33ab43ef49471f606c8c7e4cfdc26011980b385d810871f6399881e6338c"
+      },
+      "attester-b": {
+        "seed_text": "impact spec-006 synthetic attester-b key; never use outside test vectors",
+        "public_key": "fa418fb31fc0ba011397acc6a8303f82d0f2de74ad8b7ed43e471576f4af1d81",
+        "key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc"
+      },
+      "attester-c": {
+        "seed_text": "impact spec-006 synthetic attester-c key; never use outside test vectors",
+        "public_key": "9edb2c662671e1f7a062741255f062d2f74f98fa7779c7791359ee5601a1fa2e",
+        "key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033"
+      },
+      "attester-d": {
+        "seed_text": "impact spec-006 synthetic attester-d key; never use outside test vectors",
+        "public_key": "88aaadd3f00cac0a8fa1004e8feb9a2a6e65c558553c2124d12f18233061581e",
+        "key_id": "cdfc59703e6cf762dd53227aaf76ced0ad3b3d355bc837c93f6602ebff6ec265"
+      },
+      "attester-e": {
+        "seed_text": "impact spec-006 synthetic attester-e key; never use outside test vectors",
+        "public_key": "5ededb89579eab94997e6224a01c05dafbc956fd52160e24c4d0e03fd3fa421f",
+        "key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8"
+      },
+      "reviewer-f": {
+        "seed_text": "impact spec-006 synthetic reviewer-f key; never use outside test vectors",
+        "public_key": "00bf3dc129b3f40d1f1b002654743175df341c1e9685c70901216ba3ea31e70d",
+        "key_id": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0"
+      },
+      "attester-r": {
+        "seed_text": "impact spec-006 synthetic attester-r key; never use outside test vectors",
+        "public_key": "bf8ad78ce35c48a467b772ac6f4fef2ba85d4bc9d72f77e9733e5c92d561413b",
+        "key_id": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da"
+      }
+    }
+  },
+  "raw_import": {
+    "max_input_bytes": 67108864,
+    "importer_version": "0.0.0-synthetic",
+    "cases": [
+      {
+        "id": "I1-raw-single-memory",
+        "rules": [
+          "R10",
+          "R17",
+          "R20",
+          "R21",
+          "R27",
+          "R28",
+          "R29"
+        ],
+        "input": {
+          "hex": "404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f"
+        },
+        "params": {
+          "dump_kind": "bench_full",
+          "source_tool": "Synthetic Reader 1.0",
+          "options": {
+            "memory_id": "pflash"
+          }
+        },
+        "expect": {
+          "outcome": "imported",
+          "dump": {
+            "dump_kind": "bench_full",
+            "memories": [
+              {
+                "memory_id": "pflash",
+                "base_address": null,
+                "data": {
+                  "hex": "404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f"
+                }
+              }
+            ]
+          },
+          "image_jcs": "{\"dump_kind\":\"bench_full\",\"memories\":[{\"base_address\":null,\"memory_id\":\"pflash\",\"sha256\":\"6f8c40508471ed66a982c13dd5275455008ec1cd33fdbd2351a5d8c8f1574564\",\"size\":48}]}",
+          "record": {
+            "schema": "impact.import-record.v1",
+            "importer_id": "impact.raw",
+            "importer_version": "0.0.0-synthetic",
+            "source_tool": "Synthetic Reader 1.0",
+            "container_kind": "raw",
+            "input_sha256": "6f8c40508471ed66a982c13dd5275455008ec1cd33fdbd2351a5d8c8f1574564",
+            "dump_kind": "bench_full",
+            "options": {
+              "memory_id": "pflash"
+            },
+            "image_hash": "4a342fb00ae0c47f7912bf0a151fc07d0145edb215fec1f5a69f29c3230ec554"
+          },
+          "record_jcs": "{\"container_kind\":\"raw\",\"dump_kind\":\"bench_full\",\"image_hash\":\"4a342fb00ae0c47f7912bf0a151fc07d0145edb215fec1f5a69f29c3230ec554\",\"importer_id\":\"impact.raw\",\"importer_version\":\"0.0.0-synthetic\",\"input_sha256\":\"6f8c40508471ed66a982c13dd5275455008ec1cd33fdbd2351a5d8c8f1574564\",\"options\":{\"memory_id\":\"pflash\"},\"schema\":\"impact.import-record.v1\",\"source_tool\":\"Synthetic Reader 1.0\"}",
+          "import_record_hash": "b7df108a53dd78dc4437b28a390f0881835bb6e044eb184ddeeeac687c28e26f"
+        }
+      },
+      {
+        "id": "I2-raw-null-source-tool",
+        "rules": [
+          "R10",
+          "R17",
+          "R20",
+          "R21",
+          "R27",
+          "R28",
+          "R29"
+        ],
+        "input": {
+          "hex": "ffffffffffffffffffffffffffffffff"
+        },
+        "params": {
+          "dump_kind": "obd_partial",
+          "source_tool": null,
+          "options": {
+            "memory_id": "eeprom"
+          }
+        },
+        "expect": {
+          "outcome": "imported",
+          "dump": {
+            "dump_kind": "obd_partial",
+            "memories": [
+              {
+                "memory_id": "eeprom",
+                "base_address": null,
+                "data": {
+                  "hex": "ffffffffffffffffffffffffffffffff"
+                }
+              }
+            ]
+          },
+          "image_jcs": "{\"dump_kind\":\"obd_partial\",\"memories\":[{\"base_address\":null,\"memory_id\":\"eeprom\",\"sha256\":\"5ac6a5945f16500911219129984ba8b387a06f24fe383ce4e81a73294065461b\",\"size\":16}]}",
+          "record": {
+            "schema": "impact.import-record.v1",
+            "importer_id": "impact.raw",
+            "importer_version": "0.0.0-synthetic",
+            "source_tool": null,
+            "container_kind": "raw",
+            "input_sha256": "5ac6a5945f16500911219129984ba8b387a06f24fe383ce4e81a73294065461b",
+            "dump_kind": "obd_partial",
+            "options": {
+              "memory_id": "eeprom"
+            },
+            "image_hash": "d9dc6e8fef818cf2ad260ef0f2399e13cb966ce95e3e13f47b6111f3ac4f9bc2"
+          },
+          "record_jcs": "{\"container_kind\":\"raw\",\"dump_kind\":\"obd_partial\",\"image_hash\":\"d9dc6e8fef818cf2ad260ef0f2399e13cb966ce95e3e13f47b6111f3ac4f9bc2\",\"importer_id\":\"impact.raw\",\"importer_version\":\"0.0.0-synthetic\",\"input_sha256\":\"5ac6a5945f16500911219129984ba8b387a06f24fe383ce4e81a73294065461b\",\"options\":{\"memory_id\":\"eeprom\"},\"schema\":\"impact.import-record.v1\",\"source_tool\":null}",
+          "import_record_hash": "dc7c2ad1583a8e3899a41667d5e18c04a8e07180d83b0a14c6069b2a911828a8"
+        }
+      },
+      {
+        "id": "I3-empty-input",
+        "rules": [
+          "R29"
+        ],
+        "input": {
+          "hex": ""
+        },
+        "params": {
+          "dump_kind": "bench_full",
+          "source_tool": null,
+          "options": {
+            "memory_id": "pflash"
+          }
+        },
+        "expect": {
+          "outcome": "rejected",
+          "rejection": {
+            "reason": "empty_input",
+            "container_kind": "raw"
+          }
+        }
+      },
+      {
+        "id": "I4-bad-memory-id",
+        "rules": [
+          "R28"
+        ],
+        "input": {
+          "hex": "404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f"
+        },
+        "params": {
+          "dump_kind": "bench_full",
+          "source_tool": null,
+          "options": {
+            "memory_id": "PFlash"
+          }
+        },
+        "expect": {
+          "outcome": "rejected",
+          "rejection": {
+            "reason": "bad_params",
+            "container_kind": "raw"
+          }
+        }
+      },
+      {
+        "id": "I5-extra-option",
+        "rules": [
+          "R28"
+        ],
+        "input": {
+          "hex": "404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f"
+        },
+        "params": {
+          "dump_kind": "bench_full",
+          "source_tool": null,
+          "options": {
+            "memory_id": "pflash",
+            "base_address": 0
+          }
+        },
+        "expect": {
+          "outcome": "rejected",
+          "rejection": {
+            "reason": "bad_params",
+            "container_kind": "raw"
+          }
+        }
+      },
+      {
+        "id": "I6-bad-dump-kind",
+        "rules": [
+          "R11",
+          "R20"
+        ],
+        "input": {
+          "hex": "404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f"
+        },
+        "params": {
+          "dump_kind": "full",
+          "source_tool": null,
+          "options": {
+            "memory_id": "pflash"
+          }
+        },
+        "expect": {
+          "outcome": "rejected",
+          "rejection": {
+            "reason": "bad_params",
+            "container_kind": null
+          }
+        }
+      },
+      {
+        "id": "I7-too-large",
+        "rules": [
+          "R16",
+          "R20"
+        ],
+        "input": {
+          "fill": {
+            "byte": 0,
+            "size": 67108865
+          }
+        },
+        "params": {
+          "dump_kind": "bench_full",
+          "source_tool": null,
+          "options": {
+            "memory_id": "pflash"
+          }
+        },
+        "expect": {
+          "outcome": "rejected",
+          "rejection": {
+            "reason": "too_large",
+            "container_kind": null
+          }
+        }
+      },
+      {
+        "id": "I8-at-size-limit",
+        "rules": [
+          "R16",
+          "R29"
+        ],
+        "input": {
+          "fill": {
+            "byte": 0,
+            "size": 67108864
+          }
+        },
+        "params": {
+          "dump_kind": "boot_full",
+          "source_tool": null,
+          "options": {
+            "memory_id": "pflash"
+          }
+        },
+        "expect": {
+          "outcome": "imported",
+          "dump": {
+            "dump_kind": "boot_full",
+            "memories": [
+              {
+                "memory_id": "pflash",
+                "base_address": null,
+                "data": {
+                  "fill": {
+                    "byte": 0,
+                    "size": 67108864
+                  }
+                }
+              }
+            ]
+          },
+          "image_jcs": "{\"dump_kind\":\"boot_full\",\"memories\":[{\"base_address\":null,\"memory_id\":\"pflash\",\"sha256\":\"3b6a07d0d404fab4e23b6d34bc6696a6a312dd92821332385e5af7c01c421351\",\"size\":67108864}]}",
+          "record": {
+            "schema": "impact.import-record.v1",
+            "importer_id": "impact.raw",
+            "importer_version": "0.0.0-synthetic",
+            "source_tool": null,
+            "container_kind": "raw",
+            "input_sha256": "3b6a07d0d404fab4e23b6d34bc6696a6a312dd92821332385e5af7c01c421351",
+            "dump_kind": "boot_full",
+            "options": {
+              "memory_id": "pflash"
+            },
+            "image_hash": "ab5dc701f4a994d856cba00c1c7d20774d6f80053d965e5ee752a72cdda526ef"
+          },
+          "record_jcs": "{\"container_kind\":\"raw\",\"dump_kind\":\"boot_full\",\"image_hash\":\"ab5dc701f4a994d856cba00c1c7d20774d6f80053d965e5ee752a72cdda526ef\",\"importer_id\":\"impact.raw\",\"importer_version\":\"0.0.0-synthetic\",\"input_sha256\":\"3b6a07d0d404fab4e23b6d34bc6696a6a312dd92821332385e5af7c01c421351\",\"options\":{\"memory_id\":\"pflash\"},\"schema\":\"impact.import-record.v1\",\"source_tool\":null}",
+          "import_record_hash": "cf530d04ec987ddae91d30ec2a7a30d5d5728684c59417961721cd31925dc4b7"
+        }
+      }
+    ]
+  },
+  "dtcs": {
+    "rules": [
+      "R43"
+    ],
+    "canonical": [
+      {
+        "raw": [
+          " p0120 ",
+          "P0601-00",
+          "u0100",
+          "P0120"
+        ],
+        "expect": [
+          "P0120",
+          "P0601-00",
+          "U0100"
+        ]
+      },
+      {
+        "raw": [],
+        "expect": []
+      },
+      {
+        "raw": [
+          "c1234-af",
+          "B3FFF"
+        ],
+        "expect": [
+          "B3FFF",
+          "C1234-AF"
+        ]
+      }
+    ],
+    "invalid": [
+      {
+        "raw": [
+          "P4123"
+        ],
+        "reason": "bad_dtc"
+      },
+      {
+        "raw": [
+          "X0123"
+        ],
+        "reason": "bad_dtc"
+      },
+      {
+        "raw": [
+          "P012"
+        ],
+        "reason": "bad_dtc"
+      },
+      {
+        "raw": [
+          "P0601-0"
+        ],
+        "reason": "bad_dtc"
+      },
+      {
+        "raw": [
+          "P0601",
+          "P06O1"
+        ],
+        "reason": "bad_dtc"
+      }
+    ]
+  },
+  "unit_ids": {
+    "rules": [
+      "R45"
+    ],
+    "canonical": [
+      {
+        "raw": "sn-0001.x",
+        "expect": "SN0001X"
+      },
+      {
+        "raw": "SN 0002 Y",
+        "expect": "SN0002Y"
+      },
+      {
+        "raw": "sn/0003:z_",
+        "expect": "SN0003Z"
+      }
+    ],
+    "invalid": [
+      {
+        "raw": "ab1",
+        "reason": "bad_unit_id"
+      },
+      {
+        "raw": "SN#0001",
+        "reason": "bad_unit_id"
+      },
+      {
+        "raw": "SN\u00c40001",
+        "reason": "bad_unit_id"
+      },
+      {
+        "raw": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "reason": "bad_unit_id"
+      }
+    ]
+  },
+  "commitment_service": {
+    "rules": [
+      "R46",
+      "R47"
+    ],
+    "family": "synthetic.family",
+    "secret_text": "impact spec-006 synthetic commitment secret; never use outside test vectors",
+    "secret_hex": "258c782ae7c32dd461fb0d2114c3e05139574f2bdc62e88363e55074ede37ba9",
+    "epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+    "units": [
+      {
+        "unit": "X",
+        "unit_id": "SN0001X",
+        "lookup_input": "{\"family\":\"synthetic.family\",\"schema\":\"impact.ecu-unit.v1\",\"unit_id\":\"SN0001X\"}",
+        "lookup_key": "fd54a37a20176030ee35cff37c2c85985f256f16692aa53f2440d9e52c774a61",
+        "ecu_commitment": "8309307b1ff4d2d242a6c50ece5a8b0777fab4cb006d39dd94ee1a551b7f40e4"
+      },
+      {
+        "unit": "Y",
+        "unit_id": "SN0002Y",
+        "lookup_input": "{\"family\":\"synthetic.family\",\"schema\":\"impact.ecu-unit.v1\",\"unit_id\":\"SN0002Y\"}",
+        "lookup_key": "966cad17a880fb01976b23eb22321a737248ba8d4210f574570df5e59e6fdf6c",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669"
+      },
+      {
+        "unit": "Z",
+        "unit_id": "SN0003Z",
+        "lookup_input": "{\"family\":\"synthetic.family\",\"schema\":\"impact.ecu-unit.v1\",\"unit_id\":\"SN0003Z\"}",
+        "lookup_key": "a3794aac9a013b1b2a51823a14fe93d7a3f2edab61bf71d2dc8c9c4d8f95819b",
+        "ecu_commitment": "ee87e846bec9583e6636700195ee9d22ba744a0d8730cc5fb7fea13ca1d6370d"
+      }
+    ],
+    "second_epoch": {
+      "epoch": "a1037573d5a02b88709927f420bf80cd95b9f04a68e96905bd428d2dcdacc235",
+      "secret_hex": "acf513c302b1a698d90e0890a8bf3309f84afbaaf85a942221cde2a28ffac0f8",
+      "units": [
+        {
+          "unit": "Y",
+          "unit_id": "SN0002Y",
+          "lookup_key": "32483a11652a3a78c462648b313237268d4fea29313c5973fa2e55619568d17e",
+          "ecu_commitment": "7e96dd0891b7777028e4915a8bd7a6f28bb86ba204ea49498d6456a41aad715b"
+        }
+      ]
+    }
+  },
+  "dtc_set": {
+    "rules": [
+      "R55",
+      "R56"
+    ],
+    "value": {
+      "schema": "impact.disqualifying-dtcs.v1",
+      "version": 1,
+      "codes": [
+        "P0601",
+        "P0602",
+        "P0603",
+        "P0604",
+        "P0605",
+        "P0606",
+        "P0607",
+        "P060A",
+        "P062F"
+      ]
+    },
+    "jcs": "{\"codes\":[\"P0601\",\"P0602\",\"P0603\",\"P0604\",\"P0605\",\"P0606\",\"P0607\",\"P060A\",\"P062F\"],\"schema\":\"impact.disqualifying-dtcs.v1\",\"version\":1}",
+    "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc"
+  },
+  "head_policy": {
+    "rules": [
+      "R82"
+    ],
+    "value": {
+      "schema": "impact.head-policy.v1",
+      "version": 1,
+      "max_validity_s": 86400
+    },
+    "head_policy_hash": "b91cb6e24b8d34713263fa1244d6b0d946ad2f2bcbb913b474618579480d8cea"
+  },
+  "registry_chain": {
+    "rules": [
+      "R60",
+      "R61",
+      "R62",
+      "R63",
+      "R64",
+      "R67",
+      "R68"
+    ],
+    "test_mode": true,
+    "events": [
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 0,
+          "event_id": "00000000000000000000000000000000",
+          "project_id": null,
+          "type": "genesis",
+          "payload": {
+            "role": "server",
+            "signing_keys": [
+              {
+                "key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+                "public_key": "2777ffb024ca3a7b41e996fa5d53b10725ddd36caf6733a9d39d53be7f7cde34"
+              }
+            ]
+          },
+          "actor": {
+            "kind": "system",
+            "id": "system"
+          },
+          "ts": "2026-10-18T13:00:00Z",
+          "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933"
+        },
+        "hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 1,
+          "event_id": "00000000000000000000000000000001",
+          "project_id": null,
+          "type": "attester_enrolled",
+          "payload": {
+            "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "public_key": "942f24e644e85098fb66a13cd45d26f7b20ad62fbded37150993554c3793bcf6",
+            "roles": [
+              "attester"
+            ],
+            "rotates": null,
+            "rotation_signature": null,
+            "reason_commitment": "7d366a60b5fc2d2ce37fa2b13bb70d9ee82c226e24c630e542433279aab48c35",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "56bb0aebf09bc8ca4e2e707abbdbccbf49f2d30355800c30e34edb4c17fd9d94fb6070e89d9596b96c20027c900a300ed0f9a42772e2b113bcd23d2062ef650d"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:01:00Z",
+          "prev_hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933",
+          "hash": "defd4466ccd6dba82db4e776f60e189fb0ea47467aba0fec0211b6d4b35f2b5f"
+        },
+        "hash": "defd4466ccd6dba82db4e776f60e189fb0ea47467aba0fec0211b6d4b35f2b5f"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 2,
+          "event_id": "00000000000000000000000000000002",
+          "project_id": null,
+          "type": "attester_enrolled",
+          "payload": {
+            "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+            "public_key": "fa418fb31fc0ba011397acc6a8303f82d0f2de74ad8b7ed43e471576f4af1d81",
+            "roles": [
+              "attester"
+            ],
+            "rotates": null,
+            "rotation_signature": null,
+            "reason_commitment": "9d9af6a27e27ddd030b6010af7c6df3c365398259bc30a62e043163c53d943d0",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "b9ba0779eaddd3027e67349397e74281ee7c6bd628ca3a1af7ce3b5798d0651870b6abc766329b07fb64aabd5115374cee74014e49d71fe8af005bf1d5b98109"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:02:00Z",
+          "prev_hash": "defd4466ccd6dba82db4e776f60e189fb0ea47467aba0fec0211b6d4b35f2b5f",
+          "hash": "0ab69436cce71eb94e11342af2e0735338276d3b77fb7f82021fd7a8bc48e3dd"
+        },
+        "hash": "0ab69436cce71eb94e11342af2e0735338276d3b77fb7f82021fd7a8bc48e3dd"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 3,
+          "event_id": "00000000000000000000000000000003",
+          "project_id": null,
+          "type": "attester_enrolled",
+          "payload": {
+            "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "public_key": "9edb2c662671e1f7a062741255f062d2f74f98fa7779c7791359ee5601a1fa2e",
+            "roles": [
+              "attester"
+            ],
+            "rotates": null,
+            "rotation_signature": null,
+            "reason_commitment": "7315b708c51adc000356ef33abe88f70bda0881212891fe1113f9ea0a7bd5216",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "906694b201c8e3ed75351eedff7db08a6b0c164fb342d2a8355e97fe3e02f5aa3237b885c625c86013f8df94e18970de8607f2b109f1a6ab14703230aa7d0600"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:03:00Z",
+          "prev_hash": "0ab69436cce71eb94e11342af2e0735338276d3b77fb7f82021fd7a8bc48e3dd",
+          "hash": "f16a60dda1a6b5f7dbc94f089c48754e8b103da34e0bd4012e5193b2ec94a626"
+        },
+        "hash": "f16a60dda1a6b5f7dbc94f089c48754e8b103da34e0bd4012e5193b2ec94a626"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 4,
+          "event_id": "00000000000000000000000000000004",
+          "project_id": null,
+          "type": "attester_enrolled",
+          "payload": {
+            "attester_key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+            "public_key": "5ededb89579eab94997e6224a01c05dafbc956fd52160e24c4d0e03fd3fa421f",
+            "roles": [
+              "attester"
+            ],
+            "rotates": null,
+            "rotation_signature": null,
+            "reason_commitment": "37338e2c4989c392939e4afd42f30533c8a3b07b72f81f4b97735e276f1bf62a",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "8e08c686196d09b133a9ddee291827305ab3eb2a38778bc47576bbdf242149e8799595355a161c53096440ba4fd3f2a96bee01f4266e32777ba4e2a1ba143f0a"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:04:00Z",
+          "prev_hash": "f16a60dda1a6b5f7dbc94f089c48754e8b103da34e0bd4012e5193b2ec94a626",
+          "hash": "87433296cd6b32269a2912257c147d5dc6e685e295e40b649b0bf72137400286"
+        },
+        "hash": "87433296cd6b32269a2912257c147d5dc6e685e295e40b649b0bf72137400286"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 5,
+          "event_id": "00000000000000000000000000000005",
+          "project_id": null,
+          "type": "attester_enrolled",
+          "payload": {
+            "attester_key_id": "5d4f33ab43ef49471f606c8c7e4cfdc26011980b385d810871f6399881e6338c",
+            "public_key": "75fd1589632ea2706ebd361fc5b8c8399b4ba8419494be956c048dc000dd9966",
+            "roles": [
+              "attester"
+            ],
+            "rotates": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "rotation_signature": "c105507c5b30a868c924f5883ef3c462496b7d9ca2243a9e3c8e27cc516991a565e01919e00d95c0715ad0f1a7636a8b9a22f4a923c68bde2e267d624436d005",
+            "reason_commitment": "d7bde489364c237bd9a03263dc60178e3f671fd5e41822c3f135bdea587ea352",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "cc4e2a9adc1e75a87e1c841836890f056eefb5c7d1214b2a1280fa61e6813e330c8b0d5b6b84d9ea800deaf48b2667209881f9d9e6edf41a0f3b56200fe98900"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:05:00Z",
+          "prev_hash": "87433296cd6b32269a2912257c147d5dc6e685e295e40b649b0bf72137400286",
+          "hash": "840dcd6f1a2bdd49c59661e37cfb91bd422e73663d4d74f22abe8c306a1ea38c"
+        },
+        "hash": "840dcd6f1a2bdd49c59661e37cfb91bd422e73663d4d74f22abe8c306a1ea38c"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 6,
+          "event_id": "00000000000000000000000000000006",
+          "project_id": null,
+          "type": "attester_enrolled",
+          "payload": {
+            "attester_key_id": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+            "public_key": "00bf3dc129b3f40d1f1b002654743175df341c1e9685c70901216ba3ea31e70d",
+            "roles": [
+              "reviewer"
+            ],
+            "rotates": null,
+            "rotation_signature": null,
+            "reason_commitment": "05abbd14656b6d5a6d169c1dd8766fd84793e1135a22b6280cfec266a3fefe93",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "999d5704b49613692e1ce132ade39b8cfd55cf812fc5a3ca9c7e21c8cab89fe9b4b315ebef4c7198aca284f845f753832581421e16d290fc6623175121663202"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:06:00Z",
+          "prev_hash": "840dcd6f1a2bdd49c59661e37cfb91bd422e73663d4d74f22abe8c306a1ea38c",
+          "hash": "b40a1eaed484ae4e6cfb8769d6883178421187b3670d52b3139be9b6c30edb71"
+        },
+        "hash": "b40a1eaed484ae4e6cfb8769d6883178421187b3670d52b3139be9b6c30edb71"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 7,
+          "event_id": "00000000000000000000000000000007",
+          "project_id": null,
+          "type": "attester_enrolled",
+          "payload": {
+            "attester_key_id": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+            "public_key": "bf8ad78ce35c48a467b772ac6f4fef2ba85d4bc9d72f77e9733e5c92d561413b",
+            "roles": [
+              "attester"
+            ],
+            "rotates": null,
+            "rotation_signature": null,
+            "reason_commitment": "a34baf90377d1902dd51a02183a82f01fa68e73c06e4277c05315c64fa1bc8ef",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "bcfce7e4833952b581009f2bff83151f274701896c5849fd03a120903285fd34e88d6a7b7f39d7fbe2d2c58e0edabf1bdf806b5d0e0a64d8f38b807f8d74c90c"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:07:00Z",
+          "prev_hash": "b40a1eaed484ae4e6cfb8769d6883178421187b3670d52b3139be9b6c30edb71",
+          "hash": "82ccb388ab77b1f3b5635db01dcbabe7a72b06a1683ee07df77367bbe891b0cf"
+        },
+        "hash": "82ccb388ab77b1f3b5635db01dcbabe7a72b06a1683ee07df77367bbe891b0cf"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 8,
+          "event_id": "00000000000000000000000000000008",
+          "project_id": null,
+          "type": "attestation_included",
+          "payload": {
+            "attestation_hash": "af9460900d39d4ee5df6055cee5506bc4d3b54576d4db2acbbeee31dfaa80d8b",
+            "attester_key_id": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "b8c997c6b3080cbd2114077f2905308c1bbc1c07edc17fa07ef2feb30896352325e45811b025f2cc47ebc9d5abd66b0bf27add514473f2390db38a0b08dcd001"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:08:00Z",
+          "prev_hash": "82ccb388ab77b1f3b5635db01dcbabe7a72b06a1683ee07df77367bbe891b0cf",
+          "hash": "f7ddeb5eb17639dc2929f197a0508ffef9fd80470cbda12882f5882844634866"
+        },
+        "hash": "f7ddeb5eb17639dc2929f197a0508ffef9fd80470cbda12882f5882844634866"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 9,
+          "event_id": "00000000000000000000000000000009",
+          "project_id": null,
+          "type": "attestation_included",
+          "payload": {
+            "attestation_hash": "340f657265668c6cddad8a9b00b8413500aada7213371787152a41611701d9d9",
+            "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "b540dee0130eb5a8c70de43360faf111c9d5ffa83f0554f35c1cc295fcd8757af678eefcc6e9d9c44b542c6af57a347bd3b26518a1c325e6ef374963700ef70a"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:09:00Z",
+          "prev_hash": "f7ddeb5eb17639dc2929f197a0508ffef9fd80470cbda12882f5882844634866",
+          "hash": "c2da215c9a12a688ca307c74713cc205dacaa20963f79b78212ea6e75c94eb25"
+        },
+        "hash": "c2da215c9a12a688ca307c74713cc205dacaa20963f79b78212ea6e75c94eb25"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 10,
+          "event_id": "0000000000000000000000000000000a",
+          "project_id": null,
+          "type": "attester_revoked",
+          "payload": {
+            "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "reason": "compromised",
+            "reason_commitment": "41294b13b8292c68e9baf77adc101f0ed9221f02da13e1eb560730e3dfcda453",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "3be9eaac1b8d9b575ddbac1b3ea8133f074f678968d85b8f569933d6944cdf98cc1df6fffe1884bfb7d30354bd6ebdb15e1156ed4a2cac03aeb8a4c1ef97030c"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:10:00Z",
+          "prev_hash": "c2da215c9a12a688ca307c74713cc205dacaa20963f79b78212ea6e75c94eb25",
+          "hash": "d7aa502f1d43661a0258b00b32374b02cba73cc21a76c94f760cc474889d3e2f"
+        },
+        "hash": "d7aa502f1d43661a0258b00b32374b02cba73cc21a76c94f760cc474889d3e2f"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 11,
+          "event_id": "0000000000000000000000000000000b",
+          "project_id": null,
+          "type": "attester_revoked",
+          "payload": {
+            "attester_key_id": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+            "reason": "retired",
+            "reason_commitment": "365b9053ec7690f70a9390b6972e1b306cfede2b11e5f16e1e46233651b75da9",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "03c6e6ee54a502eb3e9ad52c65f2bde552df9469ba5a09c264f05a84922dfef44f38dd4f69c9e55b0f3f056c09305fd6b7dd0170e2e72db7d5dd0713e4bb4904"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:11:00Z",
+          "prev_hash": "d7aa502f1d43661a0258b00b32374b02cba73cc21a76c94f760cc474889d3e2f",
+          "hash": "22861b0697e43137ef0d6293c27c8bd06116915044eb0accab2c455bb0f112b9"
+        },
+        "hash": "22861b0697e43137ef0d6293c27c8bd06116915044eb0accab2c455bb0f112b9"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 12,
+          "event_id": "0000000000000000000000000000000c",
+          "project_id": null,
+          "type": "attestation_included",
+          "payload": {
+            "attestation_hash": "3d08cba24360fa6048a776c9bb2fd654cdf119cf396f818ad1ddcd460785f48f",
+            "attester_key_id": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "1eb931c07f463bec7c8ce4eb48771c4d42edfc7f9cfb900718f5f4288817dcfd8ea7b56774be77284e486762b3990392e844491bc4cef46821be978250ca880a"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:12:00Z",
+          "prev_hash": "22861b0697e43137ef0d6293c27c8bd06116915044eb0accab2c455bb0f112b9",
+          "hash": "fe953ca83a56c34856a76b8bb54d49af9bab60e9806d43f75758001a631212be"
+        },
+        "hash": "fe953ca83a56c34856a76b8bb54d49af9bab60e9806d43f75758001a631212be"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 13,
+          "event_id": "0000000000000000000000000000000d",
+          "project_id": null,
+          "type": "review",
+          "payload": {
+            "subject_kind": "golden_record",
+            "export_ref": null,
+            "subject_hash": "79ff8f62419a95ad24f4329566fd4242925c46793c546a746a10b6671b993770",
+            "decision": "approved",
+            "reviewer_key_id": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+            "signature": "85a57af37896032f766898efab035855e335ab063733791fce8d5f240673a223f226e7d692066ee67a666ecc63a42aa684d01e7e0e91138a4cec1e5cb3abd704"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-reviewer-f"
+          },
+          "ts": "2026-10-18T13:13:00Z",
+          "prev_hash": "fe953ca83a56c34856a76b8bb54d49af9bab60e9806d43f75758001a631212be",
+          "hash": "e1d3352ee07cba25d30d004efe2e8384cc654cc4b7e1894c67adcf31ec1c3e34"
+        },
+        "hash": "e1d3352ee07cba25d30d004efe2e8384cc654cc4b7e1894c67adcf31ec1c3e34"
+      }
+    ]
+  },
+  "registries": {
+    "pre": {
+      "rules": [
+        "R61",
+        "R62",
+        "R63",
+        "R64",
+        "R65",
+        "R67",
+        "R68"
+      ],
+      "value": {
+        "schema": "impact.attester-registry.v1",
+        "tenant_id": "tenant-registry-synthetic",
+        "genesis_hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933",
+        "head": {
+          "seq": 9,
+          "hash": "c2da215c9a12a688ca307c74713cc205dacaa20963f79b78212ea6e75c94eb25"
+        },
+        "attesters": [
+          {
+            "attester_key_id": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+            "public_key": "00bf3dc129b3f40d1f1b002654743175df341c1e9685c70901216ba3ea31e70d",
+            "roles": [
+              "reviewer"
+            ],
+            "identity": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+            "enrolled_seq": 6,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "public_key": "942f24e644e85098fb66a13cd45d26f7b20ad62fbded37150993554c3793bcf6",
+            "roles": [
+              "attester"
+            ],
+            "identity": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "enrolled_seq": 1,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "5d4f33ab43ef49471f606c8c7e4cfdc26011980b385d810871f6399881e6338c",
+            "public_key": "75fd1589632ea2706ebd361fc5b8c8399b4ba8419494be956c048dc000dd9966",
+            "roles": [
+              "attester"
+            ],
+            "identity": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "enrolled_seq": 5,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+            "public_key": "bf8ad78ce35c48a467b772ac6f4fef2ba85d4bc9d72f77e9733e5c92d561413b",
+            "roles": [
+              "attester"
+            ],
+            "identity": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+            "enrolled_seq": 7,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "public_key": "9edb2c662671e1f7a062741255f062d2f74f98fa7779c7791359ee5601a1fa2e",
+            "roles": [
+              "attester"
+            ],
+            "identity": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "enrolled_seq": 3,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+            "public_key": "5ededb89579eab94997e6224a01c05dafbc956fd52160e24c4d0e03fd3fa421f",
+            "roles": [
+              "attester"
+            ],
+            "identity": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+            "enrolled_seq": 4,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+            "public_key": "fa418fb31fc0ba011397acc6a8303f82d0f2de74ad8b7ed43e471576f4af1d81",
+            "roles": [
+              "attester"
+            ],
+            "identity": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+            "enrolled_seq": 2,
+            "revoked": null
+          }
+        ],
+        "inclusions": [
+          {
+            "attestation_hash": "340f657265668c6cddad8a9b00b8413500aada7213371787152a41611701d9d9",
+            "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "seq": 9
+          },
+          {
+            "attestation_hash": "af9460900d39d4ee5df6055cee5506bc4d3b54576d4db2acbbeee31dfaa80d8b",
+            "attester_key_id": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+            "seq": 8
+          }
+        ],
+        "record_reviews": [],
+        "findings": []
+      },
+      "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5"
+    },
+    "post": {
+      "rules": [
+        "R61",
+        "R62",
+        "R63",
+        "R64",
+        "R65",
+        "R67",
+        "R68"
+      ],
+      "value": {
+        "schema": "impact.attester-registry.v1",
+        "tenant_id": "tenant-registry-synthetic",
+        "genesis_hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933",
+        "head": {
+          "seq": 12,
+          "hash": "fe953ca83a56c34856a76b8bb54d49af9bab60e9806d43f75758001a631212be"
+        },
+        "attesters": [
+          {
+            "attester_key_id": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+            "public_key": "00bf3dc129b3f40d1f1b002654743175df341c1e9685c70901216ba3ea31e70d",
+            "roles": [
+              "reviewer"
+            ],
+            "identity": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+            "enrolled_seq": 6,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "public_key": "942f24e644e85098fb66a13cd45d26f7b20ad62fbded37150993554c3793bcf6",
+            "roles": [
+              "attester"
+            ],
+            "identity": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "enrolled_seq": 1,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "5d4f33ab43ef49471f606c8c7e4cfdc26011980b385d810871f6399881e6338c",
+            "public_key": "75fd1589632ea2706ebd361fc5b8c8399b4ba8419494be956c048dc000dd9966",
+            "roles": [
+              "attester"
+            ],
+            "identity": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "enrolled_seq": 5,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+            "public_key": "bf8ad78ce35c48a467b772ac6f4fef2ba85d4bc9d72f77e9733e5c92d561413b",
+            "roles": [
+              "attester"
+            ],
+            "identity": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+            "enrolled_seq": 7,
+            "revoked": {
+              "seq": 11,
+              "reason": "retired"
+            }
+          },
+          {
+            "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "public_key": "9edb2c662671e1f7a062741255f062d2f74f98fa7779c7791359ee5601a1fa2e",
+            "roles": [
+              "attester"
+            ],
+            "identity": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "enrolled_seq": 3,
+            "revoked": {
+              "seq": 10,
+              "reason": "compromised"
+            }
+          },
+          {
+            "attester_key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+            "public_key": "5ededb89579eab94997e6224a01c05dafbc956fd52160e24c4d0e03fd3fa421f",
+            "roles": [
+              "attester"
+            ],
+            "identity": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+            "enrolled_seq": 4,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+            "public_key": "fa418fb31fc0ba011397acc6a8303f82d0f2de74ad8b7ed43e471576f4af1d81",
+            "roles": [
+              "attester"
+            ],
+            "identity": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+            "enrolled_seq": 2,
+            "revoked": null
+          }
+        ],
+        "inclusions": [
+          {
+            "attestation_hash": "340f657265668c6cddad8a9b00b8413500aada7213371787152a41611701d9d9",
+            "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "seq": 9
+          },
+          {
+            "attestation_hash": "af9460900d39d4ee5df6055cee5506bc4d3b54576d4db2acbbeee31dfaa80d8b",
+            "attester_key_id": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+            "seq": 8
+          }
+        ],
+        "record_reviews": [],
+        "findings": [
+          {
+            "seq": 12,
+            "reason": "revoked_attester"
+          }
+        ]
+      },
+      "registry_hash": "a3e1613f8209ad3f8278d54a173f40d3eef1c0e8df5f03332697343def8206ce"
+    },
+    "reviewed": {
+      "rules": [
+        "R61",
+        "R62",
+        "R63",
+        "R64",
+        "R65",
+        "R67",
+        "R68"
+      ],
+      "value": {
+        "schema": "impact.attester-registry.v1",
+        "tenant_id": "tenant-registry-synthetic",
+        "genesis_hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933",
+        "head": {
+          "seq": 13,
+          "hash": "e1d3352ee07cba25d30d004efe2e8384cc654cc4b7e1894c67adcf31ec1c3e34"
+        },
+        "attesters": [
+          {
+            "attester_key_id": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+            "public_key": "00bf3dc129b3f40d1f1b002654743175df341c1e9685c70901216ba3ea31e70d",
+            "roles": [
+              "reviewer"
+            ],
+            "identity": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+            "enrolled_seq": 6,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "public_key": "942f24e644e85098fb66a13cd45d26f7b20ad62fbded37150993554c3793bcf6",
+            "roles": [
+              "attester"
+            ],
+            "identity": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "enrolled_seq": 1,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "5d4f33ab43ef49471f606c8c7e4cfdc26011980b385d810871f6399881e6338c",
+            "public_key": "75fd1589632ea2706ebd361fc5b8c8399b4ba8419494be956c048dc000dd9966",
+            "roles": [
+              "attester"
+            ],
+            "identity": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "enrolled_seq": 5,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+            "public_key": "bf8ad78ce35c48a467b772ac6f4fef2ba85d4bc9d72f77e9733e5c92d561413b",
+            "roles": [
+              "attester"
+            ],
+            "identity": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+            "enrolled_seq": 7,
+            "revoked": {
+              "seq": 11,
+              "reason": "retired"
+            }
+          },
+          {
+            "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "public_key": "9edb2c662671e1f7a062741255f062d2f74f98fa7779c7791359ee5601a1fa2e",
+            "roles": [
+              "attester"
+            ],
+            "identity": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "enrolled_seq": 3,
+            "revoked": {
+              "seq": 10,
+              "reason": "compromised"
+            }
+          },
+          {
+            "attester_key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+            "public_key": "5ededb89579eab94997e6224a01c05dafbc956fd52160e24c4d0e03fd3fa421f",
+            "roles": [
+              "attester"
+            ],
+            "identity": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+            "enrolled_seq": 4,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+            "public_key": "fa418fb31fc0ba011397acc6a8303f82d0f2de74ad8b7ed43e471576f4af1d81",
+            "roles": [
+              "attester"
+            ],
+            "identity": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+            "enrolled_seq": 2,
+            "revoked": null
+          }
+        ],
+        "inclusions": [
+          {
+            "attestation_hash": "340f657265668c6cddad8a9b00b8413500aada7213371787152a41611701d9d9",
+            "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "seq": 9
+          },
+          {
+            "attestation_hash": "af9460900d39d4ee5df6055cee5506bc4d3b54576d4db2acbbeee31dfaa80d8b",
+            "attester_key_id": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+            "seq": 8
+          }
+        ],
+        "record_reviews": [
+          {
+            "golden_record_hash": "79ff8f62419a95ad24f4329566fd4242925c46793c546a746a10b6671b993770",
+            "decision": "approved",
+            "reviewer_key_id": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+            "seq": 13
+          }
+        ],
+        "findings": [
+          {
+            "seq": 12,
+            "reason": "revoked_attester"
+          }
+        ]
+      },
+      "registry_hash": "aa459feff126269e3555f89f51b7e9c9efc3c76aa8296f35c0760ce624d968c4"
+    }
+  },
+  "attestations": {
+    "AX": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "8309307b1ff4d2d242a6c50ece5a8b0777fab4cb006d39dd94ee1a551b7f40e4",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+      "signature": "82153a9bcbee121f4d2a3a23255dee4b6555d3e493747a6843dade2312db45afe566836b2fddcbee2ed9ce39b703c4de7498e3cbf6dfbe83dddd31922a17c80a"
+    },
+    "AY": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "005fb41bf7ba5322310d9528e70166d374a14b3a8069b88c39b997a791dfd702",
+      "signature": "faca75ca418082a07074b838d81db01431956a1514df9b93b6e0b4bfcb9930f1dd074eb7a59fbedfd081f046ee2775a3632ce134847d66ecec5d5da5d6dd5607"
+    },
+    "AX2": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "8309307b1ff4d2d242a6c50ece5a8b0777fab4cb006d39dd94ee1a551b7f40e4",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+        "created_at": "2026-10-18T15:00:00Z"
+      },
+      "attestation_hash": "84e69227872dff1ba986a21759d6bee45eb73803a29dc5a24004568afa41f6b3",
+      "signature": "ebf76e0246f8c65921103eead1b7a97d2513975347964ae43a8fa5b66128a287a8708466930c6c92cb1909cdbca11b4d04f02562e9cc1338721d927cb4ee9006"
+    },
+    "BY": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+      "signature": "97ccdc42742e6c548d5599cf1bf1f73161a12bf41e637a8f8ae401e0be60a96521e74620dcdfdfcef64b1eeb86fc4a81af3f3bc2bbed0eda4286823d20e0390c"
+    },
+    "BX": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "8309307b1ff4d2d242a6c50ece5a8b0777fab4cb006d39dd94ee1a551b7f40e4",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "a9a6633e84c544ce9b5dc640b6b02ceb8c91361783156f68efef1f4550ad348c",
+      "signature": "ae44df3837a5eba9209aaa345a940eb62e59b9b90765328c0ab188716ef72c9fa02332ddfeec66ea18a79d6a2e9b13efdbd58d9ab1c539ab7a57cd9fb300a105"
+    },
+    "CY": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "340f657265668c6cddad8a9b00b8413500aada7213371787152a41611701d9d9",
+      "signature": "d6aaeb7243ac86416d52f615cea3c086dcc25604ee561ec87d604f14561e0531599fe3719fdcbce1ccfe5a397353a38967242c32f45f56408ac1717caaab8b09"
+    },
+    "CY_BACKDATED": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+        "created_at": "2026-10-18T12:00:00Z"
+      },
+      "attestation_hash": "a79c7b587125de3c447df1fb7adbe809e050e5cf46dd63eff48e574361e27685",
+      "signature": "4a2f3e1a64ac97ba9f8f1e1ca4ef646e742152db1ff44863cca41cbb36cda63e1b6e44fae8e51cdd03d7d99b85dded0d4544f585a14fe64e60cbdf749c461b0d"
+    },
+    "DY": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "cdfc59703e6cf762dd53227aaf76ced0ad3b3d355bc837c93f6602ebff6ec265",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "1e0773f851d43274268999d39b38779e20d5433f60f28fcbf97c10f39e191dc8",
+      "signature": "28700bae776bcd71f7a8bb1aa3c31e3ee35b2f82b44200a0d817b098717410b5d70dcd52aff66db73b848b2c17074ba3202da6c9242ad9d3885f99d4fb543b04"
+    },
+    "A2Y": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "5d4f33ab43ef49471f606c8c7e4cfdc26011980b385d810871f6399881e6338c",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "30d62ff10554b5a62cc08cecff2430e291b7a66ef9f40bf264bbbf1f32b8f6a4",
+      "signature": "da5d03eed431799e28256e3d9565db1b7ed22be938b6f0bf84faaea546892c7dc94e129083ca60ad190989ec8d67ca47fb4a6b409419d6cee1371db10736080a"
+    },
+    "BY_V2": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.2"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "3b07dcbde9849d377f3ab803e1b1e4faffcccd7febe14b201b967bd97abb1d38",
+      "signature": "f6e58a678ad014bca05569499b1dfced671dc2c2d7296596e5015cbee7d1869b9e32bde02f06c7cc7b8f1bb70e4095dcecac133aa3db68491fc4362c484fb00a"
+    },
+    "BY_WRONG_SUBJECT": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "c42a3fdf83267ff246a7de25f05553c28f56adcaa048316bac9750968a58a10b",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "52a0b6e8bb5bd1421a09f6f46df02a8beaabb1eb802a93339f88af2a101abfb8",
+      "signature": "3695006f190f91babb7e5a51161dc3a2c179297a5e89739d54f304eb907a04c73ea6a7469c6431edf1977d8450d421d48f9ed4d411f2c05b49f02f2609517b02"
+    },
+    "EZ_NOCOMM": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": false,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "ee87e846bec9583e6636700195ee9d22ba744a0d8730cc5fb7fea13ca1d6370d",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "93e349bea90ac3c21be855bb2e4872a5dd6e500713683e99bc60f10956aebfb0",
+      "signature": "51d47135b146249ba80cce595716c3cd18b25050cf7e36287dbaec38dcd31c8d24f71417a00520903a076a6a14e7884ea63aa553c0efbe0e71ad0dafab7f0b08"
+    },
+    "EZ_DTC": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [
+          "P0601-00"
+        ],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "ee87e846bec9583e6636700195ee9d22ba744a0d8730cc5fb7fea13ca1d6370d",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "23d747003e6cf64202a61c45bf06fcd8a800c8ad0cd90e926a833f555562ae28",
+      "signature": "b60281b717204c358791cbf3888f22b1b9481ab97dd5c7e9265c0043b86fbb09f15c18f0d18ce0e9c99275c924478ddcc931bd9c999466e6c626919e42386702"
+    },
+    "AX_OKDTC": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [
+          "P0120",
+          "U0100"
+        ],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "8309307b1ff4d2d242a6c50ece5a8b0777fab4cb006d39dd94ee1a551b7f40e4",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "26a687113cdd687cb87dbc44b02c2d39c173edbf2a0bc58327e78f8b775da9bd",
+      "signature": "781b93cae715271fa27e27ae907c82ed4d1c01d367dc24c38c4304ed8de8425d8c2c4bde0de9911fd18ff8871ce0ccdd04c814cd25dc8355f795ee915d87f80d"
+    },
+    "BY_MISMATCH": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "mismatch",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "1e08e835895f020112cb07ed0aa6000eb4ca2b46764248328feddf2b3ff37269",
+      "signature": "02375d888f38283e6517ed2dd72878541cdf8b5d16a0610533b1539b286ca7208071fef5aab65a1a26d5d16b55727a1891aa6b0a4922a5384ef672e08c45f702"
+    },
+    "AX_NOTREP": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "not_reported",
+        "ecu_commitment": "8309307b1ff4d2d242a6c50ece5a8b0777fab4cb006d39dd94ee1a551b7f40e4",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "35fe646c79e12f9dd8e16a05c762929cce6cec1ea31b9405454915958f37baeb",
+      "signature": "5f2ea22cfdc818e035a52344dc04ce2fbac9e94cdad6826be890e2e2e6dfdd6bdd26fce3abe9e2857c67d78ee381781aae28c55b3c44f91c44f4a0e2e78d730b"
+    },
+    "BY_READBACK": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": "c42a3fdf83267ff246a7de25f05553c28f56adcaa048316bac9750968a58a10b",
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "0a811a4790d41d6b1397550301a9df73e6da7da9a3754b9223c443414d1d65ff",
+      "signature": "62d457900c26f3e7acac041c56d19d0dc1766024be0ad91497523ee327aef2df8407a980b39f8b1646bdea4baa6da0b8bafe9269af947c6129ffa3128d73bf0b"
+    },
+    "BY_EPOCH2": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "7e96dd0891b7777028e4915a8bd7a6f28bb86ba204ea49498d6456a41aad715b",
+        "ecu_commitment_epoch": "a1037573d5a02b88709927f420bf80cd95b9f04a68e96905bd428d2dcdacc235",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "e8d9a31c4bf811479adba7b32c0d0f0270af1209a1c558512086ae7df4f60793",
+      "signature": "4c284b457d2ff02115109db29271cf7561ecf6a1d77b3d812c42159cd51d7f2945d35da0fea6ebeb0eb55fb6deacd7a027d2c1d02c12f85878dc4a1692203909"
+    },
+    "CZ_NOCOMM": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": false,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "ee87e846bec9583e6636700195ee9d22ba744a0d8730cc5fb7fea13ca1d6370d",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "32db4012fa96c70a5e7195c71db563a778d3310f9d636110c2bef5df51c76b32",
+      "signature": "c832c684a4f0da41270219b06f0a7c21c11bee6804012ca48dbfe55c7313c17f2552c2bd9cc840c7ea456c7f191298dba47294c1288378be7a1c05ab441bdc06"
+    },
+    "FY": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "285a3455c26c76546547834f1396c592c23bb86fc04f9db68384dec050c51647",
+      "signature": "c59c52c9894aa6fdaa27d2da7e605bcf07cfa903f8ff7cd8941a855cd8122bb4709785d6208330f1075a609460d08b8c2ddba0bd5b6e5895599b41d8139ad609"
+    },
+    "A_SIGNED_BY_B": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "ee87e846bec9583e6636700195ee9d22ba744a0d8730cc5fb7fea13ca1d6370d",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "b68701d405771e644a259c2aaa995ddb7957db03f4ecd211643f2fae96e4925a",
+      "signature": "d17912a0aa4be145e1c6299abf3c791a9d35839f5c2c2946586345cd5b36ac1a705721939c37b915c4b0e46963c20b23f0011ca232bf9955585bd1fee615df09"
+    },
+    "EW": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": null,
+        "ecu_commitment_epoch": null,
+        "attester_key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "152571509918804e4749a9a971c523e8ffa34e2f584034d0ad88591483de3a80",
+      "signature": "c58d8e0557e4e0a26fcdeee69ed3df67cdb993b57e8ac85abf54952ccdc1864d2a12b8df310a522ae7b6e70486df0b739f99c54fcb810af9513fa4298678f301"
+    },
+    "BW": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": null,
+        "ecu_commitment_epoch": null,
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "c33f13f856fd66ab2ce917a1fe233e3ddeea49e43c25938ecd07dabbf5a49adf",
+      "signature": "aab5d1883a1a3feb90cd6754b71bed0483134f0714834af5258f509ee7e2a790eac1e7528f6469f00970c6a298bb9082830dc56a661faf4c5ce79485d80dfa0a"
+    },
+    "EW_NOCOMM": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": false,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": null,
+        "ecu_commitment_epoch": null,
+        "attester_key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "1c6e98b98116e8f6396157fa3c7f702d46e40e68ef1c5a4bc7aed91ce5a2f6e9",
+      "signature": "9fc82d9016b39a711fb0e1947ee87f24fd465d14431ed9de3127c55bb59eb92d6b54a6793c96ab40abb403e21cb44bcd9d01e81443d65e3c32d07ef3f18c3901"
+    },
+    "RY": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "af9460900d39d4ee5df6055cee5506bc4d3b54576d4db2acbbeee31dfaa80d8b",
+      "signature": "dbf6695ba6dcb5ebff7c1919f79bb39ced1345cc0907865ec8b4271bb20b21342ce63b89469720e34cec7bbcc3f4d02a6411f8a982ade4a42fda508bf5498109"
+    },
+    "RZ": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "ee87e846bec9583e6636700195ee9d22ba744a0d8730cc5fb7fea13ca1d6370d",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "7064327d245dfac8651ecc3f0c5ed9d9106d4ed71a09e2c2dfc8882538e0e6da",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "3d08cba24360fa6048a776c9bb2fd654cdf119cf396f818ad1ddcd460785f48f",
+      "signature": "28c9dccc8d6027c77a1220ba63ccc7eb29a42ce2d1006af82b38c6aacf7d4f2bb3a8a194fa4785570b2b7e6641acddf3d2f55b92347e68ae9070b1623f363307"
+    },
+    "AX_IMG2": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "87c026feb3148faf6105d564e0ce5cdd09ed54d58a0b5099e8d5b15c1396bc04",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "8309307b1ff4d2d242a6c50ece5a8b0777fab4cb006d39dd94ee1a551b7f40e4",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "ced3cd1b82c1ca001ca4159d5ddaa5eb6a00fa21cf45f1a0eca1f1c82fb99e6a",
+      "signature": "28232362a94abe166656a648ed742ce66b02abb2b0f3344a682e4844c281a0eb735c198026a75b55604055b6d9d1513c1af41327994c443843046cde5908170f"
+    },
+    "BY_IMG2": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "87c026feb3148faf6105d564e0ce5cdd09ed54d58a0b5099e8d5b15c1396bc04",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "7c4a70d2104d4a7d9554eec559b82ea911c725a8025a7ef87966d088bfc634b5",
+      "signature": "6f76e22e134aef704e19aa9700a64848150b39ed850edd442aba23e3197d3b5f62a870c651629540223fe841d549a6d4631781477f80a4de4c396aafe9f35106"
+    },
+    "BY_EDITED_REHASH": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.1"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "5838a18fb8438ea59335d17b8a39d046dcae5ff9aeef65ff5a30038a33d83652",
+      "signature": "97ccdc42742e6c548d5599cf1bf1f73161a12bf41e637a8f8ae401e0be60a96521e74620dcdfdfcef64b1eeb86fc4a81af3f3bc2bbed0eda4286823d20e0390c"
+    },
+    "BY_EDITED_NOREHASH": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.1"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "9f7f462f7e13288eaa93b5160fd9d96dc1f13b78a660da5d8c1fa5278ec5d669",
+        "ecu_commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+      "signature": "97ccdc42742e6c548d5599cf1bf1f73161a12bf41e637a8f8ae401e0be60a96521e74620dcdfdfcef64b1eeb86fc4a81af3f3bc2bbed0eda4286823d20e0390c"
+    }
+  },
+  "attestation_verify": {
+    "rules": [
+      "R48",
+      "R49",
+      "R50",
+      "R77"
+    ],
+    "example": {
+      "label": "AX",
+      "attestation_jcs": "{\"attester_key_id\":\"4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19\",\"communicates\":true,\"created_at\":\"2026-10-18T14:00:00Z\",\"dtcs_after_clear_and_reread\":[],\"ecu_commitment\":\"8309307b1ff4d2d242a6c50ece5a8b0777fab4cb006d39dd94ee1a551b7f40e4\",\"ecu_commitment_epoch\":\"a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777\",\"identification\":{\"checksum_variant_id\":\"synthetic.variant.1\",\"family\":\"synthetic.family\",\"hw_id\":\"synthetic-hw-1\",\"sw_id\":\"synthetic-sw-1\"},\"readback_image_hash\":\"3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86\",\"schema\":\"impact.field-attestation.v1\",\"subject_image_hash\":\"3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86\",\"tool_checksum_status\":\"ok\",\"write_tool\":{\"name\":\"Synthetic Flasher\",\"version\":\"1.0\"}}",
+      "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+      "signing_input": "{\"domain\":\"impact.field-attestation-signature.v1\",\"hash\":\"56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025\"}",
+      "signature": "82153a9bcbee121f4d2a3a23255dee4b6555d3e493747a6843dade2312db45afe566836b2fddcbee2ed9ce39b703c4de7498e3cbf6dfbe83dddd31922a17c80a"
+    },
+    "cases": [
+      {
+        "label": "AX",
+        "registry": "pre",
+        "expect": []
+      },
+      {
+        "label": "BY_EDITED_REHASH",
+        "registry": "pre",
+        "expect": [
+          "bad_signature"
+        ]
+      },
+      {
+        "label": "BY_EDITED_NOREHASH",
+        "registry": "pre",
+        "expect": [
+          "attestation_hash_mismatch"
+        ]
+      },
+      {
+        "label": "A_SIGNED_BY_B",
+        "registry": "pre",
+        "expect": [
+          "bad_signature"
+        ]
+      },
+      {
+        "label": "DY",
+        "registry": "pre",
+        "expect": [
+          "unknown_attester"
+        ]
+      },
+      {
+        "label": "CY",
+        "registry": "pre",
+        "expect": []
+      },
+      {
+        "label": "CY",
+        "registry": "post",
+        "expect": [
+          "revoked_attester"
+        ]
+      },
+      {
+        "label": "RY",
+        "registry": "post",
+        "expect": []
+      },
+      {
+        "label": "RZ",
+        "registry": "post",
+        "expect": [
+          "revoked_attester"
+        ]
+      },
+      {
+        "label": "FY",
+        "registry": "pre",
+        "expect": [
+          "not_attester"
+        ]
+      },
+      {
+        "label": "EW",
+        "registry": "pre",
+        "expect": []
+      }
+    ]
+  },
+  "evaluations": [
+    {
+      "id": "G01-two-attesters-two-ecus",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "721185beafd8a43c107a4e4db70a48b2aa46b96f6a3f297655c5481636111a55",
+      "supplied": [
+        "AX",
+        "BY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "721185beafd8a43c107a4e4db70a48b2aa46b96f6a3f297655c5481636111a55",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "70689b0c8401771242d5344b637ab330ebadeb0bd3fe5ad062d0671ddc6075ac"
+      }
+    },
+    {
+      "id": "G02-one-attester-two-ecus",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [
+            {
+              "name": "Synthetic Tool One",
+              "version": "2.0",
+              "image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+              "date": "2026-10-17"
+            },
+            {
+              "name": "Synthetic Tool Two",
+              "version": "5.1",
+              "image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+              "date": "2026-10-17"
+            }
+          ],
+          "attestations": [
+            "005fb41bf7ba5322310d9528e70166d374a14b3a8069b88c39b997a791dfd702",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "81729ee1a7e5363e53cb5e46633491c99de26f54cd75520c25da5dfb91b5629a",
+      "supplied": [
+        "AX",
+        "AY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "81729ee1a7e5363e53cb5e46633491c99de26f54cd75520c25da5dfb91b5629a",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 1,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "005fb41bf7ba5322310d9528e70166d374a14b3a8069b88c39b997a791dfd702",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attesters"
+          ],
+          "level": "golden_concordant"
+        },
+        "evaluation_hash": "25ae3e4df4117b3f1a34236ae229cf781661b8d0b32f913e86d1e696e5449718"
+      }
+    },
+    {
+      "id": "G03-two-attesters-one-ecu",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [
+            {
+              "name": "Synthetic Tool One",
+              "version": "2.0",
+              "image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+              "date": "2026-10-17"
+            }
+          ],
+          "attestations": [
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+            "a9a6633e84c544ce9b5dc640b6b02ceb8c91361783156f68efef1f4550ad348c"
+          ]
+        }
+      },
+      "golden_record_hash": "aa75955b519ca51bf1b967da24d8d4ecdf63d6e64632e407e888ed958321940c",
+      "supplied": [
+        "AX",
+        "BX"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "aa75955b519ca51bf1b967da24d8d4ecdf63d6e64632e407e888ed958321940c",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "a9a6633e84c544ce9b5dc640b6b02ceb8c91361783156f68efef1f4550ad348c",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_units"
+          ],
+          "level": "candidate"
+        },
+        "evaluation_hash": "ed9d6115e6ec03e9c6576c15642e7293abb187466aee758d7faa34409ffe494c"
+      }
+    },
+    {
+      "id": "G04-single-attestation",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "016b0569cc7001e83b5807d8364d7429d898622e7edd71526293a50ebbcc3833",
+      "supplied": [
+        "AX"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "016b0569cc7001e83b5807d8364d7429d898622e7edd71526293a50ebbcc3833",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "2ad5b7fac63b79a75a9ddf9634c1605cf2737f3e57ffab9c4ba5564f6c8a3342"
+      }
+    },
+    {
+      "id": "G05-three-attestations",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "005fb41bf7ba5322310d9528e70166d374a14b3a8069b88c39b997a791dfd702",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+            "a9a6633e84c544ce9b5dc640b6b02ceb8c91361783156f68efef1f4550ad348c"
+          ]
+        }
+      },
+      "golden_record_hash": "6d7da86f16598cc370d40870bc7808411c03c78540e8838cba445ce4989738f8",
+      "supplied": [
+        "AX",
+        "AY",
+        "BX"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "6d7da86f16598cc370d40870bc7808411c03c78540e8838cba445ce4989738f8",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 3,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "005fb41bf7ba5322310d9528e70166d374a14b3a8069b88c39b997a791dfd702",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "a9a6633e84c544ce9b5dc640b6b02ceb8c91361783156f68efef1f4550ad348c",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "ec1ec187d48cf9571b4a3e9dc3669059d27acd9a6fe945e090b400aca9979b32"
+      }
+    },
+    {
+      "id": "G06-other-attester-has-zero-qualifying",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "005fb41bf7ba5322310d9528e70166d374a14b3a8069b88c39b997a791dfd702",
+            "52a0b6e8bb5bd1421a09f6f46df02a8beaabb1eb802a93339f88af2a101abfb8",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "05bcebfc0b2379478d48096bea7c95cc597cf73848c0d0b79c17d8fcd035f707",
+      "supplied": [
+        "AX",
+        "AY",
+        "BY_WRONG_SUBJECT"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "05bcebfc0b2379478d48096bea7c95cc597cf73848c0d0b79c17d8fcd035f707",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 1,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "005fb41bf7ba5322310d9528e70166d374a14b3a8069b88c39b997a791dfd702",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "52a0b6e8bb5bd1421a09f6f46df02a8beaabb1eb802a93339f88af2a101abfb8",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "wrong_subject"
+              ]
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attesters"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "7ea90dae51d75cacbbded24da427377fa31bd29e3628c2cddab87eee21e11e46"
+      }
+    },
+    {
+      "id": "G07-before-revocation",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R77"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "340f657265668c6cddad8a9b00b8413500aada7213371787152a41611701d9d9",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "8aa4638419faf174bd8948a67fa58a77546e44dd56c9f08367fb5ed99e6bfa72",
+      "supplied": [
+        "AX",
+        "CY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "8aa4638419faf174bd8948a67fa58a77546e44dd56c9f08367fb5ed99e6bfa72",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "340f657265668c6cddad8a9b00b8413500aada7213371787152a41611701d9d9",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "cdc437182599a080e5179136cb6c1587f890284367bc75cd7be6edce12bb14b0"
+      }
+    },
+    {
+      "id": "G08-compromise-is-retroactive-even-if-included",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R63",
+        "R67",
+        "R77",
+        "R79"
+      ],
+      "registry": "post",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "340f657265668c6cddad8a9b00b8413500aada7213371787152a41611701d9d9",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "8aa4638419faf174bd8948a67fa58a77546e44dd56c9f08367fb5ed99e6bfa72",
+      "supplied": [
+        "AX",
+        "CY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "8aa4638419faf174bd8948a67fa58a77546e44dd56c9f08367fb5ed99e6bfa72",
+          "registry_hash": "a3e1613f8209ad3f8278d54a173f40d3eef1c0e8df5f03332697343def8206ce",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "340f657265668c6cddad8a9b00b8413500aada7213371787152a41611701d9d9",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "revoked_attester"
+              ]
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "937ed7d0c25a666597af57d5053b24ac2232481f82eb8b455b184270f8a156bb"
+      }
+    },
+    {
+      "id": "G09-backdated-attestation-of-revoked-key",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R51",
+        "R77"
+      ],
+      "registry": "post",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+            "a79c7b587125de3c447df1fb7adbe809e050e5cf46dd63eff48e574361e27685"
+          ]
+        }
+      },
+      "golden_record_hash": "5879a6d98c0940661bc52a91d66f03c9be250459fc1affbabd4726b444139500",
+      "supplied": [
+        "AX",
+        "CY_BACKDATED"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "5879a6d98c0940661bc52a91d66f03c9be250459fc1affbabd4726b444139500",
+          "registry_hash": "a3e1613f8209ad3f8278d54a173f40d3eef1c0e8df5f03332697343def8206ce",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "a79c7b587125de3c447df1fb7adbe809e050e5cf46dd63eff48e574361e27685",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "revoked_attester"
+              ]
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "96e43e43cc46725d385dc456d4c3585934740dd511f677fceadefec66ede19d8"
+      }
+    },
+    {
+      "id": "G10-unenrolled-key",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R50"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "1e0773f851d43274268999d39b38779e20d5433f60f28fcbf97c10f39e191dc8",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "c28fa3b583861a4fef7e1857169c38370a86b0f616bd3b4c41ae19b94f22aa80",
+      "supplied": [
+        "AX",
+        "DY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "c28fa3b583861a4fef7e1857169c38370a86b0f616bd3b4c41ae19b94f22aa80",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "1e0773f851d43274268999d39b38779e20d5433f60f28fcbf97c10f39e191dc8",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "unknown_attester"
+              ]
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "90d085199dc7a2fc606fd83722272ae5531fc6b9cd4126f2a68210e3341a2f23"
+      }
+    },
+    {
+      "id": "G11-duplicates-and-reflash",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+            "84e69227872dff1ba986a21759d6bee45eb73803a29dc5a24004568afa41f6b3"
+          ]
+        }
+      },
+      "golden_record_hash": "7175fe64584fbd260932351a184ca8cbdb94a8cd3983f0c7d89cd76e7d9cb737",
+      "supplied": [
+        "BY",
+        "AX",
+        "AX2",
+        "BY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "7175fe64584fbd260932351a184ca8cbdb94a8cd3983f0c7d89cd76e7d9cb737",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 3,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "84e69227872dff1ba986a21759d6bee45eb73803a29dc5a24004568afa41f6b3",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "0dc6b1bfc466da3d658228eda3f1fa64ed5a04741f00f3d0e08bff66f3fa7832"
+      }
+    },
+    {
+      "id": "G12-rotation-is-one-identity",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R64"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "30d62ff10554b5a62cc08cecff2430e291b7a66ef9f40bf264bbbf1f32b8f6a4",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "5dae6a52defc0cb232f2f5bf4173e57ab358303645cbc30270318f394c14a91e",
+      "supplied": [
+        "AX",
+        "A2Y"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "5dae6a52defc0cb232f2f5bf4173e57ab358303645cbc30270318f394c14a91e",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 1,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "30d62ff10554b5a62cc08cecff2430e291b7a66ef9f40bf264bbbf1f32b8f6a4",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attesters"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "80fd4447b59bfa0b6683cdc0e7ed2f71d6a6097ba38564848026931068c79d93"
+      }
+    },
+    {
+      "id": "G13-edited-and-rehashed",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R50"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+            "5838a18fb8438ea59335d17b8a39d046dcae5ff9aeef65ff5a30038a33d83652"
+          ]
+        }
+      },
+      "golden_record_hash": "8bdfbe1cf61c97040d7216439bdfa2bc27ee5c6f412f5c245ee9fd7291d8553d",
+      "supplied": [
+        "AX",
+        "BY_EDITED_REHASH"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "8bdfbe1cf61c97040d7216439bdfa2bc27ee5c6f412f5c245ee9fd7291d8553d",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "5838a18fb8438ea59335d17b8a39d046dcae5ff9aeef65ff5a30038a33d83652",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "bad_signature"
+              ]
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "46206b11f2bf71aa5ab7549011c4141c77cdab4eccc0d745390ffc6ba9357671"
+      }
+    },
+    {
+      "id": "G14-edited-without-rehash",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R50"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "721185beafd8a43c107a4e4db70a48b2aa46b96f6a3f297655c5481636111a55",
+      "supplied": [
+        "AX",
+        "BY_EDITED_NOREHASH"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "721185beafd8a43c107a4e4db70a48b2aa46b96f6a3f297655c5481636111a55",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "attestation_hash_mismatch"
+              ]
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "67760e1c0ea92c6afc49f70b7a6c1f180322dc3a1128779903204a63088fa98c"
+      }
+    },
+    {
+      "id": "G15-wrong-variant",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "3b07dcbde9849d377f3ab803e1b1e4faffcccd7febe14b201b967bd97abb1d38",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "4dfa2c29aeb496bafb4669db8c6b1ede4b3c26328e259487e90d390e0472fd7e",
+      "supplied": [
+        "AX",
+        "BY_V2"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "4dfa2c29aeb496bafb4669db8c6b1ede4b3c26328e259487e90d390e0472fd7e",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "3b07dcbde9849d377f3ab803e1b1e4faffcccd7febe14b201b967bd97abb1d38",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "wrong_variant"
+              ]
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "79f72fdc5ed165e77125b0d0e8aceaf9881d9025edc92380961d65a54bf95b87"
+      }
+    },
+    {
+      "id": "G16-negative-no-communication",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R74"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+            "93e349bea90ac3c21be855bb2e4872a5dd6e500713683e99bc60f10956aebfb0"
+          ]
+        }
+      },
+      "golden_record_hash": "79ff8f62419a95ad24f4329566fd4242925c46793c546a746a10b6671b993770",
+      "supplied": [
+        "AX",
+        "BY",
+        "EZ_NOCOMM"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "79ff8f62419a95ad24f4329566fd4242925c46793c546a746a10b6671b993770",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "93e349bea90ac3c21be855bb2e4872a5dd6e500713683e99bc60f10956aebfb0",
+              "qualifying": false,
+              "negative": true,
+              "reasons": [
+                "no_communication"
+              ]
+            }
+          ],
+          "reasons": [
+            "negative_field_evidence"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "fb80f98a70a97f43bf73ba661913a20fed0fdf93778ae6388c5a730d46afc6db"
+      }
+    },
+    {
+      "id": "G17-negative-dtc-with-failure-type",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R55",
+        "R56",
+        "R74"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "23d747003e6cf64202a61c45bf06fcd8a800c8ad0cd90e926a833f555562ae28",
+            "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "f4f56dc37043617d542940baad1630e2aec47f900bb542197bb8d501be72d658",
+      "supplied": [
+        "AX",
+        "BY",
+        "EZ_DTC"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "f4f56dc37043617d542940baad1630e2aec47f900bb542197bb8d501be72d658",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "23d747003e6cf64202a61c45bf06fcd8a800c8ad0cd90e926a833f555562ae28",
+              "qualifying": false,
+              "negative": true,
+              "reasons": [
+                "disqualifying_dtc"
+              ]
+            },
+            {
+              "attestation_hash": "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "negative_field_evidence"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "1efb2167bce5595afbb206b7461d2bc3308623f24830fd3234143228e542ba94"
+      }
+    },
+    {
+      "id": "G18-non-disqualifying-dtcs",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R55"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "26a687113cdd687cb87dbc44b02c2d39c173edbf2a0bc58327e78f8b775da9bd",
+            "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab"
+          ]
+        }
+      },
+      "golden_record_hash": "f71bf6fab6e299ad46c6f79135487a8ddf1a70b962375ef6145d7dd99f5a3835",
+      "supplied": [
+        "AX_OKDTC",
+        "BY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "f71bf6fab6e299ad46c6f79135487a8ddf1a70b962375ef6145d7dd99f5a3835",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "26a687113cdd687cb87dbc44b02c2d39c173edbf2a0bc58327e78f8b775da9bd",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "412d229a70bfb49ccb27a1a31200842b6a39eb382d6a7fd1a07166570ce40b58"
+      }
+    },
+    {
+      "id": "G19-tool-checksum-mismatch",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R42",
+        "R74"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [
+            {
+              "name": "Synthetic Tool One",
+              "version": "2.0",
+              "image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+              "date": "2026-10-17"
+            }
+          ],
+          "attestations": [
+            "1e08e835895f020112cb07ed0aa6000eb4ca2b46764248328feddf2b3ff37269",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "74008bb71b7cdfee5d66af688841d866f4bca8e95ccf670e4a0e03cf664ffea2",
+      "supplied": [
+        "AX",
+        "BY_MISMATCH"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "74008bb71b7cdfee5d66af688841d866f4bca8e95ccf670e4a0e03cf664ffea2",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "1e08e835895f020112cb07ed0aa6000eb4ca2b46764248328feddf2b3ff37269",
+              "qualifying": false,
+              "negative": true,
+              "reasons": [
+                "tool_checksum_mismatch"
+              ]
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units",
+            "negative_field_evidence"
+          ],
+          "level": "candidate"
+        },
+        "evaluation_hash": "e9ccbb0bf7ac7984d76946140e54762f55f4b31b0adf6ba840db6b5af5b0322f"
+      }
+    },
+    {
+      "id": "G20-checksum-not-reported",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R42"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "35fe646c79e12f9dd8e16a05c762929cce6cec1ea31b9405454915958f37baeb",
+            "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab"
+          ]
+        }
+      },
+      "golden_record_hash": "dee26895de404e9e1603087933c862b7ac6ac23b67d909fe637433b621d79afe",
+      "supplied": [
+        "AX_NOTREP",
+        "BY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "dee26895de404e9e1603087933c862b7ac6ac23b67d909fe637433b621d79afe",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "35fe646c79e12f9dd8e16a05c762929cce6cec1ea31b9405454915958f37baeb",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "5808e147794e6e6a45986a5c820d3c28b600ddcbc48947a9ccdda660f492c827"
+      }
+    },
+    {
+      "id": "G21-readback-mismatch",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R44",
+        "R74"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "0a811a4790d41d6b1397550301a9df73e6da7da9a3754b9223c443414d1d65ff",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "a10bb9120dc5410643616d2d04b935c7d581a69463b1651f275f0ee091157c01",
+      "supplied": [
+        "AX",
+        "BY_READBACK"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "a10bb9120dc5410643616d2d04b935c7d581a69463b1651f275f0ee091157c01",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "0a811a4790d41d6b1397550301a9df73e6da7da9a3754b9223c443414d1d65ff",
+              "qualifying": false,
+              "negative": true,
+              "reasons": [
+                "readback_mismatch"
+              ]
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units",
+            "negative_field_evidence"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "b7e54cbae9700009e98f569d74b1055147796db2c33e4f1073b0d49cda76362c"
+      }
+    },
+    {
+      "id": "G22-foreign-epoch",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R47"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+            "e8d9a31c4bf811479adba7b32c0d0f0270af1209a1c558512086ae7df4f60793"
+          ]
+        }
+      },
+      "golden_record_hash": "f1eef2a00ee4a36668b9bcf11578106162399bc892b38d97e0e141656cb29018",
+      "supplied": [
+        "AX",
+        "BY_EPOCH2"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "f1eef2a00ee4a36668b9bcf11578106162399bc892b38d97e0e141656cb29018",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "e8d9a31c4bf811479adba7b32c0d0f0270af1209a1c558512086ae7df4f60793",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "foreign_epoch"
+              ]
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "703e65fa4a7c1e336ad4d2dc9ca138c1408e0c415916d404e7f02dd4671a7794"
+      }
+    },
+    {
+      "id": "G23-missing-attestation",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "721185beafd8a43c107a4e4db70a48b2aa46b96f6a3f297655c5481636111a55",
+      "supplied": [
+        "AX"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "721185beafd8a43c107a4e4db70a48b2aa46b96f6a3f297655c5481636111a55",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "missing"
+              ]
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "8cde36a789e1b39491069846d5e7253453bbaa140d3ace1c188bfedd88d21723"
+      }
+    },
+    {
+      "id": "G24-negative-by-revoked-key-ignored",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R74",
+        "R77"
+      ],
+      "registry": "post",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "32db4012fa96c70a5e7195c71db563a778d3310f9d636110c2bef5df51c76b32",
+            "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "981d2c996ddc8fd9c9bbd96d1ab1b1f5a3417210a8ffe19279f42d58e428cb34",
+      "supplied": [
+        "AX",
+        "BY",
+        "CZ_NOCOMM"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "981d2c996ddc8fd9c9bbd96d1ab1b1f5a3417210a8ffe19279f42d58e428cb34",
+          "registry_hash": "a3e1613f8209ad3f8278d54a173f40d3eef1c0e8df5f03332697343def8206ce",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "32db4012fa96c70a5e7195c71db563a778d3310f9d636110c2bef5df51c76b32",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "revoked_attester"
+              ]
+            },
+            {
+              "attestation_hash": "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "bb566a5e55980f06f3036ebd1466c59528f5e17e5cafea16c37951b80acd3638"
+      }
+    },
+    {
+      "id": "G25-reviewer-only-key",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R62"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "285a3455c26c76546547834f1396c592c23bb86fc04f9db68384dec050c51647",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "21dd796e80246fbcfb0b3f8010b00ce6a0c905303154cdc84378d84f3871ec10",
+      "supplied": [
+        "AX",
+        "FY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "21dd796e80246fbcfb0b3f8010b00ce6a0c905303154cdc84378d84f3871ec10",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "285a3455c26c76546547834f1396c592c23bb86fc04f9db68384dec050c51647",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "not_attester"
+              ]
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "db8f63b3bed6f09957d01d636937d3e475f532b10c4871ef4b01dde02e8f40bf"
+      }
+    },
+    {
+      "id": "G26-tools-disagree",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [
+            {
+              "name": "Synthetic Tool One",
+              "version": "2.0",
+              "image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+              "date": "2026-10-17"
+            },
+            {
+              "name": "Synthetic Tool Three",
+              "version": "1.0",
+              "image_hash": "c42a3fdf83267ff246a7de25f05553c28f56adcaa048316bac9750968a58a10b",
+              "date": "2026-10-17"
+            }
+          ],
+          "attestations": []
+        }
+      },
+      "golden_record_hash": "2f1964cf486c7d35fea7617e2dd185d99d6403d4a039c74afb418f42259f8cd7",
+      "supplied": [],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "2f1964cf486c7d35fea7617e2dd185d99d6403d4a039c74afb418f42259f8cd7",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 0,
+            "attesters": 0,
+            "units": 0
+          },
+          "attestations": [],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units",
+            "tool_disagreement"
+          ],
+          "level": "candidate"
+        },
+        "evaluation_hash": "698e2b087314a73c3a30b48205646860f900d403d19beb7958ed7bc8b6e03612"
+      }
+    },
+    {
+      "id": "G27-test-keys-outside-test-mode",
+      "rules": [
+        "R65",
+        "R66",
+        "R80"
+      ],
+      "registry": null,
+      "test_mode": false,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "721185beafd8a43c107a4e4db70a48b2aa46b96f6a3f297655c5481636111a55",
+      "supplied": [
+        "AX",
+        "BY"
+      ],
+      "expect": {
+        "error": "registry_broken"
+      }
+    },
+    {
+      "id": "G28-field-with-tool-disagreement",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [
+            {
+              "name": "Synthetic Tool One",
+              "version": "2.0",
+              "image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+              "date": "2026-10-17"
+            },
+            {
+              "name": "Synthetic Tool Three",
+              "version": "1.0",
+              "image_hash": "c42a3fdf83267ff246a7de25f05553c28f56adcaa048316bac9750968a58a10b",
+              "date": "2026-10-17"
+            }
+          ],
+          "attestations": [
+            "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "4b625608514d9fd980de4d67e568918436a7edf6da40d32510504360f47341d0",
+      "supplied": [
+        "AX",
+        "BY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "4b625608514d9fd980de4d67e568918436a7edf6da40d32510504360f47341d0",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "tool_disagreement"
+          ],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "a3dd7d22b6bc3a74b563391b2a9014c45db337bb343f4c86ca4f161f0ec8a157"
+      }
+    },
+    {
+      "id": "G29-unit-without-serial-not-counted",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R45",
+        "R52"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "152571509918804e4749a9a971c523e8ffa34e2f584034d0ad88591483de3a80",
+            "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "6173c2398693513bcccf54be09b35a5367f5c6524878c9e9dda83cf63785cc07",
+      "supplied": [
+        "AX",
+        "BY",
+        "EW"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "6173c2398693513bcccf54be09b35a5367f5c6524878c9e9dda83cf63785cc07",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "152571509918804e4749a9a971c523e8ffa34e2f584034d0ad88591483de3a80",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "no_unit_commitment"
+              ]
+            },
+            {
+              "attestation_hash": "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "74fee5e601fd25d2f629e7c8be703f5d5b9b04f624ca019374d65fe15a66dd56"
+      }
+    },
+    {
+      "id": "G30-unit-without-serial-counts-for-nothing",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R52"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+            "c33f13f856fd66ab2ce917a1fe233e3ddeea49e43c25938ecd07dabbf5a49adf"
+          ]
+        }
+      },
+      "golden_record_hash": "e9d7b87ee6c1dd5a445cbf6f296bcd78973b258355c463d89dfac4f72698dcf7",
+      "supplied": [
+        "AX",
+        "BW"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "e9d7b87ee6c1dd5a445cbf6f296bcd78973b258355c463d89dfac4f72698dcf7",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "c33f13f856fd66ab2ce917a1fe233e3ddeea49e43c25938ecd07dabbf5a49adf",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "no_unit_commitment"
+              ]
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "f6079aa7189fc29c5aad0e14a9d32cf3a9341dcd004df17c931c77d60b7514f8"
+      }
+    },
+    {
+      "id": "G31-unit-without-serial-negative-blocks",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R52",
+        "R74"
+      ],
+      "registry": "pre",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "1c6e98b98116e8f6396157fa3c7f702d46e40e68ef1c5a4bc7aed91ce5a2f6e9",
+            "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "1287039aaac0d002106fd58a0e8fcc3b2628c8b92dc47fcd33d26b356bbc406f",
+      "supplied": [
+        "AX",
+        "BY",
+        "EW_NOCOMM"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "1287039aaac0d002106fd58a0e8fcc3b2628c8b92dc47fcd33d26b356bbc406f",
+          "registry_hash": "38357efefbe6406a6565cfc146368b711baa7b2548289c3ebb44f16351b227e5",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "1c6e98b98116e8f6396157fa3c7f702d46e40e68ef1c5a4bc7aed91ce5a2f6e9",
+              "qualifying": false,
+              "negative": true,
+              "reasons": [
+                "no_communication"
+              ]
+            },
+            {
+              "attestation_hash": "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "negative_field_evidence"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "8f030b4dea5af19d66ed0772f3191efe477a83ec018c3b34de24c6da617e9939"
+      }
+    },
+    {
+      "id": "G32-retired-key-included-before",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R63",
+        "R67",
+        "R77"
+      ],
+      "registry": "post",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+            "af9460900d39d4ee5df6055cee5506bc4d3b54576d4db2acbbeee31dfaa80d8b"
+          ]
+        }
+      },
+      "golden_record_hash": "0e02df6a2475dd0ff1c9f80280df5abc5d4ea7f32636e83a0ec361d08ca3bed1",
+      "supplied": [
+        "AX",
+        "RY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "0e02df6a2475dd0ff1c9f80280df5abc5d4ea7f32636e83a0ec361d08ca3bed1",
+          "registry_hash": "a3e1613f8209ad3f8278d54a173f40d3eef1c0e8df5f03332697343def8206ce",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "af9460900d39d4ee5df6055cee5506bc4d3b54576d4db2acbbeee31dfaa80d8b",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "6eb9607016db6d62de77afc1480835b495218673dc448c3cf9b4ac97dfe4ed21"
+      }
+    },
+    {
+      "id": "G33-retired-key-included-after",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R63",
+        "R67",
+        "R77"
+      ],
+      "registry": "post",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "3d08cba24360fa6048a776c9bb2fd654cdf119cf396f818ad1ddcd460785f48f",
+            "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+          ]
+        }
+      },
+      "golden_record_hash": "b30288dd9a8f02c96221c84d3a128174c5daa655e41910a02deef8ceefffc9fd",
+      "supplied": [
+        "AX",
+        "RZ"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "b30288dd9a8f02c96221c84d3a128174c5daa655e41910a02deef8ceefffc9fd",
+          "registry_hash": "a3e1613f8209ad3f8278d54a173f40d3eef1c0e8df5f03332697343def8206ce",
+          "dtc_set_hash": "57c7c574aaf3d5c27c6d230071782c59553d9eb33daece04869a45d38361e0dc",
+          "commitment_epoch": "a733303ec8b3be90dd8689cb1f2256a444cfc877af87d7082a99c8c0770b9777",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "3d08cba24360fa6048a776c9bb2fd654cdf119cf396f818ad1ddcd460785f48f",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "revoked_attester"
+              ]
+            },
+            {
+              "attestation_hash": "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "c9dee73f1382737b367a1bd7d62ac071d5c738d34f97bac89aca2fa7774ba44f"
+      }
+    }
+  ],
+  "trust": {
+    "tenant_id": "tenant-registry-synthetic",
+    "genesis_hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933",
+    "key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+    "public_key": "2777ffb024ca3a7b41e996fa5d53b10725ddd36caf6733a9d39d53be7f7cde34"
+  },
+  "heads": {
+    "rules": [
+      "R81"
+    ],
+    "example": {
+      "head_jcs": "{\"expires_at\":\"2026-10-20T00:00:00Z\",\"genesis_hash\":\"8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933\",\"head_hash\":\"fe953ca83a56c34856a76b8bb54d49af9bab60e9806d43f75758001a631212be\",\"issued_at\":\"2026-10-19T00:00:00Z\",\"registry_hash\":\"a3e1613f8209ad3f8278d54a173f40d3eef1c0e8df5f03332697343def8206ce\",\"schema\":\"impact.registry-head.v1\",\"seq\":12,\"tenant_id\":\"tenant-registry-synthetic\"}",
+      "head_digest": "55152f674c0a75a8f59d7277e1645dd4bdbbd3bb719edb2ff14815073b80a272",
+      "signing_input": "{\"domain\":\"impact.registry-head-signature.v1\",\"hash\":\"55152f674c0a75a8f59d7277e1645dd4bdbbd3bb719edb2ff14815073b80a272\"}"
+    },
+    "values": {
+      "post": {
+        "head": {
+          "schema": "impact.registry-head.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "genesis_hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933",
+          "seq": 12,
+          "head_hash": "fe953ca83a56c34856a76b8bb54d49af9bab60e9806d43f75758001a631212be",
+          "registry_hash": "a3e1613f8209ad3f8278d54a173f40d3eef1c0e8df5f03332697343def8206ce",
+          "issued_at": "2026-10-19T00:00:00Z",
+          "expires_at": "2026-10-20T00:00:00Z"
+        },
+        "head_digest": "55152f674c0a75a8f59d7277e1645dd4bdbbd3bb719edb2ff14815073b80a272",
+        "key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+        "signature": "df910d240a25b097314012f1b40645389dffa2b461938fb682ab1c3ac0b32894354766de9db9f6184e42b2c568e35d8611cd13f2e6760c8abd36c3a9621e830c"
+      },
+      "reviewed": {
+        "head": {
+          "schema": "impact.registry-head.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "genesis_hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933",
+          "seq": 13,
+          "head_hash": "e1d3352ee07cba25d30d004efe2e8384cc654cc4b7e1894c67adcf31ec1c3e34",
+          "registry_hash": "aa459feff126269e3555f89f51b7e9c9efc3c76aa8296f35c0760ce624d968c4",
+          "issued_at": "2026-10-19T00:00:00Z",
+          "expires_at": "2026-10-20T00:00:00Z"
+        },
+        "head_digest": "c20e7c84240c9a7a760e0aa6907f492041117223cad16529cf6f059964fea4da",
+        "key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+        "signature": "1cf8183bd6a5b2b4c592d71cd6e6b7b1cb642c1c8636f2a6b47f8f57aa1920e648d1f4138401179f2a209394ee3b4ae29fedfe1fe5ed73843ad8af9f8b805501"
+      },
+      "too_long": {
+        "head": {
+          "schema": "impact.registry-head.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "genesis_hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933",
+          "seq": 12,
+          "head_hash": "fe953ca83a56c34856a76b8bb54d49af9bab60e9806d43f75758001a631212be",
+          "registry_hash": "a3e1613f8209ad3f8278d54a173f40d3eef1c0e8df5f03332697343def8206ce",
+          "issued_at": "2026-10-19T00:00:00Z",
+          "expires_at": "2026-10-21T00:00:00Z"
+        },
+        "head_digest": "87a21cba1b852649ebe07c14215bf4abd73964fedd8922db71a5833277a7cf91",
+        "key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+        "signature": "e421c22a1ddf15498cac2f1f47d2e155e414a2c5006d1a0b41b227238fbd43f38196b99bc8e6bd0c5e191220e6d7949e7cfcf3eb15d898b561dbd41152cfdd07"
+      },
+      "bad_signature": {
+        "head": {
+          "schema": "impact.registry-head.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "genesis_hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933",
+          "seq": 12,
+          "head_hash": "fe953ca83a56c34856a76b8bb54d49af9bab60e9806d43f75758001a631212be",
+          "registry_hash": "a3e1613f8209ad3f8278d54a173f40d3eef1c0e8df5f03332697343def8206ce",
+          "issued_at": "2026-10-19T00:00:00Z",
+          "expires_at": "2026-10-20T00:00:00Z"
+        },
+        "head_digest": "55152f674c0a75a8f59d7277e1645dd4bdbbd3bb719edb2ff14815073b80a272",
+        "key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+        "signature": "0f910d240a25b097314012f1b40645389dffa2b461938fb682ab1c3ac0b32894354766de9db9f6184e42b2c568e35d8611cd13f2e6760c8abd36c3a9621e830c"
+      }
+    }
+  },
+  "admissions": [
+    {
+      "id": "A1-current-head",
+      "rules": [
+        "R81",
+        "R82",
+        "R83",
+        "R84"
+      ],
+      "head": "post",
+      "registry": "post",
+      "records": [
+        {
+          "schema": "impact.golden-record.v1",
+          "family": "synthetic.family",
+          "checksum_variant_id": "synthetic.variant.1",
+          "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+          "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+          "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+          "oracle": {
+            "tools": [],
+            "attestations": [
+              "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+            ]
+          }
+        }
+      ],
+      "as_of": "2026-10-19T12:00:00Z",
+      "test_mode": true,
+      "expect": {
+        "schema": "impact.evidence-admission.v1",
+        "status": "current",
+        "reasons": [],
+        "head_digest": "55152f674c0a75a8f59d7277e1645dd4bdbbd3bb719edb2ff14815073b80a272",
+        "variants": [
+          {
+            "family": "synthetic.family",
+            "checksum_variant_id": "synthetic.variant.1",
+            "golden_field": true,
+            "reasons": [],
+            "evaluations": [
+              "a40dc536cbcc4362ec0f05d3d2ab5ceafc13b4e240de18709427afa6c617d846"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "A2-head-not-yet-valid",
+      "rules": [
+        "R81",
+        "R82",
+        "R83"
+      ],
+      "head": "post",
+      "registry": "post",
+      "records": [
+        {
+          "schema": "impact.golden-record.v1",
+          "family": "synthetic.family",
+          "checksum_variant_id": "synthetic.variant.1",
+          "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+          "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+          "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+          "oracle": {
+            "tools": [],
+            "attestations": [
+              "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+            ]
+          }
+        }
+      ],
+      "as_of": "2026-10-18T23:59:59Z",
+      "test_mode": true,
+      "expect": {
+        "schema": "impact.evidence-admission.v1",
+        "status": "unavailable",
+        "reasons": [
+          "head_not_yet_valid"
+        ],
+        "head_digest": null,
+        "variants": []
+      }
+    },
+    {
+      "id": "A3-head-expired",
+      "rules": [
+        "R81",
+        "R82",
+        "R83"
+      ],
+      "head": "post",
+      "registry": "post",
+      "records": [
+        {
+          "schema": "impact.golden-record.v1",
+          "family": "synthetic.family",
+          "checksum_variant_id": "synthetic.variant.1",
+          "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+          "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+          "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+          "oracle": {
+            "tools": [],
+            "attestations": [
+              "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+            ]
+          }
+        }
+      ],
+      "as_of": "2026-10-20T00:00:00Z",
+      "test_mode": true,
+      "expect": {
+        "schema": "impact.evidence-admission.v1",
+        "status": "unavailable",
+        "reasons": [
+          "head_expired"
+        ],
+        "head_digest": null,
+        "variants": []
+      }
+    },
+    {
+      "id": "A4-head-validity-too-long",
+      "rules": [
+        "R81",
+        "R82",
+        "R83"
+      ],
+      "head": "too_long",
+      "registry": "post",
+      "records": [
+        {
+          "schema": "impact.golden-record.v1",
+          "family": "synthetic.family",
+          "checksum_variant_id": "synthetic.variant.1",
+          "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+          "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+          "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+          "oracle": {
+            "tools": [],
+            "attestations": [
+              "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+            ]
+          }
+        }
+      ],
+      "as_of": "2026-10-19T12:00:00Z",
+      "test_mode": true,
+      "expect": {
+        "schema": "impact.evidence-admission.v1",
+        "status": "unavailable",
+        "reasons": [
+          "head_validity_too_long"
+        ],
+        "head_digest": null,
+        "variants": []
+      }
+    },
+    {
+      "id": "A5-head-bad-signature",
+      "rules": [
+        "R81",
+        "R82",
+        "R83"
+      ],
+      "head": "bad_signature",
+      "registry": "post",
+      "records": [
+        {
+          "schema": "impact.golden-record.v1",
+          "family": "synthetic.family",
+          "checksum_variant_id": "synthetic.variant.1",
+          "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+          "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+          "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+          "oracle": {
+            "tools": [],
+            "attestations": [
+              "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+            ]
+          }
+        }
+      ],
+      "as_of": "2026-10-19T12:00:00Z",
+      "test_mode": true,
+      "expect": {
+        "schema": "impact.evidence-admission.v1",
+        "status": "unavailable",
+        "reasons": [
+          "untrusted_head"
+        ],
+        "head_digest": null,
+        "variants": []
+      }
+    },
+    {
+      "id": "A6-registry-does-not-match-head",
+      "rules": [
+        "R81",
+        "R82",
+        "R83"
+      ],
+      "head": "post",
+      "registry": "reviewed",
+      "records": [
+        {
+          "schema": "impact.golden-record.v1",
+          "family": "synthetic.family",
+          "checksum_variant_id": "synthetic.variant.1",
+          "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+          "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+          "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+          "oracle": {
+            "tools": [],
+            "attestations": [
+              "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025"
+            ]
+          }
+        }
+      ],
+      "as_of": "2026-10-19T12:00:00Z",
+      "test_mode": true,
+      "expect": {
+        "schema": "impact.evidence-admission.v1",
+        "status": "unavailable",
+        "reasons": [
+          "registry_mismatch"
+        ],
+        "head_digest": null,
+        "variants": []
+      }
+    },
+    {
+      "id": "A7-negative-without-review",
+      "rules": [
+        "R81",
+        "R82",
+        "R83",
+        "R74",
+        "R89"
+      ],
+      "head": "post",
+      "registry": "post",
+      "records": [
+        {
+          "schema": "impact.golden-record.v1",
+          "family": "synthetic.family",
+          "checksum_variant_id": "synthetic.variant.1",
+          "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+          "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+          "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+          "oracle": {
+            "tools": [],
+            "attestations": [
+              "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "93e349bea90ac3c21be855bb2e4872a5dd6e500713683e99bc60f10956aebfb0"
+            ]
+          }
+        },
+        {
+          "schema": "impact.golden-record.v1",
+          "family": "synthetic.family",
+          "checksum_variant_id": "synthetic.variant.1",
+          "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+          "version_hash": "8f26f907d1ee3940a81dfb745cfbc940fcb142a6aa0e1f0b4190201faea7d47f",
+          "expected_image_hash": "87c026feb3148faf6105d564e0ce5cdd09ed54d58a0b5099e8d5b15c1396bc04",
+          "oracle": {
+            "tools": [],
+            "attestations": [
+              "7c4a70d2104d4a7d9554eec559b82ea911c725a8025a7ef87966d088bfc634b5",
+              "ced3cd1b82c1ca001ca4159d5ddaa5eb6a00fa21cf45f1a0eca1f1c82fb99e6a"
+            ]
+          }
+        }
+      ],
+      "as_of": "2026-10-19T12:00:00Z",
+      "test_mode": true,
+      "expect": {
+        "schema": "impact.evidence-admission.v1",
+        "status": "current",
+        "reasons": [],
+        "head_digest": "55152f674c0a75a8f59d7277e1645dd4bdbbd3bb719edb2ff14815073b80a272",
+        "variants": [
+          {
+            "family": "synthetic.family",
+            "checksum_variant_id": "synthetic.variant.1",
+            "golden_field": false,
+            "reasons": [
+              "unreviewed_negative"
+            ],
+            "evaluations": [
+              "9654fd2282974baa8bf67ea07256da91e838160d07b871eee3c4cbb2c5982db5",
+              "c7ea732e0789cddabfe1a9df2cee3db17d2b48f7dbb81d640d3312bb301e87bf"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "A8-negative-with-approved-review",
+      "rules": [
+        "R81",
+        "R82",
+        "R83",
+        "R68",
+        "R74",
+        "R89"
+      ],
+      "head": "reviewed",
+      "registry": "reviewed",
+      "records": [
+        {
+          "schema": "impact.golden-record.v1",
+          "family": "synthetic.family",
+          "checksum_variant_id": "synthetic.variant.1",
+          "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+          "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+          "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+          "oracle": {
+            "tools": [],
+            "attestations": [
+              "42fee708a3f599c26520420ad422ee6f2e983d1e04274e96cb20d19d0893deab",
+              "56c8747c714e2fcfbb1b5a582fb1671d7f74d2d4ce95dd66377b1bd2a5dad025",
+              "93e349bea90ac3c21be855bb2e4872a5dd6e500713683e99bc60f10956aebfb0"
+            ]
+          }
+        },
+        {
+          "schema": "impact.golden-record.v1",
+          "family": "synthetic.family",
+          "checksum_variant_id": "synthetic.variant.1",
+          "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+          "version_hash": "8f26f907d1ee3940a81dfb745cfbc940fcb142a6aa0e1f0b4190201faea7d47f",
+          "expected_image_hash": "87c026feb3148faf6105d564e0ce5cdd09ed54d58a0b5099e8d5b15c1396bc04",
+          "oracle": {
+            "tools": [],
+            "attestations": [
+              "7c4a70d2104d4a7d9554eec559b82ea911c725a8025a7ef87966d088bfc634b5",
+              "ced3cd1b82c1ca001ca4159d5ddaa5eb6a00fa21cf45f1a0eca1f1c82fb99e6a"
+            ]
+          }
+        }
+      ],
+      "as_of": "2026-10-19T12:00:00Z",
+      "test_mode": true,
+      "expect": {
+        "schema": "impact.evidence-admission.v1",
+        "status": "current",
+        "reasons": [],
+        "head_digest": "c20e7c84240c9a7a760e0aa6907f492041117223cad16529cf6f059964fea4da",
+        "variants": [
+          {
+            "family": "synthetic.family",
+            "checksum_variant_id": "synthetic.variant.1",
+            "golden_field": true,
+            "reasons": [],
+            "evaluations": [
+              "c1136923606424aca05007a7b1fcf452f6af326ec12df7208306ef2855608911",
+              "f5f053eb5803ecd60f0f7b894f90dd32bc187f430ec6133c28fcd634e50b2b5c"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
