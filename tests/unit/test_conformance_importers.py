@@ -9,9 +9,6 @@ import rfc8785
 
 from core.conformance import (
     PREFIX_SIZES,
-    Check,
-    Failure,
-    Limit,
     OracleRecord,
     ReportInputs,
     admit_importers,
@@ -26,6 +23,15 @@ from core.conformance import (
     prefix_sizes,
     report_hash,
     version_bump_ok,
+)
+from core.conformance import (
+    ImporterCheck as Check,
+)
+from core.conformance import (
+    ImporterFailure as Failure,
+)
+from core.conformance import (
+    ImporterLimit as Limit,
 )
 from core.importers import RAW_IMPORTER, Importer, ImporterContractError, ImportParams, ImportRejected
 from core.kernel import Dump, Memory

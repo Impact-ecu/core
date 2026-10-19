@@ -14,9 +14,11 @@ import core.kernel
 SRC = Path(__file__).resolve().parents[2] / "src" / "core"
 FILES = sorted(SRC.rglob("*.py"))
 
+# ast: the SPEC-002 R100 scan of plugin source text (parsing only, never compiling or running it).
 # fractions, math and unicodedata: exact rationals, gcd and NFC for SPEC-003 R3, R4, R99; xml: the
 # expat reader of SPEC-003 R80, with every DTD hook turned into a rejection.
 ALLOWED_STDLIB = {
+    "ast",
     "bisect",
     "collections",
     "dataclasses",
