@@ -172,6 +172,7 @@ protected_modules = [
     "core.provenance._anchor",
     "core.provenance._errors",
     "core.provenance._events",
+    "core.provenance._generic",
     "core.provenance._json",
     "core.provenance._payloads",
     "core.provenance._records",

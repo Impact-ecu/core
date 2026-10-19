@@ -4,7 +4,7 @@ own input reports and to the kernel diff, and is deterministic."""
 from hypothesis import given
 from hypothesis import strategies as st
 
-from core.gate._audit import run_audit
+from core.gate._audit import Audit, run_audit
 from core.kernel import diff, image_hash
 from tests.unit.gate_support import CORE_VERSION, admit_all, arguments, doc, file_of
 from tests.unit.plugin_fixtures import LAYOUT, ORIGINAL, dump_of
@@ -25,6 +25,7 @@ def candidates(draw: st.DrawFn) -> bytes:
 def test_audit_binds_to_the_gate_and_the_diff(data: bytes) -> None:
     original, candidate = dump_of(ORIGINAL), dump_of(data)
     result = run_audit(file_of(original), file_of(candidate), arguments(), admit_all, CORE_VERSION)
+    assert isinstance(result, Audit)
     record = doc(result.record.value)
     subjects = [doc(r.report)["subject"]["verify_status"] for r in (result.original_input, result.candidate_input)]
     assert [record["verify"]["original"], record["verify"]["candidate"]] == subjects
@@ -34,4 +35,5 @@ def test_audit_binds_to_the_gate_and_the_diff(data: bytes) -> None:
     assert list(record["diff_patch_hashes"]) == [p.patch_hash for p in expected.patches]
     assert [(f["offset"], f["length"]) for f in record["foreign"]] == [(f.offset, f.length) for f in expected.foreign]
     again = run_audit(file_of(original), file_of(candidate), arguments(), admit_all, CORE_VERSION)
+    assert isinstance(again, Audit)
     assert again.record.audit_hash == result.record.audit_hash

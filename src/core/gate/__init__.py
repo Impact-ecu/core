@@ -5,9 +5,10 @@ The verdict is `block`, `warn` or `no findings`, always inside a report with its
 a boolean and never "pass". Pure (R80): no I/O, network, clock, randomness, environment reads or threads.
 """
 
-from core.gate._audit import Audit, AuditArgs, AuditFile, AuditRefused, audit
+from core.gate._audit import Audit, AuditArgs, AuditFile, audit
 from core.gate._check import CheckInputArgs, check_input
 from core.gate._fatigue import AlertRecord, Fatigue, fatigue
+from core.gate._generic import AuditRefused, GenericArgs, GenericAudit, audit_generic
 from core.gate._maps import Engine
 from core.gate._model import BUILTIN, Fuel, GateError, GateInvariantError, Severity, Verdict
 from core.gate._release import ReleaseArgs, release
@@ -39,6 +40,8 @@ __all__ = [
     "GateBlocked",
     "GateError",
     "GateInvariantError",
+    "GenericArgs",
+    "GenericAudit",
     "InputResult",
     "ReleaseArgs",
     "ReleasedImage",
@@ -50,6 +53,7 @@ __all__ = [
     "alert_ack_payload",
     "alert_warnings",
     "audit",
+    "audit_generic",
     "check_input",
     "export_inputs",
     "fatigue",

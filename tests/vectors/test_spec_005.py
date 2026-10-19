@@ -10,12 +10,26 @@ import hashlib
 import importlib.metadata
 import json
 import re
+from fractions import Fraction
 from itertools import pairwise
 from typing import Any
 
 import pytest
 import rfc8785
 
+from core.definitions import (
+    Definition,
+    DefinitionError,
+    Dtype,
+    InlineAxis,
+    License,
+    MapDef,
+    Scaling,
+    SoftwareVersion,
+    map_attribution,
+    span,
+)
+from core.definitions import Origin as DefinitionOrigin
 from core.kernel import (
     Dump,
     Memory,
@@ -30,17 +44,24 @@ from core.kernel import (
 from core.provenance import (
     AuditRecord,
     Build,
+    ChangedRun,
     EventMeta,
     ExportInputs,
     ExportProvenance,
+    GenericAuditInputs,
+    GenericAuditRecord,
+    KnownMaps,
+    PluginReason,
     ReportBindingError,
     ReportContext,
+    changed_ranges,
     check_alert_ack,
     check_report_file,
     check_suspect_ack,
     commitment,
     event_hash,
     export_report,
+    generic_audit_record,
     issue_report,
     make_anchor,
     parse_anchor,
@@ -372,3 +393,112 @@ def test_tamper(tamper_id: str) -> None:
 def test_every_tamper_is_run() -> None:
     assert len(TAMPERS) == 16
     assert {t["target"] for t in V["tampers"]} == {"chain", "report_file"}
+
+
+GENERIC_INPUTS = V["generic_audit_inputs"]
+GENERIC_CANDIDATE = Dump(
+    "bench_full",
+    tuple(
+        Memory(m.memory_id, m.base_address, bytes.fromhex(GENERIC_INPUTS["candidate"][m.memory_id]))
+        for m in ORIGINAL.memories
+    ),
+)
+_U8 = Dtype("uint", 8, "none")
+_ONE = Scaling(Fraction(1), Fraction(0))
+
+
+def _mapdef(map_id: str, memory_id: str, offset: int, rows: int, cols: int, x: InlineAxis | None) -> MapDef:
+    return MapDef(
+        map_id=map_id,
+        name=map_id.upper(),
+        category=None,
+        map_type=None,
+        state="imported",
+        memory_id=memory_id,
+        offset=offset,
+        rows=rows,
+        cols=cols,
+        cell_order="x_fastest",
+        dtype=_U8,
+        scaling=_ONE,
+        unit=None,
+        unit_text="raw",
+        x=x,
+        y=None,
+    )
+
+
+# A real definition whose spans are exactly the vector's synthetic spans, so the core attributes them itself.
+GENERIC_DEFINITION = Definition(
+    "synthetic.vectors",
+    SoftwareVersion("exact", ("SYN0001",)),
+    (),
+    (
+        _mapdef("syn.a", "pflash", 16, 2, 4, InlineAxis("pflash", 36, 4, _U8, _ONE, "rpm", None)),
+        _mapdef("syn.b", "pflash", 40, 1, 8, None),
+        _mapdef("syn.c", "dflash", 8, 1, 8, None),
+        _mapdef("syn.z", "nowhere", 0, 1, 1, None),
+    ),
+    DefinitionOrigin("platform", ()),
+    License("platform_created", None),
+    500,
+)
+GENERIC_CASES = [
+    ("generic_audit", True, "no_admitted_plugin"),
+    ("generic_audit_no_definition", False, "no_admitted_plugin"),
+    ("generic_audit_no_rule_table", True, "no_rule_table"),
+]
+
+
+# SPEC-005 R111, R112: the vector's inputs, and the test definition's spans equal the vector's spans.
+def test_generic_audit_inputs() -> None:
+    assert GENERIC_INPUTS["rules"] == ["R111", "R112"]
+    assert image_hash(GENERIC_CANDIDATE) == V["generic_audit"]["value"]["image_hash_candidate"]
+    candidate_image = {
+        "dump_kind": "bench_full",
+        "memories": [
+            {
+                "memory_id": m.memory_id,
+                "base_address": m.base_address,
+                "size": len(m.data),
+                "sha256": hashlib.sha256(m.data).hexdigest(),
+            }
+            for m in sorted(GENERIC_CANDIDATE.memories, key=lambda m: m.memory_id)
+        ],
+    }
+    assert jcs(candidate_image) == GENERIC_INPUTS["candidate_image_jcs"]
+    for mapdef in GENERIC_DEFINITION.mapdefs[:3]:
+        spans = [
+            {"memory_id": r.memory_id, "start": r.start, "end": r.end}
+            for r in span(mapdef, GENERIC_DEFINITION, ORIGINAL)
+        ]
+        assert spans == GENERIC_INPUTS["spans"][mapdef.map_id]
+    with pytest.raises(DefinitionError):
+        span(GENERIC_DEFINITION.mapdefs[3], GENERIC_DEFINITION, ORIGINAL)
+    assert GENERIC_INPUTS["unbound"] == ["syn.z"]
+
+
+# SPEC-005 R110-R115: the core's changed ranges and attribution give the vector record and its hash. The vector's
+# `definition_hash` and `python` are synthetic placeholders, set in place of the core's before hashing.
+@pytest.mark.parametrize(("name", "with_definition", "reason"), GENERIC_CASES)
+def test_generic_audit(name: str, with_definition: bool, reason: PluginReason) -> None:
+    vector = V[name]
+    expected = vector["value"]
+    known = None
+    if with_definition:
+        changes = changed_ranges(ORIGINAL, GENERIC_CANDIDATE)
+        attribution = map_attribution(changes, GENERIC_DEFINITION, (ORIGINAL, GENERIC_CANDIDATE))
+        known = KnownMaps(
+            GENERIC_INPUTS["definition_hash"],
+            {line.patch_hash: line.map_ids for line in attribution.patches},
+            tuple(ChangedRun(r.memory_id, r.offset, r.length) for r in attribution.unmapped),
+            attribution.unbound,
+        )
+    build = Build(**expected["build"])
+    inputs = GenericAuditInputs(ORIGINAL, GENERIC_CANDIDATE, "file_service", known, reason, "0.0.0-synthetic", build)
+    value = json.loads(json.dumps(_plain(generic_audit_record(inputs).value)))
+    assert {k: v for k, v in value.items() if k != "python"} == {k: v for k, v in expected.items() if k != "python"}
+    record = GenericAuditRecord({**value, "python": expected["python"]})
+    assert record.generic_audit_hash == vector["generic_audit_hash"]
+    assert jcs(expected) == vector["jcs"]
+    assert try_hash(expected) == vector["generic_audit_hash"]
