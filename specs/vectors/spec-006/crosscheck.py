@@ -5,14 +5,17 @@ Stdlib only and independent of the core and of generate.py:
   json.dumps with sorted keys, no whitespace and ensure_ascii=False (SPEC-005 R72);
 - Ed25519: transcribed from the RFC 8032 section 6 reference code, checked against RFC 8032 section 7.1 TEST 1
   (see the notice above the Ed25519 section);
-- raw importer (R20, R27-R29), canonicalizers (R43, R46), registry builder (R60-R66 with SPEC-005 R31, R33, R57),
-  attestation verifier (R50) and golden evaluation (R73-R78), all written from SPEC-006.
+- raw importer (R20, R27-R29), canonicalizers (R43, R45), commitment lookup keys by stdlib hmac (R46), registry
+  builder (R60-R68 with SPEC-005 R31, R33, R57), attestation verifier (R50, R77), golden evaluation (R73-R78),
+  signed registry heads and variant admission (R81-R83), all written from SPEC-006.
 Run: python -I crosscheck.py vectors.json   (exit status 1 on any disagreement)
 """
 from __future__ import annotations
 
 import copy
+import datetime
 import hashlib
+import hmac
 import json
 import pathlib
 import re
@@ -250,8 +253,9 @@ def canonical_unit_id(raw: str) -> str:
     return c
 
 
-# ---- Registry (R60-R66) from the chain ----
-TEST_KEY_NAMES = ["registry", "attester-a", "attester-a2", "attester-b", "attester-c", "attester-d", "attester-e", "reviewer-f"]
+# ---- Registry (R60-R68) from the chain ----
+TEST_KEY_NAMES = ["registry", "attester-a", "attester-a2", "attester-b", "attester-c", "attester-d", "attester-e", "reviewer-f", "attester-r"]
+RETROACTIVE = {"compromised", "misconduct", "error"}
 
 
 def test_key_ids() -> set[str]:
@@ -264,6 +268,21 @@ def test_key_ids() -> set[str]:
 
 TEST_KEYS = test_key_ids()
 EVENT_KEYS = {"schema", "tenant_id", "seq", "event_id", "project_id", "type", "payload", "actor", "ts", "prev_hash", "hash"}
+R57_TYPES = ("attester_enrolled", "attester_revoked", "attestation_included")
+
+
+def review_hash(tenant: str, genesis: str, pl: dict) -> str:
+    return sha_obj(
+        {
+            "schema": "impact.review.v1",
+            "tenant_id": tenant,
+            "genesis_hash": genesis,
+            "subject_kind": pl["subject_kind"],
+            "export_ref": pl["export_ref"],
+            "subject_hash": pl["subject_hash"],
+            "decision": pl["decision"],
+        }
+    )
 
 
 def build_registry(events: list[dict], head: int, test_mode: bool) -> dict:
@@ -271,21 +290,28 @@ def build_registry(events: list[dict], head: int, test_mode: bool) -> dict:
     evs = sorted([e for e in events if e["seq"] <= head], key=lambda e: e["seq"])
     g = evs[0]
     gp = g["payload"]
-    if not (
-        g["seq"] == 0
-        and g["type"] == "genesis"
-        and g["prev_hash"] == "0" * 64
-        and g["actor"]["kind"] == "system"
-        and len(gp["signing_keys"]) == 1
-    ):
+    if not (g["seq"] == 0 and g["type"] == "genesis" and g["prev_hash"] == "0" * 64 and g["actor"]["kind"] == "system" and len(gp["signing_keys"]) == 1):
         raise Reject("registry_broken")
     chain_keys = {k["key_id"]: unhex(k["public_key"]) for k in gp["signing_keys"]}
     for k_id, pub in chain_keys.items():
         if sha_hex(pub) != k_id or (k_id in TEST_KEYS and not test_mode):
             raise Reject("registry_broken")
-    attesters: dict[str, dict] = {}
+    att: dict[str, dict] = {}
     successors: set[str] = set()
+    inclusions: dict[str, dict] = {}
+    reviews: list[dict] = []
     findings: list[dict] = []
+
+    def usable(k_id: str, role: str, seq: int) -> str | None:
+        e = att.get(k_id)
+        if e is None:
+            return "unknown"
+        if e["revoked"] is not None and e["revoked"]["seq"] < seq:
+            return "revoked"
+        if role not in e["roles"]:
+            return "role"
+        return None
+
     prev = None
     for ev in evs:
         if set(ev) != EVENT_KEYS or sha_obj({k: v for k, v in ev.items() if k != "hash"}) != ev["hash"]:
@@ -294,62 +320,93 @@ def build_registry(events: list[dict], head: int, test_mode: bool) -> dict:
             raise Reject("registry_broken")
         prev = ev
         typ, pl, seq = ev["type"], ev["payload"], ev["seq"]
-        if typ not in ("attester_enrolled", "attester_revoked"):
-            continue
-        body = {k: v for k, v in pl.items() if k != "signature"}
-        kh = sha_obj({"schema": "impact.key-event.v1", "tenant_id": ev["tenant_id"], "genesis_hash": g["hash"], "seq": seq, "type": typ, "payload": body})
-        signer = chain_keys.get(pl["signer_key_id"])
-        if signer is None or not verify(signer, signing_input("impact.key-event-signature.v1", kh), unhex(pl["signature"])):
-            raise Reject("registry_broken")
-        if ev["actor"]["kind"] != "user" or not is_hex32(pl["reason_commitment"]):
-            raise Reject("registry_broken")
-        k_id = pl["attester_key_id"]
+        if typ in R57_TYPES:
+            body = {k: v for k, v in pl.items() if k != "signature"}
+            kh = sha_obj({"schema": "impact.key-event.v1", "tenant_id": ev["tenant_id"], "genesis_hash": g["hash"], "seq": seq, "type": typ, "payload": body})
+            signer = chain_keys.get(pl["signer_key_id"])
+            if signer is None or not verify(signer, signing_input("impact.key-event-signature.v1", kh), unhex(pl["signature"])):
+                raise Reject("registry_broken")
         if typ == "attester_enrolled":
-            if sha_hex(unhex(pl["public_key"])) != k_id:
+            k_id = pl["attester_key_id"]
+            if ev["actor"]["kind"] != "user" or not is_hex32(pl["reason_commitment"]) or sha_hex(unhex(pl["public_key"])) != k_id:
                 raise Reject("registry_broken")
             if k_id in TEST_KEYS and not test_mode:
                 findings.append({"seq": seq, "reason": "test_key"})
                 continue
-            if k_id in attesters:
+            if k_id in att:
                 findings.append({"seq": seq, "reason": "already_enrolled"})
                 continue
             rot = pl["rotates"]
-            if rot is not None and (rot not in attesters or rot in successors):
-                findings.append({"seq": seq, "reason": "bad_rotation"})
-                continue
-            identity = k_id if rot is None else attesters[rot]["identity"]
             if rot is not None:
+                old = att.get(rot)
+                ok = old is not None and rot not in successors and not (old["revoked"] is not None and old["revoked"]["reason"] in RETROACTIVE)
+                if ok:
+                    rh = sha_obj(
+                        {
+                            "schema": "impact.attester-rotation.v1",
+                            "tenant_id": ev["tenant_id"],
+                            "genesis_hash": g["hash"],
+                            "old_key_id": rot,
+                            "new_key_id": k_id,
+                            "new_public_key": pl["public_key"],
+                        }
+                    )
+                    ok = verify(unhex(old["public_key"]), signing_input("impact.attester-rotation-signature.v1", rh), unhex(pl["rotation_signature"]))
+                if not ok:
+                    findings.append({"seq": seq, "reason": "bad_rotation"})
+                    continue
                 successors.add(rot)
-            attesters[k_id] = {
+            elif pl["rotation_signature"] is not None:
+                raise Reject("registry_broken")
+            att[k_id] = {
                 "attester_key_id": k_id,
                 "public_key": pl["public_key"],
                 "roles": pl["roles"],
-                "identity": identity,
+                "identity": k_id if rot is None else att[rot]["identity"],
                 "enrolled_seq": seq,
                 "revoked": None,
             }
-        else:
-            if k_id not in attesters:
+        elif typ == "attester_revoked":
+            k_id = pl["attester_key_id"]
+            if k_id not in att:
                 findings.append({"seq": seq, "reason": "unknown_attester"})
-            elif attesters[k_id]["revoked"] is not None:
+            elif att[k_id]["revoked"] is not None:
                 findings.append({"seq": seq, "reason": "already_revoked"})
             else:
-                attesters[k_id]["revoked"] = {"seq": seq, "reason": pl["reason"]}
+                att[k_id]["revoked"] = {"seq": seq, "reason": pl["reason"]}
+        elif typ == "attestation_included":
+            u = usable(pl["attester_key_id"], "attester", seq + 1)
+            if u is not None:
+                findings.append({"seq": seq, "reason": {"unknown": "unknown_attester", "revoked": "revoked_attester", "role": "not_attester"}[u]})
+            elif pl["attestation_hash"] in inclusions:
+                findings.append({"seq": seq, "reason": "already_included"})
+            else:
+                inclusions[pl["attestation_hash"]] = {"attestation_hash": pl["attestation_hash"], "attester_key_id": pl["attester_key_id"], "seq": seq}
+        elif typ == "review" and pl["subject_kind"] == "golden_record":
+            u = usable(pl["reviewer_key_id"], "reviewer", seq + 1)
+            if u is not None:
+                findings.append({"seq": seq, "reason": {"unknown": "unknown_reviewer", "revoked": "revoked_reviewer", "role": "not_reviewer"}[u]})
+            elif not verify(unhex(att[pl["reviewer_key_id"]]["public_key"]), signing_input("impact.review-signature.v1", review_hash(ev["tenant_id"], g["hash"], pl)), unhex(pl["signature"])):
+                findings.append({"seq": seq, "reason": "bad_signature"})
+            else:
+                reviews.append({"golden_record_hash": pl["subject_hash"], "decision": pl["decision"], "reviewer_key_id": pl["reviewer_key_id"], "seq": seq})
     last = evs[-1]
     return {
         "schema": "impact.attester-registry.v1",
         "tenant_id": g["tenant_id"],
         "genesis_hash": g["hash"],
         "head": {"seq": last["seq"], "hash": last["hash"]},
-        "attesters": [attesters[k] for k in sorted(attesters)],
+        "attesters": [att[k] for k in sorted(att)],
+        "inclusions": [inclusions[h] for h in sorted(inclusions)],
+        "record_reviews": sorted(reviews, key=lambda r: (r["golden_record_hash"], r["seq"])),
         "findings": sorted(findings, key=lambda f: (f["seq"], f["reason"])),
     }
 
 
-# ---- Attestations (R40-R50) ----
+# ---- Attestations (R40-R52) ----
 ATT_KEYS = {
     "schema", "subject_image_hash", "identification", "write_tool", "readback_image_hash", "communicates",
-    "dtcs_after_clear_and_reread", "tool_checksum_status", "ecu_commitment", "ecu_salt_id", "attester_key_id", "created_at",
+    "dtcs_after_clear_and_reread", "tool_checksum_status", "ecu_commitment", "ecu_commitment_epoch", "attester_key_id", "created_at",
 }
 
 
@@ -357,6 +414,7 @@ def att_shape_ok(a: object) -> bool:
     if not isinstance(a, dict) or set(a) != ATT_KEYS or a["schema"] != "impact.field-attestation.v1":
         return False
     idn, wt, dtcs = a["identification"], a["write_tool"], a["dtcs_after_clear_and_reread"]
+    com, ep = a["ecu_commitment"], a["ecu_commitment_epoch"]
     return (
         is_hex32(a["subject_image_hash"])
         and isinstance(idn, dict)
@@ -375,8 +433,7 @@ def att_shape_ok(a: object) -> bool:
         and all(matches(DTC_RE, x) for x in dtcs)
         and dtcs == sorted(set(dtcs))
         and a["tool_checksum_status"] in ("ok", "mismatch", "not_reported")
-        and is_hex32(a["ecu_commitment"])
-        and is_hex32(a["ecu_salt_id"])
+        and ((com is None and ep is None) or (is_hex32(com) and is_hex32(ep)))
         and is_hex32(a["attester_key_id"])
         and matches(TS_RE, a["created_at"])
     )
@@ -393,8 +450,11 @@ def verify_attestation(sa: dict, registry: dict) -> list[str]:
     entry = next((x for x in registry["attesters"] if x["attester_key_id"] == a["attester_key_id"]), None)
     if entry is None:
         return ["unknown_attester"]
-    if entry["revoked"] is not None:
-        return ["revoked_attester"]
+    rv = entry["revoked"]
+    if rv is not None:
+        inc = next((i for i in registry["inclusions"] if i["attestation_hash"] == sa["attestation_hash"] and i["attester_key_id"] == a["attester_key_id"]), None)
+        if not (rv["reason"] == "retired" and inc is not None and inc["seq"] < rv["seq"]):
+            return ["revoked_attester"]
     if "attester" not in entry["roles"]:
         return ["not_attester"]
     if not verify(unhex(entry["public_key"]), signing_input("impact.field-attestation-signature.v1", sa["attestation_hash"]), unhex(sa["signature"])):
@@ -403,7 +463,7 @@ def verify_attestation(sa: dict, registry: dict) -> list[str]:
 
 
 # ---- Evaluation (R73-R78) ----
-def evaluate(record: dict, supplied: list[dict], registry: dict, dtc_set: dict, salt_id: str) -> dict:
+def evaluate(record: dict, supplied: list[dict], registry: dict, dtc_set: dict, epoch: str) -> dict:
     exp = record["expected_image_hash"]
     rows = []
     q_hashes, identities, units = set(), set(), set()
@@ -426,8 +486,8 @@ def evaluate(record: dict, supplied: list[dict], registry: dict, dtc_set: dict, 
                     rel.append("wrong_variant")
                 if a["subject_image_hash"] != exp:
                     rel.append("wrong_subject")
-                if a["ecu_salt_id"] != salt_id:
-                    rel.append("foreign_salt")
+                if a["ecu_commitment_epoch"] is not None and a["ecu_commitment_epoch"] != epoch:
+                    rel.append("foreign_epoch")
                 if a["write_tool"]["name"].lower().startswith("impact"):
                     rel.append("impact_write_tool")
                 reasons = rel
@@ -444,9 +504,12 @@ def evaluate(record: dict, supplied: list[dict], registry: dict, dtc_set: dict, 
                     reasons = out
                     negative = bool(out)
                     if not out:
-                        q_hashes.add(h)
-                        identities.add(ident_of[a["attester_key_id"]])
-                        units.add(a["ecu_commitment"])
+                        if a["ecu_commitment"] is None:
+                            reasons = ["no_unit_commitment"]
+                        else:
+                            q_hashes.add(h)
+                            identities.add(ident_of[a["attester_key_id"]])
+                            units.add(a["ecu_commitment"])
         negative_any = negative_any or negative
         rows.append({"attestation_hash": h, "qualifying": not reasons, "negative": negative, "reasons": sorted(reasons)})
     rec_reasons = set()
@@ -475,13 +538,88 @@ def evaluate(record: dict, supplied: list[dict], registry: dict, dtc_set: dict, 
         "golden_record_hash": sha_obj(record),
         "registry_hash": sha_obj(registry),
         "dtc_set_hash": sha_obj(dtc_set),
-        "salt_id": salt_id,
+        "commitment_epoch": epoch,
         "thresholds": {"attestations": 2, "attesters": 2, "units": 2},
         "counts": {"attestations": len(q_hashes), "attesters": len(identities), "units": len(units)},
         "attestations": sorted(rows, key=lambda r: r["attestation_hash"]),
         "reasons": sorted(rec_reasons),
         "level": level,
     }
+
+
+# ---- Signed registry head and admission (R81-R84) ----
+def instant(ts: str) -> int:
+    return int(datetime.datetime.strptime(ts, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=datetime.timezone.utc).timestamp())
+
+
+def admit(sh: dict, registry: dict, records: list[dict], supplied: list[dict], trust: dict, policy: dict, as_of: str, dtc_set: dict, epoch: str, test_mode: bool) -> dict:
+    def unavailable(reasons: list[str]) -> dict:
+        return {"schema": "impact.evidence-admission.v1", "status": "unavailable", "reasons": sorted(reasons), "head_digest": None, "variants": []}
+
+    h = sh["head"]
+    if (
+        h["tenant_id"] != trust["tenant_id"]
+        or h["genesis_hash"] != trust["genesis_hash"]
+        or sh["key_id"] != trust["key_id"]
+        or (sh["key_id"] in TEST_KEYS and not test_mode)
+        or sha_obj(h) != sh["head_digest"]
+        or not verify(unhex(trust["public_key"]), signing_input("impact.registry-head-signature.v1", sh["head_digest"]), unhex(sh["signature"]))
+    ):
+        return unavailable(["untrusted_head"])
+    reasons = []
+    t, i, x = instant(as_of), instant(h["issued_at"]), instant(h["expires_at"])
+    if not i <= t:
+        reasons.append("head_not_yet_valid")
+    if not t < x:
+        reasons.append("head_expired")
+    if x - i > policy["max_validity_s"]:
+        reasons.append("head_validity_too_long")
+    if sha_obj(registry) != h["registry_hash"] or registry["head"] != {"seq": h["seq"], "hash": h["head_hash"]}:
+        reasons.append("registry_mismatch")
+    if reasons:
+        return unavailable(reasons)
+    groups: dict[tuple[str, str], list[dict]] = {}
+    for r in records:
+        groups.setdefault((r["family"], r["checksum_variant_id"]), []).append(r)
+    ident_of = {x["attester_key_id"]: x["identity"] for x in registry["attesters"]}
+    variants = []
+    for (fam, var), recs in sorted(groups.items()):
+        evs = [evaluate(r, supplied, registry, dtc_set, epoch) for r in recs]
+        vreasons = set()
+        if not any(e["level"] == "golden_field" for e in evs):
+            vreasons.add("no_golden_field")
+        for r, e in zip(recs, evs):
+            if "negative_field_evidence" not in e["reasons"]:
+                continue
+            rh = sha_obj(r)
+            att_idents = set()
+            for s in supplied:
+                if s["attestation_hash"] in r["oracle"]["attestations"] and s["attestation"]["attester_key_id"] in ident_of:
+                    att_idents.add(ident_of[s["attestation"]["attester_key_id"]])
+            valid = []
+            for rv in registry["record_reviews"]:
+                if rv["golden_record_hash"] != rh:
+                    continue
+                rk = next(a for a in registry["attesters"] if a["attester_key_id"] == rv["reviewer_key_id"])
+                if rk["revoked"] is not None and not (rk["revoked"]["reason"] == "retired" and rv["seq"] < rk["revoked"]["seq"]):
+                    continue
+                if rk["identity"] in att_idents:
+                    continue
+                valid.append(rv["decision"])
+            if "rejected" in valid:
+                vreasons.add("rejected_negative")
+            elif "approved" not in valid:
+                vreasons.add("unreviewed_negative")
+        variants.append(
+            {
+                "family": fam,
+                "checksum_variant_id": var,
+                "golden_field": not vreasons,
+                "reasons": sorted(vreasons),
+                "evaluations": sorted(sha_obj(e) for e in evs),
+            }
+        )
+    return {"schema": "impact.evidence-admission.v1", "status": "current", "reasons": [], "head_digest": sh["head_digest"], "variants": variants}
 
 
 class Checker:
@@ -506,7 +644,6 @@ class Checker:
         t1sig = "e5564300c360ac729086e2cc806e828a84877f1eb8e5d974d873e065224901555fb8821590a33bacc61e39701cf9b46bd25bf5f0595bbe24655141438e7a100b"
         self.expect("rfc8032.test1.signature", sign(t1, b"").hex(), t1sig)
 
-        # SPEC-001 inputs, taken from spec-001's own records.
         cases1 = {c["id"]: c for c in s1["cases"]}
         inp = v["spec001_inputs"]
         self.expect("spec001.base", inp["base_image_hash"], s1["original"]["image_hash"])
@@ -557,12 +694,7 @@ class Checker:
                 got_r = str(e)
             self.expect(f"dtcs.invalid[{i}]", got_r, c["reason"])
 
-        # Salt, unit ids, commitments
-        sl = v["salt"]
-        self.expect("salt.primary", sl["salt"], sha_hex(b"impact spec-006 synthetic ecu salt; never use outside test vectors"))
-        self.expect("salt.second", sl["second_salt"], sha_hex(b"impact spec-006 synthetic second ecu salt; never use outside test vectors"))
-        self.expect("salt.salt_id", sha_obj({"schema": "impact.ecu-salt-id.v1", "salt": sl["salt"]}), sl["salt_id"])
-        self.expect("salt.second_salt_id", sha_obj({"schema": "impact.ecu-salt-id.v1", "salt": sl["second_salt"]}), sl["second_salt_id"])
+        # Unit ids and the commitment service (lookup keys by HMAC; the table values are the service's data)
         for i, c in enumerate(v["unit_ids"]["canonical"]):
             self.expect(f"unit_ids.canonical[{i}]", canonical_unit_id(c["raw"]), c["expect"])
         for i, c in enumerate(v["unit_ids"]["invalid"]):
@@ -572,39 +704,67 @@ class Checker:
             except Reject as e:
                 got_r = str(e)
             self.expect(f"unit_ids.invalid[{i}]", got_r, c["reason"])
-        raw_of = {c["expect"]: c["raw"] for c in v["unit_ids"]["canonical"]}
-        ec = v["ecu_commitment"]
-        for c in ec["cases"]:
-            salt = sl["salt"] if c["salt"] == "primary" else sl["second_salt"]
-            uid = canonical_unit_id(raw_of[c["unit_id"]])
-            obj = {"schema": "impact.ecu-commitment.v1", "salt": salt, "family": ec["family"], "unit_id": uid}
-            if "input_jcs" in c:
-                self.expect(f"ecu_commitment.{c['unit']}.jcs", canon(obj), c["input_jcs"])
-            self.expect(f"ecu_commitment.{c['unit']}.{c['salt']}", sha_obj(obj), c["ecu_commitment"])
+        cs = v["commitment_service"]
+        secret = hashlib.sha256(cs["secret_text"].encode("utf-8")).digest()
+        self.expect("commitment.secret", secret.hex(), cs["secret_hex"])
 
-        # DTC set
+        def lk(sec: bytes, unit_id: str) -> tuple[str, str]:
+            msg = canon({"schema": "impact.ecu-unit.v1", "family": cs["family"], "unit_id": unit_id})
+            return msg, hmac.new(sec, msg.encode("utf-8"), hashlib.sha256).hexdigest()
+
+        table: dict[str, str] = {}
+        for u in cs["units"]:
+            msg, key = lk(secret, u["unit_id"])
+            self.expect(f"commitment.{u['unit']}.input", msg, u["lookup_input"])
+            self.expect(f"commitment.{u['unit']}.lookup_key", key, u["lookup_key"])
+            self.expect(f"commitment.{u['unit']}.is_hex32", is_hex32(u["ecu_commitment"]), True)
+            table[u["unit"]] = u["ecu_commitment"]
+        self.expect("commitment.table_distinct", len(set(table.values())), len(table))
+        se = cs["second_epoch"]
+        for u in se["units"]:
+            self.expect(f"commitment.epoch2.{u['unit']}.lookup_key", lk(bytes.fromhex(se["secret_hex"]), u["unit_id"])[1], u["lookup_key"])
+            self.expect(f"commitment.epoch2.{u['unit']}.differs", u["ecu_commitment"] != table[u["unit"]], True)
+        self.expect("commitment.epochs_differ", cs["epoch"] != se["epoch"], True)
+
+        # DTC set and head policy
         ds = v["dtc_set"]
-        self.expect("dtc_set.value", ds["value"], {"schema": "impact.disqualifying-dtcs.v1", "version": 1, "codes": ["P0601", "P0602", "P0603", "P0604", "P0605", "P0606", "P062F"]})
+        self.expect(
+            "dtc_set.value",
+            ds["value"],
+            {"schema": "impact.disqualifying-dtcs.v1", "version": 1, "codes": ["P0601", "P0602", "P0603", "P0604", "P0605", "P0606", "P0607", "P060A", "P062F"]},
+        )
+        self.expect("dtc_set.sorted", ds["value"]["codes"], sorted(set(ds["value"]["codes"])))
         self.expect("dtc_set.jcs", canon(ds["value"]), ds["jcs"])
         self.expect("dtc_set.hash", sha_obj(ds["value"]), ds["dtc_set_hash"])
+        hp = v["head_policy"]
+        self.expect("head_policy.value", hp["value"], {"schema": "impact.head-policy.v1", "version": 1, "max_validity_s": 86400})
+        self.expect("head_policy.hash", sha_obj(hp["value"]), hp["head_policy_hash"])
 
         # Registry chain and registries
         events = [e["event"] for e in v["registry_chain"]["events"]]
         for i, e in enumerate(v["registry_chain"]["events"]):
             self.expect(f"registry_chain[{i}].hash", sha_obj({k: x for k, x in e["event"].items() if k != "hash"}), e["hash"])
-        self.expect("registry_chain.revocation_ts", events[7]["ts"], v["registry_chain"]["revocation_ts"])
-        built = {"head6": build_registry(events, 6, True), "head7": build_registry(events, 7, True)}
+        heads = {"pre": 9, "post": 12, "reviewed": 13}
+        built = {name: build_registry(events, seq, True) for name, seq in heads.items()}
         for name, rg in v["registries"].items():
             self.expect(f"registries.{name}", built[name], rg["value"])
             self.expect(f"registries.{name}.hash", sha_obj(built[name]), rg["registry_hash"])
-        # Re-sign every attester event with the registry seed and compare bytes.
-        s_seed = seeds[events[0]["payload"]["signing_keys"][0]["key_id"]]
+        # Re-sign every signed registry event with the seeds and compare bytes.
+        g = events[0]
+        s_seed = seeds[g["payload"]["signing_keys"][0]["key_id"]]
         for ev in events[1:]:
-            body = {k: x for k, x in ev["payload"].items() if k != "signature"}
-            kh = sha_obj({"schema": "impact.key-event.v1", "tenant_id": ev["tenant_id"], "genesis_hash": events[0]["hash"], "seq": ev["seq"], "type": ev["type"], "payload": body})
-            self.expect(f"registry_chain[{ev['seq']}].resign", sign(s_seed, signing_input("impact.key-event-signature.v1", kh)).hex(), ev["payload"]["signature"])
+            pl = ev["payload"]
+            if ev["type"] in R57_TYPES:
+                body = {k: x for k, x in pl.items() if k != "signature"}
+                kh = sha_obj({"schema": "impact.key-event.v1", "tenant_id": ev["tenant_id"], "genesis_hash": g["hash"], "seq": ev["seq"], "type": ev["type"], "payload": body})
+                self.expect(f"registry_chain[{ev['seq']}].resign", sign(s_seed, signing_input("impact.key-event-signature.v1", kh)).hex(), pl["signature"])
+            if ev["type"] == "attester_enrolled" and pl["rotates"] is not None:
+                rh = sha_obj({"schema": "impact.attester-rotation.v1", "tenant_id": ev["tenant_id"], "genesis_hash": g["hash"], "old_key_id": pl["rotates"], "new_key_id": pl["attester_key_id"], "new_public_key": pl["public_key"]})
+                self.expect(f"registry_chain[{ev['seq']}].rotation_resign", sign(seeds[pl["rotates"]], signing_input("impact.attester-rotation-signature.v1", rh)).hex(), pl["rotation_signature"])
+            if ev["type"] == "review":
+                self.expect(f"registry_chain[{ev['seq']}].review_resign", sign(seeds[pl["reviewer_key_id"]], signing_input("impact.review-signature.v1", review_hash(ev["tenant_id"], g["hash"], pl))).hex(), pl["signature"])
 
-        # Attestations: hash, signing input and signature re-signed byte for byte.
+        # Attestations
         pool = v["attestations"]
         av = v["attestation_verify"]
         ex = av["example"]
@@ -615,6 +775,10 @@ class Checker:
         self.expect("attestation.example.signing_input", msg.decode("utf-8"), ex["signing_input"])
         self.expect("attestation.example.resign", sign(seeds[axs["attestation"]["attester_key_id"]], msg).hex(), ex["signature"])
         self.expect("attestation.example.stored_signature", axs["signature"], ex["signature"])
+        epoch = cs["epoch"]
+        for label, sa in pool.items():
+            com = sa["attestation"]["ecu_commitment"]
+            self.expect(f"attestation.{label}.commitment_from_service", com is None or com in table.values() or com in [u["ecu_commitment"] for u in se["units"]], True)
         for c in av["cases"]:
             self.expect(f"attestation_verify.{c['label']}.{c['registry']}", verify_attestation(pool[c["label"]], built[c["registry"]]), c["expect"])
 
@@ -623,16 +787,33 @@ class Checker:
             supplied = [pool[x] for x in c["supplied"]]
             self.expect(f"eval.{c['id']}.record_hash", sha_obj(c["record"]), c["golden_record_hash"])
             try:
-                reg = build_registry(events, 7 if c["registry"] == "head7" else 6, c["test_mode"])
-                got = {"evaluation": evaluate(c["record"], supplied, reg, ds["value"], sl["salt_id"])}
+                reg = build_registry(events, heads[c["registry"]] if c["registry"] else 9, c["test_mode"])
+                got = {"evaluation": evaluate(c["record"], supplied, reg, ds["value"], epoch)}
                 got["evaluation_hash"] = sha_obj(got["evaluation"])
             except Reject as e:
                 got = {"error": str(e)}
             self.expect(f"eval.{c['id']}", got, c["expect"])
             if "evaluation" in got:
-                # Input order never changes the output (R72).
-                rev = evaluate(c["record"], list(reversed(supplied)), reg, ds["value"], sl["salt_id"])
+                rev = evaluate(c["record"], list(reversed(supplied)), reg, ds["value"], epoch)
                 self.expect(f"eval.{c['id']}.order", rev, got["evaluation"])
+
+        # Heads and admissions
+        hv = v["heads"]
+        trust = v["trust"]
+        self.expect("trust.key", (trust["key_id"], trust["public_key"]), (g["payload"]["signing_keys"][0]["key_id"], g["payload"]["signing_keys"][0]["public_key"]))
+        self.expect("trust.genesis", (trust["tenant_id"], trust["genesis_hash"]), (g["tenant_id"], g["hash"]))
+        post = hv["values"]["post"]
+        self.expect("heads.example.jcs", canon(post["head"]), hv["example"]["head_jcs"])
+        self.expect("heads.example.digest", sha_obj(post["head"]), hv["example"]["head_digest"])
+        hmsg = signing_input("impact.registry-head-signature.v1", post["head_digest"])
+        self.expect("heads.example.signing_input", hmsg.decode("utf-8"), hv["example"]["signing_input"])
+        for name in ("post", "reviewed", "too_long"):
+            sh = hv["values"][name]
+            self.expect(f"heads.{name}.resign", sign(s_seed, signing_input("impact.registry-head-signature.v1", sh["head_digest"])).hex(), sh["signature"])
+        all_att = list(pool.values())
+        for c in v["admissions"]:
+            got = admit(hv["values"][c["head"]], built[c["registry"]], c["records"], all_att, trust, hp["value"], c["as_of"], ds["value"], epoch, c["test_mode"])
+            self.expect(f"admission.{c['id']}", got, c["expect"])
 
 
 def main() -> int:
