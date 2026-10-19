@@ -1,5 +1,7 @@
 """Definitions (SPEC-003)."""
 
+from core.definitions._bind import ByteRange, Decoded, cell_index, decode, encode, encode_axis, span
+from core.definitions._cells import NON_FINITE, NonFinite, Value, decode_cell, encode_cell
 from core.definitions._errors import DefinitionError, DefinitionInvariantError
 from core.definitions._model import (
     AxisDef,
@@ -54,11 +56,14 @@ from core.definitions._units import EXPORT_TEXT, Unit
 
 __all__ = [
     "EXPORT_TEXT",
+    "NON_FINITE",
     "AxisDef",
     "AxisRef",
     "ByteOrder",
+    "ByteRange",
     "Category",
     "CellOrder",
+    "Decoded",
     "Definition",
     "DefinitionError",
     "DefinitionInvariantError",
@@ -72,6 +77,7 @@ __all__ = [
     "MapDef",
     "MapType",
     "Match",
+    "NonFinite",
     "Origin",
     "OriginKind",
     "PointerAxis",
@@ -80,17 +86,24 @@ __all__ = [
     "SoftwareVersion",
     "State",
     "Unit",
+    "Value",
     "axis_from_json",
     "axis_json",
     "axisdef_from_json",
     "axisdef_hash",
     "axisdef_json",
+    "cell_index",
+    "decode",
+    "decode_cell",
     "definition_from_json",
     "definition_hash",
     "definition_json",
     "derive_axis_id",
     "derive_map_id",
     "distribution",
+    "encode",
+    "encode_axis",
+    "encode_cell",
     "finite_decimal_text",
     "has_reviewed_category",
     "mapdef_from_json",
@@ -101,5 +114,6 @@ __all__ = [
     "parse_xdf_decimal",
     "rational_text",
     "revise",
+    "span",
     "transition",
 ]
