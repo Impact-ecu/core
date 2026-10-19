@@ -14,7 +14,21 @@ import core.kernel
 SRC = Path(__file__).resolve().parents[2] / "src" / "core"
 FILES = sorted(SRC.rglob("*.py"))
 
-ALLOWED_STDLIB = {"bisect", "collections", "dataclasses", "hashlib", "heapq", "re", "typing"}
+# fractions, math and unicodedata: exact rationals, gcd and NFC for SPEC-003 R3, R4, R99; xml: the
+# expat reader of SPEC-003 R80, with every DTD hook turned into a rejection.
+ALLOWED_STDLIB = {
+    "bisect",
+    "collections",
+    "dataclasses",
+    "fractions",
+    "hashlib",
+    "heapq",
+    "math",
+    "re",
+    "typing",
+    "unicodedata",
+    "xml",
+}
 FORBIDDEN_CALLS = {"open", "eval", "exec", "compile", "__import__", "input", "print", "float", "globals", "vars"}
 
 
