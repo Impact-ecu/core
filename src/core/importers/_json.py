@@ -1,26 +1,18 @@
-"""JCS values of SPEC-006 R1, frozen, and their RFC 8785 serialization.
+"""JCS values of SPEC-006 R1, frozen, and their hash.
 
-The kernel's canonical JSON rejects booleans (SPEC-001 R60), but importer `options` may hold any JCS value
-(SPEC-006 R11), so importers carry their own encoder for the R1 domain: null, booleans, integers in
-`[0, 2**53 - 1]`, strings without lone surrogates, arrays, and objects with ASCII keys (R2).
+Importer `options` may hold any JCS value (SPEC-006 R11), booleans included, so they are encoded by the kernel's
+`jcs`. `freeze_json` admits the R1 domain only: null, booleans, integers in `[0, 2**53 - 1]`, strings without
+lone surrogates, arrays, and objects with ASCII keys (R2).
 """
 
 import hashlib
 from collections.abc import Iterator, Mapping, Sequence
 
-type JsonValue = bool | int | str | Sequence[JsonValue] | Mapping[str, JsonValue] | None
+from core.kernel import JcsValue, jcs
+
+type JsonValue = JcsValue
 
 MAX_SAFE_INTEGER = 2**53 - 1
-
-_ESCAPES = {
-    '"': '\\"',
-    "\\": "\\\\",
-    "\b": "\\b",
-    "\f": "\\f",
-    "\n": "\\n",
-    "\r": "\\r",
-    "\t": "\\t",
-}
 
 
 class NotJsonError(ValueError):
@@ -78,57 +70,6 @@ def freeze_json(value: object) -> JsonValue:
     raise NotJsonError(f"{type(value).__name__} is not a JCS value")
 
 
-def jcs(value: JsonValue) -> bytes:
-    """RFC 8785 serialization of a value already checked by `freeze_json`, UTF-8 encoded."""
-    parts: list[str] = []
-    _encode(value, parts)
-    return "".join(parts).encode("utf-8")
-
-
 def jcs_hash(value: JsonValue) -> str:
     """SPEC-006 R1: lowercase hex `sha256(JCS(value))`."""
     return hashlib.sha256(jcs(value)).hexdigest()
-
-
-def _string(text: str) -> str:
-    out = ['"']
-    for char in text:
-        escaped = _ESCAPES.get(char)
-        if escaped is not None:
-            out.append(escaped)
-        elif char < " ":
-            out.append(f"\\u{ord(char):04x}")
-        else:
-            out.append(char)
-    out.append('"')
-    return "".join(out)
-
-
-def _encode(value: JsonValue, parts: list[str]) -> None:
-    if value is None:
-        parts.append("null")
-    elif value is True:
-        parts.append("true")
-    elif value is False:
-        parts.append("false")
-    elif isinstance(value, int):
-        parts.append(str(value))
-    elif isinstance(value, str):
-        parts.append(_string(value))
-    elif isinstance(value, Mapping):
-        parts.append("{")
-        # Keys are ASCII (R2), so code-point order equals RFC 8785's UTF-16 order.
-        for index, key in enumerate(sorted(value)):
-            if index:
-                parts.append(",")
-            parts.append(_string(key))
-            parts.append(":")
-            _encode(value[key], parts)
-        parts.append("}")
-    else:
-        parts.append("[")
-        for index, item in enumerate(value):
-            if index:
-                parts.append(",")
-            _encode(item, parts)
-        parts.append("]")

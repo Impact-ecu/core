@@ -6,7 +6,7 @@ from typing import Any, cast
 
 import pytest
 
-from core.kernel import Dump, LayoutMemory, Memory, MemoryLayout, Patch, Region, RegionKind
+from core.kernel import Dump, LayoutMemory, Memory, MemoryLayout, Patch, Region, RegionKind, jcs
 from core.plugins import (
     TIME_BUDGET_MS,
     Admission,
@@ -29,7 +29,6 @@ from core.plugins import (
     check_plugin,
     check_regions,
     check_verify_report,
-    contract_json,
     identification_json,
     not_applicable,
     recalculable_fields,
@@ -402,8 +401,8 @@ def test_limits() -> None:
 # repeated calls of a pure plugin give identical bytes.
 def test_contract_objects_serialize_deterministically() -> None:
     plugin = FakePlugin()
-    first = contract_json(identification_json(plugin.identify(DUMP) or IDENT))
-    second = contract_json(identification_json(plugin.identify(DUMP) or IDENT))
+    first = jcs(identification_json(plugin.identify(DUMP) or IDENT))
+    second = jcs(identification_json(plugin.identify(DUMP) or IDENT))
     assert first == second
 
 

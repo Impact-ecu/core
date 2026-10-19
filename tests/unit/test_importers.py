@@ -17,13 +17,12 @@ from core.importers import (
     ImportParams,
     ImportRejected,
     dispatch,
-    jcs,
     outcome_jcs,
     run_import,
 )
 from core.importers._json import FrozenObject, NotJsonError, freeze_json
 from core.importers._raw import ensure
-from core.kernel import Dump, KernelError, KernelInvariantError, Memory
+from core.kernel import Dump, KernelError, KernelInvariantError, Memory, jcs
 from tests.unit.importer_fakes import ScriptedImporter, SynthImporter, encode_synth
 
 RAW = ImportParams("bench_full", None, {"memory_id": "pflash"})
