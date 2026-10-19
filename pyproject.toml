@@ -114,11 +114,12 @@ source_modules = ["core.kernel"]
 forbidden_modules = ["json", "struct", "numpy"]
 
 [[tool.importlinter.contracts]]
-name = "Layers: kernel < importers < provenance < evidence < definitions < plugins < gate < conformance (SPEC-000 layer 4, SPEC-001 R9, SPEC-006 R4, D1)"
+name = "Layers: kernel < importers < provenance < evidence < definitions < plugins < stock < gate < conformance (SPEC-000 layer 4, SPEC-001 R9, SPEC-006 R4, D1, SPEC-008 R40)"
 type = "layers"
 layers = [
     "(core.conformance)",
     "core.gate",
+    "core.stock",
     "(core.plugins)",
     "(core.definitions)",
     "(core.evidence)",
@@ -190,6 +191,12 @@ protected_modules = [
     "core.evidence._review",
 ]
 allowed_importers = ["core.evidence"]
+
+[[tool.importlinter.contracts]]
+name = "Outside the stock package, only its public API is importable (SPEC-008 R14, R15, R40)"
+type = "protected"
+protected_modules = ["core.stock._check", "core.stock._registry"]
+allowed_importers = ["core.stock"]
 
 [[tool.importlinter.contracts]]
 name = "Outside the gate, only its public API is importable: InputResult and ReleasedImage are built only there (SPEC-004 R9, SPEC-001 R9)"
