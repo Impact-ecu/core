@@ -5,6 +5,7 @@ The verdict is `block`, `warn` or `no findings`, always inside a report with its
 a boolean and never "pass". Pure (R80): no I/O, network, clock, randomness, environment reads or threads.
 """
 
+from core.gate._audit import Audit, AuditArgs, AuditFile, AuditRefused, audit
 from core.gate._check import CheckInputArgs, check_input
 from core.gate._fatigue import AlertRecord, Fatigue, fatigue
 from core.gate._maps import Engine
@@ -16,6 +17,10 @@ from core.gate._rules import Rule, RuleKey, Table, parse_rule_table
 __all__ = [
     "BUILTIN",
     "AlertRecord",
+    "Audit",
+    "AuditArgs",
+    "AuditFile",
+    "AuditRefused",
     "CheckInputArgs",
     "Engine",
     "ExportRefused",
@@ -32,6 +37,7 @@ __all__ = [
     "Severity",
     "Table",
     "Verdict",
+    "audit",
     "check_input",
     "fatigue",
     "parse_rule_table",

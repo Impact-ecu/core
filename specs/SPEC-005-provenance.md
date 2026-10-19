@@ -3,6 +3,7 @@
 Status: draft
 Date: 2026-10-18
 Revision: 1 (2026-10-18), proposed with SPEC-006 (ADR-002): R36 adds the `attester_enrolled`, `attester_revoked`, `attestation_included` and `review` payloads; R40 step 3, R51, R56 and R57 cover them. Adding event types is minor under §13.
+Revision: 2 (2026-10-19), for SPEC-007 §2.1 gap CG2: §4.1 (R23–R28) makes `core.gate.audit` build the `AuditRecord`, with the layout and both verify statuses computed by the gate instead of taken from the caller. The record shape, `audit_hash` and the vectors are unchanged; a new optional API is minor under §13.
 Governs: `src/core/provenance/`, the export and audit records the gate builds, the `Event` hash chain, the customer report, and the contract of the independent reproduction script.
 Derives from: SPEC-000 invariant 12, §Data model (Event row and Modeling decisions), §"Done" criteria (Provenance), §Gaps and adopted improvements ("Workflow: report for the end customer"), §CI pipeline (`release`), §Security and compliance, §Gaps that still require a decision (WORM vs LGPD, bus factor), §Core engineering practices (Reproducible build). Hash base: SPEC-001 §7 (R60–R65), reused and never redefined. This spec is the only owner of `Event` payload shapes (R36); SPEC-004 cites them.
 
@@ -109,6 +110,27 @@ AuditRecord = {
 - **R20.** Every hash and list is computed by the core from `diff(o, x, layout)` (SPEC-001 R31, R32), never accepted from a caller. (SPEC-001 R31, R32)
 - **R21.** R15–R17 and R19 apply unchanged. `audit_hash = sha256(JCS(AuditRecord))`. (SPEC-000 invariant 12)
 - **R22.** `candidate_origin` of `virtual_read` or `file_service` adds the `origin_not_evidence` notice to the report (§8). (SPEC-000 §Modeling decisions)
+
+### 4.1 Building an audit (revision 2)
+
+R20 computes the diff fields, but `audit_record` takes the layout and both verify statuses from its caller, so the audit's integrity would rest on the consumer's orchestration of the plugin (SPEC-007 gap CG2, G2). The gate builds the record instead, as it builds the export record (R10). The record shape and `audit_hash` are unchanged.
+
+```
+AuditFile = { dump: Dump, declared_sha256: Hex32, received_sha256: Hex32, confirmation: Event | null }
+gate.audit(original: AuditFile, candidate: AuditFile, *, candidate_origin: Origin, project_id: ProjectId,
+           plugin: EcuPlugin | None, conformance_report: object | None, evidence: FieldEvidence | None,
+           as_of: Timestamp, verifier: Verifier | None, rule_table: RuleTable | None,
+           definition: Definition | None, build: Build) -> Audit
+Audit = { record: AuditRecord, original_input: InputResult, candidate_input: InputResult,
+          inputs: AuditInputs, attribution: MapAttribution | None }
+```
+
+- **R23. Only the gate builds an audit.** `core.gate.audit` is the function a consumer calls to build an `AuditRecord` (SPEC-007 R14); `audit_record` stays the provenance-level builder it uses. It runs SPEC-004 `check_input` on each file with that file's hashes and `confirmation` and the shared arguments, so both verify statuses and both identifications come from the gate's own plugin calls (SPEC-004 R12, R13), never from the caller. (SPEC-000 §Verification gate: "the gate is a core function, not an API step someone can skip"; SPEC-004 R9)
+- **R24. Layout.** The layout of the diff is `plugin.layout(identification, original.dump_kind)` of the original's `InputResult.identification`, checked per SPEC-002 R20–R22; the candidate's layout, from its own identification and `dump_kind`, MUST have the same `layout_hash`, so one layout describes both files (SPEC-001 R5, R31). The identification is used only when the input gate accepted it: when an input report's `subject.verify_status` is `null` (the run stopped before `verify`: rule table or plugin unavailable, plugin error, or an identification below the threshold and not confirmed, SPEC-004 R10, R12) the audit is refused, because a layout from an identification the gate did not accept is not trusted (SPEC-004 R12, R23) and R20's `verify` fields are `VerifyStatus`, which has no "not run" value. A `not_applicable` status (for example `unknown_variant` with an expired registry head, SPEC-006 R82) is a status, and the audit proceeds.
+- **R25. Refusals.** `AuditRefused` (a `GateError`) with reason: `original_not_identified` or `candidate_not_identified` (R24); `plugin_error` (`layout` raised or broke SPEC-002 R20–R22); `layout_mismatch` (R24); the `KernelError` reason of `diff` (`shape_mismatch`, `unknown_base_address`, SPEC-001 R2, R31); `bad_type` for arguments of the wrong type. An invalid `candidate_origin` or `build` is R3 `bad_shape`. A refusal builds nothing; the input results are not returned. (R91)
+- **R26. Fields.** `verify.original` and `verify.candidate` are the `subject.verify_status` of each input report; `gate_report` is the candidate's input report (R20 table); `versions` is `{core: the core version, plugins: [{family, version} of the candidate input subject's plugin, conformance_report_hash of that subject], gate_rules: the version of that report's rule table, references: []}`; `build` is supplied by the packaging (R16). Every hash and list is then R20's. (R10, R16, R20)
+- **R27. Per-map lines.** With a `definition`, `attribution` is SPEC-003 R100 over the diff patches with the dumps `(original, candidate)`, and `Audit.report(context)` builds the R62 report with the `map_id`s of SPEC-003 R102; without one, `attribution` is `null` and every `map_id` is `null`. The consumer never supplies `map_id`s for an audit report (SPEC-007 R14). (SPEC-000 §First wins item 4, per-map diff)
+- **R28. No verdict of its own.** An audit is never blocked and has no verdict: the consumer shows the candidate's input gate verdict (SPEC-007 R47), and both input reports stay available for display. The audit decides nothing about the candidate; R20's diff and the verify statuses are information (SPEC-004 R7).
 
 ## 5. Event and the per-signer chain
 
@@ -313,7 +335,7 @@ ReproductionBundle = {
 | `commitment` | R82 | commitment hash |
 | `tampers` T1–T15, T4b | R38, R40, R41, R45, R51, R52, R56, R57, R61 | `hash_mismatch`; `seq_gap` (with `missing`) + `prev_mismatch`; `truncated`; a consistent rewrite caught only by `anchor_mismatch` (T4) and undetected without an anchor (T4b, the R41 limit); `bad_signature`; `record_hash_mismatch` + `report_hash_mismatch`; `revoked_key` on an export after a signed self-revocation (T7) and on an anchor whose key was revoked at the anchored `seq` (T8); informational `ts_regression` with status `intact` (T9); `test_key` outside test mode (T10); a genesis with two keys is `not_genesis` (T11); a `key_enrolled` signed by a key that is not enrolled is `unknown_key` and enrolls nothing (T12); a second `genesis` at `seq > 0` is `not_genesis` (T13); a `chain_ref` signed by the chain's key keeps the chain `intact` (T14), and one signed by a key not in the chain is `unknown_key` (T15) |
 
-Not covered by vectors, so they need dedicated tests: R1, R3, R4 (shape rejection), R10 beyond `definition_hash` and `versions.references` (no caller-supplied hash), R15, R19 (record fields), R22, R34 (storage uniqueness), R37, R43, R44, R46 (anchor location, checkpoints, `verify_tenant`), R45 beyond the `chain_ref` signature, R53–R55, R62 beyond the vector's integrity section, R64–R65 (consumer pages), R70–R76 (script contract, CI), R80–R84 (privacy, by architecture and payload-schema tests), R90–R92.
+Not covered by vectors, so they need dedicated tests: R1, R3, R4 (shape rejection), R10 beyond `definition_hash` and `versions.references` (no caller-supplied hash), R15, R19 (record fields), R22, R23–R28 (the gate's audit, on the SPEC-002 fixture plugin), R34 (storage uniqueness), R37, R43, R44, R46 (anchor location, checkpoints, `verify_tenant`), R45 beyond the `chain_ref` signature, R53–R55, R62 beyond the vector's integrity section, R64–R65 (consumer pages), R70–R76 (script contract, CI), R80–R84 (privacy, by architecture and payload-schema tests), R90–R92.
 
 Vectors are test data, not golden files: no hash is a checksum result.
 
@@ -351,6 +373,7 @@ Changing a field, a hash definition, a signing input, a domain string, an event 
 11. Anchors signed by a key later revoked as `compromised` (R43): how the consumer proves the external write time (location metadata, a third-party timestamp) without a paid service.
 12. Offline-only shops (D10): a CLI that never syncs is never cross-referenced, so its chain has no anchor; whether such a CLI may export at all, or must sync within a deadline.
 13. **Signed regions (pending author decision, SPEC-004 open question 1).** R14 accepts an original whose input verify is `signature_unverifiable` with `result: ok`, and R63 reports `signature_unverifiable` from `signed_regions`; both follow the `warn` reading of SPEC-000 §Plugin SDK. If the fail-closed alternative is chosen, such originals become suspect and R14 changes.
+14. **Audit before a rule table is published (pending author decision).** R24 refuses an audit whose input reports stopped before `verify`. Without a published rule table (SPEC-004 R70, blocked by SPEC-003 open question 8; SPEC-007 CG6) every input report has `G-UNAVAILABLE-RULES` and a null `verify_status`, so no audit can be built, although the diff itself needs only the layout. Options: keep R24 (fail-closed: no layout from an identification the gate did not accept); publish a table with only `identify_min_confidence` and no rules; or move the threshold out of the rule table. Luiz to decide.
 
 ### Gaps found in SPEC-000 and SPEC-001
 
@@ -364,3 +387,4 @@ Changing a field, a hash definition, a signing input, a domain string, an event 
 | G6 | SPEC-000 invariant 12 "version of the kernel" | The kernel has no version of its own; it ships inside `core` | `versions.core` |
 | G7 | SPEC-000 §Plugin SDK (`identify` extracts VIN, `pii_in_flash`); SPEC-001 R62 | `image_hash` hashes memories that may hold the VIN | Open question 4 |
 | G8 | SPEC-000 §Data model Event; SPEC-001 §11 question 1 | No `seq` (gap detection) or `schema`; SPEC-001 deferred the fields here | R30; the SPEC-000 Event row is aligned in the same `foundation-change` PR |
+| G9 | §4 R20 (revision 1) | `audit_record` takes the layout and both verify statuses from its caller (SPEC-007 G2, CG2) | R23–R28 (revision 2) |

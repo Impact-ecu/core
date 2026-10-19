@@ -5,6 +5,7 @@ The A2L converter is specified but not implemented (R99): `import_a2l` and `expo
 """
 
 from core.definitions._a2l import compu_method_scaling, export_a2l, import_a2l, rat_func_coeffs
+from core.definitions._attribution import ByteRun, MapAttribution, MapRuns, PatchMaps, map_attribution, report_map_ids
 from core.definitions._bind import ByteRange, Decoded, cell_index, decode, encode, encode_axis, span
 from core.definitions._cells import NON_FINITE, NonFinite, Value, decode_cell, encode_cell
 from core.definitions._errors import DefinitionError, DefinitionInvariantError
@@ -67,6 +68,7 @@ __all__ = [
     "AxisRef",
     "ByteOrder",
     "ByteRange",
+    "ByteRun",
     "Category",
     "CellOrder",
     "Decoded",
@@ -81,12 +83,15 @@ __all__ = [
     "Kind",
     "License",
     "LicenseKind",
+    "MapAttribution",
     "MapDef",
+    "MapRuns",
     "MapType",
     "Match",
     "NonFinite",
     "Origin",
     "OriginKind",
+    "PatchMaps",
     "PointerAxis",
     "Rejection",
     "Scaling",
@@ -120,6 +125,7 @@ __all__ = [
     "has_reviewed_category",
     "import_a2l",
     "import_xdf",
+    "map_attribution",
     "mapdef_from_json",
     "mapdef_hash",
     "mapdef_json",
@@ -129,6 +135,7 @@ __all__ = [
     "parse_xdf_decimal",
     "rat_func_coeffs",
     "rational_text",
+    "report_map_ids",
     "revise",
     "span",
     "transition",

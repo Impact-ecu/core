@@ -54,6 +54,7 @@ from core.plugins._contract import (
 )
 from core.plugins._errors import DescriptorError, InterpreterDivergence, PluginContractError
 from core.plugins._jcs import ContractJson, contract_hash, contract_json
+from core.plugins._probe import Outcome, Probe, ProbeEntry, ProbeStatus, probe, probe_json, rebase
 from core.plugins._schema import (
     Addressing,
     Algorithm,
@@ -106,10 +107,14 @@ __all__ = [
     "MirrorBlock",
     "MirrorDescriptor",
     "NotApplicableReason",
+    "Outcome",
     "PiiKind",
     "PiiLocation",
     "PluginContractError",
     "PresentMemory",
+    "Probe",
+    "ProbeEntry",
+    "ProbeStatus",
     "ProtectionFlag",
     "Range",
     "Reference",
@@ -145,6 +150,9 @@ __all__ = [
     "map_hint_json",
     "not_applicable",
     "output_fields",
+    "probe",
+    "probe_json",
+    "rebase",
     "recalculable_fields",
     "region_result_json",
     "report_hash",
