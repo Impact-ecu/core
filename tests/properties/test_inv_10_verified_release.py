@@ -1,8 +1,7 @@
 """SPEC-000 invariant 10 (Verified release): kernel side, SPEC-001 R7, R9, R42.
 
-R42 is owned by the gate (SPEC-004), which is not implemented yet. What the kernel owns is that an
-`UnverifiedImage` never leaks its bytes and that nothing below the gate releases one: the only
-release path, `core.gate.release`, is fail-closed until SPEC-004 lands.
+R42 is owned by the gate (SPEC-004). What the kernel owns is that an `UnverifiedImage` never leaks its
+bytes and that nothing below the gate releases one.
 """
 
 import copy
@@ -15,6 +14,7 @@ import pytest
 from hypothesis import given
 
 import core.gate
+import core.kernel
 from core.kernel import apply
 from tests.properties.strategies import Scenario, scenarios
 
@@ -48,7 +48,8 @@ def test_unverified_image_never_exposes_or_serializes_its_bytes(s: Scenario) -> 
             convert(u)
 
 
-# SPEC-001 R9, R42: no image leaves through the gate before SPEC-004 is implemented.
-def test_release_is_fail_closed() -> None:
-    with pytest.raises(NotImplementedError):
-        core.gate.release()
+# SPEC-001 R9, R42: the gate is the only constructor of `ReleasedImage`; its release property is in
+# tests/properties/test_spec004_gate.py. Below the gate nothing names it.
+def test_only_the_gate_constructs_a_released_image() -> None:
+    assert not hasattr(core.kernel, "ReleasedImage")
+    assert core.gate.ReleasedImage.__module__ == "core.gate._result"

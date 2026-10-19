@@ -7,7 +7,6 @@ from typing import cast
 
 import pytest
 
-import core.gate
 from core.kernel import (
     ContainmentError,
     Dump,
@@ -82,12 +81,6 @@ def test_unverified_image_is_immutable() -> None:
         pickle.dumps(u)
     with pytest.raises(TypeError):
         u.__getstate__()
-
-
-# SPEC-001 R9, R42: the gate is the only release path and it is fail-closed until SPEC-004 lands.
-def test_gate_release_is_fail_closed() -> None:
-    with pytest.raises(NotImplementedError):
-        core.gate.release()
 
 
 # SPEC-001 R22, R25: a patch with two predecessors waits for both.
