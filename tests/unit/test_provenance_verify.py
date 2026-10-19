@@ -13,6 +13,7 @@ import rfc8785
 from core.provenance import (
     AnchorFile,
     AnchorStatement,
+    AnchorTrust,
     ChainReport,
     Checkpoint,
     CheckpointKey,
@@ -341,6 +342,34 @@ def test_anchor_reasons() -> None:
     assert verify_chain(events, [anchor(chain, 1), forged], VERIFIER).anchored_through == 1
 
 
+def nested(depth: int) -> object:
+    value: object = "x"
+    for _ in range(depth):
+        value = [value]
+    return value
+
+
+# SPEC-005 R1, R40 step 2; SPEC-001 R66: an event nested past 64 levels is a finding, never an exception. The audit
+# reproduced a RecursionError out of verify_chain at 5,000 levels.
+def test_deep_nesting_is_a_finding() -> None:
+    chain = [start()]
+    add(chain, "import", import_payload())
+    for depth in (64, 5000):
+        in_payload = raw(chain)
+        in_payload[1]["payload"]["origin"] = nested(depth)
+        assert reasons(verify_chain(in_payload, [], VERIFIER)) == [(1, "bad_payload"), (1, "hash_mismatch")]
+        in_actor = raw(chain)
+        in_actor[1]["actor"] = nested(depth)
+        assert reasons(verify_chain(in_actor, [], VERIFIER)) == [(1, "bad_shape")]
+        extra = [*raw(chain), nested(depth)]
+        assert reasons(verify_chain(extra, [], VERIFIER)) == [(NO_POSITION, "bad_shape")]
+    # 62 levels under `payload.origin` keep the event at 64: hashable, so only the payload shape is wrong.
+    hashable = raw(chain)
+    hashable[1]["payload"]["origin"] = nested(62)
+    rehash_from(hashable, 1)
+    assert reasons(verify_chain(hashable, [], VERIFIER)) == [(1, "bad_payload")]
+
+
 # SPEC-005 R40 step 4: a revocation at exactly the anchored seq counts.
 def test_anchor_revoked_at_its_seq() -> None:
     chain = [start()]
@@ -348,6 +377,11 @@ def test_anchor_revoked_at_its_seq() -> None:
     add_signed(chain, "key_revoked", {"key_id": OTHER.key_id, "reason": "compromised"}, SERVER)
     assert reasons(verify_chain(raw(chain), [anchor(chain, 2, signer=OTHER)], VERIFIER)) == [(2, "revoked_key")]
     assert verify_chain(raw(chain), [anchor(chain, 1, signer=OTHER)], VERIFIER).findings == ()
+
+
+def pinned(chain: list[Event], signer: Ed25519Signer = SERVER) -> list[AnchorTrust]:
+    """SPEC-005 R44: the caller's out-of-band trust anchor for a server chain."""
+    return [AnchorTrust(TENANT, chain[0].hash, signer.key_id, signer.public_key)]
 
 
 def checkpoint_of(chain: list[Event], seq: int, signers: list[Ed25519Signer]) -> Checkpoint:
@@ -363,7 +397,7 @@ def test_segment_from_anchored_checkpoint() -> None:
     tail = raw(chain)[2:]
     # An anchor before the checkpoint covers nothing in the segment and is not checked against it.
     anchors = [anchor(chain, 0), cut, anchor(chain)]
-    report = verify_segment(checkpoint_of(chain, 1, [SERVER]), tail, anchors, VERIFIER, None)
+    report = verify_segment(checkpoint_of(chain, 1, [SERVER]), tail, anchors, VERIFIER, None, trust=pinned(chain))
     assert report.status == "intact"
     assert report.findings == ()
     assert report.segment_from == 2
@@ -371,27 +405,106 @@ def test_segment_from_anchored_checkpoint() -> None:
     assert report.anchored_through == 3
     assert report.head is not None
     assert report.head.seq == 3
-    unanchored = verify_segment(checkpoint_of(chain, 1, [SERVER]), tail, [anchor(chain)], VERIFIER, None)
+    unanchored = verify_segment(
+        checkpoint_of(chain, 1, [SERVER]), tail, [anchor(chain)], VERIFIER, None, trust=pinned(chain)
+    )
     assert (1, "unanchored_checkpoint") in reasons(unanchored)
     assert unanchored.genesis_hash is None
-    gap = verify_segment(checkpoint_of(chain, 1, [SERVER]), raw(chain)[3:], [cut], VERIFIER, None)
+    gap = verify_segment(checkpoint_of(chain, 1, [SERVER]), raw(chain)[3:], [cut], VERIFIER, None, trust=pinned(chain))
     assert reasons(gap) == [(3, "prev_mismatch"), (3, "seq_gap")]
     revoked = Checkpoint(1, chain[1].hash, (CheckpointKey(SERVER.key_id, SERVER.public_key, 0, 1),))
-    assert reasons(verify_segment(revoked, tail, [cut], VERIFIER, None)) == [
+    assert reasons(verify_segment(revoked, tail, [cut], VERIFIER, None, trust=pinned(chain))) == [
         (1, "anchor_mismatch"),
         (1, "revoked_key"),
         (1, "unanchored_checkpoint"),
         (2, "revoked_key"),
         (3, "revoked_key"),
     ]
-    empty = verify_segment(checkpoint_of(chain, 1, [SERVER]), [], [cut], VERIFIER, None)
+    empty = verify_segment(checkpoint_of(chain, 1, [SERVER]), [], [cut], VERIFIER, None, trust=pinned(chain))
     assert empty.status == "intact"
     assert empty.head is not None
     assert empty.head.seq == 1
-    with_genesis = verify_segment(checkpoint_of(chain, 1, [SERVER]), [*tail, "junk"], [cut], VERIFIER, None)
+    with_genesis = verify_segment(
+        checkpoint_of(chain, 1, [SERVER]), [*tail, "junk"], [cut], VERIFIER, None, trust=pinned(chain)
+    )
     assert reasons(with_genesis) == [(NO_POSITION, "bad_shape")]
-    lost = verify_segment(checkpoint_of(chain, 1, [SERVER]), ["junk"], [], VERIFIER, None)
+    lost = verify_segment(checkpoint_of(chain, 1, [SERVER]), ["junk"], [], VERIFIER, None, trust=pinned(chain))
     assert reasons(lost) == [(NO_POSITION, "bad_shape"), (1, "unanchored_checkpoint")]
+
+
+# SPEC-005 R44 rule 1 (revision 5): the audit PoC. A checkpoint that carries the attacker's key and an anchor
+# signed by it vouched for itself (status intact, anchored_through set). Only a pinned key accepts an anchor now.
+def test_forged_checkpoint_does_not_vouch_for_itself() -> None:
+    chain = server_chain()
+    add_export(chain, SERVER)
+    tail = raw(chain)[2:]
+    forged = checkpoint_of(chain, 1, [SERVER, OTHER])
+    self_signed = [anchor(chain, 1, signer=OTHER), anchor(chain, signer=OTHER)]
+    report = verify_segment(forged, tail, self_signed, VERIFIER, None, trust=pinned(chain))
+    assert report.status == "broken"
+    assert report.anchored_through is None
+    assert report.genesis_hash is None
+    assert reasons(report) == [(1, "unanchored_checkpoint")]
+    # A whole chain made by the attacker, with its own genesis and anchors, is not the pinned chain either.
+    fake = [start(OTHER)]
+    add(fake, "import", import_payload())
+    add_export(fake, OTHER)
+    fake_anchors = [anchor(fake, 1, signer=OTHER), anchor(fake, signer=OTHER)]
+    own = verify_segment(
+        checkpoint_of(fake, 1, [OTHER]), raw(fake)[2:], fake_anchors, VERIFIER, None, trust=pinned(chain)
+    )
+    assert own.anchored_through is None
+    assert reasons(own) == [(1, "unanchored_checkpoint")]
+    # A pinned key of another chain, or an entry whose public key is not the one that signed, counts for nothing.
+    elsewhere = [AnchorTrust(TENANT, "ab" * 32, SERVER.key_id, SERVER.public_key)]
+    cut = [anchor(chain, 1), anchor(chain)]
+    assert (
+        verify_segment(checkpoint_of(chain, 1, [SERVER]), tail, cut, VERIFIER, None, trust=elsewhere).anchored_through
+        is None
+    )
+    # With the pinned key, an anchor after the checkpoint signed by a checkpoint key still adds nothing.
+    mixed = [anchor(chain, 1), anchor(chain, signer=OTHER)]
+    both = checkpoint_of(chain, 1, [SERVER, OTHER])
+    later = verify_segment(both, tail, mixed, VERIFIER, None, trust=pinned(chain))
+    assert later.findings == ()
+    assert later.anchored_through == 1
+    # Several pinned keys: any of them accepts an anchor.
+    rotated = [*pinned(chain, OTHER), *pinned(chain)]
+    assert verify_segment(both, tail, mixed, VERIFIER, None, trust=rotated).anchored_through == 3
+    assert verify_segment(both, tail, mixed, VERIFIER, None, trust=[]).anchored_through is None
+
+
+# SPEC-005 R44 rule 2 (revision 5): a checkpoint key must be named by the SHA-256 of its public key.
+def test_checkpoint_key_id_is_bound_to_its_public_key() -> None:
+    chain = server_chain()
+    add_export(chain, SERVER)
+    tail = raw(chain)[2:]
+    cut = [anchor(chain, 1)]
+    renamed = Checkpoint(1, chain[1].hash, (CheckpointKey(SERVER.key_id, OTHER.public_key, 0, None),))
+    report = verify_segment(renamed, tail, cut, VERIFIER, None, trust=pinned(chain))
+    assert reasons(report) == [
+        (1, "anchor_mismatch"),
+        (1, "bad_checkpoint"),
+        (1, "unanchored_checkpoint"),
+        (1, "unknown_key"),
+        (2, "unknown_key"),
+        (3, "unknown_key"),
+    ]
+    not_hex = Checkpoint(1, chain[1].hash, (CheckpointKey(SERVER.key_id, "zz", 0, None),))
+    assert (1, "bad_checkpoint") in reasons(verify_segment(not_hex, tail, cut, VERIFIER, None, trust=pinned(chain)))
+
+
+# SPEC-005 R44 (revision 5): an AnchorTrust is checked when it is built.
+def test_anchor_trust_shape() -> None:
+    AnchorTrust(TENANT, "ab" * 32, SERVER.key_id, SERVER.public_key)
+    for bad in (
+        ("Tenant", "ab" * 32, SERVER.key_id, SERVER.public_key),
+        (TENANT, "AB" * 32, SERVER.key_id, SERVER.public_key),
+        (TENANT, "ab" * 32, SERVER.key_id, "zz"),
+        (TENANT, "ab" * 32, OTHER.key_id, SERVER.public_key),
+    ):
+        with expect("bad_shape", ShapeError):
+            AnchorTrust(*bad)
 
 
 def cli_setup() -> tuple[list[Event], list[Event], list[AnchorFile]]:
@@ -412,13 +525,19 @@ def cli_setup() -> tuple[list[Event], list[Event], list[AnchorFile]]:
 # SPEC-005 R44, R45: a CLI segment is accepted through an anchored chain_ref of the server chain.
 def test_cli_segment() -> None:
     cli, server, anchors = cli_setup()
-    report = verify_segment(checkpoint_of(cli, 1, [CLI]), raw(cli)[2:], anchors, VERIFIER, raw(server))
+    report = verify_segment(
+        checkpoint_of(cli, 1, [CLI]), raw(cli)[2:], anchors, VERIFIER, raw(server), trust=pinned(server)
+    )
     assert report.findings == ()
     assert (report.genesis_hash, report.signer_key_id, report.anchored_through) == (cli[0].hash, CLI.key_id, 1)
-    later = verify_segment(checkpoint_of(cli, 0, [CLI]), raw(cli)[1:], anchors, VERIFIER, raw(server))
+    later = verify_segment(
+        checkpoint_of(cli, 0, [CLI]), raw(cli)[1:], anchors, VERIFIER, raw(server), trust=pinned(server)
+    )
     assert reasons(later) == [(0, "unanchored_checkpoint")]
     assert later.anchored_through is None
-    unanchored = verify_segment(checkpoint_of(cli, 1, [CLI]), raw(cli)[2:], [], VERIFIER, raw(server))
+    unanchored = verify_segment(
+        checkpoint_of(cli, 1, [CLI]), raw(cli)[2:], [], VERIFIER, raw(server), trust=pinned(server)
+    )
     assert reasons(unanchored) == [(1, "unanchored_checkpoint")]
     beyond = [start()]
     add_signed(
@@ -433,7 +552,9 @@ def test_cli_segment() -> None:
         {"chain_signer_key_id": CLI.key_id, "genesis_hash": cli[0].hash, "seq": 1, "head_hash": cli[1].hash},
         SERVER,
     )
-    through = verify_segment(checkpoint_of(cli, 1, [CLI]), raw(cli)[2:], [anchor(beyond)], VERIFIER, raw(beyond))
+    through = verify_segment(
+        checkpoint_of(cli, 1, [CLI]), raw(cli)[2:], [anchor(beyond)], VERIFIER, raw(beyond), trust=pinned(beyond)
+    )
     assert through.anchored_through is None
     as_cli = [start(SERVER, role="cli")]
     add_signed(
@@ -442,7 +563,31 @@ def test_cli_segment() -> None:
         {"chain_signer_key_id": CLI.key_id, "genesis_hash": cli[0].hash, "seq": 1, "head_hash": cli[1].hash},
         SERVER,
     )
-    not_server = verify_segment(checkpoint_of(cli, 1, [CLI]), raw(cli)[2:], [anchor(as_cli)], VERIFIER, raw(as_cli))
+    # SPEC-005 R44 rule 1 (revision 5): the server chain's anchor counts only under the pinned server key.
+    forged = verify_segment(
+        checkpoint_of(cli, 1, [CLI]),
+        raw(cli)[2:],
+        [anchor(server, signer=OTHER)],
+        VERIFIER,
+        raw(server),
+        trust=pinned(server),
+    )
+    assert reasons(forged) == [(1, "unanchored_checkpoint")]
+    other_server = verify_segment(
+        checkpoint_of(cli, 1, [CLI]), raw(cli)[2:], anchors, VERIFIER, raw(server), trust=pinned(server, OTHER)
+    )
+    assert reasons(other_server) == [(1, "unanchored_checkpoint")]
+    fake = [start(OTHER)]
+    ref = {"chain_signer_key_id": CLI.key_id, "genesis_hash": cli[0].hash, "seq": 1, "head_hash": cli[1].hash}
+    add_signed(fake, "chain_ref", ref, OTHER)
+    fake_anchor = [anchor(fake, signer=OTHER)]
+    self_made = verify_segment(
+        checkpoint_of(cli, 1, [CLI]), raw(cli)[2:], fake_anchor, VERIFIER, raw(fake), trust=pinned(server)
+    )
+    assert (self_made.anchored_through, reasons(self_made)) == (None, [(1, "unanchored_checkpoint")])
+    not_server = verify_segment(
+        checkpoint_of(cli, 1, [CLI]), raw(cli)[2:], [anchor(as_cli)], VERIFIER, raw(as_cli), trust=pinned(as_cli)
+    )
     assert reasons(not_server) == [(1, "unanchored_checkpoint")]
 
 

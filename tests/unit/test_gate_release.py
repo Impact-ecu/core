@@ -11,7 +11,7 @@ import pytest
 
 import core.gate._release
 from core.definitions import AxisDef, Definition, Dtype, FixedAxis, InlineAxis, Scaling, SharedAxis
-from core.gate import ExportRefused, GateBlocked, GateError, InputResult, ReleasedImage, release
+from core.gate import ExportRefused, GateBlocked, GateError, InputResult, ReleasedImage, alert_warnings, release
 from core.gate._model import json_hash
 from core.gate._output import KernelOutcome
 from core.gate._report import GateReport
@@ -668,3 +668,34 @@ def test_released_image_is_sealed() -> None:
             clone(released)
     assert "no findings" in repr(released)
     assert not any(isinstance(getattr(released, a), bytes | bytearray) for a in dir(released) if not a.startswith("_"))
+
+
+class _Spoof:
+    """Claims a sealed class through `__class__`, which `isinstance` honours and `type` does not."""
+
+    def __init__(self, sealed: type) -> None:
+        self.sealed = sealed
+
+    def __getattribute__(self, name: str) -> object:
+        if name == "__class__":
+            return object.__getattribute__(self, "sealed")
+        return object.__getattribute__(self, name)
+
+
+# SPEC-004 R9, R29 (revision 5): a sealed result cannot be subclassed, and the gate takes only exact instances,
+# so neither a subclass nor an object claiming the class through `__class__` reaches what the gate reads.
+def test_sealed_results_are_exact_types() -> None:
+    for sealed in (ReleasedImage, InputResult):
+        with pytest.raises(TypeError, match="sealed"):
+            type("Subclass", (sealed,), {})
+    spoofed_image: object = _Spoof(ReleasedImage)
+    spoofed_input: object = _Spoof(InputResult)
+    assert isinstance(spoofed_image, ReleasedImage)
+    assert isinstance(spoofed_input, InputResult)
+    for call in (
+        lambda: alert_warnings(spoofed_image),
+        lambda: Scenario().release(None, admit_all, input=spoofed_input),
+    ):
+        with pytest.raises(GateError) as error:
+            call()
+        assert error.value.reason == "bad_type"

@@ -1,8 +1,9 @@
 # SPEC-001 · Binary kernel
 
-Status: accepted (revision 1); revision 2 proposed
+Status: accepted (revision 1); revisions 2 and 3 proposed
 Date: 2026-10-18
 Revision: 2 (2026-10-18), proposed in the `foundation-change` PR that adds SPEC-002 to SPEC-005: R2 allows address translation outside the kernel; R42 defines a green `verify` (including `signature_unverifiable`, pending author decision, SPEC-004 open question 1) and references the released image by `image_hash`. Breaking under §10.
+Revision: 3 (2026-10-19), security audit: R66 caps the nesting depth of canonical JSON at 64, so a deeply nested input is a `ValueError` instead of a `RecursionError` that escapes every caller's error contract. Every hashed object of R61–R64 and of the other specs nests far less, so no hash and no vector changes; a new rejection of inputs no spec object can take is minor under §10.
 Governs: `src/core/kernel/`, the kernel side of `release`, and the hash definitions used by provenance.
 Derives from: SPEC-000 §Two stages, §Binary kernel invariants, §Data model, §Plugin SDK per ECU family.
 
@@ -111,6 +112,7 @@ Application metadata (`version_id`, `project_id`, `parent_version`, `plugin_vers
 - **R63.** `layout_hash = sha256(JCS({memories: [{memory_id, base_address, size, regions: [{kind, start, end, name}]}]}))`, with memories sorted by `memory_id` and regions by `start`.
 - **R64.** `version_hash = sha256(JCS({base_image_hash, layout_hash, patches: [patch_hash in canonical order], overlaps: [[patch_hash, patch_hash] sorted lexicographically]}))`.
 - **R65.** All hashes are lowercase hex SHA-256 strings. A hash is never computed over Python `repr`, plain `json.dumps`, dict iteration order, or locale-dependent text.
+- **R66. Nesting depth (revision 3).** A value encoded by the core's JCS (`jcs`, `canonical_json`) nests at most 64 arrays and objects: the outermost array or object is at depth 1, and a value with an array or object at depth 65 is rejected with `ValueError`. Every core module that copies untrusted JSON before hashing it (SPEC-005 R1, SPEC-006 R1) applies the same limit and maps it to its own error or finding. Why: the encoder recurses once per level, and without a limit a deep input raises Python's `RecursionError`, which no caller's contract names (SPEC-005 R40 promises findings, never exceptions). 64 is far above any object a spec defines.
 
 These definitions realize SPEC-000 invariant 12. The rest of the provenance record (kernel, plugin and gate-rule versions, `gate_report` hash, verdict, Python version, `build`) is specified in SPEC-005.
 
@@ -134,7 +136,7 @@ These definitions realize SPEC-000 invariant 12. The rest of the provenance reco
 | 9 Contained checksum | R6, R40, R41 |
 | 10 Verified release | R42 (gate, SPEC-004) |
 | 11 Patch migration | R50 |
-| 12 Provenance | R60–R65 (+ SPEC-005) |
+| 12 Provenance | R60–R66 (+ SPEC-005) |
 
 ## 9. Test vectors
 

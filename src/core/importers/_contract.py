@@ -194,7 +194,8 @@ def _checked_params(params: ImportParams) -> ImportParams | None:
     if params.source_tool is not None and not _matches(TOOL_NAME, params.source_tool):
         return None
     try:
-        options = freeze_json(params.options)
+        # SPEC-001 R66 counts from the ImportRecord, which holds `options` one level down (R21).
+        options = freeze_json(params.options, depth=1)
     except NotJsonError:
         return None
     if not isinstance(options, FrozenObject):

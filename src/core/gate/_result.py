@@ -47,6 +47,12 @@ def _sealed(seal: object, what: str) -> None:
 class _Immutable:
     __slots__ = ()
 
+    def __init_subclass__(cls) -> None:
+        # `@final` binds mypy only; at runtime a subclass of a sealed result could override what the gate reads.
+        if cls.__bases__ != (_Immutable,):
+            raise TypeError(f"{cls.__bases__[0].__name__} is sealed and cannot be subclassed (SPEC-004 R9, R29)")
+        super().__init_subclass__()
+
     def __setattr__(self, name: str, value: object) -> NoReturn:
         raise AttributeError(f"{type(self).__name__} is immutable: cannot set {name!r}")
 
@@ -271,7 +277,7 @@ class ReleasedImage(_Immutable):
 
 
 def _released(value: object, what: str) -> ReleasedImage:
-    if not isinstance(value, ReleasedImage):
+    if type(value) is not ReleasedImage:
         raise GateError("bad_type", f"{what} takes a ReleasedImage")
     return value
 

@@ -54,6 +54,7 @@ from core.provenance._report import (
 )
 from core.provenance._signing import TEST_KEY_IDS, Signer, Verifier
 from core.provenance._verify import (
+    AnchorTrust,
     ChainReport,
     Checkpoint,
     CheckpointKey,
@@ -73,6 +74,7 @@ __all__ = [
     "Actor",
     "AnchorFile",
     "AnchorStatement",
+    "AnchorTrust",
     "AuditInputs",
     "AuditRecord",
     "Build",

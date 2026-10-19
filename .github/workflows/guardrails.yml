@@ -54,7 +54,7 @@ jobs:
         env:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: git fetch --no-tags --no-recurse-submodules origin "$HEAD_SHA"
-      - name: SPEC-009 R40 (24 h since the last commit on a foundation change)
+      - name: SPEC-009 R40 (24 h since the pull request was last updated, on a foundation change)
         run: |
           if [ ! -f guardrails/check.py ]; then echo "::notice::base has no guardrails/check.py yet"; exit 0; fi
           python3 -I guardrails/check.py foundation-24h --repo . --event "$GITHUB_EVENT_PATH" --now "$(date -u +%s)"

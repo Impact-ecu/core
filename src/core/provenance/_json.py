@@ -10,7 +10,7 @@ from collections.abc import Callable, Mapping, Sequence
 from itertools import pairwise
 from types import MappingProxyType
 
-from core.kernel import canonical_json
+from core.kernel import MAX_JSON_DEPTH, canonical_json
 
 type Json = int | str | Sequence[Json] | Mapping[str, Json] | None
 type Raw = bool | int | float | str | Sequence[Raw] | Mapping[str, Raw] | None
@@ -56,8 +56,8 @@ def encodable(text: str) -> bool:
     return True
 
 
-def to_json(value: Raw) -> Json:
-    """A frozen copy of `value` in the hashable domain, or `ValueError` (SPEC-005 R1, R4)."""
+def to_json(value: Raw, depth: int = 0) -> Json:
+    """A frozen copy of `value` in the hashable domain, or `ValueError` (SPEC-005 R1, R4; SPEC-001 R66)."""
     if value is None:
         return None
     if isinstance(value, bool | float):
@@ -70,15 +70,17 @@ def to_json(value: Raw) -> Json:
         if not encodable(value):
             raise ValueError("lone surrogate")
         return value
+    if depth == MAX_JSON_DEPTH and isinstance(value, (Mapping, list, tuple)):
+        raise ValueError(f"arrays and objects nest deeper than {MAX_JSON_DEPTH}")
     if isinstance(value, Mapping):
         members: dict[str, Json] = {}
         for key, item in value.items():
             if not isinstance(key, str) or not key.isascii():
                 raise ValueError(f"object key {key!r} is not an ASCII string")
-            members[key] = to_json(item)
+            members[key] = to_json(item, depth + 1)
         return MappingProxyType(members)
     if isinstance(value, list | tuple):
-        return tuple(to_json(item) for item in value)
+        return tuple(to_json(item, depth + 1) for item in value)
     raise ValueError(f"{type(value).__name__} is not a JSON value")
 
 

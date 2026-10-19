@@ -85,9 +85,18 @@ def rules(findings: list[check.Finding]) -> list[str]:
         ("specs/SPEC-001-kernel.md", True),
         ("guardrails/ratchet.json", True),
         (".github/workflows/ci.yml", True),
+        # Revision 1: what the gate admits, the independent verifier, and the build and dependency pins.
+        ("src/core/evidence/_registry.py", True),
+        ("src/core/stock/_check.py", True),
+        ("src/core/importers/_raw.py", True),
+        ("src/core/definitions/_xdf.py", True),
+        ("tools/reproduce/reproduce.py", True),
+        ("pyproject.toml", True),
+        ("uv.lock", True),
         ("src/core/plugins/_checks.py", False),
-        ("src/core/definitions/_xdf.py", False),
         ("tests/unit/test_model.py", False),
+        ("tools/other.py", False),
+        ("docs/pyproject.toml", False),
         ("README.md", False),
     ],
 )
@@ -341,10 +350,10 @@ def test_unreadable_mirror_is_input_error(current: check.PullRequest) -> None:
 # SPEC-009 R40
 def test_foundation_age() -> None:
     foundation = ("specs/SPEC-009-guardrails.md",)
-    assert rules(check.evaluate_age(foundation, committed_at=1000, now=1000 + 86_399)) == ["R40"]
-    assert check.evaluate_age(foundation, committed_at=1000, now=1000 + 86_400) == []
-    assert rules(check.evaluate_age(foundation, committed_at=10_000, now=0)) == ["R40"]
-    assert check.evaluate_age(("README.md",), committed_at=1000, now=1000) == []
+    assert rules(check.evaluate_age(foundation, updated_at=1000, now=1000 + 86_399)) == ["R40"]
+    assert check.evaluate_age(foundation, updated_at=1000, now=1000 + 86_400) == []
+    assert rules(check.evaluate_age(foundation, updated_at=10_000, now=0)) == ["R40"]
+    assert check.evaluate_age(("README.md",), updated_at=1000, now=1000) == []
 
 
 def test_parse_added_lines() -> None:
@@ -367,6 +376,10 @@ def test_parse_added_lines() -> None:
         ]
     )
     assert check.parse_added_lines(diff) == (("a.py", "first"), ("a.py", "++ not a header"))
+    # SPEC-009 R25 (revision 1): git ends `+++ path` with a tab when the path has a space; the audit found the
+    # marker scan missed such paths because the tab stayed in the path and `.py` no longer ended it.
+    spaced = "diff --git tests/x y/t.py tests/x y/t.py\n+++ tests/x y/t.py\t\n@@ -0,0 +1 @@\n+x\n"
+    assert check.parse_added_lines(spaced) == (("tests/x y/t.py", "x"),)
     with pytest.raises(check.InputError):
         check.parse_added_lines('diff --git "a\\tb.py" "a\\tb.py"\n+++ "a\\tb.py"\n')
 
@@ -388,7 +401,13 @@ def test_evaluate_combines_rules() -> None:
 
 
 def write_event(path: Path, **pull_request: object) -> Path:
-    doc = {"labels": [], "body": None, "base": {"sha": SHA_A}, "head": {"sha": SHA_B}} | pull_request
+    doc = {
+        "labels": [],
+        "body": None,
+        "base": {"sha": SHA_A},
+        "head": {"sha": SHA_B},
+        "updated_at": "2026-10-01T00:00:00Z",
+    } | pull_request
     path.write_text(json.dumps({"pull_request": doc}), encoding="utf-8")
     return path
 
@@ -396,7 +415,7 @@ def write_event(path: Path, **pull_request: object) -> Path:
 # SPEC-009 R2, R3
 def test_read_event(tmp_path: Path) -> None:
     event = check.read_event(write_event(tmp_path / "e.json", labels=[{"name": "foundation-change"}], body="b"))
-    assert event == check.Event(frozenset({"foundation-change"}), "b", SHA_A, SHA_B)
+    assert event == check.Event(frozenset({"foundation-change"}), "b", SHA_A, SHA_B, 1_790_812_800)
     assert check.read_event(write_event(tmp_path / "e.json")).body == ""
     bad: list[dict[str, object]] = [
         {"base": {"sha": "A" * 40}},
@@ -405,10 +424,19 @@ def test_read_event(tmp_path: Path) -> None:
         {"body": 3},
         {"labels": [{}]},
         {"labels": None},
+        {"updated_at": None},
+        {"updated_at": 1_790_812_800},
+        {"updated_at": "2026-10-01T00:00:00+00:00"},
+        {"updated_at": "2026-13-01T00:00:00Z"},
     ]
     for changes in bad:
         with pytest.raises(check.InputError):
             check.read_event(write_event(tmp_path / "e.json", **changes))
+    doc = json.loads((tmp_path / "e.json").read_text(encoding="utf-8"))
+    del doc["pull_request"]["updated_at"]
+    (tmp_path / "e.json").write_text(json.dumps(doc), encoding="utf-8")
+    with pytest.raises(check.InputError):
+        check.read_event(tmp_path / "e.json")
     for text in ("{", "{}", "[]"):
         (tmp_path / "e.json").write_text(text, encoding="utf-8")
         with pytest.raises(check.InputError):
@@ -496,19 +524,41 @@ def test_main_guardrails(repo: Path, tmp_path: Path, capsys: pytest.CaptureFixtu
     )
 
 
-# SPEC-009 R40, R41
+# SPEC-009 R40, R41 (revision 1): the age runs from the server-set `updated_at`. The audit's exploit: a commit
+# backdated by its author (here to 2020) passed the 24 h rule at once when R40 read the committer date.
 def test_main_foundation_24h(repo: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     base = git(repo, "rev-parse", "HEAD")
-    head = commit_files(repo, {"specs/SPEC-009-guardrails.md": "x\n"}, date="2026-10-10T00:00:00+00:00")
-    committed = int(git(repo, "show", "-s", "--format=%ct", head))
-    event = write_event(tmp_path / "e.json", base={"sha": base}, head={"sha": head})
+    head = commit_files(repo, {"specs/SPEC-009-guardrails.md": "x\n"}, date="2020-01-01T00:00:00+00:00")
+    updated = 1_791_590_400  # 2026-10-10T00:00:00Z
+    event = write_event(tmp_path / "e.json", base={"sha": base}, head={"sha": head}, updated_at="2026-10-10T00:00:00Z")
     args = ["foundation-24h", "--repo", str(repo), "--event", str(event)]
-    code, out = run_main([*args, "--now", str(committed + 60)], capsys)
+    code, out = run_main([*args, "--now", str(updated + 60)], capsys)
     assert code == 1
-    assert out.splitlines()[-1] == "R40: foundation change: last commit is 60 s old, needs 86400 s"
-    assert run_main([*args, "--now", str(committed + 86_400)], capsys) == (0, "foundation-24h: no findings\n")
+    assert out.splitlines()[-1] == "R40: foundation change: pull request updated 60 s ago, needs 86400 s"
+    assert run_main([*args, "--now", str(updated + 86_400)], capsys) == (0, "foundation-24h: no findings\n")
     code, out = run_main(args, capsys)
     assert (code, out.splitlines()[-1]) == (2, "R3: --now is required for foundation-24h")
+
+
+# SPEC-009 R25 (revision 1): end to end, a marker added to a path with a space is found.
+def test_main_scans_paths_with_spaces(repo: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    base = git(repo, "rev-parse", "HEAD")
+    head = commit_files(repo, {"tests/x y/test_a.py": f"x = 1  {NOQA}\n"})
+    event = write_event(tmp_path / "e.json", base={"sha": base}, head={"sha": head})
+    code, out = run_main(["guardrails", "--repo", str(repo), "--event", str(event)], capsys)
+    assert code == 1
+    assert out.splitlines()[-1] == f"R25: noqa comment added in tests/x y/test_a.py: x = 1  {NOQA}"
+
+
+# SPEC-009 R3, R25 (revision 1): an added line whose path is outside the change set fails closed.
+def test_added_line_outside_the_change_set(
+    repo: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    head = git(repo, "rev-parse", "HEAD")
+    event = write_event(tmp_path / "e.json", base={"sha": head}, head={"sha": head})
+    monkeypatch.setattr(check, "parse_added_lines", lambda _diff: (("elsewhere.py", "x"),))
+    code, out = run_main(["guardrails", "--repo", str(repo), "--event", str(event)], capsys)
+    assert (code, out.splitlines()[-1]) == (2, "R3: diff names a path outside the change set: elsewhere.py")
 
 
 # SPEC-009 R3

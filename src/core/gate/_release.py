@@ -429,7 +429,7 @@ def _valid(u: UnverifiedImage, args: ReleaseArgs) -> bool:
         and isinstance(args["version"], Version)
         and isinstance(args["definition"], Definition)
         and isinstance(args["engine"], Engine)
-        and isinstance(args["input"], InputResult)
+        and type(args["input"]) is InputResult
         and isinstance(args["project_id"], str)
     )
 

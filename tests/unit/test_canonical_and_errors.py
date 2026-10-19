@@ -5,7 +5,7 @@ from typing import cast
 import pytest
 import rfc8785
 
-from core.kernel import KernelError, KernelInvariantError, PreconditionConflict, ShapeError, canonical_json
+from core.kernel import KernelError, KernelInvariantError, PreconditionConflict, ShapeError, canonical_json, jcs
 from core.kernel._canonical import Json
 from core.kernel._errors import ensure
 
@@ -47,6 +47,31 @@ def test_values_outside_the_domain_are_rejected(value: object, error: type[Excep
 def test_nested_values() -> None:
     value: Json = {"b": [1, None, "x", ()], "a": {}}
     assert canonical_json(value) == b'{"a":{},"b":[1,null,"x",[]]}'
+
+
+def nested_lists(depth: int) -> Json:
+    value: Json = None
+    for _ in range(depth):
+        value = [value]
+    return value
+
+
+def nested_objects(depth: int) -> Json:
+    value: Json = None
+    for _ in range(depth):
+        value = {"k": value}
+    return value
+
+
+# SPEC-001 R66: 64 levels encode; one more, or a nesting deep enough to exhaust Python's recursion limit, is a
+# ValueError, never a RecursionError (the audit reproduced RecursionError at 5,000 levels).
+def test_nesting_depth_is_capped_at_64() -> None:
+    assert canonical_json(nested_lists(64)) == b"[" * 64 + b"null" + b"]" * 64
+    assert jcs(nested_objects(64)) == b'{"k":' * 64 + b"null" + b"}" * 64
+    for value in (nested_lists(65), nested_objects(65), nested_lists(5000), [1, nested_objects(64)]):
+        for encode in (canonical_json, jcs):
+            with pytest.raises(ValueError, match="nest deeper than 64"):
+                encode(value)
 
 
 # SPEC-001 R72: every rejection is a KernelError with a stable machine reason.

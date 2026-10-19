@@ -63,6 +63,36 @@ def rejection(outcome: Imported | ImportRejected) -> tuple[str, str | None]:
     return (outcome.reason, outcome.container_kind)
 
 
+def deep_list(depth: int) -> object:
+    value: object = None
+    for _ in range(depth):
+        value = [value]
+    return value
+
+
+# SPEC-006 R1, R20; SPEC-001 R66: options nested past 64 levels are bad_params, not a RecursionError (the audit
+# reproduced it at 5,000 levels). The ImportRecord holds `options` at depth 2, so 62 levels inside it are the most
+# its hash can take.
+def test_options_nesting_is_capped() -> None:
+    frozen = freeze_json(deep_list(64))
+    for _ in range(64):
+        assert isinstance(frozen, tuple)
+        assert len(frozen) == 1
+        frozen = frozen[0]
+    assert frozen is None
+    for depth in (65, 5000):
+        with pytest.raises(NotJsonError, match="nest deeper than 64"):
+            freeze_json(deep_list(depth))
+    dump = Dump("bench_full", (Memory("pflash", None, b"\x00"),))
+    admitted = ImportParams("bench_full", None, {"memory_id": "pflash", "x": cast(Any, deep_list(62))})
+    assert isinstance(run_import(scripted(dump), b"\x00", admitted), Imported)
+    for depth in (63, 5000):
+        importer = scripted(dump)
+        params = ImportParams("bench_full", None, {"memory_id": "pflash", "x": cast(Any, deep_list(depth))})
+        assert rejection(run_import(importer, b"\x00", params)) == ("bad_params", None)
+        assert importer.calls == []
+
+
 # --- run_import: parameters (R11, R20, R22) ---------------------------------------------------------------
 
 

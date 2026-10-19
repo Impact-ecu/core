@@ -8,7 +8,7 @@ lone surrogates, arrays, and objects with ASCII keys (R2).
 import hashlib
 from collections.abc import Iterator, Mapping, Sequence
 
-from core.kernel import JcsValue, jcs
+from core.kernel import MAX_JSON_DEPTH, JcsValue, jcs
 
 type JsonValue = JcsValue
 
@@ -48,8 +48,8 @@ def _check_string(text: str) -> str:
     return text
 
 
-def freeze_json(value: object) -> JsonValue:
-    """A deep, immutable copy of `value`, or `NotJsonError` if it is outside SPEC-006 R1 and R2."""
+def freeze_json(value: object, depth: int = 0) -> JsonValue:
+    """A deep, immutable copy of `value`, or `NotJsonError` if it is outside SPEC-006 R1 and R2 (SPEC-001 R66)."""
     if value is None or isinstance(value, bool):
         return value
     if isinstance(value, int):
@@ -58,15 +58,17 @@ def freeze_json(value: object) -> JsonValue:
         return value
     if isinstance(value, str):
         return _check_string(value)
+    if depth == MAX_JSON_DEPTH and isinstance(value, Mapping | Sequence) and not isinstance(value, bytes | bytearray):
+        raise NotJsonError(f"arrays and objects nest deeper than {MAX_JSON_DEPTH}")
     if isinstance(value, Mapping):
         members: dict[str, JsonValue] = {}
         for key in value:
             if not isinstance(key, str) or not key.isascii():
                 raise NotJsonError(f"object key {key!r} is not an ASCII string")
-            members[key] = freeze_json(value[key])
+            members[key] = freeze_json(value[key], depth + 1)
         return FrozenObject(members)
     if isinstance(value, Sequence) and not isinstance(value, bytes | bytearray):
-        return tuple(freeze_json(item) for item in value)
+        return tuple(freeze_json(item, depth + 1) for item in value)
     raise NotJsonError(f"{type(value).__name__} is not a JCS value")
 
 

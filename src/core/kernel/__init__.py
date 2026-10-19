@@ -4,7 +4,7 @@ Pure: no I/O, network, clock, randomness, environment, threads or global state (
 """
 
 from core.kernel._apply import Conflict, MigrationResult, apply, apply_checksum_patches, invert, migrate
-from core.kernel._canonical import JcsValue, canonical_json, jcs
+from core.kernel._canonical import MAX_JSON_DEPTH, JcsValue, canonical_json, jcs
 from core.kernel._diff import DiffResult, ForeignRun, diff
 from core.kernel._errors import (
     ContainmentError,
@@ -31,6 +31,7 @@ from core.kernel._model import (
 from core.kernel._order import canonical_order, version_hash
 
 __all__ = [
+    "MAX_JSON_DEPTH",
     "Conflict",
     "ContainmentError",
     "DiffResult",
