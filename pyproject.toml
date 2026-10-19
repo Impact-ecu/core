@@ -125,6 +125,12 @@ protected_modules = ["core.kernel._internal"]
 allowed_importers = ["core.gate"]
 
 [[tool.importlinter.contracts]]
+name = "Only the gate and the conformance suite use the descriptor interpreter (SPEC-002 R47, R80)"
+type = "protected"
+protected_modules = ["core.plugins.descriptor"]
+allowed_importers = ["core.gate", "core.conformance"]
+
+[[tool.importlinter.contracts]]
 name = "Outside the kernel, only its public API and _internal are importable (SPEC-001 R7, R8)"
 type = "protected"
 protected_modules = [
