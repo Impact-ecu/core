@@ -1,11 +1,44 @@
-"""Verification gate (SPEC-004): the only constructor of `ReleasedImage` (SPEC-001 R9).
+"""Verification gate (SPEC-004): the only way a binary leaves Impact, and the only constructor of
+`ReleasedImage` (SPEC-001 R9).
 
-Not implemented yet. `release` is fail-closed: it raises for every input, so no image can leave
-the kernel until SPEC-004 is implemented here.
+The verdict is `block`, `warn` or `no findings`, always inside a report with its disclaimer (R1, R8); never
+a boolean and never "pass". Pure (R80): no I/O, network, clock, randomness, environment reads or threads.
 """
 
-from typing import NoReturn
+from core.gate._check import CheckInputArgs, check_input
+from core.gate._evidence import EvidenceAdmission, FieldEvidence, Timestamp, VariantEvidence
+from core.gate._fatigue import AlertRecord, Fatigue, fatigue
+from core.gate._maps import Engine
+from core.gate._model import BUILTIN, Fuel, GateError, GateInvariantError, Severity, Verdict
+from core.gate._release import ReleaseArgs, release
+from core.gate._result import ExportRefused, GateBlocked, InputResult, ReleasedImage
+from core.gate._rules import Rule, RuleKey, Table, parse_rule_table
 
-
-def release() -> NoReturn:
-    raise NotImplementedError("core.gate.release is not implemented yet (SPEC-004); nothing can be released")
+__all__ = [
+    "BUILTIN",
+    "AlertRecord",
+    "CheckInputArgs",
+    "Engine",
+    "EvidenceAdmission",
+    "ExportRefused",
+    "Fatigue",
+    "FieldEvidence",
+    "Fuel",
+    "GateBlocked",
+    "GateError",
+    "GateInvariantError",
+    "InputResult",
+    "ReleaseArgs",
+    "ReleasedImage",
+    "Rule",
+    "RuleKey",
+    "Severity",
+    "Table",
+    "Timestamp",
+    "VariantEvidence",
+    "Verdict",
+    "check_input",
+    "fatigue",
+    "parse_rule_table",
+    "release",
+]
