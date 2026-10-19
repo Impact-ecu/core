@@ -190,3 +190,23 @@ protected_modules = [
     "core.evidence._review",
 ]
 allowed_importers = ["core.evidence"]
+
+[[tool.importlinter.contracts]]
+name = "Outside the gate, only its public API is importable: InputResult and ReleasedImage are built only there (SPEC-004 R9, SPEC-001 R9)"
+type = "protected"
+protected_modules = [
+    "core.gate._calls",
+    "core.gate._check",
+    "core.gate._evidence",
+    "core.gate._fatigue",
+    "core.gate._input",
+    "core.gate._integrity",
+    "core.gate._maps",
+    "core.gate._model",
+    "core.gate._output",
+    "core.gate._release",
+    "core.gate._report",
+    "core.gate._result",
+    "core.gate._rules",
+]
+allowed_importers = ["core.gate"]
