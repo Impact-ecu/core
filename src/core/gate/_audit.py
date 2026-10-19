@@ -1,5 +1,6 @@
 """`audit` (SPEC-005 §4.1, R23-R28): the gate builds the `AuditRecord`, with the layout and both verify statuses
-from its own plugin calls, never from the caller."""
+from its own plugin calls, never from the caller. Without a rule table it builds the generic audit (SPEC-005 R115,
+SPEC-004 R19)."""
 
 from collections.abc import Mapping
 from dataclasses import dataclass
@@ -12,8 +13,10 @@ from core.evidence import FieldEvidence
 from core.gate._calls import PluginFault, call
 from core.gate._check import CheckInputArgs, run_check_input
 from core.gate._evidence import EvidenceAdmissionFn, published_admission
-from core.gate._model import GateError, child, present
+from core.gate._generic import AuditRefused, GenericAudit, run_generic, valid_generic
+from core.gate._model import child, present
 from core.gate._result import InputResult
+from core.gate._rules import parse_rule_table
 from core.kernel import Dump, KernelError, MemoryLayout, diff, layout_hash
 from core.plugins import ContractJson, EcuPlugin, PluginContractError, check_layout
 from core.provenance import (
@@ -30,10 +33,6 @@ from core.provenance import (
     audit_record,
     audit_report,
 )
-
-
-class AuditRefused(GateError):
-    """SPEC-005 R25: the audit was not built; `reason` says why."""
 
 
 @dataclass(frozen=True, slots=True)
@@ -126,20 +125,22 @@ def _versions(result: InputResult, core_version: str) -> Versions:
 
 
 def _valid(original: AuditFile, candidate: AuditFile, args: AuditArgs) -> bool:
-    definition = args["definition"]
     return (
-        all(isinstance(f, AuditFile) and isinstance(f.dump, Dump) for f in (original, candidate))
-        and isinstance(args["build"], Build)
-        and (definition is None or isinstance(definition, Definition))
+        isinstance(original, AuditFile)
+        and isinstance(candidate, AuditFile)
+        and valid_generic(original.dump, candidate.dump, args["definition"], args["build"])
     )
 
 
 def run_audit(
     original: AuditFile, candidate: AuditFile, args: AuditArgs, admit: EvidenceAdmissionFn, core_version: str
-) -> Audit:
+) -> Audit | GenericAudit:
     """`audit` with the evidence seam and the core version as parameters (tests; SPEC-004 R16)."""
     if not _valid(original, candidate, args):
         raise AuditRefused("bad_type", "audit takes two AuditFiles, a Build and a Definition or None")
+    if parse_rule_table(args["rule_table"]) is None:
+        # SPEC-005 R115: no threshold accepts an identification, so no layout; the generic audit still runs.
+        return run_generic(original.dump, candidate.dump, args, "no_rule_table", core_version)
     original_input = _input(original, args, admit, core_version)
     candidate_input = _input(candidate, args, admit, core_version)
     plugin = args["plugin"]
@@ -169,6 +170,7 @@ def run_audit(
     return Audit(audit_record(inputs), original_input, candidate_input, inputs, attribution, map_ids)
 
 
-def audit(original: AuditFile, candidate: AuditFile, **args: Unpack[AuditArgs]) -> Audit:
-    """SPEC-005 §4.1: the input gate on both files, the layout and the diff, all computed by the core."""
+def audit(original: AuditFile, candidate: AuditFile, **args: Unpack[AuditArgs]) -> Audit | GenericAudit:
+    """SPEC-005 §4.1: the input gate on both files, the layout and the diff, all computed by the core; the generic
+    audit when no rule table is available (SPEC-005 R115)."""
     return run_audit(original, candidate, args, published_admission, __version__)

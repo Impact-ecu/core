@@ -38,13 +38,15 @@ def run(
     admit: EvidenceAdmissionFn = admit_all,
     **overrides: object,
 ) -> Audit:
-    return run_audit(
+    result = run_audit(
         file_of(dump_of(ORIGINAL) if original is None else original),
         file_of(dump_of(CANDIDATE) if candidate is None else candidate),
         arguments(**overrides),
         admit,
         CORE_VERSION,
     )
+    assert isinstance(result, Audit)
+    return result
 
 
 def refusal(
@@ -117,13 +119,15 @@ def test_unknown_variant_still_audits() -> None:
 # SPEC-005 R23: the public `audit` uses the published field evidence (none yet, so `not_applicable`).
 def test_public_audit() -> None:
     result = audit(file_of(dump_of(ORIGINAL)), file_of(dump_of(CANDIDATE)), **arguments())
+    assert isinstance(result, Audit)
     assert doc(result.record.value)["verify"] == {"original": "not_applicable", "candidate": "not_applicable"}
     assert doc(result.record.value)["versions"]["core"] != CORE_VERSION
 
 
-# SPEC-005 R24, R25: without a rule table the input gate never reaches verify, so nothing is built.
-def test_no_rule_table_refuses() -> None:
-    assert refusal(rule_table=None) == "original_not_identified"
+# SPEC-005 R24: a plugin that is unavailable stops the input gate before verify, so no layout is taken. (Without a
+# rule table the generic audit is built instead, SPEC-005 R115; tests/unit/test_gate_generic.py.)
+def test_no_plugin_refuses() -> None:
+    assert refusal(plugin=None) == "original_not_identified"
 
 
 def low_confidence(dump: Dump) -> Identification | None:

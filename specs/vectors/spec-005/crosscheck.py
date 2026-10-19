@@ -527,6 +527,10 @@ def mutate_chain(events: list[dict], m: dict | None) -> list[dict]:
     return evs
 
 
+def nat(x: object) -> bool:
+    return isinstance(x, int) and not isinstance(x, bool) and x >= 0
+
+
 class Checker:
     def __init__(self, v: dict, spec001: dict, spec001_sha: str) -> None:
         self.v = v
@@ -549,6 +553,160 @@ class Checker:
                 ],
             }
         )
+
+    def generic(self, v: dict, o: dict, dk: str) -> None:
+        """R110-R115: every differing position, grouped, then each position looked up in the map spans."""
+        gi = v["generic_audit_inputs"]
+        orig = {m: (x["base_address"], bytes.fromhex(x["bytes_hex"])) for m, x in o["memories"].items()}
+        cand = {m: (orig[m][0], bytes.fromhex(h)) for m, h in gi["candidate"].items()}
+        self.expect("generic.candidate.shape", sorted((m, b, len(d)) for m, (b, d) in cand.items()), sorted((m, b, len(d)) for m, (b, d) in orig.items()))
+        self.expect("generic.candidate_image_jcs", canon({"dump_kind": dk, "memories": [{"memory_id": m, "base_address": b, "size": len(d), "sha256": sha_hex(d)} for m, (b, d) in sorted(cand.items())]}), gi["candidate_image_jcs"])
+        positions = {m: [i for i in range(len(d)) if d[i] != cand[m][1][i]] for m, (_, d) in orig.items()}
+
+        def groups(memory_id: str, pos: list[int]) -> list[tuple[str, int, int]]:
+            out: list[tuple[str, int, int]] = []
+            for i in pos:
+                if out and out[-1][1] + out[-1][2] == i:
+                    out[-1] = (memory_id, out[-1][1], out[-1][2] + 1)
+                else:
+                    out.append((memory_id, i, 1))
+            return out
+
+        changes = [g for m in sorted(positions) for g in groups(m, positions[m])]
+        cover: dict[tuple[str, int], set[str]] = {}
+        for map_id, ranges in gi["spans"].items():
+            for r in ranges:
+                for i in range(r["start"], r["end"]):
+                    cover.setdefault((r["memory_id"], i), set()).add(map_id)
+        for name, with_definition, reason in (
+            ("generic_audit", True, "no_admitted_plugin"),
+            ("generic_audit_no_definition", False, "no_admitted_plugin"),
+            ("generic_audit_no_rule_table", True, "no_rule_table"),
+        ):
+            vec = v[name]
+            rec = vec["value"]
+            want_changes = []
+            for m, off, n in changes:
+                maps: set[str] = set()
+                if with_definition:
+                    for i in range(off, off + n):
+                        maps |= cover.get((m, i), set())
+                before, after = orig[m][1][off : off + n], cand[m][1][off : off + n]
+                ph = sha_obj({"memory_id": m, "offset": off, "length": n, "before": before.hex(), "after": after.hex()})
+                want_changes.append({"memory_id": m, "offset": off, "length": n, "patch_hash": ph, "map_ids": sorted(maps)})
+            outside = [
+                {"memory_id": m, "offset": off, "length": n}
+                for mem in sorted(positions)
+                for m, off, n in groups(mem, [i for i in positions[mem] if not (with_definition and cover.get((mem, i)))])
+            ]
+            not_evaluated = sorted(
+                [
+                    {"check": "identification", "reason": reason},
+                    {"check": "layout", "reason": reason},
+                    {"check": "verify", "reason": reason},
+                    {"check": "map_rules", "reason": "no_rule_table" if with_definition else "no_definition"},
+                ],
+                key=lambda e: e["check"],
+            )
+            self.expect(f"{name}.keys", sorted(rec), sorted(["schema", "dump_kind", "image_hash_original", "image_hash_candidate", "candidate_origin", "definition_hash", "changes", "outside_known_maps", "unbound_maps", "not_evaluated", "checksum_status", "versions", "python", "build", "reproducibility"]))
+            self.expect(f"{name}.schema", rec["schema"], "impact.generic-audit-record.v1")
+            self.expect(f"{name}.image_hash_original", rec["image_hash_original"], self.image_hash(dk, orig))
+            self.expect(f"{name}.image_hash_candidate", rec["image_hash_candidate"], self.image_hash(dk, cand))
+            self.expect(f"{name}.definition_hash", rec["definition_hash"], gi["definition_hash"] if with_definition else None)
+            self.expect(f"{name}.R111_R112.changes", rec["changes"], want_changes)
+            self.expect(f"{name}.R112.outside_known_maps", rec["outside_known_maps"], outside)
+            self.expect(f"{name}.R112.unbound_maps", rec["unbound_maps"], sorted(gi["unbound"]) if with_definition else [])
+            self.expect(f"{name}.R113.not_evaluated", rec["not_evaluated"], not_evaluated)
+            self.expect(f"{name}.R113.checksum_status", rec["checksum_status"], "not_verified")
+            self.expect(f"{name}.R113.never_ok", "\"ok\"" in json.dumps(rec), False)
+            self.expect(f"{name}.versions", sorted(rec["versions"]), ["core"])
+            self.expect(f"{name}.R17", rec["reproducibility"], "full" if rec["build"]["kind"] == "image" else "best_effort")
+            self.expect(f"{name}.jcs", canon(rec), vec["jcs"])
+            self.expect(f"{name}.generic_audit_hash", sha_obj(rec), vec["generic_audit_hash"])
+
+    @staticmethod
+    def generic_record_ok(rec: object) -> bool:
+        """R3, R112, R113, R17 for a GenericAuditRecord, written from SPEC-005 §4.2."""
+        keys = {"schema", "dump_kind", "image_hash_original", "image_hash_candidate", "candidate_origin", "definition_hash", "changes", "outside_known_maps", "unbound_maps", "not_evaluated", "checksum_status", "versions", "python", "build", "reproducibility"}
+        if not isinstance(rec, dict) or set(rec) != keys:
+            return False
+        run_keys = {"memory_id", "offset", "length"}
+        ne = rec["not_evaluated"]
+        if not (
+            rec["schema"] == "impact.generic-audit-record.v1"
+            and rec["checksum_status"] == "not_verified"
+            and is_hex32(rec["image_hash_original"]) and is_hex32(rec["image_hash_candidate"])
+            and (rec["definition_hash"] is None or is_hex32(rec["definition_hash"]))
+            and isinstance(rec["changes"], list) and isinstance(rec["outside_known_maps"], list)
+            and isinstance(ne, list) and len(ne) == 4 and all(isinstance(e, dict) and set(e) == {"check", "reason"} for e in ne)
+            and isinstance(rec["versions"], dict) and set(rec["versions"]) == {"core"}
+            and isinstance(rec["build"], dict)
+        ):
+            return False
+        for c in rec["changes"]:
+            if not (isinstance(c, dict) and set(c) == run_keys | {"patch_hash", "map_ids"} and nat(c["offset"]) and nat(c["length"]) and is_hex32(c["patch_hash"])):
+                return False
+            if not (isinstance(c["map_ids"], list) and c["map_ids"] == sorted(set(c["map_ids"]))):
+                return False
+        if not all(isinstance(r, dict) and set(r) == run_keys for r in rec["outside_known_maps"]):
+            return False
+        if [e["check"] for e in ne] != ["identification", "layout", "map_rules", "verify"]:
+            return False
+        plugin = {ne[0]["reason"], ne[1]["reason"], ne[3]["reason"]}
+        if len(plugin) != 1 or not plugin <= {"no_admitted_plugin", "no_rule_table"}:
+            return False
+        no_def = rec["definition_hash"] is None
+        if ne[2]["reason"] != ("no_definition" if no_def else "no_rule_table"):
+            return False
+        if no_def and (rec["unbound_maps"] or any(c["map_ids"] for c in rec["changes"])):
+            return False
+        return rec["reproducibility"] == ("best_effort" if rec["build"].get("kind") == "lockfile" else "full")
+
+    def generic_report_findings(self, rep: object, trust: list[str], test_mode: bool) -> list[str]:
+        """R117, written from the spec: findings, never an exception."""
+        if not (
+            isinstance(rep, dict)
+            and set(rep) == {"schema", "record", "record_hash", "key_id", "signature"}
+            and rep["schema"] == "impact.generic-audit-report.v1"
+            and isinstance(rep["record"], dict)
+            and is_hex32(rep["record_hash"]) and is_hex32(rep["key_id"])
+            and isinstance(rep["signature"], str) and re.fullmatch(r"[0-9a-f]{128}", rep["signature"]) is not None
+        ):
+            return ["bad_shape"]
+        out: set[str] = set()
+        if not self.generic_record_ok(rep["record"]):
+            out.add("bad_record")
+        elif sha_obj(rep["record"]) != rep["record_hash"]:
+            out.add("record_hash_mismatch")
+        if rep["key_id"] == self.v["key"]["key_id"] and not test_mode:
+            out.add("test_key")
+        keys = {sha_hex(bytes.fromhex(k)): k for k in trust}
+        if rep["key_id"] not in keys:
+            out.add("unknown_key")
+        elif not verify(bytes.fromhex(keys[rep["key_id"]]), signing_input("impact.generic-audit-signature.v1", rep["record_hash"]), bytes.fromhex(rep["signature"])):
+            out.add("bad_signature")
+        return sorted(out)
+
+    def generic_report(self, v: dict) -> None:
+        gr = v["generic_audit_report"]
+        rep = gr["value"]
+        seed = hashlib.sha256(v["key"]["seed_text"].encode("utf-8")).digest()
+        self.expect("generic_report.record", rep["record"], v["generic_audit"]["value"])
+        self.expect("generic_report.record_hash", sha_obj(rep["record"]), rep["record_hash"])
+        self.expect("generic_report.key_id", rep["key_id"], v["key"]["key_id"])
+        msg = signing_input("impact.generic-audit-signature.v1", rep["record_hash"])
+        self.expect("generic_report.signing_input", msg.decode("utf-8"), gr["signing_input"])
+        self.expect("generic_report.signature(resign)", sign(seed, msg).hex(), rep["signature"])
+        self.expect("generic_report.verify", self.generic_report_findings(rep, gr["trust"], gr["test_mode"]), [])
+        self.expect("generic_report.record_valid", self.generic_record_ok(rep["record"]), True)
+        for t in gr["tampers"]:
+            mutated = copy.deepcopy(rep)
+            if t["mutation"] is not None:
+                tgt = mutated
+                for key in t["mutation"]["path"][:-1]:
+                    tgt = tgt[key]
+                tgt[t["mutation"]["path"][-1]] = t["mutation"]["value"]
+            self.expect(f"generic_report.tamper.{t['id']}", self.generic_report_findings(mutated, gr["trust"], t["test_mode"]), sorted(t["expect"]))
 
     def run(self) -> None:
         v, s1 = self.v, self.s1
@@ -738,6 +896,9 @@ class Checker:
 
         cm = v["commitment"]
         self.expect("commitment", sha_obj(cm["value"]), cm["commitment"])
+
+        self.generic(v, o, dk)
+        self.generic_report(v)
 
         # Tampers: every mutation MUST be detected exactly as expected (T4b documents the unanchored limit).
         for t in v["tampers"]:

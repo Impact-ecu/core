@@ -28,7 +28,7 @@ def imported_modules(path: Path) -> set[str]:
 
 # SPEC-005 R55, R90: no Ed25519 or other cryptographic code; only `core.kernel`'s public API and never `core.gate`.
 def test_provenance_imports() -> None:
-    assert len(FILES) == 11
+    assert len(FILES) == 12
     for path in FILES:
         for name in imported_modules(path):
             assert name.split(".")[0] not in CRYPTO, f"{path.name}: {name}"

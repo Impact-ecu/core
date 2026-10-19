@@ -1237,5 +1237,664 @@
         }
       ]
     }
-  ]
+  ],
+  "generic_audit_inputs": {
+    "rules": [
+      "R111",
+      "R112"
+    ],
+    "note": "the V8 candidate with pflash 38..42 xor 0xff and 47..50 xor 0x5a; map spans given as byte ranges",
+    "candidate": {
+      "dflash": "00ffffffffffffffffffffffffffffff",
+      "pflash": "000102030400060708090a0b0c0d0e0f101112137715161718191a1b1c1d1e1f202122232425d9d8d7d62a2b2c2d2e756a6b32333435363738393a3b3c3d993f"
+    },
+    "candidate_image_jcs": "{\"dump_kind\":\"bench_full\",\"memories\":[{\"base_address\":2936012800,\"memory_id\":\"dflash\",\"sha256\":\"abbbabc6ed4cd201aab19286bd54bd4fb339b33539d99f30ff61e42c3c8a6207\",\"size\":16},{\"base_address\":2147483648,\"memory_id\":\"pflash\",\"sha256\":\"8f2599dd3877f72a6de346e70c12e16ca24095bc2f8c96370cb6afc54ffc5014\",\"size\":64}]}",
+    "definition_hash": "45a950685ba36a6323d79239c5ff39394f2ef361e80c9219f9fe859d75135c38",
+    "spans": {
+      "syn.a": [
+        {
+          "memory_id": "pflash",
+          "start": 16,
+          "end": 24
+        },
+        {
+          "memory_id": "pflash",
+          "start": 36,
+          "end": 40
+        }
+      ],
+      "syn.b": [
+        {
+          "memory_id": "pflash",
+          "start": 40,
+          "end": 48
+        }
+      ],
+      "syn.c": [
+        {
+          "memory_id": "dflash",
+          "start": 8,
+          "end": 16
+        }
+      ]
+    },
+    "unbound": [
+      "syn.z"
+    ]
+  },
+  "generic_audit": {
+    "rules": [
+      "R110",
+      "R111",
+      "R112",
+      "R113",
+      "R114"
+    ],
+    "value": {
+      "schema": "impact.generic-audit-record.v1",
+      "dump_kind": "bench_full",
+      "image_hash_original": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+      "image_hash_candidate": "f9f991d09643923bc35140b78aeddde28db40dc73b3bee749a18301cc5b3ca7b",
+      "candidate_origin": "file_service",
+      "definition_hash": "45a950685ba36a6323d79239c5ff39394f2ef361e80c9219f9fe859d75135c38",
+      "changes": [
+        {
+          "memory_id": "dflash",
+          "offset": 0,
+          "length": 1,
+          "patch_hash": "ba7f8533e4b8823110d55514778202e0aa05aef8e9c041eb9d01490f21fa03a0",
+          "map_ids": []
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 5,
+          "length": 1,
+          "patch_hash": "e3648b45e11dbed1996239b345de597d757c4309fc7a1fb7627b749885a8072f",
+          "map_ids": []
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 20,
+          "length": 1,
+          "patch_hash": "33f5b39a34688a7b0abd1331ff380c25cd300076a85b91f8f391eded2ae554bc",
+          "map_ids": [
+            "syn.a"
+          ]
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 38,
+          "length": 4,
+          "patch_hash": "41371c7f3e696f707379bf43473994cf655fdf13a24152b9a5ff35c4bca62b08",
+          "map_ids": [
+            "syn.a",
+            "syn.b"
+          ]
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 47,
+          "length": 3,
+          "patch_hash": "1632bf63923ceb81d94330cf341a09da2e14c8b322e6029255c19e45b3d87b89",
+          "map_ids": [
+            "syn.b"
+          ]
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 62,
+          "length": 1,
+          "patch_hash": "062869fb2bb48f3bba1cff17a1eb548eba1fe88b7a3fe27e56a8327beb5e5d3d",
+          "map_ids": []
+        }
+      ],
+      "outside_known_maps": [
+        {
+          "memory_id": "dflash",
+          "offset": 0,
+          "length": 1
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 5,
+          "length": 1
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 48,
+          "length": 2
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 62,
+          "length": 1
+        }
+      ],
+      "unbound_maps": [
+        "syn.z"
+      ],
+      "not_evaluated": [
+        {
+          "check": "identification",
+          "reason": "no_admitted_plugin"
+        },
+        {
+          "check": "layout",
+          "reason": "no_admitted_plugin"
+        },
+        {
+          "check": "map_rules",
+          "reason": "no_rule_table"
+        },
+        {
+          "check": "verify",
+          "reason": "no_admitted_plugin"
+        }
+      ],
+      "checksum_status": "not_verified",
+      "versions": {
+        "core": "0.0.0-synthetic"
+      },
+      "python": {
+        "implementation": "cpython",
+        "version": "3.12.3"
+      },
+      "build": {
+        "kind": "image",
+        "value": "sha256:bbb9a30ac377725931b09171c74994e4428edd32294adb6bf49285e786715299",
+        "platform": "linux/amd64",
+        "attestation_id": null
+      },
+      "reproducibility": "full"
+    },
+    "jcs": "{\"build\":{\"attestation_id\":null,\"kind\":\"image\",\"platform\":\"linux/amd64\",\"value\":\"sha256:bbb9a30ac377725931b09171c74994e4428edd32294adb6bf49285e786715299\"},\"candidate_origin\":\"file_service\",\"changes\":[{\"length\":1,\"map_ids\":[],\"memory_id\":\"dflash\",\"offset\":0,\"patch_hash\":\"ba7f8533e4b8823110d55514778202e0aa05aef8e9c041eb9d01490f21fa03a0\"},{\"length\":1,\"map_ids\":[],\"memory_id\":\"pflash\",\"offset\":5,\"patch_hash\":\"e3648b45e11dbed1996239b345de597d757c4309fc7a1fb7627b749885a8072f\"},{\"length\":1,\"map_ids\":[\"syn.a\"],\"memory_id\":\"pflash\",\"offset\":20,\"patch_hash\":\"33f5b39a34688a7b0abd1331ff380c25cd300076a85b91f8f391eded2ae554bc\"},{\"length\":4,\"map_ids\":[\"syn.a\",\"syn.b\"],\"memory_id\":\"pflash\",\"offset\":38,\"patch_hash\":\"41371c7f3e696f707379bf43473994cf655fdf13a24152b9a5ff35c4bca62b08\"},{\"length\":3,\"map_ids\":[\"syn.b\"],\"memory_id\":\"pflash\",\"offset\":47,\"patch_hash\":\"1632bf63923ceb81d94330cf341a09da2e14c8b322e6029255c19e45b3d87b89\"},{\"length\":1,\"map_ids\":[],\"memory_id\":\"pflash\",\"offset\":62,\"patch_hash\":\"062869fb2bb48f3bba1cff17a1eb548eba1fe88b7a3fe27e56a8327beb5e5d3d\"}],\"checksum_status\":\"not_verified\",\"definition_hash\":\"45a950685ba36a6323d79239c5ff39394f2ef361e80c9219f9fe859d75135c38\",\"dump_kind\":\"bench_full\",\"image_hash_candidate\":\"f9f991d09643923bc35140b78aeddde28db40dc73b3bee749a18301cc5b3ca7b\",\"image_hash_original\":\"5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2\",\"not_evaluated\":[{\"check\":\"identification\",\"reason\":\"no_admitted_plugin\"},{\"check\":\"layout\",\"reason\":\"no_admitted_plugin\"},{\"check\":\"map_rules\",\"reason\":\"no_rule_table\"},{\"check\":\"verify\",\"reason\":\"no_admitted_plugin\"}],\"outside_known_maps\":[{\"length\":1,\"memory_id\":\"dflash\",\"offset\":0},{\"length\":1,\"memory_id\":\"pflash\",\"offset\":5},{\"length\":2,\"memory_id\":\"pflash\",\"offset\":48},{\"length\":1,\"memory_id\":\"pflash\",\"offset\":62}],\"python\":{\"implementation\":\"cpython\",\"version\":\"3.12.3\"},\"reproducibility\":\"full\",\"schema\":\"impact.generic-audit-record.v1\",\"unbound_maps\":[\"syn.z\"],\"versions\":{\"core\":\"0.0.0-synthetic\"}}",
+    "generic_audit_hash": "d88cde0df247b300c9e293cf65549e197e9a62bb949321d951fd1705c7ec4810"
+  },
+  "generic_audit_no_definition": {
+    "rules": [
+      "R111",
+      "R112",
+      "R113",
+      "R114"
+    ],
+    "value": {
+      "schema": "impact.generic-audit-record.v1",
+      "dump_kind": "bench_full",
+      "image_hash_original": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+      "image_hash_candidate": "f9f991d09643923bc35140b78aeddde28db40dc73b3bee749a18301cc5b3ca7b",
+      "candidate_origin": "file_service",
+      "definition_hash": null,
+      "changes": [
+        {
+          "memory_id": "dflash",
+          "offset": 0,
+          "length": 1,
+          "patch_hash": "ba7f8533e4b8823110d55514778202e0aa05aef8e9c041eb9d01490f21fa03a0",
+          "map_ids": []
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 5,
+          "length": 1,
+          "patch_hash": "e3648b45e11dbed1996239b345de597d757c4309fc7a1fb7627b749885a8072f",
+          "map_ids": []
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 20,
+          "length": 1,
+          "patch_hash": "33f5b39a34688a7b0abd1331ff380c25cd300076a85b91f8f391eded2ae554bc",
+          "map_ids": []
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 38,
+          "length": 4,
+          "patch_hash": "41371c7f3e696f707379bf43473994cf655fdf13a24152b9a5ff35c4bca62b08",
+          "map_ids": []
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 47,
+          "length": 3,
+          "patch_hash": "1632bf63923ceb81d94330cf341a09da2e14c8b322e6029255c19e45b3d87b89",
+          "map_ids": []
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 62,
+          "length": 1,
+          "patch_hash": "062869fb2bb48f3bba1cff17a1eb548eba1fe88b7a3fe27e56a8327beb5e5d3d",
+          "map_ids": []
+        }
+      ],
+      "outside_known_maps": [
+        {
+          "memory_id": "dflash",
+          "offset": 0,
+          "length": 1
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 5,
+          "length": 1
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 20,
+          "length": 1
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 38,
+          "length": 4
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 47,
+          "length": 3
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 62,
+          "length": 1
+        }
+      ],
+      "unbound_maps": [],
+      "not_evaluated": [
+        {
+          "check": "identification",
+          "reason": "no_admitted_plugin"
+        },
+        {
+          "check": "layout",
+          "reason": "no_admitted_plugin"
+        },
+        {
+          "check": "map_rules",
+          "reason": "no_definition"
+        },
+        {
+          "check": "verify",
+          "reason": "no_admitted_plugin"
+        }
+      ],
+      "checksum_status": "not_verified",
+      "versions": {
+        "core": "0.0.0-synthetic"
+      },
+      "python": {
+        "implementation": "cpython",
+        "version": "3.12.3"
+      },
+      "build": {
+        "kind": "image",
+        "value": "sha256:bbb9a30ac377725931b09171c74994e4428edd32294adb6bf49285e786715299",
+        "platform": "linux/amd64",
+        "attestation_id": null
+      },
+      "reproducibility": "full"
+    },
+    "jcs": "{\"build\":{\"attestation_id\":null,\"kind\":\"image\",\"platform\":\"linux/amd64\",\"value\":\"sha256:bbb9a30ac377725931b09171c74994e4428edd32294adb6bf49285e786715299\"},\"candidate_origin\":\"file_service\",\"changes\":[{\"length\":1,\"map_ids\":[],\"memory_id\":\"dflash\",\"offset\":0,\"patch_hash\":\"ba7f8533e4b8823110d55514778202e0aa05aef8e9c041eb9d01490f21fa03a0\"},{\"length\":1,\"map_ids\":[],\"memory_id\":\"pflash\",\"offset\":5,\"patch_hash\":\"e3648b45e11dbed1996239b345de597d757c4309fc7a1fb7627b749885a8072f\"},{\"length\":1,\"map_ids\":[],\"memory_id\":\"pflash\",\"offset\":20,\"patch_hash\":\"33f5b39a34688a7b0abd1331ff380c25cd300076a85b91f8f391eded2ae554bc\"},{\"length\":4,\"map_ids\":[],\"memory_id\":\"pflash\",\"offset\":38,\"patch_hash\":\"41371c7f3e696f707379bf43473994cf655fdf13a24152b9a5ff35c4bca62b08\"},{\"length\":3,\"map_ids\":[],\"memory_id\":\"pflash\",\"offset\":47,\"patch_hash\":\"1632bf63923ceb81d94330cf341a09da2e14c8b322e6029255c19e45b3d87b89\"},{\"length\":1,\"map_ids\":[],\"memory_id\":\"pflash\",\"offset\":62,\"patch_hash\":\"062869fb2bb48f3bba1cff17a1eb548eba1fe88b7a3fe27e56a8327beb5e5d3d\"}],\"checksum_status\":\"not_verified\",\"definition_hash\":null,\"dump_kind\":\"bench_full\",\"image_hash_candidate\":\"f9f991d09643923bc35140b78aeddde28db40dc73b3bee749a18301cc5b3ca7b\",\"image_hash_original\":\"5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2\",\"not_evaluated\":[{\"check\":\"identification\",\"reason\":\"no_admitted_plugin\"},{\"check\":\"layout\",\"reason\":\"no_admitted_plugin\"},{\"check\":\"map_rules\",\"reason\":\"no_definition\"},{\"check\":\"verify\",\"reason\":\"no_admitted_plugin\"}],\"outside_known_maps\":[{\"length\":1,\"memory_id\":\"dflash\",\"offset\":0},{\"length\":1,\"memory_id\":\"pflash\",\"offset\":5},{\"length\":1,\"memory_id\":\"pflash\",\"offset\":20},{\"length\":4,\"memory_id\":\"pflash\",\"offset\":38},{\"length\":3,\"memory_id\":\"pflash\",\"offset\":47},{\"length\":1,\"memory_id\":\"pflash\",\"offset\":62}],\"python\":{\"implementation\":\"cpython\",\"version\":\"3.12.3\"},\"reproducibility\":\"full\",\"schema\":\"impact.generic-audit-record.v1\",\"unbound_maps\":[],\"versions\":{\"core\":\"0.0.0-synthetic\"}}",
+    "generic_audit_hash": "28f10ba60fea2a9ea8e3b4816c72eb6eb6b9d92c1384a5fe14a2db9218fa08b8"
+  },
+  "generic_audit_report": {
+    "rules": [
+      "R50",
+      "R51",
+      "R116",
+      "R117"
+    ],
+    "value": {
+      "schema": "impact.generic-audit-report.v1",
+      "record": {
+        "schema": "impact.generic-audit-record.v1",
+        "dump_kind": "bench_full",
+        "image_hash_original": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "image_hash_candidate": "f9f991d09643923bc35140b78aeddde28db40dc73b3bee749a18301cc5b3ca7b",
+        "candidate_origin": "file_service",
+        "definition_hash": "45a950685ba36a6323d79239c5ff39394f2ef361e80c9219f9fe859d75135c38",
+        "changes": [
+          {
+            "memory_id": "dflash",
+            "offset": 0,
+            "length": 1,
+            "patch_hash": "ba7f8533e4b8823110d55514778202e0aa05aef8e9c041eb9d01490f21fa03a0",
+            "map_ids": []
+          },
+          {
+            "memory_id": "pflash",
+            "offset": 5,
+            "length": 1,
+            "patch_hash": "e3648b45e11dbed1996239b345de597d757c4309fc7a1fb7627b749885a8072f",
+            "map_ids": []
+          },
+          {
+            "memory_id": "pflash",
+            "offset": 20,
+            "length": 1,
+            "patch_hash": "33f5b39a34688a7b0abd1331ff380c25cd300076a85b91f8f391eded2ae554bc",
+            "map_ids": [
+              "syn.a"
+            ]
+          },
+          {
+            "memory_id": "pflash",
+            "offset": 38,
+            "length": 4,
+            "patch_hash": "41371c7f3e696f707379bf43473994cf655fdf13a24152b9a5ff35c4bca62b08",
+            "map_ids": [
+              "syn.a",
+              "syn.b"
+            ]
+          },
+          {
+            "memory_id": "pflash",
+            "offset": 47,
+            "length": 3,
+            "patch_hash": "1632bf63923ceb81d94330cf341a09da2e14c8b322e6029255c19e45b3d87b89",
+            "map_ids": [
+              "syn.b"
+            ]
+          },
+          {
+            "memory_id": "pflash",
+            "offset": 62,
+            "length": 1,
+            "patch_hash": "062869fb2bb48f3bba1cff17a1eb548eba1fe88b7a3fe27e56a8327beb5e5d3d",
+            "map_ids": []
+          }
+        ],
+        "outside_known_maps": [
+          {
+            "memory_id": "dflash",
+            "offset": 0,
+            "length": 1
+          },
+          {
+            "memory_id": "pflash",
+            "offset": 5,
+            "length": 1
+          },
+          {
+            "memory_id": "pflash",
+            "offset": 48,
+            "length": 2
+          },
+          {
+            "memory_id": "pflash",
+            "offset": 62,
+            "length": 1
+          }
+        ],
+        "unbound_maps": [
+          "syn.z"
+        ],
+        "not_evaluated": [
+          {
+            "check": "identification",
+            "reason": "no_admitted_plugin"
+          },
+          {
+            "check": "layout",
+            "reason": "no_admitted_plugin"
+          },
+          {
+            "check": "map_rules",
+            "reason": "no_rule_table"
+          },
+          {
+            "check": "verify",
+            "reason": "no_admitted_plugin"
+          }
+        ],
+        "checksum_status": "not_verified",
+        "versions": {
+          "core": "0.0.0-synthetic"
+        },
+        "python": {
+          "implementation": "cpython",
+          "version": "3.12.3"
+        },
+        "build": {
+          "kind": "image",
+          "value": "sha256:bbb9a30ac377725931b09171c74994e4428edd32294adb6bf49285e786715299",
+          "platform": "linux/amd64",
+          "attestation_id": null
+        },
+        "reproducibility": "full"
+      },
+      "record_hash": "d88cde0df247b300c9e293cf65549e197e9a62bb949321d951fd1705c7ec4810",
+      "key_id": "83299ff053ca22658116fb63fbcfbadabfd166ac75b2a523cbe5210c7d08ef79",
+      "signature": "77150b2adaafddb64dae4b712a568d536e54b06607294401de14c6db58e47bda23252cb4a2b6e52d1061fa7fae6abcd06a044524d76026377c66c144143b6a04"
+    },
+    "signing_input": "{\"domain\":\"impact.generic-audit-signature.v1\",\"hash\":\"d88cde0df247b300c9e293cf65549e197e9a62bb949321d951fd1705c7ec4810\"}",
+    "trust": [
+      "694d3d57ad563b08528d38dcc8debc8e82555ebff6932f348d1ba81031208085"
+    ],
+    "test_mode": true,
+    "tampers": [
+      {
+        "id": "G1",
+        "note": "a record field changed",
+        "mutation": {
+          "path": [
+            "record",
+            "candidate_origin"
+          ],
+          "value": "bench_read"
+        },
+        "test_mode": true,
+        "expect": [
+          "record_hash_mismatch"
+        ]
+      },
+      {
+        "id": "G2",
+        "note": "record_hash replaced by another record's hash",
+        "mutation": {
+          "path": [
+            "record_hash"
+          ],
+          "value": "28f10ba60fea2a9ea8e3b4816c72eb6eb6b9d92c1384a5fe14a2db9218fa08b8"
+        },
+        "test_mode": true,
+        "expect": [
+          "bad_signature",
+          "record_hash_mismatch"
+        ]
+      },
+      {
+        "id": "G3",
+        "note": "a signature byte flipped",
+        "mutation": {
+          "path": [
+            "signature"
+          ],
+          "value": "00150b2adaafddb64dae4b712a568d536e54b06607294401de14c6db58e47bda23252cb4a2b6e52d1061fa7fae6abcd06a044524d76026377c66c144143b6a04"
+        },
+        "test_mode": true,
+        "expect": [
+          "bad_signature"
+        ]
+      },
+      {
+        "id": "G4",
+        "note": "signed by a key outside the trust list",
+        "mutation": {
+          "path": [
+            "key_id"
+          ],
+          "value": "215a6e4e17f7933ade9985809611df16d59467452146874d0620c7f7fb379b33"
+        },
+        "test_mode": true,
+        "expect": [
+          "unknown_key"
+        ]
+      },
+      {
+        "id": "G5",
+        "note": "the synthetic key outside test mode",
+        "mutation": null,
+        "test_mode": false,
+        "expect": [
+          "test_key"
+        ]
+      },
+      {
+        "id": "G6",
+        "note": "a record that is not a GenericAuditRecord",
+        "mutation": {
+          "path": [
+            "record",
+            "checksum_status"
+          ],
+          "value": "ok"
+        },
+        "test_mode": true,
+        "expect": [
+          "bad_record"
+        ]
+      },
+      {
+        "id": "G7",
+        "note": "a missing member",
+        "mutation": {
+          "path": [
+            "schema"
+          ],
+          "value": "impact.report.v1"
+        },
+        "test_mode": true,
+        "expect": [
+          "bad_shape"
+        ]
+      }
+    ]
+  },
+  "generic_audit_no_rule_table": {
+    "rules": [
+      "R113",
+      "R115"
+    ],
+    "value": {
+      "schema": "impact.generic-audit-record.v1",
+      "dump_kind": "bench_full",
+      "image_hash_original": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+      "image_hash_candidate": "f9f991d09643923bc35140b78aeddde28db40dc73b3bee749a18301cc5b3ca7b",
+      "candidate_origin": "file_service",
+      "definition_hash": "45a950685ba36a6323d79239c5ff39394f2ef361e80c9219f9fe859d75135c38",
+      "changes": [
+        {
+          "memory_id": "dflash",
+          "offset": 0,
+          "length": 1,
+          "patch_hash": "ba7f8533e4b8823110d55514778202e0aa05aef8e9c041eb9d01490f21fa03a0",
+          "map_ids": []
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 5,
+          "length": 1,
+          "patch_hash": "e3648b45e11dbed1996239b345de597d757c4309fc7a1fb7627b749885a8072f",
+          "map_ids": []
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 20,
+          "length": 1,
+          "patch_hash": "33f5b39a34688a7b0abd1331ff380c25cd300076a85b91f8f391eded2ae554bc",
+          "map_ids": [
+            "syn.a"
+          ]
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 38,
+          "length": 4,
+          "patch_hash": "41371c7f3e696f707379bf43473994cf655fdf13a24152b9a5ff35c4bca62b08",
+          "map_ids": [
+            "syn.a",
+            "syn.b"
+          ]
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 47,
+          "length": 3,
+          "patch_hash": "1632bf63923ceb81d94330cf341a09da2e14c8b322e6029255c19e45b3d87b89",
+          "map_ids": [
+            "syn.b"
+          ]
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 62,
+          "length": 1,
+          "patch_hash": "062869fb2bb48f3bba1cff17a1eb548eba1fe88b7a3fe27e56a8327beb5e5d3d",
+          "map_ids": []
+        }
+      ],
+      "outside_known_maps": [
+        {
+          "memory_id": "dflash",
+          "offset": 0,
+          "length": 1
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 5,
+          "length": 1
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 48,
+          "length": 2
+        },
+        {
+          "memory_id": "pflash",
+          "offset": 62,
+          "length": 1
+        }
+      ],
+      "unbound_maps": [
+        "syn.z"
+      ],
+      "not_evaluated": [
+        {
+          "check": "identification",
+          "reason": "no_rule_table"
+        },
+        {
+          "check": "layout",
+          "reason": "no_rule_table"
+        },
+        {
+          "check": "map_rules",
+          "reason": "no_rule_table"
+        },
+        {
+          "check": "verify",
+          "reason": "no_rule_table"
+        }
+      ],
+      "checksum_status": "not_verified",
+      "versions": {
+        "core": "0.0.0-synthetic"
+      },
+      "python": {
+        "implementation": "cpython",
+        "version": "3.12.3"
+      },
+      "build": {
+        "kind": "image",
+        "value": "sha256:bbb9a30ac377725931b09171c74994e4428edd32294adb6bf49285e786715299",
+        "platform": "linux/amd64",
+        "attestation_id": null
+      },
+      "reproducibility": "full"
+    },
+    "jcs": "{\"build\":{\"attestation_id\":null,\"kind\":\"image\",\"platform\":\"linux/amd64\",\"value\":\"sha256:bbb9a30ac377725931b09171c74994e4428edd32294adb6bf49285e786715299\"},\"candidate_origin\":\"file_service\",\"changes\":[{\"length\":1,\"map_ids\":[],\"memory_id\":\"dflash\",\"offset\":0,\"patch_hash\":\"ba7f8533e4b8823110d55514778202e0aa05aef8e9c041eb9d01490f21fa03a0\"},{\"length\":1,\"map_ids\":[],\"memory_id\":\"pflash\",\"offset\":5,\"patch_hash\":\"e3648b45e11dbed1996239b345de597d757c4309fc7a1fb7627b749885a8072f\"},{\"length\":1,\"map_ids\":[\"syn.a\"],\"memory_id\":\"pflash\",\"offset\":20,\"patch_hash\":\"33f5b39a34688a7b0abd1331ff380c25cd300076a85b91f8f391eded2ae554bc\"},{\"length\":4,\"map_ids\":[\"syn.a\",\"syn.b\"],\"memory_id\":\"pflash\",\"offset\":38,\"patch_hash\":\"41371c7f3e696f707379bf43473994cf655fdf13a24152b9a5ff35c4bca62b08\"},{\"length\":3,\"map_ids\":[\"syn.b\"],\"memory_id\":\"pflash\",\"offset\":47,\"patch_hash\":\"1632bf63923ceb81d94330cf341a09da2e14c8b322e6029255c19e45b3d87b89\"},{\"length\":1,\"map_ids\":[],\"memory_id\":\"pflash\",\"offset\":62,\"patch_hash\":\"062869fb2bb48f3bba1cff17a1eb548eba1fe88b7a3fe27e56a8327beb5e5d3d\"}],\"checksum_status\":\"not_verified\",\"definition_hash\":\"45a950685ba36a6323d79239c5ff39394f2ef361e80c9219f9fe859d75135c38\",\"dump_kind\":\"bench_full\",\"image_hash_candidate\":\"f9f991d09643923bc35140b78aeddde28db40dc73b3bee749a18301cc5b3ca7b\",\"image_hash_original\":\"5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2\",\"not_evaluated\":[{\"check\":\"identification\",\"reason\":\"no_rule_table\"},{\"check\":\"layout\",\"reason\":\"no_rule_table\"},{\"check\":\"map_rules\",\"reason\":\"no_rule_table\"},{\"check\":\"verify\",\"reason\":\"no_rule_table\"}],\"outside_known_maps\":[{\"length\":1,\"memory_id\":\"dflash\",\"offset\":0},{\"length\":1,\"memory_id\":\"pflash\",\"offset\":5},{\"length\":2,\"memory_id\":\"pflash\",\"offset\":48},{\"length\":1,\"memory_id\":\"pflash\",\"offset\":62}],\"python\":{\"implementation\":\"cpython\",\"version\":\"3.12.3\"},\"reproducibility\":\"full\",\"schema\":\"impact.generic-audit-record.v1\",\"unbound_maps\":[\"syn.z\"],\"versions\":{\"core\":\"0.0.0-synthetic\"}}",
+    "generic_audit_hash": "d81df43872f1cbb5f71b2929538a4bda4e2f7f9cfaa2cddb4c67cfc4cc698435"
+  }
 }

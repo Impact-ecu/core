@@ -8,6 +8,7 @@ from core.provenance._json import sha256_hex, signing_input
 REPORT_DOMAIN = "impact.report-signature.v1"
 ANCHOR_DOMAIN = "impact.anchor-signature.v1"
 KEY_EVENT_DOMAIN = "impact.key-event-signature.v1"
+GENERIC_AUDIT_DOMAIN = "impact.generic-audit-signature.v1"
 
 # R56: the synthetic keys of SPEC-005 §12 (`key.key_id`) and SPEC-006 §12 (`keys`). A test checks this set
 # against both vector files, so it cannot drift from them.

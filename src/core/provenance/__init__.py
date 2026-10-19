@@ -1,4 +1,4 @@
-"""Provenance (SPEC-005): export and audit records, the per-signer event chain, anchors, signed reports.
+"""Provenance (SPEC-005): export, audit and generic audit records, the per-signer event chain, anchors, signed reports.
 
 Pure (R90): no I/O, network, clock, randomness, threads or global state; the only environment read is the
 interpreter identity of R15. Ids, timestamps, nonces, `build`, the `Signer` and the `Verifier` are inputs.
@@ -25,6 +25,19 @@ from core.provenance._events import (
     key_event_hash,
     parse_event,
     sign_key_event,
+)
+from core.provenance._generic import (
+    ChangedRun,
+    GenericAuditInputs,
+    GenericAuditRecord,
+    GenericAuditReport,
+    GenericReportCheck,
+    KnownMaps,
+    PluginReason,
+    changed_ranges,
+    generic_audit_record,
+    sign_generic_audit,
+    verify_generic_audit_report,
 )
 from core.provenance._json import Json, Raw
 from core.provenance._records import (
@@ -79,6 +92,7 @@ __all__ = [
     "AuditRecord",
     "Build",
     "ChainReport",
+    "ChangedRun",
     "Checkpoint",
     "CheckpointKey",
     "Draft",
@@ -88,9 +102,15 @@ __all__ = [
     "ExportInputs",
     "ExportProvenance",
     "Finding",
+    "GenericAuditInputs",
+    "GenericAuditRecord",
+    "GenericAuditReport",
+    "GenericReportCheck",
     "Head",
     "Json",
+    "KnownMaps",
     "Missing",
+    "PluginReason",
     "PluginVersion",
     "ProvenanceError",
     "Raw",
@@ -110,6 +130,7 @@ __all__ = [
     "append",
     "audit_record",
     "audit_report",
+    "changed_ranges",
     "check_alert_ack",
     "check_export_record",
     "check_report_file",
@@ -118,14 +139,17 @@ __all__ = [
     "event_hash",
     "export_provenance",
     "export_report",
+    "generic_audit_record",
     "genesis",
     "issue_report",
     "key_event_hash",
     "make_anchor",
     "parse_anchor",
     "parse_event",
+    "sign_generic_audit",
     "sign_key_event",
     "verify_chain",
+    "verify_generic_audit_report",
     "verify_segment",
     "verify_tenant",
 ]
