@@ -35,11 +35,11 @@ jobs:
       - name: Install (locked)
         run: uv sync --locked --python python3.12
       - name: ruff check
-        run: uv run --locked ruff check src tests
+        run: uv run --locked ruff check src tests tools
       - name: ruff format
-        run: uv run --locked ruff format --check src tests
+        run: uv run --locked ruff format --check src tests tools
       - name: mypy --strict
-        run: uv run --locked mypy --strict src tests
+        run: uv run --locked mypy --strict src tests tools
       - name: import-linter
         run: uv run --locked lint-imports
       - name: pytest (Hypothesis ci profile, 100% line and branch coverage)
@@ -48,4 +48,16 @@ jobs:
         run: |
           for d in specs/vectors/spec-*/; do
             python3 -I "${d}crosscheck.py" "${d}vectors.json"
+          done
+      - name: SPEC-005 R76 reproduction script on the vector bundles (runner python3 -I, outside the venv)
+        run: |
+          uv run --locked python -m tests.reproduce.bundles "$RUNNER_TEMP/bundles"
+          for b in "$RUNNER_TEMP"/bundles/*.json; do
+            status=0
+            python3 -I tools/reproduce/reproduce.py "$b" > "$b.out" || status=$?
+            case "$(basename "$b")" in
+              reproduced.*) want=0 ;;
+              *) want=1 ;;
+            esac
+            if [ "$status" -ne "$want" ]; then cat "$b.out"; echo "::error::$b exited $status, expected $want"; exit 1; fi
           done
