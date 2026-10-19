@@ -1,0 +1,3235 @@
+{
+  "spec": "SPEC-003",
+  "generator": {
+    "rfc8785": "0.1.4",
+    "python": "3.12.3"
+  },
+  "rationals": [
+    {
+      "id": "Q1",
+      "grammar": "xdf_decimal",
+      "text": "0.000123",
+      "expect": {
+        "value": "123/1000000"
+      }
+    },
+    {
+      "id": "Q2",
+      "grammar": "a2l_number",
+      "text": "256.000000",
+      "expect": {
+        "value": "256"
+      }
+    },
+    {
+      "id": "Q3",
+      "grammar": "a2l_number",
+      "text": "-0.5",
+      "expect": {
+        "value": "-1/2"
+      }
+    },
+    {
+      "id": "Q4",
+      "grammar": "a2l_number",
+      "text": "1.5e-3",
+      "expect": {
+        "value": "3/2000"
+      }
+    },
+    {
+      "id": "Q5",
+      "grammar": "a2l_number",
+      "text": "-0",
+      "expect": {
+        "value": "0"
+      }
+    },
+    {
+      "id": "Q6",
+      "grammar": "a2l_number",
+      "text": "1E3",
+      "expect": {
+        "value": "1000"
+      }
+    },
+    {
+      "id": "Q7",
+      "grammar": "xdf_decimal",
+      "text": "0.10",
+      "expect": {
+        "value": "1/10"
+      }
+    },
+    {
+      "id": "Q8",
+      "grammar": "xdf_decimal",
+      "text": "1.5e-3",
+      "expect": {
+        "error": "bad_number"
+      }
+    },
+    {
+      "id": "Q9",
+      "grammar": "a2l_number",
+      "text": "1e",
+      "expect": {
+        "error": "bad_number"
+      }
+    },
+    {
+      "id": "Q10",
+      "grammar": "a2l_number",
+      "text": "0x10",
+      "expect": {
+        "error": "bad_number"
+      }
+    },
+    {
+      "id": "Q11",
+      "grammar": "xdf_decimal",
+      "text": "-2.50",
+      "expect": {
+        "value": "-5/2"
+      }
+    },
+    {
+      "id": "Q12",
+      "grammar": "rational_text",
+      "text": "-7/4",
+      "expect": {
+        "value": "-7/4"
+      }
+    },
+    {
+      "id": "Q13",
+      "grammar": "rational_text",
+      "text": "2/4",
+      "expect": {
+        "error": "bad_rational"
+      }
+    },
+    {
+      "id": "Q14",
+      "grammar": "rational_text",
+      "text": "3/1",
+      "expect": {
+        "error": "bad_rational"
+      }
+    },
+    {
+      "id": "Q15",
+      "grammar": "rational_text",
+      "text": "-0",
+      "expect": {
+        "error": "bad_rational"
+      }
+    },
+    {
+      "id": "Q16",
+      "grammar": "rational_text",
+      "text": "1/0",
+      "expect": {
+        "error": "bad_rational"
+      }
+    }
+  ],
+  "decode": [
+    {
+      "id": "C1",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "uint",
+        "bits": 8,
+        "byte_order": "none"
+      },
+      "bytes_hex": "ff",
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "expect": {
+        "raw": "255",
+        "physical": "255"
+      }
+    },
+    {
+      "id": "C2",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "int",
+        "bits": 8,
+        "byte_order": "none"
+      },
+      "bytes_hex": "80",
+      "scaling": {
+        "factor": "3/4",
+        "addend": "0"
+      },
+      "expect": {
+        "raw": "-128",
+        "physical": "-96"
+      }
+    },
+    {
+      "id": "C3",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "uint",
+        "bits": 16,
+        "byte_order": "le"
+      },
+      "bytes_hex": "3412",
+      "scaling": {
+        "factor": "1/4",
+        "addend": "0"
+      },
+      "expect": {
+        "raw": "4660",
+        "physical": "1165"
+      }
+    },
+    {
+      "id": "C4",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "uint",
+        "bits": 16,
+        "byte_order": "be"
+      },
+      "bytes_hex": "1234",
+      "scaling": {
+        "factor": "1/4",
+        "addend": "0"
+      },
+      "expect": {
+        "raw": "4660",
+        "physical": "1165"
+      }
+    },
+    {
+      "id": "C5",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "int",
+        "bits": 16,
+        "byte_order": "be"
+      },
+      "bytes_hex": "fffe",
+      "scaling": {
+        "factor": "1/10",
+        "addend": "5"
+      },
+      "expect": {
+        "raw": "-2",
+        "physical": "24/5"
+      }
+    },
+    {
+      "id": "C6",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "int",
+        "bits": 16,
+        "byte_order": "le"
+      },
+      "bytes_hex": "0080",
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "expect": {
+        "raw": "-32768",
+        "physical": "-32768"
+      }
+    },
+    {
+      "id": "C7",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "uint",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "bytes_hex": "deadbeef",
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "expect": {
+        "raw": "3735928559",
+        "physical": "3735928559"
+      }
+    },
+    {
+      "id": "C8",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "int",
+        "bits": 32,
+        "byte_order": "le"
+      },
+      "bytes_hex": "ffffffff",
+      "scaling": {
+        "factor": "1/250",
+        "addend": "1/2"
+      },
+      "expect": {
+        "raw": "-1",
+        "physical": "62/125"
+      }
+    },
+    {
+      "id": "C9",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "bytes_hex": "3fc00000",
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "expect": {
+        "raw": "3/2",
+        "physical": "3/2"
+      }
+    },
+    {
+      "id": "C10",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "le"
+      },
+      "bytes_hex": "0000c03f",
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "expect": {
+        "raw": "3/2",
+        "physical": "3/2"
+      }
+    },
+    {
+      "id": "C11",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "bytes_hex": "3dcccccd",
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "expect": {
+        "raw": "13421773/134217728",
+        "physical": "13421773/134217728"
+      }
+    },
+    {
+      "id": "C12",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "bytes_hex": "80000000",
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "expect": {
+        "raw": "0",
+        "physical": "0"
+      }
+    },
+    {
+      "id": "C13",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "bytes_hex": "00000001",
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "expect": {
+        "raw": "1/713623846352979940529142984724747568191373312",
+        "physical": "1/713623846352979940529142984724747568191373312"
+      }
+    },
+    {
+      "id": "C14",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "bytes_hex": "7f7fffff",
+      "scaling": {
+        "factor": "2",
+        "addend": "-1"
+      },
+      "expect": {
+        "raw": "340282346638528859811704183484516925440",
+        "physical": "680564693277057719623408366969033850879"
+      }
+    },
+    {
+      "id": "C15",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "bytes_hex": "7f800000",
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "expect": {
+        "raw": "non_finite",
+        "physical": "non_finite"
+      }
+    },
+    {
+      "id": "C16",
+      "rules": [
+        "R6",
+        "R7",
+        "R12"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "le"
+      },
+      "bytes_hex": "0000c07f",
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "expect": {
+        "raw": "non_finite",
+        "physical": "non_finite"
+      }
+    }
+  ],
+  "encode": [
+    {
+      "id": "E1",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "uint",
+        "bits": 8,
+        "byte_order": "none"
+      },
+      "scaling": {
+        "factor": "2",
+        "addend": "0"
+      },
+      "target": "3",
+      "current_hex": null,
+      "expect": {
+        "bytes_hex": "02"
+      }
+    },
+    {
+      "id": "E2",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "uint",
+        "bits": 8,
+        "byte_order": "none"
+      },
+      "scaling": {
+        "factor": "2",
+        "addend": "0"
+      },
+      "target": "5",
+      "current_hex": null,
+      "expect": {
+        "bytes_hex": "02"
+      }
+    },
+    {
+      "id": "E3",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "uint",
+        "bits": 8,
+        "byte_order": "none"
+      },
+      "scaling": {
+        "factor": "2",
+        "addend": "0"
+      },
+      "target": "7",
+      "current_hex": null,
+      "expect": {
+        "bytes_hex": "04"
+      }
+    },
+    {
+      "id": "E4",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "int",
+        "bits": 8,
+        "byte_order": "none"
+      },
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "target": "-129",
+      "current_hex": null,
+      "expect": {
+        "error": "out_of_range"
+      }
+    },
+    {
+      "id": "E5",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "uint",
+        "bits": 16,
+        "byte_order": "le"
+      },
+      "scaling": {
+        "factor": "1/4",
+        "addend": "0"
+      },
+      "target": "1165",
+      "current_hex": null,
+      "expect": {
+        "bytes_hex": "3412"
+      }
+    },
+    {
+      "id": "E6",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "int",
+        "bits": 16,
+        "byte_order": "be"
+      },
+      "scaling": {
+        "factor": "1/10",
+        "addend": "5"
+      },
+      "target": "24/5",
+      "current_hex": null,
+      "expect": {
+        "bytes_hex": "fffe"
+      }
+    },
+    {
+      "id": "E7",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "target": "3/2",
+      "current_hex": null,
+      "expect": {
+        "bytes_hex": "3fc00000"
+      }
+    },
+    {
+      "id": "E8",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "target": "16777217/16777216",
+      "current_hex": null,
+      "expect": {
+        "bytes_hex": "3f800000"
+      }
+    },
+    {
+      "id": "E9",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "target": "16777219/16777216",
+      "current_hex": null,
+      "expect": {
+        "bytes_hex": "3f800002"
+      }
+    },
+    {
+      "id": "E10",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "target": "1/10",
+      "current_hex": null,
+      "expect": {
+        "bytes_hex": "3dcccccd"
+      }
+    },
+    {
+      "id": "E11",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "target": "340282356779733661637539395458142568448",
+      "current_hex": null,
+      "expect": {
+        "error": "out_of_range"
+      }
+    },
+    {
+      "id": "E12",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "target": "340282356779733661637539395458142568447",
+      "current_hex": null,
+      "expect": {
+        "bytes_hex": "7f7fffff"
+      }
+    },
+    {
+      "id": "E13",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "target": "0",
+      "current_hex": "80000000",
+      "expect": {
+        "bytes_hex": "80000000"
+      }
+    },
+    {
+      "id": "E14",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "uint",
+        "bits": 8,
+        "byte_order": "none"
+      },
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "target": "256",
+      "current_hex": null,
+      "expect": {
+        "error": "out_of_range"
+      }
+    },
+    {
+      "id": "E15",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "le"
+      },
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "target": "1/1427247692705959881058285969449495136382746624",
+      "current_hex": null,
+      "expect": {
+        "bytes_hex": "00000000"
+      }
+    },
+    {
+      "id": "E16",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "int",
+        "bits": 16,
+        "byte_order": "le"
+      },
+      "scaling": {
+        "factor": "-1/2",
+        "addend": "0"
+      },
+      "target": "3/4",
+      "current_hex": null,
+      "expect": {
+        "bytes_hex": "feff"
+      }
+    },
+    {
+      "id": "E17",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "target": "-3/1427247692705959881058285969449495136382746624",
+      "current_hex": null,
+      "expect": {
+        "bytes_hex": "80000002"
+      }
+    },
+    {
+      "id": "E18",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "target": "-1/2854495385411919762116571938898990272765493248",
+      "current_hex": null,
+      "expect": {
+        "bytes_hex": "00000000"
+      }
+    },
+    {
+      "id": "E19",
+      "rules": [
+        "R13",
+        "R14",
+        "R15"
+      ],
+      "dtype": {
+        "kind": "float",
+        "bits": 32,
+        "byte_order": "be"
+      },
+      "scaling": {
+        "factor": "2",
+        "addend": "5"
+      },
+      "target": "5",
+      "current_hex": "80000000",
+      "expect": {
+        "bytes_hex": "80000000"
+      }
+    }
+  ],
+  "units": [
+    {
+      "id": "U1",
+      "unit_text": "us",
+      "scaling": {
+        "factor": "4",
+        "addend": "500"
+      },
+      "expect": {
+        "unit": "ms",
+        "unit_text": null,
+        "scaling": {
+          "factor": "1/250",
+          "addend": "1/2"
+        }
+      }
+    },
+    {
+      "id": "U2",
+      "unit_text": "1/min",
+      "scaling": {
+        "factor": "1/4",
+        "addend": "0"
+      },
+      "expect": {
+        "unit": "rpm",
+        "unit_text": null,
+        "scaling": {
+          "factor": "1/4",
+          "addend": "0"
+        }
+      }
+    },
+    {
+      "id": "U3",
+      "unit_text": "kPa",
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "expect": {
+        "unit": null,
+        "unit_text": "kPa",
+        "scaling": {
+          "factor": "1",
+          "addend": "0"
+        }
+      }
+    },
+    {
+      "id": "U4",
+      "unit_text": "°C",
+      "scaling": {
+        "factor": "3/4",
+        "addend": "-48"
+      },
+      "expect": {
+        "unit": "degC",
+        "unit_text": null,
+        "scaling": {
+          "factor": "3/4",
+          "addend": "-48"
+        }
+      }
+    },
+    {
+      "id": "U5",
+      "unit_text": "s",
+      "scaling": {
+        "factor": "1/1000",
+        "addend": "0"
+      },
+      "expect": {
+        "unit": "ms",
+        "unit_text": null,
+        "scaling": {
+          "factor": "1",
+          "addend": "0"
+        }
+      }
+    },
+    {
+      "id": "U6",
+      "unit_text": "RPM",
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "expect": {
+        "unit": null,
+        "unit_text": "RPM",
+        "scaling": {
+          "factor": "1",
+          "addend": "0"
+        }
+      }
+    },
+    {
+      "id": "U7",
+      "unit_text": "s",
+      "scaling": {
+        "factor": "1/3",
+        "addend": "0"
+      },
+      "expect": {
+        "unit": null,
+        "unit_text": "s",
+        "scaling": {
+          "factor": "1/3",
+          "addend": "0"
+        }
+      }
+    }
+  ],
+  "a2l_compu": [
+    {
+      "id": "A1a",
+      "conversion_type": "IDENTICAL",
+      "coeffs": [],
+      "expect": {
+        "scaling": {
+          "factor": "1",
+          "addend": "0"
+        }
+      }
+    },
+    {
+      "id": "A1b",
+      "conversion_type": "LINEAR",
+      "coeffs": [
+        "0.75",
+        "-48"
+      ],
+      "expect": {
+        "scaling": {
+          "factor": "3/4",
+          "addend": "-48"
+        }
+      }
+    },
+    {
+      "id": "A1c",
+      "conversion_type": "RAT_FUNC",
+      "coeffs": [
+        "0",
+        "64.000000",
+        "0.000000",
+        "0",
+        "0.000000",
+        "5.000000"
+      ],
+      "expect": {
+        "scaling": {
+          "factor": "5/64",
+          "addend": "0"
+        }
+      }
+    },
+    {
+      "id": "A1d",
+      "conversion_type": "RAT_FUNC",
+      "coeffs": [
+        "0",
+        "2",
+        "-10",
+        "0",
+        "0",
+        "1"
+      ],
+      "expect": {
+        "scaling": {
+          "factor": "1/2",
+          "addend": "5"
+        }
+      }
+    },
+    {
+      "id": "A1e",
+      "conversion_type": "RAT_FUNC",
+      "coeffs": [
+        "1",
+        "2",
+        "0",
+        "0",
+        "0",
+        "1"
+      ],
+      "expect": {
+        "error": "unsupported_conversion"
+      }
+    },
+    {
+      "id": "A1f",
+      "conversion_type": "RAT_FUNC",
+      "coeffs": [
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1"
+      ],
+      "expect": {
+        "error": "unsupported_conversion"
+      }
+    },
+    {
+      "id": "A1g",
+      "conversion_type": "RAT_FUNC",
+      "coeffs": [
+        "0",
+        "1",
+        "0",
+        "0",
+        "1",
+        "0"
+      ],
+      "expect": {
+        "error": "unsupported_conversion"
+      }
+    },
+    {
+      "id": "A1h",
+      "conversion_type": "LINEAR",
+      "coeffs": [
+        "0",
+        "5"
+      ],
+      "expect": {
+        "error": "zero_factor"
+      }
+    },
+    {
+      "id": "A1i",
+      "conversion_type": "TAB_VERB",
+      "coeffs": [],
+      "expect": {
+        "error": "unsupported_conversion"
+      }
+    },
+    {
+      "id": "A1j",
+      "conversion_type": "FORM",
+      "coeffs": [],
+      "expect": {
+        "error": "unsupported_conversion"
+      }
+    }
+  ],
+  "a2l_export": [
+    {
+      "id": "A2a",
+      "scaling": {
+        "factor": "2/5",
+        "addend": "50"
+      },
+      "expect": {
+        "coeffs": [
+          0,
+          5,
+          -250,
+          0,
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "id": "A2b",
+      "scaling": {
+        "factor": "1/250",
+        "addend": "1/2"
+      },
+      "expect": {
+        "coeffs": [
+          0,
+          250,
+          -125,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "A2c",
+      "scaling": {
+        "factor": "-3/4",
+        "addend": "-48"
+      },
+      "expect": {
+        "coeffs": [
+          0,
+          4,
+          192,
+          0,
+          0,
+          -3
+        ]
+      }
+    },
+    {
+      "id": "A2d",
+      "scaling": {
+        "factor": "1",
+        "addend": "0"
+      },
+      "expect": {
+        "coeffs": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    }
+  ],
+  "mapdefs": {
+    "M1": {
+      "rules": [
+        "R26",
+        "R51"
+      ],
+      "value": {
+        "map_id": "syn.scalar",
+        "name": "SYN_SCALAR",
+        "category": null,
+        "map_type": null,
+        "state": "proposed",
+        "memory_id": "cal",
+        "offset": 128,
+        "dims": {
+          "rows": 1,
+          "cols": 1
+        },
+        "cell_order": "x_fastest",
+        "dtype": {
+          "kind": "uint",
+          "bits": 8,
+          "byte_order": "none"
+        },
+        "scaling": {
+          "factor": "1",
+          "addend": "0"
+        },
+        "unit": "one",
+        "unit_text": null,
+        "axes": {
+          "x": null,
+          "y": null
+        }
+      },
+      "mapdef_hash": "ecb8476d7b3fbf92fdedf42ae66c33013c7b2727590bc79037154dbad6a7433c"
+    },
+    "M2": {
+      "rules": [
+        "R28",
+        "R51"
+      ],
+      "derive": {
+        "memory_id": "cal",
+        "name": "SYN_SCALAR",
+        "offset": 128
+      },
+      "value": {
+        "map_id": "m_927ce404e4d69dce23c52758",
+        "name": "SYN_SCALAR",
+        "category": null,
+        "map_type": null,
+        "state": "proposed",
+        "memory_id": "cal",
+        "offset": 128,
+        "dims": {
+          "rows": 1,
+          "cols": 1
+        },
+        "cell_order": "x_fastest",
+        "dtype": {
+          "kind": "uint",
+          "bits": 8,
+          "byte_order": "none"
+        },
+        "scaling": {
+          "factor": "1",
+          "addend": "0"
+        },
+        "unit": "one",
+        "unit_text": null,
+        "axes": {
+          "x": null,
+          "y": null
+        }
+      },
+      "mapdef_hash": "a0b69d9e88776821566ce2275f9c06d30b0744e9f05471ff93dcefb276740c3b"
+    }
+  },
+  "definitions": {
+    "D1": {
+      "rules": [
+        "R20",
+        "R21",
+        "R23",
+        "R34",
+        "R35",
+        "R36",
+        "R37",
+        "R38",
+        "R51",
+        "R52"
+      ],
+      "value": {
+        "spec": "SPEC-003/1",
+        "family_id": "synthetic.test",
+        "software_version": {
+          "match": "exact",
+          "values": [
+            "SYN0001",
+            "SYN0002"
+          ]
+        },
+        "axes": [
+          {
+            "axis_id": "syn.rpm_axis",
+            "name": "SYN_RPM_AXIS",
+            "axis": {
+              "axis_source": "inline",
+              "memory_id": "cal",
+              "offset": 512,
+              "count": 4,
+              "dtype": {
+                "kind": "uint",
+                "bits": 16,
+                "byte_order": "be"
+              },
+              "scaling": {
+                "factor": "25",
+                "addend": "0"
+              },
+              "unit": "rpm",
+              "unit_text": null
+            }
+          }
+        ],
+        "mapdefs": [
+          {
+            "map_id": "syn.dead_time",
+            "name": "SYN_DEAD_TIME",
+            "category": "injector_dead_time",
+            "map_type": "base",
+            "state": "proposed",
+            "memory_id": "cal",
+            "offset": 16,
+            "dims": {
+              "rows": 1,
+              "cols": 1
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "uint",
+              "bits": 16,
+              "byte_order": "le"
+            },
+            "scaling": {
+              "factor": "1/250",
+              "addend": "1/2"
+            },
+            "unit": "ms",
+            "unit_text": null,
+            "axes": {
+              "x": null,
+              "y": null
+            }
+          },
+          {
+            "map_id": "syn.ign_base",
+            "name": "Zündwinkel Basis",
+            "category": "ignition",
+            "map_type": "base",
+            "state": "reviewed",
+            "memory_id": "cal",
+            "offset": 0,
+            "dims": {
+              "rows": 3,
+              "cols": 4
+            },
+            "cell_order": "y_fastest",
+            "dtype": {
+              "kind": "int",
+              "bits": 8,
+              "byte_order": "none"
+            },
+            "scaling": {
+              "factor": "3/4",
+              "addend": "0"
+            },
+            "unit": "deg_crank",
+            "unit_text": null,
+            "axes": {
+              "x": {
+                "axis_source": "shared",
+                "axis_id": "syn.rpm_axis"
+              },
+              "y": {
+                "axis_source": "fixed",
+                "values": [
+                  "20",
+                  "121/2",
+                  "100"
+                ],
+                "unit": "kPa_rel",
+                "unit_text": null
+              }
+            }
+          },
+          {
+            "map_id": "syn.lambda_target",
+            "name": "SYN_LAMBDA_TARGET",
+            "category": "lambda",
+            "map_type": "base",
+            "state": "golden",
+            "memory_id": "cal",
+            "offset": 96,
+            "dims": {
+              "rows": 1,
+              "cols": 4
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "uint",
+              "bits": 16,
+              "byte_order": "be"
+            },
+            "scaling": {
+              "factor": "1/1000",
+              "addend": "0"
+            },
+            "unit": "lambda",
+            "unit_text": null,
+            "axes": {
+              "x": {
+                "axis_source": "shared",
+                "axis_id": "syn.rpm_axis"
+              },
+              "y": null
+            }
+          },
+          {
+            "map_id": "syn.vvt_ptr",
+            "name": "SYN_VVT",
+            "category": "vvt",
+            "map_type": "base",
+            "state": "potential",
+            "memory_id": "cal",
+            "offset": 48,
+            "dims": {
+              "rows": 1,
+              "cols": 2
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "int",
+              "bits": 16,
+              "byte_order": "be"
+            },
+            "scaling": {
+              "factor": "1/16",
+              "addend": "0"
+            },
+            "unit": "deg_crank",
+            "unit_text": null,
+            "axes": {
+              "x": {
+                "axis_source": "pointer",
+                "memory_id": "pflash",
+                "pointer_offset": 16,
+                "pointer_dtype": {
+                  "kind": "uint",
+                  "bits": 32,
+                  "byte_order": "be"
+                },
+                "target_memory_id": "cal",
+                "count": 2,
+                "dtype": {
+                  "kind": "uint",
+                  "bits": 8,
+                  "byte_order": "none"
+                },
+                "scaling": {
+                  "factor": "50",
+                  "addend": "0"
+                },
+                "unit": "rpm",
+                "unit_text": null
+              },
+              "y": null
+            }
+          }
+        ],
+        "origin": {
+          "kind": "platform",
+          "derived_from": []
+        },
+        "license": {
+          "kind": "platform_created",
+          "reference": null
+        },
+        "confidence_permille": 900
+      },
+      "definition_hash": "979c551b91b64ed58a0742b2018a9548531e7977f22957ba75678a55d71687fd",
+      "axisdef_hashes": {
+        "syn.rpm_axis": "4c24f338cb13d5d3d8422514871a92bb3b14a2fd83f13721d03142527b04dc6d"
+      }
+    },
+    "D2": {
+      "rules": [
+        "R35",
+        "R52"
+      ],
+      "input": {
+        "spec": "SPEC-003/1",
+        "family_id": "synthetic.test",
+        "software_version": {
+          "match": "exact",
+          "values": [
+            "SYN0001",
+            "SYN0002"
+          ]
+        },
+        "axes": [
+          {
+            "axis_id": "syn.rpm_axis",
+            "name": "SYN_RPM_AXIS",
+            "axis": {
+              "axis_source": "inline",
+              "memory_id": "cal",
+              "offset": 512,
+              "count": 4,
+              "dtype": {
+                "kind": "uint",
+                "bits": 16,
+                "byte_order": "be"
+              },
+              "scaling": {
+                "factor": "25",
+                "addend": "0"
+              },
+              "unit": "rpm",
+              "unit_text": null
+            }
+          }
+        ],
+        "mapdefs": [
+          {
+            "map_id": "syn.lambda_target",
+            "name": "SYN_LAMBDA_TARGET",
+            "category": "lambda",
+            "map_type": "base",
+            "state": "golden",
+            "memory_id": "cal",
+            "offset": 96,
+            "dims": {
+              "rows": 1,
+              "cols": 4
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "uint",
+              "bits": 16,
+              "byte_order": "be"
+            },
+            "scaling": {
+              "factor": "1/1000",
+              "addend": "0"
+            },
+            "unit": "lambda",
+            "unit_text": null,
+            "axes": {
+              "x": {
+                "axis_source": "shared",
+                "axis_id": "syn.rpm_axis"
+              },
+              "y": null
+            }
+          },
+          {
+            "map_id": "syn.vvt_ptr",
+            "name": "SYN_VVT",
+            "category": "vvt",
+            "map_type": "base",
+            "state": "potential",
+            "memory_id": "cal",
+            "offset": 48,
+            "dims": {
+              "rows": 1,
+              "cols": 2
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "int",
+              "bits": 16,
+              "byte_order": "be"
+            },
+            "scaling": {
+              "factor": "1/16",
+              "addend": "0"
+            },
+            "unit": "deg_crank",
+            "unit_text": null,
+            "axes": {
+              "x": {
+                "axis_source": "pointer",
+                "memory_id": "pflash",
+                "pointer_offset": 16,
+                "pointer_dtype": {
+                  "kind": "uint",
+                  "bits": 32,
+                  "byte_order": "be"
+                },
+                "target_memory_id": "cal",
+                "count": 2,
+                "dtype": {
+                  "kind": "uint",
+                  "bits": 8,
+                  "byte_order": "none"
+                },
+                "scaling": {
+                  "factor": "50",
+                  "addend": "0"
+                },
+                "unit": "rpm",
+                "unit_text": null
+              },
+              "y": null
+            }
+          },
+          {
+            "map_id": "syn.ign_base",
+            "name": "Zündwinkel Basis",
+            "category": "ignition",
+            "map_type": "base",
+            "state": "reviewed",
+            "memory_id": "cal",
+            "offset": 0,
+            "dims": {
+              "rows": 3,
+              "cols": 4
+            },
+            "cell_order": "y_fastest",
+            "dtype": {
+              "kind": "int",
+              "bits": 8,
+              "byte_order": "none"
+            },
+            "scaling": {
+              "factor": "3/4",
+              "addend": "0"
+            },
+            "unit": "deg_crank",
+            "unit_text": null,
+            "axes": {
+              "x": {
+                "axis_source": "shared",
+                "axis_id": "syn.rpm_axis"
+              },
+              "y": {
+                "axis_source": "fixed",
+                "values": [
+                  "20",
+                  "121/2",
+                  "100"
+                ],
+                "unit": "kPa_rel",
+                "unit_text": null
+              }
+            }
+          },
+          {
+            "map_id": "syn.dead_time",
+            "name": "SYN_DEAD_TIME",
+            "category": "injector_dead_time",
+            "map_type": "base",
+            "state": "proposed",
+            "memory_id": "cal",
+            "offset": 16,
+            "dims": {
+              "rows": 1,
+              "cols": 1
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "uint",
+              "bits": 16,
+              "byte_order": "le"
+            },
+            "scaling": {
+              "factor": "1/250",
+              "addend": "1/2"
+            },
+            "unit": "ms",
+            "unit_text": null,
+            "axes": {
+              "x": null,
+              "y": null
+            }
+          }
+        ],
+        "origin": {
+          "kind": "platform",
+          "derived_from": []
+        },
+        "license": {
+          "kind": "platform_created",
+          "reference": null
+        },
+        "confidence_permille": 900
+      },
+      "expect_same_as": "D1",
+      "definition_hash": "979c551b91b64ed58a0742b2018a9548531e7977f22957ba75678a55d71687fd"
+    },
+    "D3": {
+      "rules": [
+        "R51",
+        "R52"
+      ],
+      "value": {
+        "spec": "SPEC-003/1",
+        "family_id": "synthetic.test",
+        "software_version": {
+          "match": "exact",
+          "values": [
+            "SYN0001",
+            "SYN0002"
+          ]
+        },
+        "axes": [
+          {
+            "axis_id": "syn.rpm_axis",
+            "name": "SYN_RPM_AXIS",
+            "axis": {
+              "axis_source": "inline",
+              "memory_id": "cal",
+              "offset": 512,
+              "count": 4,
+              "dtype": {
+                "kind": "uint",
+                "bits": 16,
+                "byte_order": "be"
+              },
+              "scaling": {
+                "factor": "25",
+                "addend": "0"
+              },
+              "unit": "rpm",
+              "unit_text": null
+            }
+          }
+        ],
+        "mapdefs": [
+          {
+            "map_id": "syn.dead_time",
+            "name": "SYN_DEAD_TIME",
+            "category": "injector_dead_time",
+            "map_type": "base",
+            "state": "proposed",
+            "memory_id": "cal",
+            "offset": 16,
+            "dims": {
+              "rows": 1,
+              "cols": 1
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "uint",
+              "bits": 16,
+              "byte_order": "le"
+            },
+            "scaling": {
+              "factor": "1/250",
+              "addend": "1/2"
+            },
+            "unit": "ms",
+            "unit_text": null,
+            "axes": {
+              "x": null,
+              "y": null
+            }
+          },
+          {
+            "map_id": "syn.ign_base",
+            "name": "Zündwinkel Basis",
+            "category": "ignition",
+            "map_type": "base",
+            "state": "proposed",
+            "memory_id": "cal",
+            "offset": 0,
+            "dims": {
+              "rows": 3,
+              "cols": 4
+            },
+            "cell_order": "y_fastest",
+            "dtype": {
+              "kind": "int",
+              "bits": 8,
+              "byte_order": "none"
+            },
+            "scaling": {
+              "factor": "3/4",
+              "addend": "0"
+            },
+            "unit": "deg_crank",
+            "unit_text": null,
+            "axes": {
+              "x": {
+                "axis_source": "shared",
+                "axis_id": "syn.rpm_axis"
+              },
+              "y": {
+                "axis_source": "fixed",
+                "values": [
+                  "20",
+                  "121/2",
+                  "100"
+                ],
+                "unit": "kPa_rel",
+                "unit_text": null
+              }
+            }
+          },
+          {
+            "map_id": "syn.lambda_target",
+            "name": "SYN_LAMBDA_TARGET",
+            "category": "lambda",
+            "map_type": "base",
+            "state": "golden",
+            "memory_id": "cal",
+            "offset": 96,
+            "dims": {
+              "rows": 1,
+              "cols": 4
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "uint",
+              "bits": 16,
+              "byte_order": "be"
+            },
+            "scaling": {
+              "factor": "1/1000",
+              "addend": "0"
+            },
+            "unit": "lambda",
+            "unit_text": null,
+            "axes": {
+              "x": {
+                "axis_source": "shared",
+                "axis_id": "syn.rpm_axis"
+              },
+              "y": null
+            }
+          },
+          {
+            "map_id": "syn.vvt_ptr",
+            "name": "SYN_VVT",
+            "category": "vvt",
+            "map_type": "base",
+            "state": "potential",
+            "memory_id": "cal",
+            "offset": 48,
+            "dims": {
+              "rows": 1,
+              "cols": 2
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "int",
+              "bits": 16,
+              "byte_order": "be"
+            },
+            "scaling": {
+              "factor": "1/16",
+              "addend": "0"
+            },
+            "unit": "deg_crank",
+            "unit_text": null,
+            "axes": {
+              "x": {
+                "axis_source": "pointer",
+                "memory_id": "pflash",
+                "pointer_offset": 16,
+                "pointer_dtype": {
+                  "kind": "uint",
+                  "bits": 32,
+                  "byte_order": "be"
+                },
+                "target_memory_id": "cal",
+                "count": 2,
+                "dtype": {
+                  "kind": "uint",
+                  "bits": 8,
+                  "byte_order": "none"
+                },
+                "scaling": {
+                  "factor": "50",
+                  "addend": "0"
+                },
+                "unit": "rpm",
+                "unit_text": null
+              },
+              "y": null
+            }
+          }
+        ],
+        "origin": {
+          "kind": "platform",
+          "derived_from": []
+        },
+        "license": {
+          "kind": "platform_created",
+          "reference": null
+        },
+        "confidence_permille": 900
+      },
+      "definition_hash": "6e3ab19452825987b5e6a4065a01b2c79f072912df98899aa0bda35e5796090b",
+      "differs_from": "D1"
+    }
+  },
+  "spans": {
+    "S1": {
+      "rules": [
+        "R22",
+        "R30"
+      ],
+      "definition": "D1",
+      "dump": {
+        "memories": [
+          {
+            "memory_id": "cal",
+            "base_address": 2147549184,
+            "size": 1024
+          },
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "size": 64
+          }
+        ],
+        "bytes": [
+          {
+            "memory_id": "pflash",
+            "offset": 16,
+            "hex": "80010100"
+          }
+        ]
+      },
+      "expect": {
+        "syn.dead_time": [
+          {
+            "memory_id": "cal",
+            "start": 16,
+            "end": 18
+          }
+        ],
+        "syn.ign_base": [
+          {
+            "memory_id": "cal",
+            "start": 0,
+            "end": 12
+          },
+          {
+            "memory_id": "cal",
+            "start": 512,
+            "end": 520
+          }
+        ],
+        "syn.lambda_target": [
+          {
+            "memory_id": "cal",
+            "start": 96,
+            "end": 104
+          },
+          {
+            "memory_id": "cal",
+            "start": 512,
+            "end": 520
+          }
+        ],
+        "syn.vvt_ptr": [
+          {
+            "memory_id": "cal",
+            "start": 48,
+            "end": 52
+          },
+          {
+            "memory_id": "cal",
+            "start": 256,
+            "end": 258
+          },
+          {
+            "memory_id": "pflash",
+            "start": 16,
+            "end": 20
+          }
+        ]
+      }
+    },
+    "S2": {
+      "rules": [
+        "R30",
+        "R55"
+      ],
+      "definition": {
+        "spec": "SPEC-003/1",
+        "family_id": "synthetic.test",
+        "software_version": {
+          "match": "exact",
+          "values": [
+            "SYN0001"
+          ]
+        },
+        "axes": [],
+        "mapdefs": [
+          {
+            "map_id": "syn.far_pointer",
+            "name": "SYN_FAR_POINTER",
+            "category": null,
+            "map_type": null,
+            "state": "proposed",
+            "memory_id": "pflash",
+            "offset": 0,
+            "dims": {
+              "rows": 1,
+              "cols": 2
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "uint",
+              "bits": 8,
+              "byte_order": "none"
+            },
+            "scaling": {
+              "factor": "1",
+              "addend": "0"
+            },
+            "unit": null,
+            "unit_text": "",
+            "axes": {
+              "x": {
+                "axis_source": "pointer",
+                "memory_id": "pflash",
+                "pointer_offset": 16,
+                "pointer_dtype": {
+                  "kind": "uint",
+                  "bits": 32,
+                  "byte_order": "be"
+                },
+                "target_memory_id": "dflash",
+                "count": 2,
+                "dtype": {
+                  "kind": "uint",
+                  "bits": 8,
+                  "byte_order": "none"
+                },
+                "scaling": {
+                  "factor": "1",
+                  "addend": "0"
+                },
+                "unit": null,
+                "unit_text": ""
+              },
+              "y": null
+            }
+          }
+        ],
+        "origin": {
+          "kind": "platform",
+          "derived_from": []
+        },
+        "license": {
+          "kind": "platform_created",
+          "reference": null
+        },
+        "confidence_permille": 0
+      },
+      "dump": {
+        "memories": [
+          {
+            "memory_id": "cal",
+            "base_address": 2147549184,
+            "size": 1024
+          },
+          {
+            "memory_id": "pflash",
+            "base_address": 2147483648,
+            "size": 64
+          }
+        ],
+        "bytes": [
+          {
+            "memory_id": "pflash",
+            "offset": 16,
+            "hex": "80010100"
+          }
+        ]
+      },
+      "expect": {
+        "syn.far_pointer": {
+          "error": "unknown_memory"
+        }
+      }
+    }
+  },
+  "xdf": {
+    "X1": {
+      "rules": [
+        "R61",
+        "R62",
+        "R63",
+        "R64",
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R74",
+        "R75",
+        "R76",
+        "R77",
+        "R79"
+      ],
+      "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT version=\"1.60\">\n  <XDFHEADER>\n    <deftitle>Synthetic test definition</deftitle>\n    <description>Synthetic. Not derived from any ECU or third-party file.</description>\n    <BASEOFFSET offset=\"0\" subtract=\"0\" />\n    <DEFAULTS datasizeinbits=\"8\" sigdigits=\"2\" outputtype=\"1\" signed=\"0\" lsbfirst=\"0\" float=\"0\" />\n    <CATEGORY index=\"0x0\" name=\"Synthetic\" />\n  </XDFHEADER>\n  <XDFCONSTANT uniqueid=\"0x101\">\n    <title>SYN_DEAD_TIME</title>\n    <CATEGORYMEM index=\"0\" category=\"1\" />\n    <EMBEDDEDDATA mmedtypeflags=\"0x02\" mmedaddress=\"0x10\" mmedelementsizebits=\"16\" mmedmajorstridebits=\"0\" mmedminorstridebits=\"0\" />\n    <units>us</units>\n    <decimalpl>1</decimalpl>\n    <MATH equation=\"X*4+500\">\n      <VAR id=\"X\" />\n    </MATH>\n  </XDFCONSTANT>\n  <XDFTABLE uniqueid=\"0x102\" flags=\"0x0\">\n    <title>SYN_IGN_BASE</title>\n    <CATEGORYMEM index=\"0\" category=\"1\" />\n    <XDFAXIS id=\"x\" uniqueid=\"0x0\">\n      <EMBEDDEDDATA mmedtypeflags=\"0x02\" mmedaddress=\"0x20\" mmedelementsizebits=\"16\" mmedmajorstridebits=\"0\" mmedminorstridebits=\"0\" />\n      <indexcount>4</indexcount>\n      <units>1/min</units>\n      <DALINK index=\"0\" />\n      <MATH equation=\"X/4\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n    <XDFAXIS id=\"y\" uniqueid=\"0x0\">\n      <EMBEDDEDDATA mmedelementsizebits=\"8\" mmedmajorstridebits=\"0\" mmedminorstridebits=\"0\" />\n      <indexcount>3</indexcount>\n      <units>kPa</units>\n      <LABEL index=\"0\" value=\"20.0\" />\n      <LABEL index=\"1\" value=\"60.5\" />\n      <LABEL index=\"2\" value=\"100\" />\n      <MATH equation=\"X\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedtypeflags=\"0x01\" mmedaddress=\"0x40\" mmedelementsizebits=\"8\" mmedrowcount=\"3\" mmedcolcount=\"4\" mmedmajorstridebits=\"0\" mmedminorstridebits=\"0\" />\n      <units>°</units>\n      <decimalpl>2</decimalpl>\n      <min>-20.000000</min>\n      <max>60.000000</max>\n      <MATH equation=\"0.000000+X*0.75\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n  <XDFCHECKSUM uniqueid=\"0x103\">\n    <title>SYN_CHECKSUM</title>\n  </XDFCHECKSUM>\n</XDFFORMAT>\n",
+      "params": {
+        "family_id": "synthetic.test",
+        "software_version": {
+          "match": "exact",
+          "values": [
+            "SYN0001"
+          ]
+        },
+        "memory_id": "cal",
+        "license": {
+          "kind": "unverified",
+          "reference": null
+        },
+        "confidence_permille": 0
+      },
+      "expect": {
+        "definition": {
+          "spec": "SPEC-003/1",
+          "family_id": "synthetic.test",
+          "software_version": {
+            "match": "exact",
+            "values": [
+              "SYN0001"
+            ]
+          },
+          "axes": [],
+          "mapdefs": [
+            {
+              "map_id": "m_252a872a04bcb536e4e7b9b9",
+              "name": "SYN_DEAD_TIME",
+              "category": null,
+              "map_type": null,
+              "state": "imported",
+              "memory_id": "cal",
+              "offset": 16,
+              "dims": {
+                "rows": 1,
+                "cols": 1
+              },
+              "cell_order": "x_fastest",
+              "dtype": {
+                "kind": "uint",
+                "bits": 16,
+                "byte_order": "le"
+              },
+              "scaling": {
+                "factor": "1/250",
+                "addend": "1/2"
+              },
+              "unit": "ms",
+              "unit_text": null,
+              "axes": {
+                "x": null,
+                "y": null
+              }
+            },
+            {
+              "map_id": "m_4e8ea95e476838a42724a84d",
+              "name": "SYN_IGN_BASE",
+              "category": null,
+              "map_type": null,
+              "state": "imported",
+              "memory_id": "cal",
+              "offset": 64,
+              "dims": {
+                "rows": 3,
+                "cols": 4
+              },
+              "cell_order": "x_fastest",
+              "dtype": {
+                "kind": "int",
+                "bits": 8,
+                "byte_order": "none"
+              },
+              "scaling": {
+                "factor": "3/4",
+                "addend": "0"
+              },
+              "unit": null,
+              "unit_text": "°",
+              "axes": {
+                "x": {
+                  "axis_source": "inline",
+                  "memory_id": "cal",
+                  "offset": 32,
+                  "count": 4,
+                  "dtype": {
+                    "kind": "uint",
+                    "bits": 16,
+                    "byte_order": "le"
+                  },
+                  "scaling": {
+                    "factor": "1/4",
+                    "addend": "0"
+                  },
+                  "unit": "rpm",
+                  "unit_text": null
+                },
+                "y": {
+                  "axis_source": "fixed",
+                  "values": [
+                    "20",
+                    "121/2",
+                    "100"
+                  ],
+                  "unit": null,
+                  "unit_text": "kPa"
+                }
+              }
+            }
+          ],
+          "origin": {
+            "kind": "xdf_import",
+            "derived_from": []
+          },
+          "license": {
+            "kind": "unverified",
+            "reference": null
+          },
+          "confidence_permille": 0
+        },
+        "definition_hash": "4411e9c6c966387e1ceaafee80327b1bd41b707d6f37f104198fba40e7423978",
+        "rejected": [
+          {
+            "path": "XDFFORMAT[0]/XDFCHECKSUM[0]",
+            "reason": "unsupported_element"
+          }
+        ],
+        "ignored": [
+          "XDFFORMAT[0]/@version",
+          "XDFFORMAT[0]/XDFCONSTANT[0]/@uniqueid",
+          "XDFFORMAT[0]/XDFCONSTANT[0]/CATEGORYMEM[0]",
+          "XDFFORMAT[0]/XDFCONSTANT[0]/decimalpl[0]",
+          "XDFFORMAT[0]/XDFHEADER[0]/CATEGORY[0]",
+          "XDFFORMAT[0]/XDFHEADER[0]/DEFAULTS[0]/@datasizeinbits",
+          "XDFFORMAT[0]/XDFHEADER[0]/DEFAULTS[0]/@outputtype",
+          "XDFFORMAT[0]/XDFHEADER[0]/DEFAULTS[0]/@sigdigits",
+          "XDFFORMAT[0]/XDFHEADER[0]/deftitle[0]",
+          "XDFFORMAT[0]/XDFHEADER[0]/description[0]",
+          "XDFFORMAT[0]/XDFTABLE[0]/@uniqueid",
+          "XDFFORMAT[0]/XDFTABLE[0]/CATEGORYMEM[0]",
+          "XDFFORMAT[0]/XDFTABLE[0]/XDFAXIS[0]/@uniqueid",
+          "XDFFORMAT[0]/XDFTABLE[0]/XDFAXIS[0]/DALINK[0]",
+          "XDFFORMAT[0]/XDFTABLE[0]/XDFAXIS[1]/@uniqueid",
+          "XDFFORMAT[0]/XDFTABLE[0]/XDFAXIS[1]/EMBEDDEDDATA[0]/@mmedelementsizebits",
+          "XDFFORMAT[0]/XDFTABLE[0]/XDFAXIS[1]/EMBEDDEDDATA[0]/@mmedmajorstridebits",
+          "XDFFORMAT[0]/XDFTABLE[0]/XDFAXIS[1]/EMBEDDEDDATA[0]/@mmedminorstridebits",
+          "XDFFORMAT[0]/XDFTABLE[0]/XDFAXIS[2]/decimalpl[0]",
+          "XDFFORMAT[0]/XDFTABLE[0]/XDFAXIS[2]/max[0]",
+          "XDFFORMAT[0]/XDFTABLE[0]/XDFAXIS[2]/min[0]"
+        ]
+      },
+      "export": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFCONSTANT>\n    <title>SYN_DEAD_TIME</title>\n    <EMBEDDEDDATA mmedtypeflags=\"0x02\" mmedaddress=\"0x10\" mmedelementsizebits=\"16\" />\n    <units>ms</units>\n    <MATH equation=\"X*0.004+0.5\">\n      <VAR id=\"X\" />\n    </MATH>\n  </XDFCONSTANT>\n  <XDFTABLE>\n    <title>SYN_IGN_BASE</title>\n    <XDFAXIS id=\"x\">\n      <EMBEDDEDDATA mmedtypeflags=\"0x02\" mmedaddress=\"0x20\" mmedelementsizebits=\"16\" />\n      <indexcount>4</indexcount>\n      <units>rpm</units>\n      <MATH equation=\"X*0.25\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n    <XDFAXIS id=\"y\">\n      <indexcount>3</indexcount>\n      <units>kPa</units>\n      <LABEL index=\"0\" value=\"20\" />\n      <LABEL index=\"1\" value=\"60.5\" />\n      <LABEL index=\"2\" value=\"100\" />\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedtypeflags=\"0x01\" mmedaddress=\"0x40\" mmedelementsizebits=\"8\" mmedrowcount=\"3\" mmedcolcount=\"4\" />\n      <units>°</units>\n      <MATH equation=\"X*0.75\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n</XDFFORMAT>\n",
+      "reimport": {
+        "definition_hash": "4411e9c6c966387e1ceaafee80327b1bd41b707d6f37f104198fba40e7423978",
+        "rejected": [],
+        "ignored": []
+      }
+    },
+    "XE1": {
+      "rules": [
+        "R64",
+        "R76",
+        "R77"
+      ],
+      "params": {
+        "family_id": "synthetic.test",
+        "software_version": {
+          "match": "exact",
+          "values": [
+            "SYN0001"
+          ]
+        },
+        "memory_id": "cal",
+        "license": {
+          "kind": "unverified",
+          "reference": null
+        },
+        "confidence_permille": 0
+      },
+      "definition": {
+        "spec": "SPEC-003/1",
+        "family_id": "synthetic.test",
+        "software_version": {
+          "match": "exact",
+          "values": [
+            "SYN0001"
+          ]
+        },
+        "axes": [],
+        "mapdefs": [
+          {
+            "map_id": "m_d261a1f2bff0e4bc333634c8",
+            "name": "SYN_COOLANT_OFFSET",
+            "category": null,
+            "map_type": null,
+            "state": "imported",
+            "memory_id": "cal",
+            "offset": 512,
+            "dims": {
+              "rows": 1,
+              "cols": 1
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "uint",
+              "bits": 8,
+              "byte_order": "none"
+            },
+            "scaling": {
+              "factor": "1",
+              "addend": "-40"
+            },
+            "unit": "degC",
+            "unit_text": null,
+            "axes": {
+              "x": null,
+              "y": null
+            }
+          },
+          {
+            "map_id": "m_ff7c07015d04e4a91c7f9ddf",
+            "name": "SYN_SINGLE_CELL",
+            "category": null,
+            "map_type": null,
+            "state": "imported",
+            "memory_id": "cal",
+            "offset": 528,
+            "dims": {
+              "rows": 1,
+              "cols": 1
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "uint",
+              "bits": 16,
+              "byte_order": "be"
+            },
+            "scaling": {
+              "factor": "1",
+              "addend": "1/2"
+            },
+            "unit": null,
+            "unit_text": "",
+            "axes": {
+              "x": {
+                "axis_source": "fixed",
+                "values": [
+                  "7"
+                ],
+                "unit": null,
+                "unit_text": ""
+              },
+              "y": null
+            }
+          }
+        ],
+        "origin": {
+          "kind": "xdf_import",
+          "derived_from": []
+        },
+        "license": {
+          "kind": "unverified",
+          "reference": null
+        },
+        "confidence_permille": 0
+      },
+      "definition_hash": "8c585e77cc2ea1e72841f7d02479fd89e352cf05f18a14d7432ef3e735b07281",
+      "export": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFCONSTANT>\n    <title>SYN_COOLANT_OFFSET</title>\n    <EMBEDDEDDATA mmedtypeflags=\"0x00\" mmedaddress=\"0x200\" mmedelementsizebits=\"8\" />\n    <units>degC</units>\n    <MATH equation=\"X-40\">\n      <VAR id=\"X\" />\n    </MATH>\n  </XDFCONSTANT>\n  <XDFTABLE>\n    <title>SYN_SINGLE_CELL</title>\n    <XDFAXIS id=\"x\">\n      <indexcount>1</indexcount>\n      <LABEL index=\"0\" value=\"7\" />\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedtypeflags=\"0x00\" mmedaddress=\"0x210\" mmedelementsizebits=\"16\" mmedrowcount=\"1\" mmedcolcount=\"1\" />\n      <MATH equation=\"X+0.5\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n</XDFFORMAT>\n",
+      "reimport": {
+        "definition_hash": "8c585e77cc2ea1e72841f7d02479fd89e352cf05f18a14d7432ef3e735b07281",
+        "rejected": [],
+        "ignored": []
+      }
+    },
+    "XN1": {
+      "rules": [
+        "R64",
+        "R75",
+        "R76",
+        "R77"
+      ],
+      "params": {
+        "family_id": "synthetic.test",
+        "software_version": {
+          "match": "exact",
+          "values": [
+            "SYN0001"
+          ]
+        },
+        "memory_id": "cal",
+        "license": {
+          "kind": "unverified",
+          "reference": null
+        },
+        "confidence_permille": 0
+      },
+      "definition": {
+        "spec": "SPEC-003/1",
+        "family_id": "synthetic.platform",
+        "software_version": {
+          "match": "prefix",
+          "values": [
+            "SYN"
+          ]
+        },
+        "axes": [],
+        "mapdefs": [
+          {
+            "map_id": "syn.dead_time_curve",
+            "name": "SYN_DEAD_TIME_CURVE",
+            "category": "injector_dead_time",
+            "map_type": "base",
+            "state": "reviewed",
+            "memory_id": "cal",
+            "offset": 600,
+            "dims": {
+              "rows": 1,
+              "cols": 2
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "uint",
+              "bits": 16,
+              "byte_order": "be"
+            },
+            "scaling": {
+              "factor": "1/250",
+              "addend": "1/2"
+            },
+            "unit": "ms",
+            "unit_text": null,
+            "axes": {
+              "x": {
+                "axis_source": "fixed",
+                "values": [
+                  "-40",
+                  "90"
+                ],
+                "unit": "degC",
+                "unit_text": null
+              },
+              "y": null
+            }
+          },
+          {
+            "map_id": "syn.flag",
+            "name": "SYN_FLAG",
+            "category": null,
+            "map_type": "flag",
+            "state": "golden",
+            "memory_id": "cal",
+            "offset": 620,
+            "dims": {
+              "rows": 1,
+              "cols": 1
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "uint",
+              "bits": 8,
+              "byte_order": "none"
+            },
+            "scaling": {
+              "factor": "1",
+              "addend": "0"
+            },
+            "unit": null,
+            "unit_text": "",
+            "axes": {
+              "x": null,
+              "y": null
+            }
+          }
+        ],
+        "origin": {
+          "kind": "platform",
+          "derived_from": []
+        },
+        "license": {
+          "kind": "platform_created",
+          "reference": null
+        },
+        "confidence_permille": 900
+      },
+      "export": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFTABLE>\n    <title>SYN_DEAD_TIME_CURVE</title>\n    <XDFAXIS id=\"x\">\n      <indexcount>2</indexcount>\n      <units>degC</units>\n      <LABEL index=\"0\" value=\"-40\" />\n      <LABEL index=\"1\" value=\"90\" />\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedtypeflags=\"0x00\" mmedaddress=\"0x258\" mmedelementsizebits=\"16\" mmedrowcount=\"1\" mmedcolcount=\"2\" />\n      <units>ms</units>\n      <MATH equation=\"X*0.004+0.5\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n  <XDFCONSTANT>\n    <title>SYN_FLAG</title>\n    <EMBEDDEDDATA mmedtypeflags=\"0x00\" mmedaddress=\"0x26C\" mmedelementsizebits=\"8\" />\n    <MATH equation=\"X\">\n      <VAR id=\"X\" />\n    </MATH>\n  </XDFCONSTANT>\n</XDFFORMAT>\n",
+      "normalized": {
+        "spec": "SPEC-003/1",
+        "family_id": "synthetic.test",
+        "software_version": {
+          "match": "exact",
+          "values": [
+            "SYN0001"
+          ]
+        },
+        "axes": [],
+        "mapdefs": [
+          {
+            "map_id": "m_086f62661f26800ed0b4c71d",
+            "name": "SYN_DEAD_TIME_CURVE",
+            "category": null,
+            "map_type": null,
+            "state": "imported",
+            "memory_id": "cal",
+            "offset": 600,
+            "dims": {
+              "rows": 1,
+              "cols": 2
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "uint",
+              "bits": 16,
+              "byte_order": "be"
+            },
+            "scaling": {
+              "factor": "1/250",
+              "addend": "1/2"
+            },
+            "unit": "ms",
+            "unit_text": null,
+            "axes": {
+              "x": {
+                "axis_source": "fixed",
+                "values": [
+                  "-40",
+                  "90"
+                ],
+                "unit": "degC",
+                "unit_text": null
+              },
+              "y": null
+            }
+          },
+          {
+            "map_id": "m_7603f924c406298db6dd21df",
+            "name": "SYN_FLAG",
+            "category": null,
+            "map_type": null,
+            "state": "imported",
+            "memory_id": "cal",
+            "offset": 620,
+            "dims": {
+              "rows": 1,
+              "cols": 1
+            },
+            "cell_order": "x_fastest",
+            "dtype": {
+              "kind": "uint",
+              "bits": 8,
+              "byte_order": "none"
+            },
+            "scaling": {
+              "factor": "1",
+              "addend": "0"
+            },
+            "unit": null,
+            "unit_text": "",
+            "axes": {
+              "x": null,
+              "y": null
+            }
+          }
+        ],
+        "origin": {
+          "kind": "xdf_import",
+          "derived_from": []
+        },
+        "license": {
+          "kind": "unverified",
+          "reference": null
+        },
+        "confidence_permille": 0
+      },
+      "normalized_hash": "53d9dc1c2254824bf3efab0ea1fb954e13c0442b062b97800ec68cbea699ffc9"
+    },
+    "export_rejects": [
+      {
+        "id": "XU1",
+        "rules": [
+          "R76"
+        ],
+        "memory_id": "cal",
+        "definition": {
+          "spec": "SPEC-003/1",
+          "family_id": "synthetic.platform",
+          "software_version": {
+            "match": "prefix",
+            "values": [
+              "SYN"
+            ]
+          },
+          "axes": [],
+          "mapdefs": [
+            {
+              "map_id": "syn.row_no_axis",
+              "name": "SYN_ROW",
+              "category": null,
+              "map_type": "flag",
+              "state": "proposed",
+              "memory_id": "cal",
+              "offset": 620,
+              "dims": {
+                "rows": 1,
+                "cols": 3
+              },
+              "cell_order": "x_fastest",
+              "dtype": {
+                "kind": "uint",
+                "bits": 8,
+                "byte_order": "none"
+              },
+              "scaling": {
+                "factor": "1",
+                "addend": "0"
+              },
+              "unit": null,
+              "unit_text": "",
+              "axes": {
+                "x": null,
+                "y": null
+              }
+            }
+          ],
+          "origin": {
+            "kind": "platform",
+            "derived_from": []
+          },
+          "license": {
+            "kind": "platform_created",
+            "reference": null
+          },
+          "confidence_permille": 900
+        },
+        "expect": {
+          "error": "unrepresentable",
+          "field": "axes.x"
+        }
+      },
+      {
+        "id": "XU2",
+        "rules": [
+          "R76"
+        ],
+        "memory_id": "cal",
+        "definition": {
+          "spec": "SPEC-003/1",
+          "family_id": "synthetic.platform",
+          "software_version": {
+            "match": "prefix",
+            "values": [
+              "SYN"
+            ]
+          },
+          "axes": [],
+          "mapdefs": [
+            {
+              "map_id": "syn.col_no_axis",
+              "name": "SYN_COL",
+              "category": null,
+              "map_type": "flag",
+              "state": "proposed",
+              "memory_id": "cal",
+              "offset": 620,
+              "dims": {
+                "rows": 3,
+                "cols": 1
+              },
+              "cell_order": "x_fastest",
+              "dtype": {
+                "kind": "uint",
+                "bits": 8,
+                "byte_order": "none"
+              },
+              "scaling": {
+                "factor": "1",
+                "addend": "0"
+              },
+              "unit": null,
+              "unit_text": "",
+              "axes": {
+                "x": null,
+                "y": null
+              }
+            }
+          ],
+          "origin": {
+            "kind": "platform",
+            "derived_from": []
+          },
+          "license": {
+            "kind": "platform_created",
+            "reference": null
+          },
+          "confidence_permille": 900
+        },
+        "expect": {
+          "error": "unrepresentable",
+          "field": "axes.y"
+        }
+      },
+      {
+        "id": "XU3",
+        "rules": [
+          "R76"
+        ],
+        "memory_id": "cal",
+        "definition": {
+          "spec": "SPEC-003/1",
+          "family_id": "synthetic.platform",
+          "software_version": {
+            "match": "prefix",
+            "values": [
+              "SYN"
+            ]
+          },
+          "axes": [],
+          "mapdefs": [
+            {
+              "map_id": "syn.other_memory",
+              "name": "SYN_FLAG",
+              "category": null,
+              "map_type": "flag",
+              "state": "golden",
+              "memory_id": "pflash",
+              "offset": 620,
+              "dims": {
+                "rows": 1,
+                "cols": 1
+              },
+              "cell_order": "x_fastest",
+              "dtype": {
+                "kind": "uint",
+                "bits": 8,
+                "byte_order": "none"
+              },
+              "scaling": {
+                "factor": "1",
+                "addend": "0"
+              },
+              "unit": null,
+              "unit_text": "",
+              "axes": {
+                "x": null,
+                "y": null
+              }
+            }
+          ],
+          "origin": {
+            "kind": "platform",
+            "derived_from": []
+          },
+          "license": {
+            "kind": "platform_created",
+            "reference": null
+          },
+          "confidence_permille": 900
+        },
+        "expect": {
+          "error": "unrepresentable",
+          "field": "memory_id"
+        }
+      },
+      {
+        "id": "XU4",
+        "rules": [
+          "R76"
+        ],
+        "memory_id": "cal",
+        "definition": {
+          "spec": "SPEC-003/1",
+          "family_id": "synthetic.platform",
+          "software_version": {
+            "match": "prefix",
+            "values": [
+              "SYN"
+            ]
+          },
+          "axes": [],
+          "mapdefs": [
+            {
+              "map_id": "syn.third_factor",
+              "name": "SYN_FLAG",
+              "category": null,
+              "map_type": "flag",
+              "state": "golden",
+              "memory_id": "cal",
+              "offset": 620,
+              "dims": {
+                "rows": 1,
+                "cols": 1
+              },
+              "cell_order": "x_fastest",
+              "dtype": {
+                "kind": "uint",
+                "bits": 8,
+                "byte_order": "none"
+              },
+              "scaling": {
+                "factor": "2/3",
+                "addend": "0"
+              },
+              "unit": null,
+              "unit_text": "",
+              "axes": {
+                "x": null,
+                "y": null
+              }
+            }
+          ],
+          "origin": {
+            "kind": "platform",
+            "derived_from": []
+          },
+          "license": {
+            "kind": "platform_created",
+            "reference": null
+          },
+          "confidence_permille": 900
+        },
+        "expect": {
+          "error": "unrepresentable",
+          "field": "scaling.factor"
+        }
+      },
+      {
+        "id": "XU5",
+        "rules": [
+          "R76"
+        ],
+        "memory_id": "cal",
+        "definition": {
+          "spec": "SPEC-003/1",
+          "family_id": "synthetic.platform",
+          "software_version": {
+            "match": "prefix",
+            "values": [
+              "SYN"
+            ]
+          },
+          "axes": [],
+          "mapdefs": [
+            {
+              "map_id": "syn.third_addend",
+              "name": "SYN_FLAG",
+              "category": null,
+              "map_type": "flag",
+              "state": "golden",
+              "memory_id": "cal",
+              "offset": 620,
+              "dims": {
+                "rows": 1,
+                "cols": 1
+              },
+              "cell_order": "x_fastest",
+              "dtype": {
+                "kind": "uint",
+                "bits": 8,
+                "byte_order": "none"
+              },
+              "scaling": {
+                "factor": "1",
+                "addend": "1/3"
+              },
+              "unit": null,
+              "unit_text": "",
+              "axes": {
+                "x": null,
+                "y": null
+              }
+            }
+          ],
+          "origin": {
+            "kind": "platform",
+            "derived_from": []
+          },
+          "license": {
+            "kind": "platform_created",
+            "reference": null
+          },
+          "confidence_permille": 900
+        },
+        "expect": {
+          "error": "unrepresentable",
+          "field": "scaling.addend"
+        }
+      },
+      {
+        "id": "XU6",
+        "rules": [
+          "R76"
+        ],
+        "memory_id": "cal",
+        "definition": {
+          "spec": "SPEC-003/1",
+          "family_id": "synthetic.platform",
+          "software_version": {
+            "match": "prefix",
+            "values": [
+              "SYN"
+            ]
+          },
+          "axes": [],
+          "mapdefs": [
+            {
+              "map_id": "syn.third_label",
+              "name": "SYN_DEAD_TIME_CURVE",
+              "category": "injector_dead_time",
+              "map_type": "base",
+              "state": "reviewed",
+              "memory_id": "cal",
+              "offset": 600,
+              "dims": {
+                "rows": 1,
+                "cols": 2
+              },
+              "cell_order": "x_fastest",
+              "dtype": {
+                "kind": "uint",
+                "bits": 16,
+                "byte_order": "be"
+              },
+              "scaling": {
+                "factor": "1/250",
+                "addend": "1/2"
+              },
+              "unit": "ms",
+              "unit_text": null,
+              "axes": {
+                "x": {
+                  "axis_source": "fixed",
+                  "values": [
+                    "1/3",
+                    "1"
+                  ],
+                  "unit": "degC",
+                  "unit_text": null
+                },
+                "y": null
+              }
+            }
+          ],
+          "origin": {
+            "kind": "platform",
+            "derived_from": []
+          },
+          "license": {
+            "kind": "platform_created",
+            "reference": null
+          },
+          "confidence_permille": 900
+        },
+        "expect": {
+          "error": "unrepresentable",
+          "field": "axes.x.values"
+        }
+      },
+      {
+        "id": "XU7",
+        "rules": [
+          "R76"
+        ],
+        "memory_id": "cal",
+        "definition": {
+          "spec": "SPEC-003/1",
+          "family_id": "synthetic.platform",
+          "software_version": {
+            "match": "prefix",
+            "values": [
+              "SYN"
+            ]
+          },
+          "axes": [],
+          "mapdefs": [
+            {
+              "map_id": "syn.pointer_axis",
+              "name": "SYN_DEAD_TIME_CURVE",
+              "category": "injector_dead_time",
+              "map_type": "base",
+              "state": "reviewed",
+              "memory_id": "cal",
+              "offset": 600,
+              "dims": {
+                "rows": 1,
+                "cols": 2
+              },
+              "cell_order": "x_fastest",
+              "dtype": {
+                "kind": "uint",
+                "bits": 16,
+                "byte_order": "be"
+              },
+              "scaling": {
+                "factor": "1/250",
+                "addend": "1/2"
+              },
+              "unit": "ms",
+              "unit_text": null,
+              "axes": {
+                "x": {
+                  "axis_source": "pointer",
+                  "memory_id": "cal",
+                  "pointer_offset": 0,
+                  "pointer_dtype": {
+                    "kind": "uint",
+                    "bits": 32,
+                    "byte_order": "be"
+                  },
+                  "target_memory_id": "cal",
+                  "count": 2,
+                  "dtype": {
+                    "kind": "uint",
+                    "bits": 8,
+                    "byte_order": "none"
+                  },
+                  "scaling": {
+                    "factor": "1",
+                    "addend": "0"
+                  },
+                  "unit": null,
+                  "unit_text": ""
+                },
+                "y": null
+              }
+            }
+          ],
+          "origin": {
+            "kind": "platform",
+            "derived_from": []
+          },
+          "license": {
+            "kind": "platform_created",
+            "reference": null
+          },
+          "confidence_permille": 900
+        },
+        "expect": {
+          "error": "unrepresentable",
+          "field": "axes.x.axis_source"
+        }
+      }
+    ],
+    "rejects": [
+      {
+        "id": "X2",
+        "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE XDFFORMAT [<!ENTITY e \"x\">]>\n<XDFFORMAT>\n</XDFFORMAT>\n",
+        "expect": {
+          "error": "xml_forbidden"
+        }
+      },
+      {
+        "id": "X3",
+        "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFHEADER>\n  </XDFHEADER>\n  <XDFTABLE>\n    <title>SYN_STRIDE</title>\n    <XDFAXIS id=\"x\">\n      <indexcount>2</indexcount>\n      <LABEL index=\"0\" value=\"1\" />\n      <LABEL index=\"1\" value=\"2\" />\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedaddress=\"0x80\" mmedelementsizebits=\"8\" mmedrowcount=\"1\" mmedcolcount=\"2\" mmedmajorstridebits=\"16\" />\n      <MATH equation=\"X\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n</XDFFORMAT>\n",
+        "expect": {
+          "rejected": [
+            {
+              "path": "XDFFORMAT[0]/XDFTABLE[0]",
+              "reason": "unsupported_stride"
+            }
+          ]
+        }
+      },
+      {
+        "id": "X4",
+        "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFHEADER>\n  </XDFHEADER>\n  <XDFTABLE>\n    <title>SYN_EQ</title>\n    <XDFAXIS id=\"x\">\n      <indexcount>2</indexcount>\n      <LABEL index=\"0\" value=\"1\" />\n      <LABEL index=\"1\" value=\"2\" />\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedaddress=\"0x80\" mmedelementsizebits=\"8\" mmedrowcount=\"1\" mmedcolcount=\"2\" />\n      <MATH equation=\"X*X\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n</XDFFORMAT>\n",
+        "expect": {
+          "rejected": [
+            {
+              "path": "XDFFORMAT[0]/XDFTABLE[0]",
+              "reason": "unsupported_equation"
+            }
+          ]
+        }
+      },
+      {
+        "id": "X5",
+        "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFHEADER>\n    <BASEOFFSET offset=\"4096\" subtract=\"0\" />\n  </XDFHEADER>\n</XDFFORMAT>\n",
+        "expect": {
+          "error": "unsupported_baseoffset"
+        }
+      },
+      {
+        "id": "X6",
+        "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFHEADER>\n    <DEFAULTS signed=\"0\" lsbfirst=\"1\" float=\"0\" />\n  </XDFHEADER>\n</XDFFORMAT>\n",
+        "expect": {
+          "error": "unverified_defaults"
+        }
+      },
+      {
+        "id": "X7",
+        "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFHEADER>\n  </XDFHEADER>\n  <XDFTABLE>\n    <title>SYN_DIMS</title>\n    <XDFAXIS id=\"x\">\n      <indexcount>2</indexcount>\n      <LABEL index=\"0\" value=\"1\" />\n      <LABEL index=\"1\" value=\"2\" />\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedaddress=\"0x80\" mmedelementsizebits=\"8\" mmedrowcount=\"1\" mmedcolcount=\"3\" />\n      <MATH equation=\"X\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n</XDFFORMAT>\n",
+        "expect": {
+          "rejected": [
+            {
+              "path": "XDFFORMAT[0]/XDFTABLE[0]",
+              "reason": "dims_mismatch"
+            }
+          ]
+        }
+      },
+      {
+        "id": "X8",
+        "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFHEADER>\n  </XDFHEADER>\n  <XDFTABLE>\n    <title>SYN_LABEL_MATH</title>\n    <XDFAXIS id=\"x\">\n      <indexcount>2</indexcount>\n      <LABEL index=\"0\" value=\"1\" />\n      <LABEL index=\"1\" value=\"2\" />\n      <MATH equation=\"X*2\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedaddress=\"0x80\" mmedelementsizebits=\"8\" mmedrowcount=\"1\" mmedcolcount=\"2\" />\n      <MATH equation=\"X\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n</XDFFORMAT>\n",
+        "expect": {
+          "rejected": [
+            {
+              "path": "XDFFORMAT[0]/XDFTABLE[0]",
+              "reason": "ambiguous_label_scaling"
+            }
+          ]
+        }
+      },
+      {
+        "id": "X9",
+        "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFHEADER>\n  </XDFHEADER>\n  <XDFTABLE>\n    <title>SYN_FLAGS</title>\n    <XDFAXIS id=\"x\">\n      <indexcount>2</indexcount>\n      <LABEL index=\"0\" value=\"1\" />\n      <LABEL index=\"1\" value=\"2\" />\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedaddress=\"0x80\" mmedelementsizebits=\"8\" mmedrowcount=\"1\" mmedcolcount=\"2\" mmedtypeflags=\"0x04\" />\n      <MATH equation=\"X\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n</XDFFORMAT>\n",
+        "expect": {
+          "rejected": [
+            {
+              "path": "XDFFORMAT[0]/XDFTABLE[0]",
+              "reason": "unsupported_typeflags"
+            }
+          ]
+        }
+      },
+      {
+        "id": "X10",
+        "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFHEADER>\n  </XDFHEADER>\n  <XDFTABLE>\n    <title>SYN_NO_EQ</title>\n    <XDFAXIS id=\"x\">\n      <indexcount>2</indexcount>\n      <LABEL index=\"0\" value=\"1\" />\n      <LABEL index=\"1\" value=\"2\" />\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedaddress=\"0x80\" mmedelementsizebits=\"8\" mmedrowcount=\"1\" mmedcolcount=\"2\" />\n      <MATH>\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n</XDFFORMAT>\n",
+        "expect": {
+          "rejected": [
+            {
+              "path": "XDFFORMAT[0]/XDFTABLE[0]",
+              "reason": "missing_element"
+            }
+          ]
+        }
+      },
+      {
+        "id": "X11",
+        "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFHEADER>\n  </XDFHEADER>\n  <XDFTABLE>\n    <title>SYN_NO_COUNT</title>\n    <XDFAXIS id=\"x\">\n      <LABEL index=\"0\" value=\"1\" />\n      <LABEL index=\"1\" value=\"2\" />\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedaddress=\"0x80\" mmedelementsizebits=\"8\" mmedrowcount=\"1\" mmedcolcount=\"2\" />\n      <MATH equation=\"X\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n</XDFFORMAT>\n",
+        "expect": {
+          "rejected": [
+            {
+              "path": "XDFFORMAT[0]/XDFTABLE[0]",
+              "reason": "missing_element"
+            }
+          ]
+        }
+      },
+      {
+        "id": "X12",
+        "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFHEADER>\n  </XDFHEADER>\n  <XDFTABLE>\n    <title>SYN_LABEL_WS</title>\n    <XDFAXIS id=\"x\">\n      <indexcount>2</indexcount>\n      <LABEL index=\"0\" value=\" -1.5 \" />\n      <LABEL index=\"1\" value=\"2\" />\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedaddress=\"0x80\" mmedelementsizebits=\"8\" mmedrowcount=\"1\" mmedcolcount=\"2\" />\n      <MATH equation=\"X\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n</XDFFORMAT>\n",
+        "expect": {
+          "rejected": []
+        }
+      },
+      {
+        "id": "X13",
+        "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFHEADER>\n  </XDFHEADER>\n  <XDFTABLE>\n    <title>SYN_LABEL_PLUS</title>\n    <XDFAXIS id=\"x\">\n      <indexcount>2</indexcount>\n      <LABEL index=\"0\" value=\"+1\" />\n      <LABEL index=\"1\" value=\"2\" />\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedaddress=\"0x80\" mmedelementsizebits=\"8\" mmedrowcount=\"1\" mmedcolcount=\"2\" />\n      <MATH equation=\"X\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n</XDFFORMAT>\n",
+        "expect": {
+          "rejected": [
+            {
+              "path": "XDFFORMAT[0]/XDFTABLE[0]",
+              "reason": "non_numeric_label"
+            }
+          ]
+        }
+      },
+      {
+        "id": "X14",
+        "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFHEADER>\n  </XDFHEADER>\n  <XDFTABLE>\n    <title>SYN_NBSP</title>\n    <XDFAXIS id=\"x\">\n      <indexcount>2</indexcount>\n      <LABEL index=\"0\" value=\"1\" />\n      <LABEL index=\"1\" value=\"2\" />\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedaddress=\" 0x80\" mmedelementsizebits=\"8\" mmedrowcount=\"1\" mmedcolcount=\"2\" />\n      <MATH equation=\"X\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n</XDFFORMAT>\n",
+        "expect": {
+          "rejected": [
+            {
+              "path": "XDFFORMAT[0]/XDFTABLE[0]",
+              "reason": "bad_number"
+            }
+          ]
+        }
+      },
+      {
+        "id": "X15",
+        "source": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<XDFFORMAT>\n  <XDFHEADER>\n  </XDFHEADER>\n  <XDFTABLE>\n    <title>SYN_DEC_DIV</title>\n    <XDFAXIS id=\"x\">\n      <indexcount>2</indexcount>\n      <LABEL index=\"0\" value=\"1\" />\n      <LABEL index=\"1\" value=\"2\" />\n    </XDFAXIS>\n    <XDFAXIS id=\"z\">\n      <EMBEDDEDDATA mmedaddress=\"0x80\" mmedelementsizebits=\"8\" mmedrowcount=\"1\" mmedcolcount=\"2\" />\n      <MATH equation=\"X/3.5\">\n        <VAR id=\"X\" />\n      </MATH>\n    </XDFAXIS>\n  </XDFTABLE>\n</XDFFORMAT>\n",
+        "expect": {
+          "rejected": [
+            {
+              "path": "XDFFORMAT[0]/XDFTABLE[0]",
+              "reason": "unsupported_equation"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
