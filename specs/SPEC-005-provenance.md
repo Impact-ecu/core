@@ -98,7 +98,7 @@ AuditRecord = {
   diff_patch_hashes: list[Hex32],              # SPEC-001 R31, in its (memory_id, offset) order
   foreign: list[{ memory_id, offset, length, region_kind, region_name }],   # SPEC-001 R32, in its order
   verify: { original: VerifyStatus, candidate: VerifyStatus },
-  versions: { core, plugins, gate_rules },     # as in §3
+  versions: { core, plugins, gate_rules, references },   # as in §3
   gate_report_hash: Hex32,                     # input gate report on the candidate (SPEC-004)
   python: { implementation, version },
   build: { kind, value, platform, attestation_id },
