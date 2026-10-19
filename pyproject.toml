@@ -10,6 +10,7 @@ dependencies = []
 
 [dependency-groups]
 dev = [
+    "cryptography==46.0.3",
     "hypothesis==6.168.3",
     "import-linter==2.15",
     "mypy==2.4.0",
