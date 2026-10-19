@@ -1,6 +1,6 @@
 # ADR-002 · Inputs and field evidence through contracts, with no fixed partner
 
-Status: accepted (author's decision, 2026-10-18); numeric thresholds in Decision 4 pending author decision
+Status: accepted (author's decision, 2026-10-18; thresholds N = K = E = 2 decided the same day)
 Date: 2026-10-18
 
 ## Context
@@ -29,7 +29,7 @@ What cannot be removed is physics: a recalculated checksum is only known good af
    - `attester_key_id`, `created_at`, Ed25519 signature (same scheme as SPEC-005 reports).
    The `oracle:` block of a golden record becomes a list of `FieldAttestation` hashes.
 
-4. **`golden_field` is computed from attestations, not granted to a party.** For a checksum variant, `golden_field` holds when there are at least **N** attestations, from at least **K** distinct `attester_key_id`s, on at least **E** distinct `ecu_commitment`s, each with `communicates = true`, no memory or checksum DTC (SPEC-000 §Golden files list), `tool_checksum_status ≠ mismatch`, and `subject_image_hash` equal to the golden hash. **Pending author decision: N, K, E.** Proposed default: N = 2, K = 2, E = 2, because with no trusted partner a single key is a single point of failure, and one unit cannot distinguish a variant property from a unit quirk.
+4. **`golden_field` is computed from attestations, not granted to a party.** For a checksum variant, `golden_field` holds when there are at least **N** attestations, from at least **K** distinct `attester_key_id`s, on at least **E** distinct `ecu_commitment`s, each with `communicates = true`, no memory or checksum DTC (SPEC-000 §Golden files list), `tool_checksum_status ≠ mismatch`, and `subject_image_hash` equal to the golden hash. **Decided (2026-10-18): N = 2, K = 2, E = 2**, because with no trusted partner a single key is a single point of failure, and one unit cannot distinguish a variant property from a unit quirk.
 
 5. **Attester trust is explicit and revocable.** An attester key counts toward `golden_field` only while enrolled in the project's attester registry (an event in the SPEC-005 chain: `attester_enrolled`, `attester_revoked`). Revoking a key re-evaluates every golden that depended on it; a golden that drops below the thresholds returns to `golden_concordant` or `candidate` and plugin release for that variant is blocked again. Enrollment is a human decision recorded with reason; the registry starts empty.
 
