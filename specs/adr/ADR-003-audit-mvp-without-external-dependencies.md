@@ -33,7 +33,7 @@ SPEC-000 already names the first product: **audit and verification of third-part
 
 4. **No published rule table needed for auditing.** Closes SPEC-005 open question 14. An audit without a published rule table still runs: map rules are `not_evaluated` with reason `no_rule_table`, and the rest of the record stands. Export keeps requiring the table (SPEC-004 R70).
 
-5. **CLI key at rest: PKCS#8 with scrypt** (`cryptography` `BestAvailableEncryption`), the OpenSSL-standard encrypted private key format. The library is already pinned for Ed25519, and no new dependency or binary is added. Closes SPEC-007 open question 2; age is not used.
+5. **CLI key at rest: the OpenSSH private key format for Ed25519**, as `ssh-keygen` writes it: aes256-ctr with the bcrypt KDF at 100 rounds, through `cryptography` and pyca `bcrypt` (both pinned). The file is readable by `ssh-keygen -y`, and no custom cryptographic encoding is written. Why: `cryptography`'s PKCS#8 `BestAvailableEncryption` uses PBKDF2 with 2048 iterations and offers no scrypt builder for PKCS#8, and the OpenSSH format is the de facto standard for Ed25519 keys. Closes SPEC-007 open question 2; age is not used.
 
 6. **The human report is a self-contained HTML file**, with no network, scripts or external assets, next to the JCS JSON report whose hash it shows. PDF is deferred.
 
@@ -50,4 +50,6 @@ SPEC-000 already names the first product: **audit and verification of third-part
 | Publish a provisional rule table and trust anchor to unblock the gate | Makes up thresholds and trust nobody has decided; violates "verification before trust" |
 | Ship a MED17 plugin from public descriptions without golden | ADR-001: constants not confirmed against our own corpus; a wrong verify would claim "intact" falsely |
 | Wait for the decisions | The author rejected waiting: the idea needs validation now |
-| age through a subprocess or binding | Extra install or compiled dependency; PKCS#8 + scrypt is the same protection with what is already pinned |
+| age through a subprocess or binding | Extra install or compiled dependency, and a format few tools read; the OpenSSH format needs only `cryptography` and pyca `bcrypt` |
+| PKCS#8 with `BestAvailableEncryption` | `cryptography` derives the key with PBKDF2 at 2048 iterations and has no scrypt builder for PKCS#8: weaker than the bcrypt KDF of the OpenSSH format |
+| A custom key file (scrypt plus AES-GCM written by us) | Our own cryptographic encoding: no other tool can read or check it, and a mistake in it is ours alone |

@@ -1,18 +1,21 @@
-"""`GenericAuditRecord` (SPEC-005 §4.2, R110-R116): the audit without a family plugin, built by the core."""
+"""`GenericAuditRecord` (SPEC-005 §4.2, R110-R118): the audit without a family plugin, built by the core, and its
+signed report."""
 
-from collections.abc import Iterator, Mapping
+from collections.abc import Iterator, Mapping, Sequence
 from dataclasses import dataclass
 from itertools import pairwise
-from typing import Literal
+from typing import Literal, cast
 
 from core.kernel import Dump, Memory, Patch, image_hash
-from core.provenance._errors import RecordError
+from core.provenance._errors import ProvenanceError, RecordError, ShapeError
 from core.provenance._json import (
     HEX32_CHECK,
     ORIGINS,
+    SIGNATURE_CHECK,
     Json,
     Raw,
     array,
+    as_str,
     hash_json,
     items,
     member,
@@ -24,6 +27,7 @@ from core.provenance._json import (
 )
 from core.provenance._records import _COMMON, Build, _frozen
 from core.provenance._runtime import python_info
+from core.provenance._signing import GENERIC_AUDIT_DOMAIN, TEST_KEY_IDS, Signer, Verifier, key_id_of, sign, verified
 
 GENERIC_AUDIT_SCHEMA = "impact.generic-audit-record.v1"
 CHECKS = ("identification", "layout", "map_rules", "verify")
@@ -240,3 +244,83 @@ def generic_audit_record(inputs: GenericAuditInputs) -> GenericAuditRecord:
             "reproducibility": inputs.build.reproducibility,
         }
     )
+
+
+GENERIC_REPORT_SCHEMA = "impact.generic-audit-report.v1"
+
+
+@dataclass(frozen=True, slots=True)
+class GenericAuditReport:
+    """R116: a generic audit record signed by its signer's key. It states nothing beyond the record."""
+
+    record: GenericAuditRecord
+    key_id: str
+    signature: str
+
+    def to_json(self) -> Mapping[str, Json]:
+        return {
+            "schema": GENERIC_REPORT_SCHEMA,
+            "record": self.record.value,
+            "record_hash": self.record.generic_audit_hash,
+            "key_id": self.key_id,
+            "signature": self.signature,
+        }
+
+
+def sign_generic_audit(record: GenericAuditRecord, signer: Signer) -> GenericAuditReport:
+    """R116: Ed25519 (R50) over R51's signing input with domain `impact.generic-audit-signature.v1`."""
+    if not isinstance(record, GenericAuditRecord) or not HEX32_CHECK(signer.key_id):
+        raise ShapeError("bad_shape", "sign_generic_audit takes a GenericAuditRecord and a signer with a key_id")
+    signature = sign(signer, GENERIC_AUDIT_DOMAIN, record.generic_audit_hash)
+    return GenericAuditReport(record, signer.key_id, signature)
+
+
+@dataclass(frozen=True, slots=True)
+class GenericReportCheck:
+    """R117: `intact` only without findings; findings sorted. Never a boolean and never "ok"."""
+
+    status: Literal["intact", "broken"]
+    findings: tuple[str, ...]
+
+
+GENERIC_REPORT_SHAPE = obj(
+    {
+        "schema": one_of(GENERIC_REPORT_SCHEMA),
+        "record": lambda value: isinstance(value, Mapping),
+        "record_hash": HEX32_CHECK,
+        "key_id": HEX32_CHECK,
+        "signature": SIGNATURE_CHECK,
+    }
+)
+
+
+def _check(findings: set[str]) -> GenericReportCheck:
+    return GenericReportCheck("broken" if findings else "intact", tuple(sorted(findings)))
+
+
+def verify_generic_audit_report(
+    value: Raw, verifier: Verifier, *, trust: Sequence[str], test_mode: bool = False
+) -> GenericReportCheck:
+    """R117: every defect is a finding, never an exception. `trust` holds the public keys (lowercase hex) the
+    caller accepts as signers, taken from the signer's chain (R52, R61), never from the report."""
+    if not GENERIC_REPORT_SHAPE(value):
+        return _check({"bad_shape"})
+    findings: set[str] = set()
+    record_hash = as_str(member(value, "record_hash"))
+    try:
+        record = GenericAuditRecord(cast("Mapping[str, Json]", member(value, "record")))
+    except ProvenanceError:
+        findings.add("bad_record")
+    else:
+        if record.generic_audit_hash != record_hash:
+            findings.add("record_hash_mismatch")
+    key_id = as_str(member(value, "key_id"))
+    if key_id in TEST_KEY_IDS and not test_mode:
+        findings.add("test_key")
+    keys = {key_id_of(key): key for key in trust if HEX32_CHECK(key)}
+    public_key = keys.get(key_id)
+    if public_key is None:
+        findings.add("unknown_key")
+    elif not verified(verifier, public_key, GENERIC_AUDIT_DOMAIN, record_hash, as_str(member(value, "signature"))):
+        findings.add("bad_signature")
+    return _check(findings)

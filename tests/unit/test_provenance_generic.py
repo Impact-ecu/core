@@ -1,7 +1,7 @@
 """SPEC-005 §4.2 R110-R114 at the provenance level: changed ranges, the record and its consistency checks."""
 
 import json
-from types import MappingProxyType
+from types import MappingProxyType, SimpleNamespace
 from typing import Any, cast
 
 import pytest
@@ -15,11 +15,16 @@ from core.provenance import (
     Json,
     KnownMaps,
     PluginReason,
+    Raw,
     RecordError,
+    Signer,
     changed_ranges,
     generic_audit_record,
+    sign_generic_audit,
+    verify_generic_audit_report,
 )
 from core.provenance import ShapeError as RecordShapeError
+from tests.unit.provenance_support import TEST_SIGNER, VERIFIER
 
 BUILD = Build("lockfile", "sha256:" + "ab" * 32, "linux/amd64", None)
 DEFINITION_HASH = "cd" * 32
@@ -234,3 +239,27 @@ def test_no_definition_attributes_nothing() -> None:
 def test_reproducibility_follows_build() -> None:
     with pytest.raises(RecordError):
         GenericAuditRecord(_with(("reproducibility",), "full"))
+
+
+# SPEC-005 R116: only a GenericAuditRecord is signed, by a signer with a key_id.
+def test_sign_rejects_bad_inputs() -> None:
+    record = generic_audit_record(inputs(None))
+    with pytest.raises(RecordShapeError):
+        sign_generic_audit(cast("GenericAuditRecord", {"schema": "x"}), TEST_SIGNER)
+    with pytest.raises(RecordShapeError):
+        sign_generic_audit(record, cast("Signer", SimpleNamespace(key_id="nope", sign=TEST_SIGNER.sign)))
+
+
+# SPEC-005 R117: findings, never an exception; trust entries that are not keys are ignored.
+@pytest.mark.parametrize("value", [None, "report", [], {"schema": "impact.generic-audit-report.v1"}])
+def test_verify_never_raises(value: Raw) -> None:
+    check = verify_generic_audit_report(value, VERIFIER, trust=["zz"])
+    assert (check.status, check.findings) == ("broken", ("bad_shape",))
+
+
+def test_verify_a_signed_record() -> None:
+    report = sign_generic_audit(generic_audit_record(inputs(None)), TEST_SIGNER).to_json()
+    good = verify_generic_audit_report(report, VERIFIER, trust=["zz", TEST_SIGNER.public_key], test_mode=True)
+    assert (good.status, good.findings) == ("intact", ())
+    outside = verify_generic_audit_report(report, VERIFIER, trust=[TEST_SIGNER.public_key])
+    assert outside.findings == ("test_key",)

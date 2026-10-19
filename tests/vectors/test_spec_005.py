@@ -66,12 +66,14 @@ from core.provenance import (
     make_anchor,
     parse_anchor,
     parse_event,
+    sign_generic_audit,
     verify_chain,
+    verify_generic_audit_report,
 )
 from core.provenance import Versions as VersionsInfo
 from core.provenance._json import signing_input, try_hash
 from core.provenance._records import check_kernel_fields
-from core.provenance._signing import ANCHOR_DOMAIN, REPORT_DOMAIN, TEST_KEY_IDS, key_id_of
+from core.provenance._signing import ANCHOR_DOMAIN, GENERIC_AUDIT_DOMAIN, REPORT_DOMAIN, TEST_KEY_IDS, key_id_of
 from tests.unit.provenance_support import ROOT, SPEC005, SPEC006, TEST_SIGNER, VERIFIER, Ed25519Signer, _plain, raw
 from tests.vectors.test_spec_001 import BASE, ORIGINAL, PATCHES
 from tests.vectors.test_spec_001 import VECTORS as SPEC001
@@ -502,3 +504,26 @@ def test_generic_audit(name: str, with_definition: bool, reason: PluginReason) -
     assert record.generic_audit_hash == vector["generic_audit_hash"]
     assert jcs(expected) == vector["jcs"]
     assert try_hash(expected) == vector["generic_audit_hash"]
+
+
+# SPEC-005 R50, R51, R116, R117: the signed generic audit report, re-signed by the core, and every tamper's findings.
+def test_generic_audit_report() -> None:
+    vector = V["generic_audit_report"]
+    assert vector["rules"] == ["R50", "R51", "R116", "R117"]
+    report = vector["value"]
+    record = GenericAuditRecord(report["record"])
+    signed = sign_generic_audit(record, TEST_SIGNER)
+    assert json.loads(json.dumps(_plain(signed.to_json()))) == report
+    assert signing_input(GENERIC_AUDIT_DOMAIN, report["record_hash"]).decode() == vector["signing_input"]
+    check = verify_generic_audit_report(report, VERIFIER, trust=vector["trust"], test_mode=vector["test_mode"])
+    assert (check.status, check.findings) == ("intact", ())
+    for tamper in vector["tampers"]:
+        mutated = copy.deepcopy(report)
+        mutation = tamper["mutation"]
+        if mutation is not None:
+            target = mutated
+            for key in mutation["path"][:-1]:
+                target = target[key]
+            target[mutation["path"][-1]] = mutation["value"]
+        result = verify_generic_audit_report(mutated, VERIFIER, trust=vector["trust"], test_mode=tamper["test_mode"])
+        assert (result.status, list(result.findings)) == ("broken", sorted(tamper["expect"])), tamper["id"]

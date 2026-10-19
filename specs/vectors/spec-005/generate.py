@@ -381,6 +381,27 @@ GENERIC = generic(definition=True, reason="no_admitted_plugin")
 GENERIC_NO_DEFINITION = generic(definition=False, reason="no_admitted_plugin")
 GENERIC_NO_RULE_TABLE = generic(definition=True, reason="no_rule_table")
 
+# R116, R117: the generic audit record signed by the synthetic key; trust is that key's public key.
+GENERIC_HASH = ohash(GENERIC)
+GENERIC_MSG, GENERIC_SIG = signature("impact.generic-audit-signature.v1", GENERIC_HASH)
+GENERIC_REPORT = {
+    "schema": "impact.generic-audit-report.v1",
+    "record": GENERIC,
+    "record_hash": GENERIC_HASH,
+    "key_id": KEY_ID,
+    "signature": GENERIC_SIG,
+}
+# Expected findings, by hand. Each mutation sets `path` to `value` in a copy of the report.
+GENERIC_TAMPERS = [
+    {"id": "G1", "note": "a record field changed", "mutation": {"path": ["record", "candidate_origin"], "value": "bench_read"}, "test_mode": True, "expect": ["record_hash_mismatch"]},
+    {"id": "G2", "note": "record_hash replaced by another record's hash", "mutation": {"path": ["record_hash"], "value": ohash(GENERIC_NO_DEFINITION)}, "test_mode": True, "expect": ["bad_signature", "record_hash_mismatch"]},
+    {"id": "G3", "note": "a signature byte flipped", "mutation": {"path": ["signature"], "value": ("00" if GENERIC_SIG[:2] != "00" else "01") + GENERIC_SIG[2:]}, "test_mode": True, "expect": ["bad_signature"]},
+    {"id": "G4", "note": "signed by a key outside the trust list", "mutation": {"path": ["key_id"], "value": KEY2_ID}, "test_mode": True, "expect": ["unknown_key"]},
+    {"id": "G5", "note": "the synthetic key outside test mode", "mutation": None, "test_mode": False, "expect": ["test_key"]},
+    {"id": "G6", "note": "a record that is not a GenericAuditRecord", "mutation": {"path": ["record", "checksum_status"], "value": "ok"}, "test_mode": True, "expect": ["bad_record"]},
+    {"id": "G7", "note": "a missing member", "mutation": {"path": ["schema"], "value": "impact.report.v1"}, "test_mode": True, "expect": ["bad_shape"]},
+]
+
 COMMIT_CONTENT = {"text": "synthetic justification typed by a person"}
 COMMIT_NONCE = sha(b"synthetic nonce 1")
 COMMITMENT = {"schema": "impact.commitment.v1", "nonce": COMMIT_NONCE, "content": COMMIT_CONTENT}
@@ -707,6 +728,14 @@ vectors = {
     "generic_audit_no_definition": {
         "rules": ["R111", "R112", "R113", "R114"],
         **hashed(GENERIC_NO_DEFINITION, "generic_audit_hash", ohash(GENERIC_NO_DEFINITION)),
+    },
+    "generic_audit_report": {
+        "rules": ["R50", "R51", "R116", "R117"],
+        "value": GENERIC_REPORT,
+        "signing_input": GENERIC_MSG,
+        "trust": [PUBLIC_KEY],
+        "test_mode": True,
+        "tampers": GENERIC_TAMPERS,
     },
     "generic_audit_no_rule_table": {
         "rules": ["R113", "R115"],

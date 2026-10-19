@@ -30,10 +30,14 @@ from core.provenance._generic import (
     ChangedRun,
     GenericAuditInputs,
     GenericAuditRecord,
+    GenericAuditReport,
+    GenericReportCheck,
     KnownMaps,
     PluginReason,
     changed_ranges,
     generic_audit_record,
+    sign_generic_audit,
+    verify_generic_audit_report,
 )
 from core.provenance._json import Json, Raw
 from core.provenance._records import (
@@ -100,6 +104,8 @@ __all__ = [
     "Finding",
     "GenericAuditInputs",
     "GenericAuditRecord",
+    "GenericAuditReport",
+    "GenericReportCheck",
     "Head",
     "Json",
     "KnownMaps",
@@ -140,8 +146,10 @@ __all__ = [
     "make_anchor",
     "parse_anchor",
     "parse_event",
+    "sign_generic_audit",
     "sign_key_event",
     "verify_chain",
+    "verify_generic_audit_report",
     "verify_segment",
     "verify_tenant",
 ]
