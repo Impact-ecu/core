@@ -195,6 +195,7 @@ allowed_importers = ["core.evidence"]
 name = "Outside the gate, only its public API is importable: InputResult and ReleasedImage are built only there (SPEC-004 R9, SPEC-001 R9)"
 type = "protected"
 protected_modules = [
+    "core.gate._audit",
     "core.gate._calls",
     "core.gate._check",
     "core.gate._evidence",

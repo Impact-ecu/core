@@ -12,7 +12,8 @@ from typing import Any, cast
 
 from core.definitions import Definition, Dtype, InlineAxis, License, MapDef, Origin, Scaling, SoftwareVersion
 from core.evidence import EvidenceAdmission, FieldEvidence, VariantAdmission
-from core.gate import Engine, GateBlocked, InputResult, ReleasedImage
+from core.gate import AuditFile, Engine, GateBlocked, InputResult, ReleasedImage
+from core.gate._audit import AuditArgs
 from core.gate._check import CheckInputArgs, run_check_input
 from core.gate._evidence import EvidenceAdmissionFn
 from core.gate._release import ReleaseArgs, run_release
@@ -26,7 +27,7 @@ from core.plugins import (
     RegionStatus,
     VerifyReport,
 )
-from core.provenance import Actor, Event, Verifier
+from core.provenance import Actor, Build, Event, Verifier
 from tests.unit.plugin_fixtures import FAMILY, LAYOUT, ORIGINAL, VARIANT, FakePlugin, dump_of
 
 PROJECT = "proj-1"
@@ -372,3 +373,28 @@ class ShaReference:
 
 
 SHA_ORIGINAL = write(ORIGINAL, 256, bytes.fromhex(sha(ORIGINAL[32:256])))
+
+
+BUILD = Build("lockfile", "sha256:" + "44" * 32, "linux/amd64", None)
+
+
+def file_of(dump: Dump, *, confirmation: Event | None = None) -> AuditFile:
+    received = sha(b"".join(memory.data for memory in dump.memories))
+    return AuditFile(dump, received, received, confirmation)
+
+
+def arguments(**overrides: object) -> AuditArgs:
+    """The keyword arguments of an audit of the fixture (SPEC-005 §4.1)."""
+    args: dict[str, object] = {
+        "candidate_origin": "file_service",
+        "project_id": PROJECT,
+        "plugin": FakePlugin(),
+        "conformance_report": CONFORMANCE,
+        "evidence": None,
+        "as_of": "2026-10-19T00:00:00Z",
+        "verifier": None,
+        "rule_table": TABLE,
+        "definition": None,
+        "build": BUILD,
+    }
+    return cast("AuditArgs", {**args, **overrides})
