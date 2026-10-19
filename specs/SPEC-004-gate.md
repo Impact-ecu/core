@@ -3,6 +3,7 @@
 Status: draft
 Date: 2026-10-18
 Revision: 1 (2026-10-18), proposed with SPEC-006 (ADR-002): `check_input` and `release` take `evidence` and `as_of`; R16 intersects the admitted set with field evidence the gate checks itself (signed, unexpired registry head; `golden_field` recomputed). A variant that fails R16 follows the existing `unknown_variant` path, so no finding, report field or vector changes. Breaking under the compatibility rules of this spec.
+Revision: 2 (2026-10-19): `check_input` and `release` take `verifier: Verifier | None`, the injected Ed25519 verifier SPEC-006 R83 needs to run `evidence_admission` itself (R16); `None` makes evidence `unavailable`, so no variant is admitted for recalculation (fail-closed).
 Governs: `src/core/gate/`, the construction of `InputResult` and `ReleasedImage`, the gate report, and how the gate reads the events it consumes.
 Derives from: SPEC-000 §Verification gate: the only way out, §Binary kernel invariants (invariant 10), §Virtual test bench (level 1), §Data model (Event, MapDef label states), §Ingestion and analysis pipeline (step 5), §Plugin SDK per ECU family, §Golden files, §Non-functional requirements; SPEC-001 R7–R9, R40–R42, R60–R65; SPEC-002 (plugin contract, checksum references); SPEC-003 (definitions, span, units); SPEC-005 R36 (event payloads); ADR-001.
 
@@ -35,7 +36,7 @@ Finding  = { rule_id, rule_version: int, severity: Severity, text: string,
 
 ## 3. Input gate
 
-`gate.check_input(dump, *, declared_sha256, received_sha256, project_id, plugin, conformance_report, evidence, as_of, confirmation, rule_table) -> InputResult`
+`gate.check_input(dump, *, declared_sha256, received_sha256, project_id, plugin, conformance_report, evidence, as_of, verifier, confirmation, rule_table) -> InputResult`
 
 `InputResult = {report, report_hash, artifact_state: "accepted" | "suspect", identification: Identification | None}`, where `identification` is the result of the gate's own `plugin.identify(dump)` call (R12). `conformance_report` is the plugin's published SPEC-002 R126 report object (R15). `received_sha256` is the SHA-256 of the file as received, computed by the consumer that read it (the core does no I/O; SPEC-001 R2 makes that hash the artifact's identity). `confirmation` is an `identification_confirmed` event (SPEC-005 R36) or `null`.
 
@@ -53,7 +54,7 @@ Finding  = { rule_id, rule_version: int, severity: Severity, text: string,
 ```
 gate.release(u: UnverifiedImage, *, original: Dump, version: Version,
              plugin: EcuPlugin | None, conformance_report: ConformanceReport | None,
-             evidence: FieldEvidence | None, as_of: Timestamp,
+             evidence: FieldEvidence | None, as_of: Timestamp, verifier: Verifier | None,
              references: Mapping[str, RegionReference], definition: Definition,
              engine: {combustion: "SI" | "CI" | null, fuel: Fuel | null}, rule_table: RuleTable | None,
              project_id: ProjectId, input: InputResult, suspect_ack: Event | None,
