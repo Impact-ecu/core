@@ -298,6 +298,89 @@ AUDIT = {
     "reproducibility": "full",
 }
 
+# --- Generic audit (R110-R115, revision 6) ---
+# The V8 candidate with two more synthetic edits: pflash 38..42 crosses the maps_a/maps_b boundary at 40, and
+# pflash 47..50 crosses the calibration/protected boundary at 48. No layout is used: neither run is split.
+G_EDITS = {"pflash": [(38, 4, 0xFF), (47, 3, 0x5A)]}
+g_mem: dict[str, bytes] = {"dflash": x_dflash, "pflash": bytearray(x_pflash)}
+for g_offset, g_length, g_mask in G_EDITS["pflash"]:
+    for g_i in range(g_offset, g_offset + g_length):
+        g_mem["pflash"][g_i] ^= g_mask
+g_mem["pflash"] = bytes(g_mem["pflash"])
+G_ORIGINAL = {m: bytes.fromhex(o_mem[m]["bytes_hex"]) for m in ("dflash", "pflash")}
+G_IMAGE = {
+    "dump_kind": "bench_full",
+    "memories": [
+        {"memory_id": m, "base_address": o_mem[m]["base_address"], "size": len(g_mem[m]), "sha256": sha(g_mem[m])}
+        for m in ("dflash", "pflash")
+    ],
+}
+# Synthetic definition spans as byte ranges [start, end) (SPEC-003 R30 resolves them; here they are given), and one
+# map whose span failed (SPEC-003 R101 `unbound`). syn.c holds no changed byte.
+G_SPANS = {
+    "syn.a": [{"memory_id": "pflash", "start": 16, "end": 24}, {"memory_id": "pflash", "start": 36, "end": 40}],
+    "syn.b": [{"memory_id": "pflash", "start": 40, "end": 48}],
+    "syn.c": [{"memory_id": "dflash", "start": 8, "end": 16}],
+}
+G_UNBOUND = ["syn.z"]
+# Expected by hand: the maximal differing runs (R111) and the maps holding each (R112).
+G_CHANGES = [
+    ("dflash", 0, 1, []),
+    ("pflash", 5, 1, []),
+    ("pflash", 20, 1, ["syn.a"]),
+    ("pflash", 38, 4, ["syn.a", "syn.b"]),
+    ("pflash", 47, 3, ["syn.b"]),
+    ("pflash", 62, 1, []),
+]
+G_OUTSIDE = [("dflash", 0, 1), ("pflash", 5, 1), ("pflash", 48, 2), ("pflash", 62, 1)]
+
+
+def g_patch_hash(memory_id: str, offset: int, length: int) -> str:
+    before, after = G_ORIGINAL[memory_id][offset : offset + length], g_mem[memory_id][offset : offset + length]
+    return ohash({"memory_id": memory_id, "offset": offset, "length": length, "before": before.hex(), "after": after.hex()})
+
+
+def generic(*, definition: bool, reason: str) -> dict[str, object]:
+    return {
+        "schema": "impact.generic-audit-record.v1",
+        "dump_kind": "bench_full",
+        "image_hash_original": ORIGINAL_HASH,
+        "image_hash_candidate": ohash(G_IMAGE),
+        "candidate_origin": "file_service",
+        "definition_hash": DEFINITION_HASH if definition else None,
+        "changes": [
+            {
+                "memory_id": m,
+                "offset": off,
+                "length": n,
+                "patch_hash": g_patch_hash(m, off, n),
+                "map_ids": maps if definition else [],
+            }
+            for m, off, n, maps in G_CHANGES
+        ],
+        "outside_known_maps": [
+            {"memory_id": m, "offset": off, "length": n}
+            for m, off, n in (G_OUTSIDE if definition else [(c[0], c[1], c[2]) for c in G_CHANGES])
+        ],
+        "unbound_maps": G_UNBOUND if definition else [],
+        "not_evaluated": [
+            {"check": "identification", "reason": reason},
+            {"check": "layout", "reason": reason},
+            {"check": "map_rules", "reason": "no_rule_table" if definition else "no_definition"},
+            {"check": "verify", "reason": reason},
+        ],
+        "checksum_status": "not_verified",
+        "versions": {"core": "0.0.0-synthetic"},
+        "python": PROV["python"],
+        "build": PROV["build"],
+        "reproducibility": "full",
+    }
+
+
+GENERIC = generic(definition=True, reason="no_admitted_plugin")
+GENERIC_NO_DEFINITION = generic(definition=False, reason="no_admitted_plugin")
+GENERIC_NO_RULE_TABLE = generic(definition=True, reason="no_rule_table")
+
 COMMIT_CONTENT = {"text": "synthetic justification typed by a person"}
 COMMIT_NONCE = sha(b"synthetic nonce 1")
 COMMITMENT = {"schema": "impact.commitment.v1", "nonce": COMMIT_NONCE, "content": COMMIT_CONTENT}
@@ -608,6 +691,27 @@ vectors = {
     },
     "commitment": {"rules": ["R82"], **hashed(COMMITMENT, "commitment", ohash(COMMITMENT))},
     "tampers": TAMPERS,
+    "generic_audit_inputs": {
+        "rules": ["R111", "R112"],
+        "note": "the V8 candidate with pflash 38..42 xor 0xff and 47..50 xor 0x5a; map spans given as byte ranges",
+        "candidate": {m: g_mem[m].hex() for m in ("dflash", "pflash")},
+        "candidate_image_jcs": jcs(G_IMAGE),
+        "definition_hash": DEFINITION_HASH,
+        "spans": G_SPANS,
+        "unbound": G_UNBOUND,
+    },
+    "generic_audit": {
+        "rules": ["R110", "R111", "R112", "R113", "R114"],
+        **hashed(GENERIC, "generic_audit_hash", ohash(GENERIC)),
+    },
+    "generic_audit_no_definition": {
+        "rules": ["R111", "R112", "R113", "R114"],
+        **hashed(GENERIC_NO_DEFINITION, "generic_audit_hash", ohash(GENERIC_NO_DEFINITION)),
+    },
+    "generic_audit_no_rule_table": {
+        "rules": ["R113", "R115"],
+        **hashed(GENERIC_NO_RULE_TABLE, "generic_audit_hash", ohash(GENERIC_NO_RULE_TABLE)),
+    },
 }
 
 json.dump(vectors, sys.stdout, indent=2)
