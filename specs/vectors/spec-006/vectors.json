@@ -1,0 +1,3726 @@
+{
+  "generator": {
+    "jcs": "rfc8785 0.1.4",
+    "ed25519": "cryptography 46.0.3",
+    "sha256": "python hashlib",
+    "python": "3.12.3",
+    "spec001_vectors_sha256": "351719cc0b064d17df24404822f363bbfac2a6111847760b55516cdc5c9a09e2"
+  },
+  "spec001_inputs": {
+    "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+    "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+    "golden_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+    "other_image_hash": "c42a3fdf83267ff246a7de25f05553c28f56adcaa048316bac9750968a58a10b",
+    "from": [
+      "original",
+      "V4-apply-disjoint",
+      "V9-checksum-patch"
+    ]
+  },
+  "keys": {
+    "rules": [
+      "R49",
+      "R66"
+    ],
+    "keys": {
+      "registry": {
+        "seed_text": "impact spec-006 synthetic registry key; never use outside test vectors",
+        "public_key": "2777ffb024ca3a7b41e996fa5d53b10725ddd36caf6733a9d39d53be7f7cde34",
+        "key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d"
+      },
+      "attester-a": {
+        "seed_text": "impact spec-006 synthetic attester-a key; never use outside test vectors",
+        "public_key": "942f24e644e85098fb66a13cd45d26f7b20ad62fbded37150993554c3793bcf6",
+        "key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19"
+      },
+      "attester-a2": {
+        "seed_text": "impact spec-006 synthetic attester-a2 key; never use outside test vectors",
+        "public_key": "75fd1589632ea2706ebd361fc5b8c8399b4ba8419494be956c048dc000dd9966",
+        "key_id": "5d4f33ab43ef49471f606c8c7e4cfdc26011980b385d810871f6399881e6338c"
+      },
+      "attester-b": {
+        "seed_text": "impact spec-006 synthetic attester-b key; never use outside test vectors",
+        "public_key": "fa418fb31fc0ba011397acc6a8303f82d0f2de74ad8b7ed43e471576f4af1d81",
+        "key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc"
+      },
+      "attester-c": {
+        "seed_text": "impact spec-006 synthetic attester-c key; never use outside test vectors",
+        "public_key": "9edb2c662671e1f7a062741255f062d2f74f98fa7779c7791359ee5601a1fa2e",
+        "key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033"
+      },
+      "attester-d": {
+        "seed_text": "impact spec-006 synthetic attester-d key; never use outside test vectors",
+        "public_key": "88aaadd3f00cac0a8fa1004e8feb9a2a6e65c558553c2124d12f18233061581e",
+        "key_id": "cdfc59703e6cf762dd53227aaf76ced0ad3b3d355bc837c93f6602ebff6ec265"
+      },
+      "attester-e": {
+        "seed_text": "impact spec-006 synthetic attester-e key; never use outside test vectors",
+        "public_key": "5ededb89579eab94997e6224a01c05dafbc956fd52160e24c4d0e03fd3fa421f",
+        "key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8"
+      },
+      "reviewer-f": {
+        "seed_text": "impact spec-006 synthetic reviewer-f key; never use outside test vectors",
+        "public_key": "00bf3dc129b3f40d1f1b002654743175df341c1e9685c70901216ba3ea31e70d",
+        "key_id": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0"
+      }
+    }
+  },
+  "raw_import": {
+    "max_input_bytes": 67108864,
+    "importer_version": "0.0.0-synthetic",
+    "cases": [
+      {
+        "id": "I1-raw-single-memory",
+        "rules": [
+          "R10",
+          "R17",
+          "R20",
+          "R21",
+          "R27",
+          "R28",
+          "R29"
+        ],
+        "input": {
+          "hex": "404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f"
+        },
+        "params": {
+          "dump_kind": "bench_full",
+          "source_tool": "Synthetic Reader 1.0",
+          "options": {
+            "memory_id": "pflash"
+          }
+        },
+        "expect": {
+          "outcome": "imported",
+          "dump": {
+            "dump_kind": "bench_full",
+            "memories": [
+              {
+                "memory_id": "pflash",
+                "base_address": null,
+                "data": {
+                  "hex": "404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f"
+                }
+              }
+            ]
+          },
+          "image_jcs": "{\"dump_kind\":\"bench_full\",\"memories\":[{\"base_address\":null,\"memory_id\":\"pflash\",\"sha256\":\"6f8c40508471ed66a982c13dd5275455008ec1cd33fdbd2351a5d8c8f1574564\",\"size\":48}]}",
+          "record": {
+            "schema": "impact.import-record.v1",
+            "importer_id": "impact.raw",
+            "importer_version": "0.0.0-synthetic",
+            "source_tool": "Synthetic Reader 1.0",
+            "container_kind": "raw",
+            "input_sha256": "6f8c40508471ed66a982c13dd5275455008ec1cd33fdbd2351a5d8c8f1574564",
+            "dump_kind": "bench_full",
+            "options": {
+              "memory_id": "pflash"
+            },
+            "image_hash": "4a342fb00ae0c47f7912bf0a151fc07d0145edb215fec1f5a69f29c3230ec554"
+          },
+          "record_jcs": "{\"container_kind\":\"raw\",\"dump_kind\":\"bench_full\",\"image_hash\":\"4a342fb00ae0c47f7912bf0a151fc07d0145edb215fec1f5a69f29c3230ec554\",\"importer_id\":\"impact.raw\",\"importer_version\":\"0.0.0-synthetic\",\"input_sha256\":\"6f8c40508471ed66a982c13dd5275455008ec1cd33fdbd2351a5d8c8f1574564\",\"options\":{\"memory_id\":\"pflash\"},\"schema\":\"impact.import-record.v1\",\"source_tool\":\"Synthetic Reader 1.0\"}",
+          "import_record_hash": "b7df108a53dd78dc4437b28a390f0881835bb6e044eb184ddeeeac687c28e26f"
+        }
+      },
+      {
+        "id": "I2-raw-null-source-tool",
+        "rules": [
+          "R10",
+          "R17",
+          "R20",
+          "R21",
+          "R27",
+          "R28",
+          "R29"
+        ],
+        "input": {
+          "hex": "ffffffffffffffffffffffffffffffff"
+        },
+        "params": {
+          "dump_kind": "obd_partial",
+          "source_tool": null,
+          "options": {
+            "memory_id": "eeprom"
+          }
+        },
+        "expect": {
+          "outcome": "imported",
+          "dump": {
+            "dump_kind": "obd_partial",
+            "memories": [
+              {
+                "memory_id": "eeprom",
+                "base_address": null,
+                "data": {
+                  "hex": "ffffffffffffffffffffffffffffffff"
+                }
+              }
+            ]
+          },
+          "image_jcs": "{\"dump_kind\":\"obd_partial\",\"memories\":[{\"base_address\":null,\"memory_id\":\"eeprom\",\"sha256\":\"5ac6a5945f16500911219129984ba8b387a06f24fe383ce4e81a73294065461b\",\"size\":16}]}",
+          "record": {
+            "schema": "impact.import-record.v1",
+            "importer_id": "impact.raw",
+            "importer_version": "0.0.0-synthetic",
+            "source_tool": null,
+            "container_kind": "raw",
+            "input_sha256": "5ac6a5945f16500911219129984ba8b387a06f24fe383ce4e81a73294065461b",
+            "dump_kind": "obd_partial",
+            "options": {
+              "memory_id": "eeprom"
+            },
+            "image_hash": "d9dc6e8fef818cf2ad260ef0f2399e13cb966ce95e3e13f47b6111f3ac4f9bc2"
+          },
+          "record_jcs": "{\"container_kind\":\"raw\",\"dump_kind\":\"obd_partial\",\"image_hash\":\"d9dc6e8fef818cf2ad260ef0f2399e13cb966ce95e3e13f47b6111f3ac4f9bc2\",\"importer_id\":\"impact.raw\",\"importer_version\":\"0.0.0-synthetic\",\"input_sha256\":\"5ac6a5945f16500911219129984ba8b387a06f24fe383ce4e81a73294065461b\",\"options\":{\"memory_id\":\"eeprom\"},\"schema\":\"impact.import-record.v1\",\"source_tool\":null}",
+          "import_record_hash": "dc7c2ad1583a8e3899a41667d5e18c04a8e07180d83b0a14c6069b2a911828a8"
+        }
+      },
+      {
+        "id": "I3-empty-input",
+        "rules": [
+          "R29"
+        ],
+        "input": {
+          "hex": ""
+        },
+        "params": {
+          "dump_kind": "bench_full",
+          "source_tool": null,
+          "options": {
+            "memory_id": "pflash"
+          }
+        },
+        "expect": {
+          "outcome": "rejected",
+          "rejection": {
+            "reason": "empty_input",
+            "container_kind": "raw"
+          }
+        }
+      },
+      {
+        "id": "I4-bad-memory-id",
+        "rules": [
+          "R28"
+        ],
+        "input": {
+          "hex": "404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f"
+        },
+        "params": {
+          "dump_kind": "bench_full",
+          "source_tool": null,
+          "options": {
+            "memory_id": "PFlash"
+          }
+        },
+        "expect": {
+          "outcome": "rejected",
+          "rejection": {
+            "reason": "bad_params",
+            "container_kind": "raw"
+          }
+        }
+      },
+      {
+        "id": "I5-extra-option",
+        "rules": [
+          "R28"
+        ],
+        "input": {
+          "hex": "404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f"
+        },
+        "params": {
+          "dump_kind": "bench_full",
+          "source_tool": null,
+          "options": {
+            "memory_id": "pflash",
+            "base_address": 0
+          }
+        },
+        "expect": {
+          "outcome": "rejected",
+          "rejection": {
+            "reason": "bad_params",
+            "container_kind": "raw"
+          }
+        }
+      },
+      {
+        "id": "I6-bad-dump-kind",
+        "rules": [
+          "R11",
+          "R20"
+        ],
+        "input": {
+          "hex": "404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f"
+        },
+        "params": {
+          "dump_kind": "full",
+          "source_tool": null,
+          "options": {
+            "memory_id": "pflash"
+          }
+        },
+        "expect": {
+          "outcome": "rejected",
+          "rejection": {
+            "reason": "bad_params",
+            "container_kind": null
+          }
+        }
+      },
+      {
+        "id": "I7-too-large",
+        "rules": [
+          "R16",
+          "R20"
+        ],
+        "input": {
+          "fill": {
+            "byte": 0,
+            "size": 67108865
+          }
+        },
+        "params": {
+          "dump_kind": "bench_full",
+          "source_tool": null,
+          "options": {
+            "memory_id": "pflash"
+          }
+        },
+        "expect": {
+          "outcome": "rejected",
+          "rejection": {
+            "reason": "too_large",
+            "container_kind": null
+          }
+        }
+      },
+      {
+        "id": "I8-at-size-limit",
+        "rules": [
+          "R16",
+          "R29"
+        ],
+        "input": {
+          "fill": {
+            "byte": 0,
+            "size": 67108864
+          }
+        },
+        "params": {
+          "dump_kind": "boot_full",
+          "source_tool": null,
+          "options": {
+            "memory_id": "pflash"
+          }
+        },
+        "expect": {
+          "outcome": "imported",
+          "dump": {
+            "dump_kind": "boot_full",
+            "memories": [
+              {
+                "memory_id": "pflash",
+                "base_address": null,
+                "data": {
+                  "fill": {
+                    "byte": 0,
+                    "size": 67108864
+                  }
+                }
+              }
+            ]
+          },
+          "image_jcs": "{\"dump_kind\":\"boot_full\",\"memories\":[{\"base_address\":null,\"memory_id\":\"pflash\",\"sha256\":\"3b6a07d0d404fab4e23b6d34bc6696a6a312dd92821332385e5af7c01c421351\",\"size\":67108864}]}",
+          "record": {
+            "schema": "impact.import-record.v1",
+            "importer_id": "impact.raw",
+            "importer_version": "0.0.0-synthetic",
+            "source_tool": null,
+            "container_kind": "raw",
+            "input_sha256": "3b6a07d0d404fab4e23b6d34bc6696a6a312dd92821332385e5af7c01c421351",
+            "dump_kind": "boot_full",
+            "options": {
+              "memory_id": "pflash"
+            },
+            "image_hash": "ab5dc701f4a994d856cba00c1c7d20774d6f80053d965e5ee752a72cdda526ef"
+          },
+          "record_jcs": "{\"container_kind\":\"raw\",\"dump_kind\":\"boot_full\",\"image_hash\":\"ab5dc701f4a994d856cba00c1c7d20774d6f80053d965e5ee752a72cdda526ef\",\"importer_id\":\"impact.raw\",\"importer_version\":\"0.0.0-synthetic\",\"input_sha256\":\"3b6a07d0d404fab4e23b6d34bc6696a6a312dd92821332385e5af7c01c421351\",\"options\":{\"memory_id\":\"pflash\"},\"schema\":\"impact.import-record.v1\",\"source_tool\":null}",
+          "import_record_hash": "cf530d04ec987ddae91d30ec2a7a30d5d5728684c59417961721cd31925dc4b7"
+        }
+      }
+    ]
+  },
+  "dtcs": {
+    "rules": [
+      "R43"
+    ],
+    "canonical": [
+      {
+        "raw": [
+          " p0120 ",
+          "P0601-00",
+          "u0100",
+          "P0120"
+        ],
+        "expect": [
+          "P0120",
+          "P0601-00",
+          "U0100"
+        ]
+      },
+      {
+        "raw": [],
+        "expect": []
+      },
+      {
+        "raw": [
+          "c1234-af",
+          "B3FFF"
+        ],
+        "expect": [
+          "B3FFF",
+          "C1234-AF"
+        ]
+      }
+    ],
+    "invalid": [
+      {
+        "raw": [
+          "P4123"
+        ],
+        "reason": "bad_dtc"
+      },
+      {
+        "raw": [
+          "X0123"
+        ],
+        "reason": "bad_dtc"
+      },
+      {
+        "raw": [
+          "P012"
+        ],
+        "reason": "bad_dtc"
+      },
+      {
+        "raw": [
+          "P0601-0"
+        ],
+        "reason": "bad_dtc"
+      },
+      {
+        "raw": [
+          "P0601",
+          "P06O1"
+        ],
+        "reason": "bad_dtc"
+      }
+    ]
+  },
+  "salt": {
+    "rules": [
+      "R47"
+    ],
+    "salt": "445a0ae1a0e95efd90b9a6133e6cacb66a25155c3d7f865e331e181a7ffe5349",
+    "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+    "second_salt": "067b9e3f7239edb2f89a8cde9b36017f2de6155a73919c7a33ae9ec94bd99079",
+    "second_salt_id": "987712267e354cde6e985c9e75bcc7205de28e9ef22b5827eb6d6510c59cb7fa"
+  },
+  "unit_ids": {
+    "rules": [
+      "R46"
+    ],
+    "canonical": [
+      {
+        "raw": "sn-0001.x",
+        "expect": "SN0001X"
+      },
+      {
+        "raw": "SN 0002 Y",
+        "expect": "SN0002Y"
+      },
+      {
+        "raw": "sn/0003:z_",
+        "expect": "SN0003Z"
+      }
+    ],
+    "invalid": [
+      {
+        "raw": "ab1",
+        "reason": "bad_unit_id"
+      },
+      {
+        "raw": "SN#0001",
+        "reason": "bad_unit_id"
+      },
+      {
+        "raw": "SN\u00c40001",
+        "reason": "bad_unit_id"
+      },
+      {
+        "raw": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "reason": "bad_unit_id"
+      }
+    ]
+  },
+  "ecu_commitment": {
+    "rules": [
+      "R46"
+    ],
+    "family": "synthetic.family",
+    "cases": [
+      {
+        "unit": "X",
+        "salt": "primary",
+        "unit_id": "SN0001X",
+        "input_jcs": "{\"family\":\"synthetic.family\",\"salt\":\"445a0ae1a0e95efd90b9a6133e6cacb66a25155c3d7f865e331e181a7ffe5349\",\"schema\":\"impact.ecu-commitment.v1\",\"unit_id\":\"SN0001X\"}",
+        "ecu_commitment": "e969f954b303aa86b5fa97429434ef238bec4a1ca4b575348b8562658d60c870"
+      },
+      {
+        "unit": "Y",
+        "salt": "primary",
+        "unit_id": "SN0002Y",
+        "input_jcs": "{\"family\":\"synthetic.family\",\"salt\":\"445a0ae1a0e95efd90b9a6133e6cacb66a25155c3d7f865e331e181a7ffe5349\",\"schema\":\"impact.ecu-commitment.v1\",\"unit_id\":\"SN0002Y\"}",
+        "ecu_commitment": "afb958e69cf5df8645960d4986ec30239bf6374442aafae3b896531c1e92cd4d"
+      },
+      {
+        "unit": "Z",
+        "salt": "primary",
+        "unit_id": "SN0003Z",
+        "input_jcs": "{\"family\":\"synthetic.family\",\"salt\":\"445a0ae1a0e95efd90b9a6133e6cacb66a25155c3d7f865e331e181a7ffe5349\",\"schema\":\"impact.ecu-commitment.v1\",\"unit_id\":\"SN0003Z\"}",
+        "ecu_commitment": "99b19dfb2d01c87323f4b6208887087dbc4b06d65d1c5ec814867f81b77b7f6f"
+      },
+      {
+        "unit": "Y",
+        "salt": "second",
+        "unit_id": "SN0002Y",
+        "ecu_commitment": "5172f1cc5f65a6ae90fdba7e431503b274010925b31cf714a8755bc7f9ea2915"
+      }
+    ]
+  },
+  "dtc_set": {
+    "rules": [
+      "R55",
+      "R56"
+    ],
+    "value": {
+      "schema": "impact.disqualifying-dtcs.v1",
+      "version": 1,
+      "codes": [
+        "P0601",
+        "P0602",
+        "P0603",
+        "P0604",
+        "P0605",
+        "P0606",
+        "P062F"
+      ]
+    },
+    "jcs": "{\"codes\":[\"P0601\",\"P0602\",\"P0603\",\"P0604\",\"P0605\",\"P0606\",\"P062F\"],\"schema\":\"impact.disqualifying-dtcs.v1\",\"version\":1}",
+    "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9"
+  },
+  "registry_chain": {
+    "rules": [
+      "R60",
+      "R61",
+      "R62",
+      "R63",
+      "R64"
+    ],
+    "test_mode": true,
+    "events": [
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 0,
+          "event_id": "00000000000000000000000000000000",
+          "project_id": null,
+          "type": "genesis",
+          "payload": {
+            "role": "server",
+            "signing_keys": [
+              {
+                "key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+                "public_key": "2777ffb024ca3a7b41e996fa5d53b10725ddd36caf6733a9d39d53be7f7cde34"
+              }
+            ]
+          },
+          "actor": {
+            "kind": "system",
+            "id": "system"
+          },
+          "ts": "2026-10-18T13:00:00Z",
+          "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933"
+        },
+        "hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 1,
+          "event_id": "00000000000000000000000000000001",
+          "project_id": null,
+          "type": "attester_enrolled",
+          "payload": {
+            "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "public_key": "942f24e644e85098fb66a13cd45d26f7b20ad62fbded37150993554c3793bcf6",
+            "roles": [
+              "attester"
+            ],
+            "rotates": null,
+            "reason_commitment": "7d366a60b5fc2d2ce37fa2b13bb70d9ee82c226e24c630e542433279aab48c35",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "b7ec7aff0cb744ff1ba07ff1ba03cef8a02f2e65b358662a88fbfc5dd8c0c9ed138732c050959e2011836576e1e2b233c137e1e3998e7b78f84fa5e316c4e409"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:01:00Z",
+          "prev_hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933",
+          "hash": "8e945c9c126b981284ac9fec4e249aced52a417a77fa0d377059b1cc51b55501"
+        },
+        "hash": "8e945c9c126b981284ac9fec4e249aced52a417a77fa0d377059b1cc51b55501"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 2,
+          "event_id": "00000000000000000000000000000002",
+          "project_id": null,
+          "type": "attester_enrolled",
+          "payload": {
+            "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+            "public_key": "fa418fb31fc0ba011397acc6a8303f82d0f2de74ad8b7ed43e471576f4af1d81",
+            "roles": [
+              "attester"
+            ],
+            "rotates": null,
+            "reason_commitment": "9d9af6a27e27ddd030b6010af7c6df3c365398259bc30a62e043163c53d943d0",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "3d6b8305397e20ed4ddd6e3358617cd18ebe5c08f25c70485ddbc0ca6c5b41ee04abf41ac824c64a5e7221bd88c8686c2d6f0d6d3aea806fea78b2ef0a6eea01"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:02:00Z",
+          "prev_hash": "8e945c9c126b981284ac9fec4e249aced52a417a77fa0d377059b1cc51b55501",
+          "hash": "c0233b2cf90e64ff08efa2bb3ea39fc03e7f1475f96c54b1145cb6550a58432c"
+        },
+        "hash": "c0233b2cf90e64ff08efa2bb3ea39fc03e7f1475f96c54b1145cb6550a58432c"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 3,
+          "event_id": "00000000000000000000000000000003",
+          "project_id": null,
+          "type": "attester_enrolled",
+          "payload": {
+            "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "public_key": "9edb2c662671e1f7a062741255f062d2f74f98fa7779c7791359ee5601a1fa2e",
+            "roles": [
+              "attester"
+            ],
+            "rotates": null,
+            "reason_commitment": "7315b708c51adc000356ef33abe88f70bda0881212891fe1113f9ea0a7bd5216",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "bf18fd99a4f0e715682979e49087b359c643b89d185578ae667e79cc96e5f322012f0cc14f94c3e40fce8a29cfa85fb9440ec51ffdcb8a0b6ba5e8803627e102"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:03:00Z",
+          "prev_hash": "c0233b2cf90e64ff08efa2bb3ea39fc03e7f1475f96c54b1145cb6550a58432c",
+          "hash": "4c82a7e4b8453c2d61a9f624b71d515a3b9eb94f93f86791ceaccfc830f15d1c"
+        },
+        "hash": "4c82a7e4b8453c2d61a9f624b71d515a3b9eb94f93f86791ceaccfc830f15d1c"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 4,
+          "event_id": "00000000000000000000000000000004",
+          "project_id": null,
+          "type": "attester_enrolled",
+          "payload": {
+            "attester_key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+            "public_key": "5ededb89579eab94997e6224a01c05dafbc956fd52160e24c4d0e03fd3fa421f",
+            "roles": [
+              "attester"
+            ],
+            "rotates": null,
+            "reason_commitment": "37338e2c4989c392939e4afd42f30533c8a3b07b72f81f4b97735e276f1bf62a",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "7c41db6769f399859bad96089ca4c5867f0bef3aa8d794adeca8f4b422c097d276944a1c2059d5b97b4f08b0814d1f3cef532dc7841495dc009eef74f6a02008"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:04:00Z",
+          "prev_hash": "4c82a7e4b8453c2d61a9f624b71d515a3b9eb94f93f86791ceaccfc830f15d1c",
+          "hash": "01cdb531b73eb5d57c4a35c6c8fe1e621828c7dc0687830e5eb7a4d6fe8f570a"
+        },
+        "hash": "01cdb531b73eb5d57c4a35c6c8fe1e621828c7dc0687830e5eb7a4d6fe8f570a"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 5,
+          "event_id": "00000000000000000000000000000005",
+          "project_id": null,
+          "type": "attester_enrolled",
+          "payload": {
+            "attester_key_id": "5d4f33ab43ef49471f606c8c7e4cfdc26011980b385d810871f6399881e6338c",
+            "public_key": "75fd1589632ea2706ebd361fc5b8c8399b4ba8419494be956c048dc000dd9966",
+            "roles": [
+              "attester"
+            ],
+            "rotates": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "reason_commitment": "d7bde489364c237bd9a03263dc60178e3f671fd5e41822c3f135bdea587ea352",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "e1c05361e61f00b16a1dd3a8280219d6d2e29506772a4f34cfafa45e63546d0eecc002911940b2696ff8f32720f7a80777f0ffa67394f15e7eded4fdbb47950a"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:05:00Z",
+          "prev_hash": "01cdb531b73eb5d57c4a35c6c8fe1e621828c7dc0687830e5eb7a4d6fe8f570a",
+          "hash": "1834cdfc7cdb173f6988fb6c78936d1c11c93cb4f867668ae6872f306d94b7bc"
+        },
+        "hash": "1834cdfc7cdb173f6988fb6c78936d1c11c93cb4f867668ae6872f306d94b7bc"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 6,
+          "event_id": "00000000000000000000000000000006",
+          "project_id": null,
+          "type": "attester_enrolled",
+          "payload": {
+            "attester_key_id": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+            "public_key": "00bf3dc129b3f40d1f1b002654743175df341c1e9685c70901216ba3ea31e70d",
+            "roles": [
+              "reviewer"
+            ],
+            "rotates": null,
+            "reason_commitment": "05abbd14656b6d5a6d169c1dd8766fd84793e1135a22b6280cfec266a3fefe93",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "d44f394000c1bfeeb56ec4ae29ddc9b77b2ebcc0f7952f91c74e8555348c5245c5530418f6744b8158c36282bc1291943fb36c6625ec70b106d2f3b03118ac08"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:06:00Z",
+          "prev_hash": "1834cdfc7cdb173f6988fb6c78936d1c11c93cb4f867668ae6872f306d94b7bc",
+          "hash": "a22a272340b98a6205644cc2346eff5fe108e85866123dbae193d5eee5325528"
+        },
+        "hash": "a22a272340b98a6205644cc2346eff5fe108e85866123dbae193d5eee5325528"
+      },
+      {
+        "event": {
+          "schema": "impact.event.v1",
+          "tenant_id": "tenant-registry-synthetic",
+          "seq": 7,
+          "event_id": "00000000000000000000000000000007",
+          "project_id": null,
+          "type": "attester_revoked",
+          "payload": {
+            "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "reason": "compromised",
+            "reason_commitment": "a34baf90377d1902dd51a02183a82f01fa68e73c06e4277c05315c64fa1bc8ef",
+            "signer_key_id": "bda10450d69d2b78922d1d1dee7e6b7b8d5c1823a727d1012acb51b78610492d",
+            "signature": "b30a676045523883e53bfcf02e1449015beace1ce389417e8aeb94b3a1b002f65e18f5ce656badd5310826c36830dd488788bdcefc2cb730f0b74a67fcf5ce04"
+          },
+          "actor": {
+            "kind": "user",
+            "id": "user-registry-operator"
+          },
+          "ts": "2026-10-18T13:07:00Z",
+          "prev_hash": "a22a272340b98a6205644cc2346eff5fe108e85866123dbae193d5eee5325528",
+          "hash": "40bd0023cc621a5e98312390da484d58731c31419f70ec7f3ee0bfe51ebc1678"
+        },
+        "hash": "40bd0023cc621a5e98312390da484d58731c31419f70ec7f3ee0bfe51ebc1678"
+      }
+    ],
+    "revocation_ts": "2026-10-18T13:07:00Z"
+  },
+  "registries": {
+    "head6": {
+      "rules": [
+        "R61",
+        "R62",
+        "R63",
+        "R64",
+        "R65"
+      ],
+      "value": {
+        "schema": "impact.attester-registry.v1",
+        "tenant_id": "tenant-registry-synthetic",
+        "genesis_hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933",
+        "head": {
+          "seq": 6,
+          "hash": "a22a272340b98a6205644cc2346eff5fe108e85866123dbae193d5eee5325528"
+        },
+        "attesters": [
+          {
+            "attester_key_id": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+            "public_key": "00bf3dc129b3f40d1f1b002654743175df341c1e9685c70901216ba3ea31e70d",
+            "roles": [
+              "reviewer"
+            ],
+            "identity": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+            "enrolled_seq": 6,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "public_key": "942f24e644e85098fb66a13cd45d26f7b20ad62fbded37150993554c3793bcf6",
+            "roles": [
+              "attester"
+            ],
+            "identity": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "enrolled_seq": 1,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "5d4f33ab43ef49471f606c8c7e4cfdc26011980b385d810871f6399881e6338c",
+            "public_key": "75fd1589632ea2706ebd361fc5b8c8399b4ba8419494be956c048dc000dd9966",
+            "roles": [
+              "attester"
+            ],
+            "identity": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "enrolled_seq": 5,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "public_key": "9edb2c662671e1f7a062741255f062d2f74f98fa7779c7791359ee5601a1fa2e",
+            "roles": [
+              "attester"
+            ],
+            "identity": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "enrolled_seq": 3,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+            "public_key": "5ededb89579eab94997e6224a01c05dafbc956fd52160e24c4d0e03fd3fa421f",
+            "roles": [
+              "attester"
+            ],
+            "identity": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+            "enrolled_seq": 4,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+            "public_key": "fa418fb31fc0ba011397acc6a8303f82d0f2de74ad8b7ed43e471576f4af1d81",
+            "roles": [
+              "attester"
+            ],
+            "identity": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+            "enrolled_seq": 2,
+            "revoked": null
+          }
+        ],
+        "findings": []
+      },
+      "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0"
+    },
+    "head7": {
+      "rules": [
+        "R61",
+        "R62",
+        "R63",
+        "R64",
+        "R65"
+      ],
+      "value": {
+        "schema": "impact.attester-registry.v1",
+        "tenant_id": "tenant-registry-synthetic",
+        "genesis_hash": "8dfa813cd0dcd73e0446ac7fd93e2d0e6ed7214f9c5f463d6f8c945f29a71933",
+        "head": {
+          "seq": 7,
+          "hash": "40bd0023cc621a5e98312390da484d58731c31419f70ec7f3ee0bfe51ebc1678"
+        },
+        "attesters": [
+          {
+            "attester_key_id": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+            "public_key": "00bf3dc129b3f40d1f1b002654743175df341c1e9685c70901216ba3ea31e70d",
+            "roles": [
+              "reviewer"
+            ],
+            "identity": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+            "enrolled_seq": 6,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "public_key": "942f24e644e85098fb66a13cd45d26f7b20ad62fbded37150993554c3793bcf6",
+            "roles": [
+              "attester"
+            ],
+            "identity": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "enrolled_seq": 1,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "5d4f33ab43ef49471f606c8c7e4cfdc26011980b385d810871f6399881e6338c",
+            "public_key": "75fd1589632ea2706ebd361fc5b8c8399b4ba8419494be956c048dc000dd9966",
+            "roles": [
+              "attester"
+            ],
+            "identity": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+            "enrolled_seq": 5,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "public_key": "9edb2c662671e1f7a062741255f062d2f74f98fa7779c7791359ee5601a1fa2e",
+            "roles": [
+              "attester"
+            ],
+            "identity": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+            "enrolled_seq": 3,
+            "revoked": {
+              "seq": 7,
+              "reason": "compromised"
+            }
+          },
+          {
+            "attester_key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+            "public_key": "5ededb89579eab94997e6224a01c05dafbc956fd52160e24c4d0e03fd3fa421f",
+            "roles": [
+              "attester"
+            ],
+            "identity": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+            "enrolled_seq": 4,
+            "revoked": null
+          },
+          {
+            "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+            "public_key": "fa418fb31fc0ba011397acc6a8303f82d0f2de74ad8b7ed43e471576f4af1d81",
+            "roles": [
+              "attester"
+            ],
+            "identity": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+            "enrolled_seq": 2,
+            "revoked": null
+          }
+        ],
+        "findings": []
+      },
+      "registry_hash": "6bcfd6b18749151cf15fa2c470aeabfab53e9207dd15b6683d2f1ccb85efd901"
+    }
+  },
+  "attestations": {
+    "AX": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "e969f954b303aa86b5fa97429434ef238bec4a1ca4b575348b8562658d60c870",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+      "signature": "ada1cebd23e800d9aa02c1860b6053d4bc614cf5817dded13bf18eb51fd8c6ce95a3aa7e0d357bad10fc9eb10c2d28005d9c80df7f68890fbb2df5a9b5f3ac08"
+    },
+    "AY": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "afb958e69cf5df8645960d4986ec30239bf6374442aafae3b896531c1e92cd4d",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "66da05d0f5a17a3b500379620f833e543097cf2cba52210ef7048c488d3ca10f",
+      "signature": "62f3972c71fdf60b6ccd4b87f954bf5a4f9af019b8b239864e72348a564b706f8fdd5089f0548810ab08581e44fdd5ba146fc079d89d3867b030f329af4c6b05"
+    },
+    "AX2": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "e969f954b303aa86b5fa97429434ef238bec4a1ca4b575348b8562658d60c870",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+        "created_at": "2026-10-18T15:00:00Z"
+      },
+      "attestation_hash": "e6a831cc218a905076955a2282c16b47d979195d5e941ce6d8f59259a205e3be",
+      "signature": "eacdb72dbf932eab82e4f338e015114d2302e1c9ec1579b08c74a52704f2c5f5006b42bfe4dd51098ba5bc18e5213b0d245aa9cebe4f76283b42a04a1270ad05"
+    },
+    "BY": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "afb958e69cf5df8645960d4986ec30239bf6374442aafae3b896531c1e92cd4d",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+      "signature": "f1d654470cf7f73e2fd4567f154c48f877629571119116361a51bc9b6bfafb83e3931f9f82fd4f4757fc66165ba98e26e6816a55f2b89f4326ca333afaf3c60b"
+    },
+    "BX": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "e969f954b303aa86b5fa97429434ef238bec4a1ca4b575348b8562658d60c870",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "70472b8bb57f009111195bb83bd5925be32402eee127911f66e2d1be57b41027",
+      "signature": "b84e33aa8e0d02cd61f1f18e1be8266296096665018d8bdb40fabd3335389f74a4b31272c1a404554e30116f9cfada3dfb91ef2742ba8d7236eb1864d902bd08"
+    },
+    "CY": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "afb958e69cf5df8645960d4986ec30239bf6374442aafae3b896531c1e92cd4d",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "a027fbfeb47dd60cf38a0e59c14241cecb22a5d64b851f7a804912aae28b89b6",
+      "signature": "47cee8c8981cb4df7a77fe22fce6d05af5a7cd5eaedf4ef5978f2047da8d707ad38af2bab71a2367209b72f12c2aac82775516c083bba63ac2d96994a9428c0e"
+    },
+    "CY_BACKDATED": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "afb958e69cf5df8645960d4986ec30239bf6374442aafae3b896531c1e92cd4d",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+        "created_at": "2026-10-18T12:00:00Z"
+      },
+      "attestation_hash": "a5b0711db6235cbaa38488c2adaf6c07f04fb42c055dc4ca450b793cf07b8d77",
+      "signature": "73501fcd37120919b9e177feacb1220f51eba3c9fd18d0c8ed2e25798f9cab0fe99a48b7b78b44d821766fa68d8764f73d85a32cc360e14a2972c5018800b603"
+    },
+    "DY": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "afb958e69cf5df8645960d4986ec30239bf6374442aafae3b896531c1e92cd4d",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "cdfc59703e6cf762dd53227aaf76ced0ad3b3d355bc837c93f6602ebff6ec265",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "d807519c4d9c79d5f84abc9ae499cdb583902455da60d57f903b7a4f431e4bd4",
+      "signature": "445353db4807f00788a89d594846421cab7c2f2e02bbb071f358132297366ef18dd1eb0d29c77cbd7973ccb28a0f9f6356f345a3f689646ca05af2d74c523e0f"
+    },
+    "A2Y": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "afb958e69cf5df8645960d4986ec30239bf6374442aafae3b896531c1e92cd4d",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "5d4f33ab43ef49471f606c8c7e4cfdc26011980b385d810871f6399881e6338c",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "e0fb8180aea39be47f6e8b0896ba8d9792cfcac5569091d59b3174450185a9c9",
+      "signature": "bf9cb6a5deb321b1ff10a3ba79ef6c868b5ee44026cbb1a4ab71134e403e5aa1f6692a5d66008cabd425b1053df75be9204500a94bf8f2ff923dd6ee9725610a"
+    },
+    "BY_V2": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.2"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "afb958e69cf5df8645960d4986ec30239bf6374442aafae3b896531c1e92cd4d",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "f69671f4b33a21989ed0000b80f1d918c850e6e65db9ba994b8768f465b8df95",
+      "signature": "ce1bd103863889c52c1e27242e6425d75f07c2d9d5107cb383bd38f3e8233d54673b3541363f5c8b340d196579d2d73d364b6b27545b1d251661b42e38ea2506"
+    },
+    "BY_WRONG_SUBJECT": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "c42a3fdf83267ff246a7de25f05553c28f56adcaa048316bac9750968a58a10b",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "afb958e69cf5df8645960d4986ec30239bf6374442aafae3b896531c1e92cd4d",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "b64132f41cd933a969bb466148ccd4a04332bed12dac22bf8b24da69c44e46ee",
+      "signature": "ad376377985c6402616718920b12b4d9a89b230c35a1e92902f18073b62165e38d0d00292e34aee4d685b85bb3477b81934d64f6a7eab3fafe525e5eea3b9401"
+    },
+    "EZ_NOCOMM": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": false,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "99b19dfb2d01c87323f4b6208887087dbc4b06d65d1c5ec814867f81b77b7f6f",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "6c26c73f601d8b87da9e9e7f165374008acf322a931431d01b4249fa8336a68e",
+      "signature": "55759e05dc43033221854c4cf01875a2b94417e58b823e72e39ab5648d1eefdfa948c63445e714ac94680885e063f6e136df7b140ef159afcb7d3d2493e78b08"
+    },
+    "EZ_DTC": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [
+          "P0601-00"
+        ],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "99b19dfb2d01c87323f4b6208887087dbc4b06d65d1c5ec814867f81b77b7f6f",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "ae873854ddced454afd7516f18b35cd4295ba0f8371d0cbec4c8892b5071f1a8",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "db6b5ac91a19cbb2924cfcfbea9a53dda7935b258b05e962fbf945242c04dab7",
+      "signature": "3945f730053a18889ac41e456635e644491f448f29e5a8f31b970d8a3479a8cdae0e7c92beca43469e9cc08b2d81239fc8f3b6abec5d1403b348bb9ba0b2e80f"
+    },
+    "AX_OKDTC": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [
+          "P0120",
+          "U0100"
+        ],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "e969f954b303aa86b5fa97429434ef238bec4a1ca4b575348b8562658d60c870",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "31be4b0af06799f8499871d046d398053df6fec0cfd4ad59bf58c7ff72863a82",
+      "signature": "7dd4a97c3abcc6bf61ffe438a7a12c5687635341ac065b331d2753d595749e485aaf8a0538ebbd092fd3ff855d908c80ffdda45641dcf5970a3bd0f7e6318c04"
+    },
+    "BY_MISMATCH": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "mismatch",
+        "ecu_commitment": "afb958e69cf5df8645960d4986ec30239bf6374442aafae3b896531c1e92cd4d",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "fe19ef32a383e35460a522b5389687a91b6b148815e36d82107011d7be2440a5",
+      "signature": "0f9f1acf4c511450941c7b287eaf128908efaa2260a3de897964f1c3d2f33062c29532f15779f6379d8b40cd587c4f146d8f72b7240d770dc6413670ae047b05"
+    },
+    "AX_NOTREP": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "not_reported",
+        "ecu_commitment": "e969f954b303aa86b5fa97429434ef238bec4a1ca4b575348b8562658d60c870",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "b19b3cfe466d3ac997bce03a51fd1677c7ebcaaa00c1fb1d047f467e895e61d3",
+      "signature": "efbe3823d738e0d1d0c4135533720ad77d4359e4a3d1ca60e99a0a4587b08c390cbad2b30b0b266a9035f441ca902e310eea7b28ae565d061c90c992be3d6009"
+    },
+    "BY_READBACK": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": "c42a3fdf83267ff246a7de25f05553c28f56adcaa048316bac9750968a58a10b",
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "afb958e69cf5df8645960d4986ec30239bf6374442aafae3b896531c1e92cd4d",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "cbeef9fb21683b73c71ce76f5d8c2fb536ef171bb1cbd6f3816be46574a1d08f",
+      "signature": "34a2ec36b5fb945308a3e9a3a8e9e473dd509dd517db14d9ea0e5143c7c403da6e80b1a0595920adfa77d8ef25df27443170843997252a660d856107f3df2004"
+    },
+    "BY_SALT2": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "5172f1cc5f65a6ae90fdba7e431503b274010925b31cf714a8755bc7f9ea2915",
+        "ecu_salt_id": "987712267e354cde6e985c9e75bcc7205de28e9ef22b5827eb6d6510c59cb7fa",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "8fad32598f0da18858a63a6591e2f3edb9520cdc7168f253cddcdc0407fc5641",
+      "signature": "62fcd2581c543c24e7bbc8cc4191e8deb8ff36cc7829526fa0e94c5b0d106f4f1f73c4c999e823a78947cc699e9af8537649a353f82dddeeae169e6f4011ba02"
+    },
+    "CZ_NOCOMM": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": false,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "99b19dfb2d01c87323f4b6208887087dbc4b06d65d1c5ec814867f81b77b7f6f",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "885d8e2ba7c9389405586e85a6d225be6de9c3c5c6db370474c21d277d5f2033",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "56eb9152aa81d02298827c47936cfb326c56403fc1c3d05ff2b0db3eb7fc7be7",
+      "signature": "027997ec65574a882a5613bb5d837022fb35487d2d836e1d97f568d52ec65f7c34963af7e0bfbb115bece19247912cf1d78a57775db88fb1df3b7d3c5aea1700"
+    },
+    "FY": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "afb958e69cf5df8645960d4986ec30239bf6374442aafae3b896531c1e92cd4d",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "34899563765b0913a82bf6177082564241c9be4eb318548e48ed2dc2f23379d0",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "356c0d940d14aa4d53b231b351971b5b4b000425871a06d43c05efe25e0c57c3",
+      "signature": "5ecbd973d05b3dfe77d23cdf75ad277b9755335c7a90a72b76bc94c25f0de5854fc4ff3ecc4d2259b0f7f29f68bd45577f0bbfb92b3f12547bd078504278910b"
+    },
+    "A_SIGNED_BY_B": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.0"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "99b19dfb2d01c87323f4b6208887087dbc4b06d65d1c5ec814867f81b77b7f6f",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "bf869c74cb398163baa488c11567ed83f0a16ba39b5941faad5006b2f86cbf30",
+      "signature": "3de7ee78f6b6389b4d11eb04050870850751240557c9de2f72189ca1b50d8a275a422c54dc6fd49bb34579598dd34d758323e46092052385269d475764b35c00"
+    },
+    "BY_EDITED_REHASH": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.1"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "afb958e69cf5df8645960d4986ec30239bf6374442aafae3b896531c1e92cd4d",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "bd2ab0978d49cd87b47974cec416ad2a3e88d38fd4a2c4f6c9fb3f78efdfe58b",
+      "signature": "f1d654470cf7f73e2fd4567f154c48f877629571119116361a51bc9b6bfafb83e3931f9f82fd4f4757fc66165ba98e26e6816a55f2b89f4326ca333afaf3c60b"
+    },
+    "BY_EDITED_NOREHASH": {
+      "attestation": {
+        "schema": "impact.field-attestation.v1",
+        "subject_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "identification": {
+          "family": "synthetic.family",
+          "hw_id": "synthetic-hw-1",
+          "sw_id": "synthetic-sw-1",
+          "checksum_variant_id": "synthetic.variant.1"
+        },
+        "write_tool": {
+          "name": "Synthetic Flasher",
+          "version": "1.1"
+        },
+        "readback_image_hash": null,
+        "communicates": true,
+        "dtcs_after_clear_and_reread": [],
+        "tool_checksum_status": "ok",
+        "ecu_commitment": "afb958e69cf5df8645960d4986ec30239bf6374442aafae3b896531c1e92cd4d",
+        "ecu_salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+        "attester_key_id": "bc8f2033ec0e03a9fa482374b0be1e8840b84512c377eebd9b13e5d06887a5dc",
+        "created_at": "2026-10-18T14:00:00Z"
+      },
+      "attestation_hash": "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+      "signature": "f1d654470cf7f73e2fd4567f154c48f877629571119116361a51bc9b6bfafb83e3931f9f82fd4f4757fc66165ba98e26e6816a55f2b89f4326ca333afaf3c60b"
+    }
+  },
+  "attestation_verify": {
+    "rules": [
+      "R48",
+      "R49",
+      "R50"
+    ],
+    "example": {
+      "label": "AX",
+      "attestation_jcs": "{\"attester_key_id\":\"4a7448d0a693e4fa927530f7a394c5c6b116c66254be5ea36fd95a27ade23e19\",\"communicates\":true,\"created_at\":\"2026-10-18T14:00:00Z\",\"dtcs_after_clear_and_reread\":[],\"ecu_commitment\":\"e969f954b303aa86b5fa97429434ef238bec4a1ca4b575348b8562658d60c870\",\"ecu_salt_id\":\"108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c\",\"identification\":{\"checksum_variant_id\":\"synthetic.variant.1\",\"family\":\"synthetic.family\",\"hw_id\":\"synthetic-hw-1\",\"sw_id\":\"synthetic-sw-1\"},\"readback_image_hash\":\"3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86\",\"schema\":\"impact.field-attestation.v1\",\"subject_image_hash\":\"3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86\",\"tool_checksum_status\":\"ok\",\"write_tool\":{\"name\":\"Synthetic Flasher\",\"version\":\"1.0\"}}",
+      "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+      "signing_input": "{\"domain\":\"impact.field-attestation-signature.v1\",\"hash\":\"659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01\"}",
+      "signature": "ada1cebd23e800d9aa02c1860b6053d4bc614cf5817dded13bf18eb51fd8c6ce95a3aa7e0d357bad10fc9eb10c2d28005d9c80df7f68890fbb2df5a9b5f3ac08"
+    },
+    "cases": [
+      {
+        "label": "AX",
+        "registry": "head6",
+        "expect": []
+      },
+      {
+        "label": "BY_EDITED_REHASH",
+        "registry": "head6",
+        "expect": [
+          "bad_signature"
+        ]
+      },
+      {
+        "label": "BY_EDITED_NOREHASH",
+        "registry": "head6",
+        "expect": [
+          "attestation_hash_mismatch"
+        ]
+      },
+      {
+        "label": "A_SIGNED_BY_B",
+        "registry": "head6",
+        "expect": [
+          "bad_signature"
+        ]
+      },
+      {
+        "label": "DY",
+        "registry": "head6",
+        "expect": [
+          "unknown_attester"
+        ]
+      },
+      {
+        "label": "CY",
+        "registry": "head6",
+        "expect": []
+      },
+      {
+        "label": "CY",
+        "registry": "head7",
+        "expect": [
+          "revoked_attester"
+        ]
+      },
+      {
+        "label": "FY",
+        "registry": "head6",
+        "expect": [
+          "not_attester"
+        ]
+      }
+    ]
+  },
+  "evaluations": [
+    {
+      "id": "G01-two-attesters-two-ecus",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01"
+          ]
+        }
+      },
+      "golden_record_hash": "8cd9f85b6365dff03339e19e093d737417b0764809441210ca96168d3373292e",
+      "supplied": [
+        "AX",
+        "BY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "8cd9f85b6365dff03339e19e093d737417b0764809441210ca96168d3373292e",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "b40b39305b14fd7051d4f633fd19c1ad2af9eb4ca340cac7295ee8db75018fb3"
+      }
+    },
+    {
+      "id": "G02-one-attester-two-ecus",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [
+            {
+              "name": "Synthetic Tool One",
+              "version": "2.0",
+              "image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+              "date": "2026-10-17"
+            },
+            {
+              "name": "Synthetic Tool Two",
+              "version": "5.1",
+              "image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+              "date": "2026-10-17"
+            }
+          ],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "66da05d0f5a17a3b500379620f833e543097cf2cba52210ef7048c488d3ca10f"
+          ]
+        }
+      },
+      "golden_record_hash": "b0f7f679d3988bb1eb8e488eabe9227cc777cad0f94fa575360da6e355dc5d1b",
+      "supplied": [
+        "AX",
+        "AY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "b0f7f679d3988bb1eb8e488eabe9227cc777cad0f94fa575360da6e355dc5d1b",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 1,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "66da05d0f5a17a3b500379620f833e543097cf2cba52210ef7048c488d3ca10f",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attesters"
+          ],
+          "level": "golden_concordant"
+        },
+        "evaluation_hash": "fd56d2bafb7c0c1db8345f5c0cbb5971ba1d9c15de6e1b6baf74dd5f53c6cfe6"
+      }
+    },
+    {
+      "id": "G03-two-attesters-one-ecu",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [
+            {
+              "name": "Synthetic Tool One",
+              "version": "2.0",
+              "image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+              "date": "2026-10-17"
+            }
+          ],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "70472b8bb57f009111195bb83bd5925be32402eee127911f66e2d1be57b41027"
+          ]
+        }
+      },
+      "golden_record_hash": "2f7865213d540eae3f7343d0f8405c22ed4e475f16aa00f6b3c5ccb7f0185135",
+      "supplied": [
+        "AX",
+        "BX"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "2f7865213d540eae3f7343d0f8405c22ed4e475f16aa00f6b3c5ccb7f0185135",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "70472b8bb57f009111195bb83bd5925be32402eee127911f66e2d1be57b41027",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_units"
+          ],
+          "level": "candidate"
+        },
+        "evaluation_hash": "2561d79392ca2b6a45f11c4077f9acbbbccc580917aef565f152cc7b7f391224"
+      }
+    },
+    {
+      "id": "G04-single-attestation",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01"
+          ]
+        }
+      },
+      "golden_record_hash": "0375499d6d650f89aef4fd413c7c2c5b186c0f1290c2bb7ae0ec6b7556887487",
+      "supplied": [
+        "AX"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "0375499d6d650f89aef4fd413c7c2c5b186c0f1290c2bb7ae0ec6b7556887487",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "b273b7aa5f1f08a3e030c04cc9dffafbedb3c2cdb698ab1fd49b89f1daaadd14"
+      }
+    },
+    {
+      "id": "G05-three-attestations",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "66da05d0f5a17a3b500379620f833e543097cf2cba52210ef7048c488d3ca10f",
+            "70472b8bb57f009111195bb83bd5925be32402eee127911f66e2d1be57b41027"
+          ]
+        }
+      },
+      "golden_record_hash": "82ba3692e278adb8c22c0ef1fdd7114b94fb14239f7495dc56a15f010d9ea1f7",
+      "supplied": [
+        "AX",
+        "AY",
+        "BX"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "82ba3692e278adb8c22c0ef1fdd7114b94fb14239f7495dc56a15f010d9ea1f7",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 3,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "66da05d0f5a17a3b500379620f833e543097cf2cba52210ef7048c488d3ca10f",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "70472b8bb57f009111195bb83bd5925be32402eee127911f66e2d1be57b41027",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "4b01e9831f983b21e3cc8ef97398e750f4806c9653555f04d8b594d72d3553ce"
+      }
+    },
+    {
+      "id": "G06-other-attester-has-zero-qualifying",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "66da05d0f5a17a3b500379620f833e543097cf2cba52210ef7048c488d3ca10f",
+            "b64132f41cd933a969bb466148ccd4a04332bed12dac22bf8b24da69c44e46ee"
+          ]
+        }
+      },
+      "golden_record_hash": "7e95f91a161c4862ae1e7b94c382924d422f344c5ac210aeb9dae54f89f1f75c",
+      "supplied": [
+        "AX",
+        "AY",
+        "BY_WRONG_SUBJECT"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "7e95f91a161c4862ae1e7b94c382924d422f344c5ac210aeb9dae54f89f1f75c",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 1,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "66da05d0f5a17a3b500379620f833e543097cf2cba52210ef7048c488d3ca10f",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "b64132f41cd933a969bb466148ccd4a04332bed12dac22bf8b24da69c44e46ee",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "wrong_subject"
+              ]
+            }
+          ],
+          "reasons": [
+            "below_attesters"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "06812dba2be1b60c0118b08f075fcb25b87dbb3d04ca5aca05fae191a66bbd71"
+      }
+    },
+    {
+      "id": "G07-before-revocation",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R77"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "a027fbfeb47dd60cf38a0e59c14241cecb22a5d64b851f7a804912aae28b89b6"
+          ]
+        }
+      },
+      "golden_record_hash": "7fe8f0e6ca32c597ff9b0eb4b5e5e24767c9c591547eb7b45fd167ef9ed4b578",
+      "supplied": [
+        "AX",
+        "CY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "7fe8f0e6ca32c597ff9b0eb4b5e5e24767c9c591547eb7b45fd167ef9ed4b578",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "a027fbfeb47dd60cf38a0e59c14241cecb22a5d64b851f7a804912aae28b89b6",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "24336ce711662b68fc0893c531fe3b638e8484b58bd8b7488739b44f2b2ce9c8"
+      }
+    },
+    {
+      "id": "G08-after-revocation",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R77",
+        "R79"
+      ],
+      "registry": "head7",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "a027fbfeb47dd60cf38a0e59c14241cecb22a5d64b851f7a804912aae28b89b6"
+          ]
+        }
+      },
+      "golden_record_hash": "7fe8f0e6ca32c597ff9b0eb4b5e5e24767c9c591547eb7b45fd167ef9ed4b578",
+      "supplied": [
+        "AX",
+        "CY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "7fe8f0e6ca32c597ff9b0eb4b5e5e24767c9c591547eb7b45fd167ef9ed4b578",
+          "registry_hash": "6bcfd6b18749151cf15fa2c470aeabfab53e9207dd15b6683d2f1ccb85efd901",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "a027fbfeb47dd60cf38a0e59c14241cecb22a5d64b851f7a804912aae28b89b6",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "revoked_attester"
+              ]
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "950c96499c302e64cc309967a6082a297208a31869e8e3fb9252ae36bbd0e0a9"
+      }
+    },
+    {
+      "id": "G09-backdated-attestation-of-revoked-key",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R51",
+        "R77"
+      ],
+      "registry": "head7",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "a5b0711db6235cbaa38488c2adaf6c07f04fb42c055dc4ca450b793cf07b8d77"
+          ]
+        }
+      },
+      "golden_record_hash": "1943251677ce44bacbdfee37a1c610996eb602a14f4c8f37f82382efb07cb66b",
+      "supplied": [
+        "AX",
+        "CY_BACKDATED"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "1943251677ce44bacbdfee37a1c610996eb602a14f4c8f37f82382efb07cb66b",
+          "registry_hash": "6bcfd6b18749151cf15fa2c470aeabfab53e9207dd15b6683d2f1ccb85efd901",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "a5b0711db6235cbaa38488c2adaf6c07f04fb42c055dc4ca450b793cf07b8d77",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "revoked_attester"
+              ]
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "3cad65970df645a88116209085c7170e2b73d3ec881560961c5df40ccda2e29c"
+      }
+    },
+    {
+      "id": "G10-unenrolled-key",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R50"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "d807519c4d9c79d5f84abc9ae499cdb583902455da60d57f903b7a4f431e4bd4"
+          ]
+        }
+      },
+      "golden_record_hash": "c4e3846a1a51271789da582ca336e2e2ca29fccf2ae4de88771c1ebf2dbee13c",
+      "supplied": [
+        "AX",
+        "DY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "c4e3846a1a51271789da582ca336e2e2ca29fccf2ae4de88771c1ebf2dbee13c",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "d807519c4d9c79d5f84abc9ae499cdb583902455da60d57f903b7a4f431e4bd4",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "unknown_attester"
+              ]
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "deec6678315681a8c4cf522ab9bbaacaca207ecae9a2416ea07b1b209a355e18"
+      }
+    },
+    {
+      "id": "G11-duplicates-and-reflash",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "e6a831cc218a905076955a2282c16b47d979195d5e941ce6d8f59259a205e3be"
+          ]
+        }
+      },
+      "golden_record_hash": "6ee65de4fd0bc202bcac18915ebfb61827a21642d388ef67953a3dcbbc1b17a2",
+      "supplied": [
+        "BY",
+        "AX",
+        "AX2",
+        "BY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "6ee65de4fd0bc202bcac18915ebfb61827a21642d388ef67953a3dcbbc1b17a2",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 3,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "e6a831cc218a905076955a2282c16b47d979195d5e941ce6d8f59259a205e3be",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "a809ec5b5adf7ae48b320e24d4b4d0939a092c6a2b7e5099114edd65435b40c0"
+      }
+    },
+    {
+      "id": "G12-rotation-is-one-identity",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R64"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "e0fb8180aea39be47f6e8b0896ba8d9792cfcac5569091d59b3174450185a9c9"
+          ]
+        }
+      },
+      "golden_record_hash": "09c99f6247abb0e1ae0b5615db9ab084638bb758c7ff73361ad59d1a3098697c",
+      "supplied": [
+        "AX",
+        "A2Y"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "09c99f6247abb0e1ae0b5615db9ab084638bb758c7ff73361ad59d1a3098697c",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 1,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "e0fb8180aea39be47f6e8b0896ba8d9792cfcac5569091d59b3174450185a9c9",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attesters"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "7fd2cd3a73471bd4551371c600e98913172f7fcab48c448a7276ef49e6766007"
+      }
+    },
+    {
+      "id": "G13-edited-and-rehashed",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R50"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "bd2ab0978d49cd87b47974cec416ad2a3e88d38fd4a2c4f6c9fb3f78efdfe58b"
+          ]
+        }
+      },
+      "golden_record_hash": "e52432532cf028b187ebe5e6aac450f7dcf696b7e2c5834f8357d6ebd632d6fc",
+      "supplied": [
+        "AX",
+        "BY_EDITED_REHASH"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "e52432532cf028b187ebe5e6aac450f7dcf696b7e2c5834f8357d6ebd632d6fc",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "bd2ab0978d49cd87b47974cec416ad2a3e88d38fd4a2c4f6c9fb3f78efdfe58b",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "bad_signature"
+              ]
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "fb6909035c0803f6050cbe4e22d1f14e50f2b7f398d6da40b301226c68de746b"
+      }
+    },
+    {
+      "id": "G14-edited-without-rehash",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R50"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01"
+          ]
+        }
+      },
+      "golden_record_hash": "8cd9f85b6365dff03339e19e093d737417b0764809441210ca96168d3373292e",
+      "supplied": [
+        "AX",
+        "BY_EDITED_NOREHASH"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "8cd9f85b6365dff03339e19e093d737417b0764809441210ca96168d3373292e",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "attestation_hash_mismatch"
+              ]
+            },
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "c3ae7c2c960b129909bb752c5760d4c35ed82b164bed5fdd9a64c7509f03a7b5"
+      }
+    },
+    {
+      "id": "G15-wrong-variant",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "f69671f4b33a21989ed0000b80f1d918c850e6e65db9ba994b8768f465b8df95"
+          ]
+        }
+      },
+      "golden_record_hash": "b4d23818652d8b8002713ba5c7377e3c25bce971d67656896a3b6faad465ee90",
+      "supplied": [
+        "AX",
+        "BY_V2"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "b4d23818652d8b8002713ba5c7377e3c25bce971d67656896a3b6faad465ee90",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "f69671f4b33a21989ed0000b80f1d918c850e6e65db9ba994b8768f465b8df95",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "wrong_variant"
+              ]
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "8fd23492ecfe772f3d87bc8d34ad75a9467c975ff1d974311bbb4f25f34a4f4b"
+      }
+    },
+    {
+      "id": "G16-negative-no-communication",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R74"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "6c26c73f601d8b87da9e9e7f165374008acf322a931431d01b4249fa8336a68e"
+          ]
+        }
+      },
+      "golden_record_hash": "45a7c4faf5ba07b612eceede77215cbe29ff40085b3df5abca5f74f9d06db07d",
+      "supplied": [
+        "AX",
+        "BY",
+        "EZ_NOCOMM"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "45a7c4faf5ba07b612eceede77215cbe29ff40085b3df5abca5f74f9d06db07d",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "6c26c73f601d8b87da9e9e7f165374008acf322a931431d01b4249fa8336a68e",
+              "qualifying": false,
+              "negative": true,
+              "reasons": [
+                "no_communication"
+              ]
+            }
+          ],
+          "reasons": [
+            "negative_field_evidence"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "ca9b4bee6f3235b419e88a2c6c70b30ff07a458304be069cfb17c378eb989700"
+      }
+    },
+    {
+      "id": "G17-negative-dtc-with-failure-type",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R55",
+        "R56",
+        "R74"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "db6b5ac91a19cbb2924cfcfbea9a53dda7935b258b05e962fbf945242c04dab7"
+          ]
+        }
+      },
+      "golden_record_hash": "ca8526a5b4cd3381429ed6df559b5dce3bf5e340c76c44078da9abb0d427a380",
+      "supplied": [
+        "AX",
+        "BY",
+        "EZ_DTC"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "ca8526a5b4cd3381429ed6df559b5dce3bf5e340c76c44078da9abb0d427a380",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "db6b5ac91a19cbb2924cfcfbea9a53dda7935b258b05e962fbf945242c04dab7",
+              "qualifying": false,
+              "negative": true,
+              "reasons": [
+                "disqualifying_dtc"
+              ]
+            }
+          ],
+          "reasons": [
+            "negative_field_evidence"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "d7cba792067bc241bbe11600ebc8fce4dc363b3da065b1089885d723704b1f0c"
+      }
+    },
+    {
+      "id": "G18-non-disqualifying-dtcs",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R55"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "31be4b0af06799f8499871d046d398053df6fec0cfd4ad59bf58c7ff72863a82",
+            "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f"
+          ]
+        }
+      },
+      "golden_record_hash": "38d00ccef7d38819437d6ad87e6e8be265e4fa2439d23c83317bd544cd4f5f94",
+      "supplied": [
+        "AX_OKDTC",
+        "BY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "38d00ccef7d38819437d6ad87e6e8be265e4fa2439d23c83317bd544cd4f5f94",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "31be4b0af06799f8499871d046d398053df6fec0cfd4ad59bf58c7ff72863a82",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "f10beb4b33549e7f6af8ec5f99fdfd2947d85f079f50329e80514dcd4e83b13f"
+      }
+    },
+    {
+      "id": "G19-tool-checksum-mismatch",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R42",
+        "R74"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [
+            {
+              "name": "Synthetic Tool One",
+              "version": "2.0",
+              "image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+              "date": "2026-10-17"
+            }
+          ],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "fe19ef32a383e35460a522b5389687a91b6b148815e36d82107011d7be2440a5"
+          ]
+        }
+      },
+      "golden_record_hash": "3be7ce3af762e4fbf2cf4b9f8df831525980527b9dde59945c4717caaeb8cadf",
+      "supplied": [
+        "AX",
+        "BY_MISMATCH"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "3be7ce3af762e4fbf2cf4b9f8df831525980527b9dde59945c4717caaeb8cadf",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "fe19ef32a383e35460a522b5389687a91b6b148815e36d82107011d7be2440a5",
+              "qualifying": false,
+              "negative": true,
+              "reasons": [
+                "tool_checksum_mismatch"
+              ]
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units",
+            "negative_field_evidence"
+          ],
+          "level": "candidate"
+        },
+        "evaluation_hash": "8db1baa9a1899e83060ffe8c09e30283a7c87ea7b91df2907109f861ae14b399"
+      }
+    },
+    {
+      "id": "G20-checksum-not-reported",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R42"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+            "b19b3cfe466d3ac997bce03a51fd1677c7ebcaaa00c1fb1d047f467e895e61d3"
+          ]
+        }
+      },
+      "golden_record_hash": "effffc9a0c9790aba00995dedcdf594328b7db93a55b69f2e881d1766cd1c1b8",
+      "supplied": [
+        "AX_NOTREP",
+        "BY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "effffc9a0c9790aba00995dedcdf594328b7db93a55b69f2e881d1766cd1c1b8",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "b19b3cfe466d3ac997bce03a51fd1677c7ebcaaa00c1fb1d047f467e895e61d3",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "e6831126e60fee49e49f43a5d6a737c96394b38644adcef8362d5ae757f58099"
+      }
+    },
+    {
+      "id": "G21-readback-mismatch",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R44",
+        "R74"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "cbeef9fb21683b73c71ce76f5d8c2fb536ef171bb1cbd6f3816be46574a1d08f"
+          ]
+        }
+      },
+      "golden_record_hash": "d8d690bc0146afe4c73d75b0a6232fd6969c2c64e02972b481a5dfa970a50edd",
+      "supplied": [
+        "AX",
+        "BY_READBACK"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "d8d690bc0146afe4c73d75b0a6232fd6969c2c64e02972b481a5dfa970a50edd",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "cbeef9fb21683b73c71ce76f5d8c2fb536ef171bb1cbd6f3816be46574a1d08f",
+              "qualifying": false,
+              "negative": true,
+              "reasons": [
+                "readback_mismatch"
+              ]
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units",
+            "negative_field_evidence"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "d34f0df7a0b019c9cf7246955aff24c99d9d3801ea5eb67cbf28770fd314ffbc"
+      }
+    },
+    {
+      "id": "G22-foreign-salt",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R47"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+            "8fad32598f0da18858a63a6591e2f3edb9520cdc7168f253cddcdc0407fc5641"
+          ]
+        }
+      },
+      "golden_record_hash": "4f961ecf56db8f12d51ff939279727ec92e9c1ad7ee15da0288531d28d44ae4c",
+      "supplied": [
+        "AX",
+        "BY_SALT2"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "4f961ecf56db8f12d51ff939279727ec92e9c1ad7ee15da0288531d28d44ae4c",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "8fad32598f0da18858a63a6591e2f3edb9520cdc7168f253cddcdc0407fc5641",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "foreign_salt"
+              ]
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "49cd32c57a2550813ff099af9f6b9877b38a5867c5b54f0b9c1e89209ff2bef1"
+      }
+    },
+    {
+      "id": "G23-missing-attestation",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01"
+          ]
+        }
+      },
+      "golden_record_hash": "8cd9f85b6365dff03339e19e093d737417b0764809441210ca96168d3373292e",
+      "supplied": [
+        "AX"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "8cd9f85b6365dff03339e19e093d737417b0764809441210ca96168d3373292e",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "missing"
+              ]
+            },
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "85fa331a1c00b16e2bdcfed7e99f5dbc58df45c1559555fa6589fd075184ecc0"
+      }
+    },
+    {
+      "id": "G24-negative-by-revoked-key-ignored",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R74",
+        "R77"
+      ],
+      "registry": "head7",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "56eb9152aa81d02298827c47936cfb326c56403fc1c3d05ff2b0db3eb7fc7be7",
+            "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01"
+          ]
+        }
+      },
+      "golden_record_hash": "dca91079d46bc9740115d69144c39390dbfeacbe5534865c09d24aefc05c5a95",
+      "supplied": [
+        "AX",
+        "BY",
+        "CZ_NOCOMM"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "dca91079d46bc9740115d69144c39390dbfeacbe5534865c09d24aefc05c5a95",
+          "registry_hash": "6bcfd6b18749151cf15fa2c470aeabfab53e9207dd15b6683d2f1ccb85efd901",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "56eb9152aa81d02298827c47936cfb326c56403fc1c3d05ff2b0db3eb7fc7be7",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "revoked_attester"
+              ]
+            },
+            {
+              "attestation_hash": "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "3752c320f9c02e423fb0f06c87cfe07385ce0c248544fc50c7bada1164597c82"
+      }
+    },
+    {
+      "id": "G25-reviewer-only-key",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78",
+        "R62"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "356c0d940d14aa4d53b231b351971b5b4b000425871a06d43c05efe25e0c57c3",
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01"
+          ]
+        }
+      },
+      "golden_record_hash": "f47a4cbbf2d51d72d1ab30523ce788f8b723d30668c79392aa27c0c935721493",
+      "supplied": [
+        "AX",
+        "FY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "f47a4cbbf2d51d72d1ab30523ce788f8b723d30668c79392aa27c0c935721493",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 1,
+            "attesters": 1,
+            "units": 1
+          },
+          "attestations": [
+            {
+              "attestation_hash": "356c0d940d14aa4d53b231b351971b5b4b000425871a06d43c05efe25e0c57c3",
+              "qualifying": false,
+              "negative": false,
+              "reasons": [
+                "not_attester"
+              ]
+            },
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units"
+          ],
+          "level": "none"
+        },
+        "evaluation_hash": "12217011be272f3d290bbe8865699267bb27b20f7a292596aeb3ddfd910d0c6a"
+      }
+    },
+    {
+      "id": "G26-tools-disagree",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [
+            {
+              "name": "Synthetic Tool One",
+              "version": "2.0",
+              "image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+              "date": "2026-10-17"
+            },
+            {
+              "name": "Synthetic Tool Three",
+              "version": "1.0",
+              "image_hash": "c42a3fdf83267ff246a7de25f05553c28f56adcaa048316bac9750968a58a10b",
+              "date": "2026-10-17"
+            }
+          ],
+          "attestations": []
+        }
+      },
+      "golden_record_hash": "2f1964cf486c7d35fea7617e2dd185d99d6403d4a039c74afb418f42259f8cd7",
+      "supplied": [],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "2f1964cf486c7d35fea7617e2dd185d99d6403d4a039c74afb418f42259f8cd7",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 0,
+            "attesters": 0,
+            "units": 0
+          },
+          "attestations": [],
+          "reasons": [
+            "below_attestations",
+            "below_attesters",
+            "below_units",
+            "tool_disagreement"
+          ],
+          "level": "candidate"
+        },
+        "evaluation_hash": "c909baf408b0fb02d386525637a6b8b0ce86dc6d4598a04552aac0f41c04f6d3"
+      }
+    },
+    {
+      "id": "G27-test-keys-outside-test-mode",
+      "rules": [
+        "R65",
+        "R66",
+        "R80"
+      ],
+      "registry": null,
+      "test_mode": false,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [],
+          "attestations": [
+            "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01"
+          ]
+        }
+      },
+      "golden_record_hash": "8cd9f85b6365dff03339e19e093d737417b0764809441210ca96168d3373292e",
+      "supplied": [
+        "AX",
+        "BY"
+      ],
+      "expect": {
+        "error": "registry_broken"
+      }
+    },
+    {
+      "id": "G28-field-with-tool-disagreement",
+      "rules": [
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R75",
+        "R76",
+        "R78"
+      ],
+      "registry": "head6",
+      "test_mode": true,
+      "record": {
+        "schema": "impact.golden-record.v1",
+        "family": "synthetic.family",
+        "checksum_variant_id": "synthetic.variant.1",
+        "base_image_hash": "5223e3affd260efc53cf530de0ac0009ca44a076e1c9aeab7bf26ffb2c3d1dd2",
+        "version_hash": "b3f432eb45b6a405d3ef606ae3e15e91251bef7992e5ea76291893d9e92ebca4",
+        "expected_image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+        "oracle": {
+          "tools": [
+            {
+              "name": "Synthetic Tool One",
+              "version": "2.0",
+              "image_hash": "3a1e04df14d984bcf693dbb7812835dedabad0c8544c90366645a0fddca82e86",
+              "date": "2026-10-17"
+            },
+            {
+              "name": "Synthetic Tool Three",
+              "version": "1.0",
+              "image_hash": "c42a3fdf83267ff246a7de25f05553c28f56adcaa048316bac9750968a58a10b",
+              "date": "2026-10-17"
+            }
+          ],
+          "attestations": [
+            "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+            "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01"
+          ]
+        }
+      },
+      "golden_record_hash": "28b946c1275609fdbec6a0bb78d66b4e934e4deeb4038ff46a8d6e4e9743fdc1",
+      "supplied": [
+        "AX",
+        "BY"
+      ],
+      "expect": {
+        "evaluation": {
+          "schema": "impact.golden-evaluation.v1",
+          "golden_record_hash": "28b946c1275609fdbec6a0bb78d66b4e934e4deeb4038ff46a8d6e4e9743fdc1",
+          "registry_hash": "d523e67ad17838b919550b648eef21df1dc7871fd12b1b5008202f9a8e4977c0",
+          "dtc_set_hash": "234c8269c3313fa4e94889e5eec209a61e79725cec85991c376aec5ccf667db9",
+          "salt_id": "108c2f8aa60a94aae4c8bec777941de6a7b2e4e218d518b623becc0ad7eaf03c",
+          "thresholds": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "counts": {
+            "attestations": 2,
+            "attesters": 2,
+            "units": 2
+          },
+          "attestations": [
+            {
+              "attestation_hash": "60c5d3c28569568a75b0ce4a9205d2f592384fea6102f0b331dd29d5a96f5e7f",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            },
+            {
+              "attestation_hash": "659fbc1e002ca0d9abf2a13982fe61d4d87c2b0d8df81acc9955a28e97a03b01",
+              "qualifying": true,
+              "negative": false,
+              "reasons": []
+            }
+          ],
+          "reasons": [
+            "tool_disagreement"
+          ],
+          "level": "golden_field"
+        },
+        "evaluation_hash": "11b62a76e4050fedbe1cfc3fc49cb37e8a086b450fa84900b0fe64a266029650"
+      }
+    }
+  ]
+}

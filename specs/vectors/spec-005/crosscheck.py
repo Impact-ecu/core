@@ -277,6 +277,34 @@ PAYLOAD = {
         "ref": is_hex32,
         "reason": one_of("data_subject_request", "consent_revoked", "retention_expired"),
     },
+    "attester_enrolled": {
+        "attester_key_id": is_hex32,
+        "public_key": is_hex32,
+        "roles": lambda x: isinstance(x, list) and x != [] and x == sorted(set(x)) and set(x) <= {"attester", "reviewer"},
+        "rotates": lambda x: x is None or is_hex32(x),
+        "reason_commitment": is_hex32,
+        "signer_key_id": is_hex32,
+        "signature": lambda x: isinstance(x, str) and bool(HEX64B.match(x)),
+    },
+    "attester_revoked": {
+        "attester_key_id": is_hex32,
+        "reason": one_of("compromised", "misconduct", "retired", "error"),
+        "reason_commitment": is_hex32,
+        "signer_key_id": is_hex32,
+        "signature": lambda x: isinstance(x, str) and bool(HEX64B.match(x)),
+    },
+    "review": {
+        "export_ref": lambda x: isinstance(x, dict)
+        and set(x) == {"event_id", "seq", "hash"}
+        and isinstance(x["event_id"], str)
+        and bool(re.match(r"^[0-9a-f]{32}$", x["event_id"]))
+        and is_int(x["seq"])
+        and is_hex32(x["hash"]),
+        "report_hash": is_hex32,
+        "decision": one_of("approved", "rejected"),
+        "reviewer_key_id": is_hex32,
+        "signature": lambda x: isinstance(x, str) and bool(HEX64B.match(x)),
+    },
 }
 EVENT_KEYS = {"schema", "tenant_id", "seq", "event_id", "project_id", "type", "payload", "actor", "ts", "prev_hash", "hash"}
 TEST_SEED_TEXT = "impact spec-005 synthetic test key; never use outside test vectors"
@@ -368,7 +396,7 @@ def verify_chain(events: list[dict], anchors: list[dict], test_mode: bool) -> tu
                 elif not verify(k[0], signing_input("impact.report-signature.v1", pl["report_hash"]), unhex(pl["signature"])):
                     findings.append(finding(seq, "bad_signature"))
             key_event_ok = True
-            if typ in ("key_enrolled", "key_revoked", "chain_ref"):
+            if typ in ("key_enrolled", "key_revoked", "attester_enrolled", "attester_revoked", "chain_ref"):
                 body = {kk: vv for kk, vv in pl.items() if kk != "signature"}
                 kh = sha_obj({"schema": "impact.key-event.v1", "tenant_id": ev["tenant_id"], "genesis_hash": g["hash"], "seq": seq, "type": typ, "payload": body})
                 k = keys.get(pl["signer_key_id"])
